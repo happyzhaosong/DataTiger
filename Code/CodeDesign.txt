@@ -1,0 +1,23 @@
+Firefox 英文原版所有版本下载地址，WebDriver一定要用英文原版的，否则可能出问题，现在 FireFox18比较稳定，和webdriver 2.32 匹配很好
+
+https://ftp.mozilla.org/pub/mozilla.org/firefox/releases/
+
+
+Data Collect 设计思路
+1.DataCollect分为五个项目
+a.WebUI 项目
+  提供数据采集的页面配置，如果需要执行数据采集任务，则通过 ActiveMQ 异步发送消息到Web Driver项目，
+  改项目前台用 Extjs，后台运行在 Tomcat 里面的servlet，Mysql 数据库。
+
+b.WebDriver 项目
+  执行数据采集任务的项目，因为要用到 web driver，而 web driver 又不能在 tomcat 里面调用，所以要开发这么一个
+  命令行java项目，该程序一直监听 ActiveMQ 端口，根据得到的命令，来下载页面，解析页面，启动线程，停止线程。
+
+c.Client 项目
+   对于a，b当中用到的一些公共的业务逻辑类，进行封装，让a，b项目都可以调用
+
+d.Common 项目
+  对于a，b当中用到的一些公共的DTO类，进行封装，让a，b项目都可以调用
+  
+e.Server 项目
+  DAO的封装，供a，b项目调用

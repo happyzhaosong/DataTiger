@@ -1,0 +1,2 @@
+1.Add machine ip who create the thread, one ip and one site limited to create 10 thread.
+2.Will created and exist plus less than 10.

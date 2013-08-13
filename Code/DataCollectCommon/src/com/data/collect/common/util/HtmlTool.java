@@ -1,0 +1,475 @@
+package com.data.collect.common.util;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.data.collect.common.constants.Constants;
+import com.data.collect.common.dto.WebSiteDTO;
+import com.data.collect.common.dto.WebSitePageLinkParseDTO;
+
+
+public class HtmlTool extends BaseTool {
+	
+	/*
+	 * because web driver web element ele.getAttribute("href") too slow for a atribute retrive, so need to use regular expression to parse 
+	 * out url from html page source.
+	 * */
+	public static List<String> parseOutUrlLinkList(String pageSrc, String currentUrl, WebSiteDTO webSiteDto, WebSitePageLinkParseDTO linkParseDto) throws Exception
+	{
+		List<String> retList = new ArrayList<String>();
+		if(!StringTool.isEmpty(pageSrc))
+		{	
+			GetDeltaTimeTool getDltaTimeTool = new GetDeltaTimeTool();
+			//get all <a ...> tag html text
+			String regExp = "<(\\s)*a((?!>).)*>";
+			List<String> urlTagList = StringTool.runRegExpToGetStringList(pageSrc, regExp, true);
+			getDltaTimeTool.getDeltaTime("parseOutUrlLinkList run regexp delta time", null, Constants.MIN_RECORD_DURATION_TIME, true);
+			
+			if(!ClassTool.isListEmpty(urlTagList))
+			{
+				if(!StringTool.isEmpty(currentUrl))
+				{
+					currentUrl = currentUrl.trim();
+				}else
+				{
+					currentUrl = webSiteDto.getTopUrl().trim();
+				}
+				
+				int size = urlTagList.size();
+				for(int i=0;i<size;i++)
+				{
+					String urlTag = urlTagList.get(i);
+					String url = HtmlTool.getUrlInHtmlTag(urlTag).trim();
+					
+					if(!StringTool.isEmpty(url))
+					{
+						if(url.startsWith("/") || url.startsWith("\\"))
+						{
+							url = HtmlTool.getRootUrl(currentUrl) + url;
+						}else if(url.startsWith("./"))
+						{
+							url = HtmlTool.getCurrentLevelUrlPathDirectory(currentUrl) + url.substring(1);
+						}else if(url.startsWith("../"))
+						{
+							url = HtmlTool.getParentLevelUrlPathDirectory(currentUrl) + url.substring(2);
+						}
+						
+						if(HtmlTool.isCorrectUrl(url, linkParseDto.getUrlCharactor(), linkParseDto.getNotUrlCharactor(), linkParseDto.getUrlMatchRegExp()))
+						{
+							//remove no value url parameters
+							url = HtmlTool.removeNoValueUrlParameter(url);
+							
+							//run regexp on parsed out url
+							url = HtmlTool.runRegExpOnUrl(url, linkParseDto);
+							
+							//run string find on parsed out url
+							url = HtmlTool.runStringFindOnUrl(url, linkParseDto);
+							
+							
+							List<String> urlTrimList = new ArrayList<String>();
+							urlTrimList.add("#");							
+							urlTrimList.add("&");
+							
+							url = StringTool.trimSpecialCharactor(url, urlTrimList);
+							
+							//remove duplicated url in url list, this way can improve efficiency.
+							if(!StringTool.isEmpty(url) && !StringTool.isStringEqualExistInArray(url, StringTool.stringListToStringArray(retList)))
+							{
+								retList.add(url);	
+							}
+						}
+					}
+				}				
+			}
+			getDltaTimeTool.getDeltaTime("parseOutUrlLinkList loop url list delta time", null, Constants.MIN_RECORD_DURATION_TIME, true);
+		}
+		return retList;
+	}
+	
+	
+	//remove no value url parameters( parameter's value is '')
+	public static String removeNoValueUrlParameter(String url)
+	{
+		StringBuffer retBuf = new StringBuffer();
+		
+		//get url before question mark
+		int questionMarkIdx = url.indexOf(Constants.QUESTION_MARK);
+		if(questionMarkIdx!=-1)
+		{
+			retBuf.append(url.substring(0, questionMarkIdx+1));
+		}else
+		{
+			return url;
+		}
+		
+		String urlPartArr[] = url.substring(questionMarkIdx+1).split(Constants.AND_MARK);
+		
+		if(!ClassTool.isNullObj(urlPartArr))
+		{
+			int len = urlPartArr.length;
+			for(int i=0;i<len;i++)
+			{
+				String urlPart = urlPartArr[i];
+				if(!urlPart.endsWith(Constants.EQUAL_MARK))
+				{
+					retBuf.append(urlPart);
+					retBuf.append(Constants.AND_MARK);
+				}
+			}
+		}
+		
+		if(retBuf.length()==0)
+		{
+			retBuf.append(url);
+		}
+
+		String ret = retBuf.toString();
+		
+		if(ret.endsWith(Constants.AND_MARK))
+		{
+			ret = ret.substring(0, ret.length()-1);
+		}
+		
+		return ret;
+	}
+	
+	
+	//run string find on parsed out url
+	public static String runStringFindOnUrl(String url, WebSitePageLinkParseDTO linkParseDto) throws Exception
+	{
+		String retUrl = url;
+		if(!StringTool.isEmpty(linkParseDto.getRunStringFindOnUrl()))
+		{
+			LogTool.debugText("url before run string find = " + retUrl);
+			String arr[] = linkParseDto.getRunStringFindOnUrl().split(Constants.SEPERATOR_SEMICOLON);
+			int arrSize = arr.length;
+			for(int i = 0; i < arrSize; i++)
+			{
+				String strPair = arr[i];
+				if(!StringTool.isEmpty(strPair))
+				{
+					String strPairArr[] = strPair.split(Constants.SEPERATOR_COMPLEX);
+					int len = strPairArr.length;
+					if(len>0)
+					{
+						String startStr = "";
+						String endStr = "";
+						if(len==1)
+						{
+							startStr = strPairArr[0];
+						}else if(len==2)
+						{
+							startStr = strPairArr[0];
+							endStr = strPairArr[1];	
+						}
+						
+						
+						int startIdx = 0;
+						int endIdx = retUrl.length();
+						if(!StringTool.isEmpty(startStr))
+						{
+							startIdx = retUrl.indexOf(startStr, startIdx);
+							
+							if(startIdx!=-1)
+							{
+								if(!StringTool.isEmpty(endStr))
+								{
+									endIdx = retUrl.indexOf(endStr, startIdx + startStr.length());
+									if(endIdx!=-1)
+									{
+										if(startStr.startsWith("&") && endStr.startsWith("&"))
+										{
+											retUrl = retUrl.substring(0, startIdx) + retUrl.substring(endIdx);
+										}else
+										{
+											retUrl = retUrl.substring(0, startIdx) + retUrl.substring(endIdx + 1);
+										}
+									}else
+									{
+										retUrl = retUrl.substring(0, startIdx);
+									}
+								}else
+								{
+									retUrl = retUrl.substring(0, startIdx);
+								}
+							}
+						}else
+						{
+							//if want to remove one string in url then set startStr to empty string and endStr to not empty string.
+							if(!StringTool.isEmpty(endStr))
+							{
+								endIdx = retUrl.indexOf(endStr, startIdx + startStr.length());
+								if(endIdx!=-1)
+								{
+									retUrl = retUrl.substring(0, endIdx) + retUrl.substring(endIdx + endStr.length());
+								}
+							}
+						}
+					}
+				}								
+			}
+			LogTool.debugText("url after run string find = " + retUrl);
+		}
+
+		return retUrl;
+	}
+	
+	
+	//run regexp on parsed out url
+	public static String runRegExpOnUrl(String url, WebSitePageLinkParseDTO linkParseDto) throws Exception
+	{
+		if(!StringTool.isEmpty(linkParseDto.getRunRegexpOnUrl()))
+		{
+			LogTool.debugText("url before run regexp = " + url);
+			String regExpArr[] = linkParseDto.getRunRegexpOnUrl().split(Constants.SEPERATOR_SEMICOLON);
+			int regExpArrSize = regExpArr.length;
+			for(int iRegExp = 0; iRegExp < regExpArrSize; iRegExp++)
+			{
+				String regExpStr = regExpArr[iRegExp];
+				if(!StringTool.isEmpty(regExpStr))
+				{
+					String srcDestRegExpArr[] = regExpStr.split(Constants.SEPERATOR_COMPLEX);
+					int len = srcDestRegExpArr.length;
+					if(len>0)
+					{
+						String srcRegExp = "";
+						String destRegExp = "";
+						if(len==1)
+						{
+							srcRegExp = srcDestRegExpArr[0];
+						}else if(len==2)
+						{
+							srcRegExp = srcDestRegExpArr[0];
+							destRegExp = srcDestRegExpArr[1];	
+						}
+						
+						if(!StringTool.isEmpty(srcRegExp))
+						{
+							url = StringTool.runRegExpToReplace(url, srcRegExp, destRegExp);
+						}
+					}
+				}								
+			}
+			LogTool.debugText("url after run regexp = " + url);
+		}
+		return url;
+	}
+	
+	
+	public static boolean isCorrectUrl(String url, String urlCharactor, String notUrlCharactor, String urlMatchRegExp)
+	{
+		boolean ret = true;
+		if(StringTool.isEmpty(url))
+		{
+			return false;
+		}
+		
+		if(!StringTool.isEmpty(urlCharactor))
+		{
+			if(!StringTool.ifMatchStringCharactor(url, urlCharactor))
+			{
+				return false;
+			}
+		}
+		
+		if(!StringTool.isEmpty(notUrlCharactor))
+		{
+			if(StringTool.ifMatchStringCharactor(url, notUrlCharactor))
+			{
+				return false;
+			}
+		}
+		
+		if(!StringTool.isEmpty(urlMatchRegExp))
+		{
+			if(!StringTool.ifMatchStringCharactor(url, urlMatchRegExp))
+			{
+				return false;
+			}
+		}
+		return ret;
+	}
+	
+	
+	
+	public static String getRootUrl(String currentUrl) throws Exception
+	{
+		String ret = "";
+		if(!StringTool.isEmpty(currentUrl))
+		{
+			String parseUrlRootRegExp = "http://((?!/).)*/";
+			List<String> urlTagList = StringTool.runRegExpToGetStringList(currentUrl, parseUrlRootRegExp, true);
+			if(!ClassTool.isListEmpty(urlTagList))
+			{
+				ret = urlTagList.get(0);
+			}else
+			{
+				parseUrlRootRegExp = "https://((?!/).)*/";
+				urlTagList = StringTool.runRegExpToGetStringList(currentUrl, parseUrlRootRegExp, true);
+				if(!ClassTool.isListEmpty(urlTagList))
+				{
+					ret = urlTagList.get(0);
+				}
+			}
+			
+			if(StringTool.isEmpty(ret))
+			{
+				if(currentUrl.startsWith("http"))
+				{
+					ret = currentUrl;
+				}
+			}
+			
+			if(ret.endsWith("/"))
+			{
+				ret = ret.substring(0, ret.length()-1);
+			}
+			
+		}
+		return ret;
+	}
+	
+	public static String getCurrentLevelUrlPathDirectory(String currentUrl)
+	{
+		String ret = "";
+		if(!StringTool.isEmpty(currentUrl))
+		{
+			currentUrl = currentUrl.trim();
+			if(currentUrl.endsWith("/"))
+			{
+				if(currentUrl.length()>1)
+				{
+					ret = currentUrl.substring(0,currentUrl.length() - 1);
+				}
+			}else
+			{
+				int endIdx = currentUrl.lastIndexOf("/");
+				
+				if(endIdx==-1)
+				{
+					ret = currentUrl;
+				}else
+				{
+					ret = currentUrl.substring(0,endIdx);
+				}
+			}
+		}
+		return ret;
+	}
+	
+	
+	public static String getParentLevelUrlPathDirectory(String currentUrl)
+	{
+		String ret = HtmlTool.getCurrentLevelUrlPathDirectory(currentUrl);
+		ret = HtmlTool.getCurrentLevelUrlPathDirectory(ret);
+		return ret;
+	}
+	
+	public static String getUrlInHtmlTag(String urlHtml) throws Exception
+	{
+		GetDeltaTimeTool getDltaTimeTool = new GetDeltaTimeTool();
+		String ret = "";
+		if(!StringTool.isEmpty(urlHtml))
+		{
+			List<String> urlTrimList = new ArrayList<String>();
+			urlTrimList.add(">");
+			urlTrimList.add("href");
+			urlTrimList.add("HREF");
+			urlTrimList.add("=");
+			urlTrimList.add("\"");
+			urlTrimList.add("'");
+			urlTrimList.add("%20");
+			urlTrimList.add("#");			
+			urlTrimList.add(".");
+			urlTrimList.add("&");
+			
+			List<String> attrNameList = new ArrayList<String>();
+			attrNameList.add("href");
+			attrNameList.add("HREF");
+			
+			ret = HtmlTool.getAttribteValueInTagHtml(urlHtml, attrNameList, urlTrimList);
+			ret = ret.replaceAll("&amp;", "&");
+			ret = DownloadTool.processDownloadPageUrl(ret);
+			ret = ret.trim();
+		}
+		getDltaTimeTool.getDeltaTime("getUrlInHtmlTag delta time", null, Constants.MIN_RECORD_DURATION_TIME, true);
+		return ret;
+	}
+	
+	public static String getAttributeValueFromOuterHtml(String outerHtml, String attrName) throws Exception
+	{
+		String ret = "";
+		if(!StringTool.isEmpty(outerHtml) && !StringTool.isEmpty(attrName))
+		{
+			String regExp = "<((?!>).)*" + attrName + "(\\s)*=((?!>).)*>";
+			List<String> attrTagHtmlValList = StringTool.runRegExpToGetStringList(outerHtml, regExp, true);
+			if(!ClassTool.isListEmpty(attrTagHtmlValList))
+			{
+				List<String> urlTrimList = new ArrayList<String>();
+				urlTrimList.add(">");
+				urlTrimList.add(attrName);
+				urlTrimList.add("=");
+				urlTrimList.add("\"");
+				urlTrimList.add("'");			
+				urlTrimList.add("#");
+				urlTrimList.add("&");
+				
+				List<String> attrNameList = new ArrayList<String>();
+				attrNameList.add(attrName);
+				
+				int size = attrTagHtmlValList.size();
+				for(int i=0;i<size;i++)
+				{
+					String attrTagHtmlVal = attrTagHtmlValList.get(0);
+					ret = HtmlTool.getAttribteValueInTagHtml(attrTagHtmlVal, attrNameList, urlTrimList);
+				}
+			}
+		}
+		return ret;
+	}
+	
+	public static String getAttribteValueInTagHtml(String attrTagHtml, List<String> attrNameList, List<String> urlTrimList) throws Exception
+	{	
+		String ret = "";
+		if(!StringTool.isEmpty(attrTagHtml))
+		{
+			String attrHtmlArr[] = attrTagHtml.split(" ");
+			int attrHtmlArrSize = attrHtmlArr.length;
+			for(int i=0;i<attrHtmlArrSize;i++)
+			{
+				String attrHtmlTmp = attrHtmlArr[i].trim();
+				if(HtmlTool.isCorrectAttrHtml(attrHtmlTmp, attrNameList))
+				{
+					ret = StringTool.trimSpecialCharactor(attrHtmlTmp, urlTrimList);
+					break;
+				}
+			}
+		}
+		return ret;
+	}
+	
+	
+	public static boolean isCorrectAttrHtml(String attrHtml, List<String> attrNameList) throws Exception
+	{
+		boolean ret = false;
+		if(!ClassTool.isListEmpty(attrNameList) && !StringTool.isEmpty(attrHtml))
+		{
+			int size = attrNameList.size();
+			for(int i=0;i<size;i++)
+			{
+				String attrName = attrNameList.get(i);
+				if(!StringTool.isEmpty(attrName))
+				{
+					String regExp = "^" + attrName + "(\\s)*=";
+					List<String> tmpList = StringTool.runRegExpToGetStringList(attrHtml, regExp, true);
+					if(!ClassTool.isListEmpty(tmpList))
+					{
+						ret = true;
+						break;
+					}
+				}
+			}
+		}
+		return ret;
+	}
+}
