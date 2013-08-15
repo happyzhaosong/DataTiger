@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Example App</title>
+</head>
+<body>
+
+    <h1></h1>
+<div id="wrapper">
+    
+</div>
+    <script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>
+    <script>
+    YUI().use('app-base', function (Y) {
+
+       var app = new Y.App({
+		    container    : '#wrapper',
+		    viewContainer: '#wrapper'
+		});
+        
+        app.render();
+
+        // Handles requests for the root by updating the page heading.
+        app.route('/', function () {
+            Y.one('h1').set('text', 'Example App - Home');
+        });
+
+        // Handles all other requests by updating the page heading and
+        // displaying current path in it.
+        app.route('*', function (req) {
+            Y.one('h1').set('text', 'Example App - ' + req.path);
+        });
+
+        // Make sure to dispatch the current hash-based URL which was set by
+        // the server to our route handlers.
+        app.render().dispatch();
+
+    });
+    </script>
+
+</body>
+</html>
