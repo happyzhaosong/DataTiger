@@ -8,36 +8,49 @@
 <body>
 
     <h1></h1>
-<div id="wrapper">
+    <div id="wrapper">
+        <div class="view" data-view="foo">
+            <h1>Foo Page</h1>
+            <p>With some content.</p>
+            <p>
+                <button>Close</button>
+            </p>
+        </div>
+    </div>
     
-</div>
-    <script src="http://yui.yahooapis.com/3.11.0/build/yui/yui-min.js"></script>
+    <script src="../yui_3.11.0/build/yui/yui-min.js"></script>
     <script>
-    YUI().use('app-base', function (Y) {
+    YUI().use('app', function(Y) {
+Y.FooView = Y.Base.create('foo', Y.View, [], {
+    events: {
+        'button': {click: 'handleButtonClick'}
+    },
 
-       var app = new Y.App({
-		    container    : '#wrapper',
-		    viewContainer: '#wrapper'
-		});
-        
-        app.render();
+    handleButtonClick: function (e) {
+        alert('You click the button, and alerts are annoying.');
+    }
+});
 
-        // Handles requests for the root by updating the page heading.
-        app.route('/', function () {
-            Y.one('h1').set('text', 'Example App - Home');
-        });
+var app, content;
 
-        // Handles all other requests by updating the page heading and
-        // displaying current path in it.
-        app.route('*', function (req) {
-            Y.one('h1').set('text', 'Example App - ' + req.path);
-        });
+app = new Y.App({
+    // The example assumes there's support for rendering on the server. That's
+    // the whole point with progressive enhancement.
+    serverRouting: true,
 
-        // Make sure to dispatch the current hash-based URL which was set by
-        // the server to our route handlers.
-        app.render().dispatch();
+    views: {
+        foo: {type: Y.FooView}
+    }
+});
 
-    });
+content = Y.one('#wrapper > .view');
+
+// Renders the app and shows the `content` node _and_ specifies which view
+// should be created.
+app.render().showContent(content, {view: content.getData('view')});
+
+Y.log(app.get('activeView') instanceof Y.FooView); // => true
+});
     </script>
 
 </body>
