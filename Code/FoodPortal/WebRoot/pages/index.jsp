@@ -17,6 +17,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body class="yui3-skin-sam">
   <h1>淘宝广告位</h1>
   <%@ include file="/pages/common/menuTop.jsp" %>
-  <%@ include file="/pages/dataQkl.jsp" %>
+  <%@ include file="/pages/flickerPaginator.jsp" %>
 </body>
 </html>

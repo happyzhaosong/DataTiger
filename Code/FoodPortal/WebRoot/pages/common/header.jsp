@@ -3,13 +3,13 @@
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="expires" content="0">    
 
-<link rel="stylesheet" href="<%=basePath%>/yui_3.11.0/node-menunav/assets/skins/sam/node-menunav.css">
-<link href="<%=basePath%>/yui_3.11.0/build/cssreset/cssreset.css" rel="stylesheet">
-<link href="<%=basePath%>/yui_3.11.0/build/cssbase/cssbase.css" rel="stylesheet">
-<link href="<%=basePath%>/yui_3.11.0/build/cssfonts/cssfonts.css" rel="stylesheet">
-<link href="<%=basePath%>/yui_3.11.0/build/cssgrids/cssgrids.css" rel="stylesheet">
-<link href="<%=basePath%>/yui_3.11.0/build/cssbutton/cssbutton.css" rel="stylesheet">
-<script src="<%=basePath%>/yui_3.11.0/build/yui/yui.js"></script>
+<link rel="stylesheet" href="<%=basePath%>yui_3.11.0/build/node-menunav/assets/skins/sam/node-menunav.css">
+<link href="<%=basePath%>yui_3.11.0/build/cssreset/cssreset.css" rel="stylesheet">
+<link href="<%=basePath%>yui_3.11.0/build/cssbase/cssbase.css" rel="stylesheet">
+<link href="<%=basePath%>yui_3.11.0/build/cssfonts/cssfonts.css" rel="stylesheet">
+<link href="<%=basePath%>yui_3.11.0/build/cssgrids/cssgrids.css" rel="stylesheet">
+<link href="<%=basePath%>yui_3.11.0/build/cssbutton/cssbutton.css" rel="stylesheet">
+<script src="<%=basePath%>yui_3.11.0/build/yui/yui.js"></script>
 
 <style>
 	/* Default layout for browsers that do not support media queries */
