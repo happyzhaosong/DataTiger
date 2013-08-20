@@ -29,7 +29,8 @@
 <script src="<%=basePath%>js/dataSearchComp.js"></script>
 <script>
 YUI().use('DataSearchApp', function (Y) {
-    
+   
+   	/* 
     Y.DataSearchApp.ATTRS = {
     	apiConfig: {
     	   value: {
@@ -44,10 +45,15 @@ YUI().use('DataSearchApp', function (Y) {
     		}
     	}
     };
+    */
     
     var dataSearch = new Y.DataSearchApp({
         container: '#demo'
-    });    
+    });
+    
+    dataSearch.url = 'http://api.flickr.com/services/rest/?';  
+    dataSearch.containerTemplate = '<ul></ul>';
+    dataSearch.dataItemTemplate = '<img src="http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg">';  
      
     dataSearch.render();
     

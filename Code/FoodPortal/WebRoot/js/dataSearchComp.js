@@ -251,12 +251,12 @@ YUI.add('DataSearchApp', function(Y){
 
         // We will be displaying the images in list elements, so we need to
         // ensure the parent element is semantically correct
-        containerTemplate: '<ul></ul>',
+        containerTemplate: '',
 
         // Our image template is dictated from the Flickr API. Here we set up
         // placeholders that will be substitued by the photo's API data in
         // order to display the correct photo
-        imageTemplate: '<img src="http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg">',
+        dataItemTemplate: '',
 
         // In order to add photos to the container, they are expected to be in
         // the format from the API, this would mean an Array of photos.
@@ -271,12 +271,11 @@ YUI.add('DataSearchApp', function(Y){
                 len;
 
             for (i = 0, len = photos.length; i < len; i++) {
-                photoItems += Y.Lang.sub('<li>' + this.imageTemplate + '</li>', photos[i]);
+                photoItems += Y.Lang.sub('<li>' + this.dataItemTemplate + '</li>', photos[i]);
             }
 
             this.get('container').append(photoItems)
         }
-
     });
 
 
@@ -365,7 +364,7 @@ YUI.add('DataSearchApp', function(Y){
 
             var self = this,
                 api = this._api,
-                url = api.url;
+                url = this.url;
 
             api.page = page || 1;
 
@@ -432,7 +431,10 @@ YUI.add('DataSearchApp', function(Y){
             var page = new Y.DataSearchPageView(),
                 resultsNode = this.get('container').one('.results'),
                 pageContainer;
-
+            
+            page.containerTemplate = this.containerTemplate;
+            page.dataItemTemplate = this.dataItemTemplate;
+            
             // Add our photos to the new page
             page.addPhotos(photos);
 
@@ -489,7 +491,13 @@ YUI.add('DataSearchApp', function(Y){
         // After our page changes, we request that page's photos
         _afterPageChange: function (e) {
             this.requestPhotos(e.newVal);
-        }
+        },
+        
+        url:'',
+        
+        containerTemplate: '',
+        
+        dataItemTemplate: ''
 
     }, {
         ATTRS: {
@@ -502,8 +510,7 @@ YUI.add('DataSearchApp', function(Y){
                     sort: 'relevance',
                     format: 'json',
                     license: 4,
-                    per_page: 20,
-                    url:'http://api.flickr.com/services/rest/?'                    
+                    per_page: 20                    
                 }
             }
         }
