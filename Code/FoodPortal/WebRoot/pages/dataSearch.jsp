@@ -1,3 +1,4 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <script>var FLICKR_API_KEY = '0c13dc70aa7eb3df87b3fee5caf37080';</script>
 <style scoped>
 /** DEMO BOX **/
@@ -159,12 +160,41 @@
     background-color: #bfdaff;
     color: #000;
 }
+
+.searchKeywordTag {
+	display:inline;
+	padding-left:10px
+}
+
+/*
+.searchKeywordTag li{
+	float: left;
+	padding: 3px
+}
+*/
+
 </style>
 <div id="demo" class="yui3-skin-sam hide-pg">
     <form id="searchForm">
         <input type="text" id="searchKeyword" name="searchKeyword" value="kitten">
         <input type="submit" value="Search" class="yui3-button">
+        
+        <p class="searchKeywordTag">
+        	<a href="baidu.com">费列罗</a>&nbsp;&nbsp;<a href="baidu.com">金帝</a>&nbsp;&nbsp;<a href="baidu.com">girl</a>
+        </p>
     </form>
+    <!-- 
+	<ul class="searchKeywordTag">
+	    <li>
+	      	<a href="baidu.com">费列罗</a>
+	    </li>
+			         
+	    <li>
+	      	<a>金帝</a>
+	    </li>
+	</ul>
+	 -->
+ 
     <div class="results"></div>
     <div class="paginator"></div>
     <div class="loading"></div>
@@ -173,11 +203,11 @@
 <script>
 YUI().use('paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring-stringify-simple', 'cssbutton', 'node-event-simulate', function (Y) {
 
-    var FlickrSearch = {};
+    var DataSearch = {};
 
-    FlickrSearch.PaginatorModel = Y.Base.create('pager-model', Y.Model, [Y.Paginator.Core]);
+    DataSearch.PaginatorModel = Y.Base.create('pager-model', Y.Model, [Y.Paginator.Core]);
 
-    FlickrSearch.PaginatorPages = Y.Base.create('pager-pages', Y.View, [], {
+    DataSearch.PaginatorPages = Y.Base.create('pager-pages', Y.View, [], {
 
         // We modify the the containerTemplate so our page items are contained in
         // their proper parent
@@ -266,7 +296,7 @@ YUI().use('paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring
         }
     });
 
-    FlickrSearch.Paginator = Y.Base.create('pager', Y.View, [], {
+    DataSearch.Paginator = Y.Base.create('pager', Y.View, [], {
 
         // Our paginator will consist of controls as list elements so we need to
         // ensure our container is the proper parent element type
@@ -292,7 +322,7 @@ YUI().use('paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring
         // page items in sync with each other
         initializer: function () {
             var model = this.get('model'),
-                pages = this.pages = new FlickrSearch.PaginatorPages({
+                pages = this.pages = new DataSearch.PaginatorPages({
                     model: model
                 });
 
@@ -422,7 +452,7 @@ YUI().use('paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring
         }
     });
 
-    FlickrSearch.PageView = Y.Base.create('page-view', Y.View, [], {
+    DataSearch.PageView = Y.Base.create('page-view', Y.View, [], {
 
         // We will be displaying the images in list elements, so we need to
         // ensure the parent element is semantically correct
@@ -455,7 +485,7 @@ YUI().use('paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring
     });
 
 
-    FlickrSearch.App = Y.Base.create('search', Y.View, [], {
+    DataSearch.App = Y.Base.create('search', Y.View, [], {
 
         // This is the Flickr API URL
         url: 'http://api.flickr.com/services/rest/?',
@@ -483,8 +513,8 @@ YUI().use('paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring
         initializer: function () {
             this._api = this.get('apiConfig');
 
-            this.paginator = new FlickrSearch.Paginator({
-                model:  new FlickrSearch.PaginatorModel({
+            this.paginator = new DataSearch.Paginator({
+                model:  new DataSearch.PaginatorModel({
                     itemsPerPage: this._api.per_page
                 })
             });
@@ -604,7 +634,7 @@ YUI().use('paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring
         // results have been processed, we create a new page containing the
         // new photos
         _createNewPage: function (photos) {
-            var page = new FlickrSearch.PageView(),
+            var page = new DataSearch.PageView(),
                 resultsNode = this.get('container').one('.results'),
                 pageContainer;
 
@@ -683,21 +713,26 @@ YUI().use('paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring
         }
     });
 
-    var flickrSearch = new FlickrSearch.App({
+    var dataSearch = new DataSearch.App({
         container: '#demo'
     });
 
-    flickrSearch.render();      
+    dataSearch.render();      
     
     Y.one('form .yui3-button').simulate('click');
     
-    Y.one('#searchKeyword').on('keydown', function(ev){
-    	ev.currentTarget;
-    	//alert("ev.charCode = " + ev.charCode);
+    Y.one('#searchKeyword').on('keydown', function(ev){    	
     	if(ev.charCode==13)
     	{
     		Y.one('form .yui3-button').focus();
     	}
-    });     
+    });
+    
+    Y.all('.searchKeywordTag a').on('click',function(ev){
+    	var searchKeyword = ev.currentTarget.getHTML();    	
+    	Y.one('#searchKeyword').set('value',searchKeyword);
+    	Y.one('form .yui3-button').simulate('click');
+    	ev.preventDefault();
+    });
 });
 </script>

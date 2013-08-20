@@ -53,6 +53,10 @@
         //  Show the menu now that it is ready
 
         menu.get("ownerDocument").get("documentElement").removeClass("yui3-loading");
+        
+        Y.all('.first-of-type a').on('mouseover',function(ev){
+        	ev.currentTarget.setStyle('cursor', 'hand');
+        });
 
     });
 
