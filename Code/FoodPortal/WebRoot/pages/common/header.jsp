@@ -13,7 +13,7 @@
 
 <style>
 	/* Default layout for browsers that do not support media queries */
-	、*
+	/*
 	body { margin: auto; width: 960px; }
 	.nav { width: 240px;  background-color:blue}
 	.main { width: 720px; background-color:red}
