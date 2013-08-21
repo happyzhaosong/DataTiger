@@ -271,7 +271,7 @@ YUI.add('DataSearchApp', function(Y){
                 len;
 
             for (i = 0, len = photos.length; i < len; i++) {
-                photoItems += Y.Lang.sub('<li>' + this.dataItemTemplate + '</li>', photos[i]);
+                photoItems += Y.Lang.sub(this.dataItemTemplate, photos[i]);
             }
 
             this.get('container').append(photoItems)
@@ -485,6 +485,10 @@ YUI.add('DataSearchApp', function(Y){
 
             // We now have a page to display, so let's show the paginator
             this.get('container').removeClass('hide-pg');
+            if(this._pages.length>0)
+            {
+            	this._pages.shift().destroy({ remove: true });
+            }
             this._pages.push(page);
         },
 
@@ -510,7 +514,7 @@ YUI.add('DataSearchApp', function(Y){
                     sort: 'relevance',
                     format: 'json',
                     license: 4,
-                    per_page: 20                    
+                    per_page: 15                    
                 }
             }
         }

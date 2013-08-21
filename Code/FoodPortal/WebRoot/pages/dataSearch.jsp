@@ -52,8 +52,8 @@ YUI().use('DataSearchApp', function (Y) {
     });
     
     dataSearch.url = 'http://api.flickr.com/services/rest/?';  
-    dataSearch.containerTemplate = '<ul></ul>';
-    dataSearch.dataItemTemplate = '<img src="http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg">';  
+    dataSearch.containerTemplate = '<ul class="yui3-g"></ul>';
+    dataSearch.dataItemTemplate = '<li class="yui3-u-1-5" style="height:200px"><img src="http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg"><div>标题:{title}<br/>ID:{id}</div></li>';  
      
     dataSearch.render();
     
