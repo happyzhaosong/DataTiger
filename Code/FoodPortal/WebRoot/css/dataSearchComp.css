@@ -52,10 +52,14 @@
 #demo .results li:hover {
     z-index: 10;
 }
+*/
 #demo .results li:hover img {
     position: absolute;
+    /*
     left: -5px;
     top: -5px;
+    */
+    opacity: 1;
     width: 260px;
     height: 260px;
     z-index: 10;
@@ -64,7 +68,7 @@
     -moz-box-shadow: 3px 3px 5px hsla(250, 40%, 30%, 0.5);
     box-shadow: 3px 3px 5px hsla(250, 40%, 30%, 0.5);
 }
-*/
+
 /** LOADING INDICATOR **/
 #demo.loading .loading {
     display: block;

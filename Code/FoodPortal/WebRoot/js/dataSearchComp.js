@@ -253,7 +253,7 @@ YUI.add('DataSearchApp', function(Y){
         // ensure the parent element is semantically correct
         containerTemplate: '',
 
-        // Our image template is dictated from the Flickr API. Here we set up
+        // Our image template is dictated from the  API. Here we set up
         // placeholders that will be substitued by the photo's API data in
         // order to display the correct photo
         dataItemTemplate: '',
@@ -278,13 +278,73 @@ YUI.add('DataSearchApp', function(Y){
         }
     });
 
+    
+    Y.DataSearchKeywordTagView = Y.Base.create('search-keyword-tag-view', Y.View, [], {
 
+    	//this is the url for generate common search key word tags
+    	url:'',
+    	
+    	containerTemplate: '',
+    	
+    	dataItemTemplate: '',
+    	
+    	addTags: function (searchKeyWordTags) {
+    	    var container = this.get('container'),
+    	   		tagItems = '',
+    	        i,
+    	        len;
+    	
+    	    for (i = 0, len = searchKeyWordTags.length; i < len; i++) {
+    	           	tagItems += Y.Lang.sub(this.dataItemTemplate, searchKeyWordTags[i]);
+    	    }
+    	
+    	    this.get('container').append(tagItems)
+    	},
+    	    	
+        render: function () {
+        	this._processSearchKeywordTagResults();
+        	/*
+        	Y.jsonp(url, {
+        	     format: function (url, proxy) {
+        	        return url + '&jsoncallback=' + proxy;
+        	     },
+        	     on: {
+		        	     failure: Y.bind(function () {                        
+		        	        this.setMessage('Oops!! something broke :(');
+		        	     }, self),
+		        	
+		        	     success: Y.bind(function (resp) {
+		        	        this._processSearchKeywordTagResults(resp.searchKeywordTags);
+		        	     }, self)
+        	     }
+        	});
+        	*/
+        },
+        
+        _processSearchKeywordTagResults: function(){
+        	this.get('container').empty();
+        	this.get('container').append('<a href="#">java</a>&nbsp;&nbsp;<a href="#">c</a>&nbsp;&nbsp;<a href="#">girl</a>');
+        	
+            Y.all('#searchKeywordTag a').on('click',function(ev){
+            	ev.preventDefault();
+            	var searchKeyword = ev.currentTarget.getHTML();    	
+            	Y.one('#searchKeyword').set('value',searchKeyword);
+            	Y.one('form .yui3-button').simulate('click');    	
+            });
+
+        }    
+    });
+    
+    Y.one('#searchKeyword').on('keydown', function(ev){    	
+    	if(ev.charCode==13)
+    	{
+    		Y.one('form .yui3-button').focus();
+    	}
+    });           
+    
     Y.DataSearchApp = Y.Base.create('search', Y.View, [], {
 
-        // This is the Flickr API URL
-        //url: 'http://api.flickr.com/services/rest/?',
-
-        // This is a flag that will determin if we are performing a new query
+    	// This is a flag that will determin if we are performing a new query
         // or simply going to a new page of the previous query
         _isNewQuery: false,
 
@@ -293,8 +353,12 @@ YUI.add('DataSearchApp', function(Y){
         // one item being persistent
         _pages: [],
 
+        //the paginator of the search result
         paginator: null,
 
+        //the searchKeywordTag view of the search result
+        searchKeywordTagView: null,
+        
         // When our form is submitted, we run a new query on it
         events: {
             'form .yui3-button': {
@@ -314,6 +378,8 @@ YUI.add('DataSearchApp', function(Y){
             });
 
             this.paginator.get('model').after('pageChange', this._afterPageChange, this);
+            
+            this.searchKeywordTagView = new Y.DataSearchKeywordTagView();
         },
 
         // We append our paginator to the paginator placeholder in our
@@ -387,6 +453,26 @@ YUI.add('DataSearchApp', function(Y){
                 }
             });
         },
+        
+        
+        // When we request a new photo, there are a few things that happen.
+        //
+        // * First we alert our app that something is loading
+        // * Then we construct our url based on the API configuration and the
+        //   page requested
+        // * Finally we request the API response through JSON-P
+        //
+        // If that request fails, we let the user know with a message
+        // If the requst succeeds, we process the response data
+        requestSearchKeywordTags: function (page) {
+        	var searchKeywordTagNode = Y.one('#demo .searchKeywordTag');
+        	if(searchKeywordTagNode!=null)
+        	{
+        		this.searchKeywordTagView.set('container', searchKeywordTagNode);
+        		this.searchKeywordTagView.render();
+        	}
+        },
+        
 
         // When our form is submitted, we assume it's a new request. As a new
         // request we remove our old pages, ensure our paginator is set to
@@ -407,9 +493,11 @@ YUI.add('DataSearchApp', function(Y){
             } else {
                 this.requestPhotos();
             }
+            
+            this.requestSearchKeywordTags();
         },
 
-        // After we receive a response from the Flickr API, we check if we
+        // After we receive a response from the  API, we check if we
         // have any pages to process and send the
         _processResults: function (resp) {
             this.setMessage( !resp.pages ?
@@ -505,7 +593,7 @@ YUI.add('DataSearchApp', function(Y){
 
     }, {
         ATTRS: {
-            // This will contain our settings for the Flickr API
+            // This will contain our settings for the  API
             apiConfig: {
                 value: {
         			api_key: '0c13dc70aa7eb3df87b3fee5caf37080',
@@ -518,21 +606,5 @@ YUI.add('DataSearchApp', function(Y){
                 }
             }
         }
-    });	
-	
-    
-    Y.one('#searchKeyword').on('keydown', function(ev){    	
-    	if(ev.charCode==13)
-    	{
-    		Y.one('form .yui3-button').focus();
-    	}
     });
-    
-    Y.all('.searchKeywordTag a').on('click',function(ev){
-    	var searchKeyword = ev.currentTarget.getHTML();    	
-    	Y.one('#searchKeyword').set('value',searchKeyword);
-    	Y.one('form .yui3-button').simulate('click');
-    	ev.preventDefault();
-    });
-    
 },'1.0',{requires:['paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring-stringify-simple', 'cssbutton', 'node-event-simulate']});

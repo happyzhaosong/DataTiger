@@ -6,8 +6,8 @@
         <input type="text" id="searchKeyword" name="searchKeyword" value="chocolate">
         <input type="submit" value="Search" class="yui3-button">
         
-        <p class="searchKeywordTag">
-        	<a href="baidu.com">费列罗</a>&nbsp;&nbsp;<a href="baidu.com">金帝</a>&nbsp;&nbsp;<a href="baidu.com">girl</a>
+        <p id="searchKeywordTag" class="searchKeywordTag">
+        	
         </p>
     </form>
     <!-- 
@@ -29,23 +29,6 @@
 <script src="<%=basePath%>js/dataSearchComp.js"></script>
 <script>
 YUI().use('DataSearchApp', function (Y) {
-   
-   	/* 
-    Y.DataSearchApp.ATTRS = {
-    	apiConfig: {
-    	   value: {
-    			api_key: '0c13dc70aa7eb3df87b3fee5caf37080',
-                method: 'flickr.photos.search',
-                safe_search: 1,
-                sort: 'relevance',
-                format: 'json',
-                license: 4,
-                per_page: 20,
-                url:'http://api.flickr.com/services/rest/?'
-    		}
-    	}
-    };
-    */
     
     var dataSearch = new Y.DataSearchApp({
         container: '#demo'
@@ -55,8 +38,10 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.containerTemplate = '<ul class="yui3-g"></ul>';
     dataSearch.dataItemTemplate = '<li class="yui3-u-1-5" style="height:200px"><img src="http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg"><div>标题:{title}<br/>ID:{id}</div></li>';  
      
+    dataSearch.searchKeywordTagView.url = 'www.baidu.com';
+     
     dataSearch.render();
-    
-    Y.one('form .yui3-button').simulate('click');
+        
+    Y.one('form .yui3-button').simulate('click');    
 });
 </script>
