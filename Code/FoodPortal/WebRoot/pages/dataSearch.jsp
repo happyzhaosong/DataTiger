@@ -10,17 +10,6 @@
         	
         </p>
     </form>
-    <!-- 
-	<ul class="searchKeywordTag">
-	    <li>
-	      	<a href="baidu.com">费列罗</a>
-	    </li>
-			         
-	    <li>
-	      	<a>金帝</a>
-	    </li>
-	</ul>
-	 -->
  
     <div class="results"></div>
     <div class="paginator"></div>
@@ -35,8 +24,8 @@ YUI().use('DataSearchApp', function (Y) {
     });
     
     dataSearch.url = 'http://api.flickr.com/services/rest/?';  
-    dataSearch.containerTemplate = '<ul class="yui3-g"></ul>';
-    dataSearch.dataItemTemplate = '<li class="yui3-u-1-5" style="height:200px"><img src="http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg"><div>标题:{title}<br/>ID:{id}</div></li>';  
+    dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:8px"></ul>';
+    dataSearch.dataItemTemplate = '<li class="yui3-u-1-4" style="height:300px"><div class="resultsItemDiv"><img width="100%" src="http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg"><div>标题:{title}<br/>ID:{id}</div></div></li>';  
      
     dataSearch.searchKeywordTagView.url = 'www.baidu.com';
      

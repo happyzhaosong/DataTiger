@@ -370,4 +370,9 @@ public class Constants {
 	public static final int TASK_LEVEL_HIGHT = 3;
 	public static final int TASK_LEVEL_MIDDLE = 2;
 
+	
+	
+	/* food search portal related constants */
+	
+	/* food search portal related constants */
 }

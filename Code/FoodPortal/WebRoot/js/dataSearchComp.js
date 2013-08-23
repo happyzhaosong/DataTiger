@@ -530,8 +530,6 @@ YUI.add('DataSearchApp', function(Y){
 
             // append our new page to the results node
             resultsNode.append(pageContainer);
-            resultsNode.setStyle('height', pageContainer.get('offsetHeight'));
-
 
             // We do not want to display the new page before all the images
             // requested have had a chance to process.
@@ -568,6 +566,10 @@ YUI.add('DataSearchApp', function(Y){
                             });
                         });
                     }
+                    
+                    //set height here can make the paginator div under the results div after all images loaded
+                    resultsNode.setStyle('height', pageContainer.get('offsetHeight'));
+
                 }
             }, this);
 
@@ -602,7 +604,7 @@ YUI.add('DataSearchApp', function(Y){
                     sort: 'relevance',
                     format: 'json',
                     license: 4,
-                    per_page: 15                    
+                    per_page: 16                    
                 }
             }
         }
