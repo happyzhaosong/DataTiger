@@ -24,7 +24,7 @@ YUI().use('DataSearchApp', function (Y) {
     });
     
     dataSearch.url = 'http://api.flickr.com/services/rest/?';  
-    dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:8px"></ul>';
+    dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px"></ul>';
     dataSearch.dataItemTemplate = '<li class="yui3-u-1-4" style="height:300px"><div class="resultsItemDiv"><img width="100%" src="http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg"><div>标题:{title}<br/>ID:{id}</div></div></li>';  
      
     dataSearch.searchKeywordTagView.url = 'www.baidu.com';
