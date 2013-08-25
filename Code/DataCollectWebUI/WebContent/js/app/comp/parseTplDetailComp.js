@@ -96,7 +96,7 @@ Ext.define('DC.comp.ParseTplItemListPanel', {
 	        fieldLabel: 'Use This Setting Url Charactor',
 	        name: 'useThisSettingUrlCharactor',
 	        allowBlank: true,
-			emptyText: "If content page url match this url charactor then use this setting to parse it. If this value is empty then all url can use this parse setting to parse data. This field can have multiple value seperated by ;"
+			emptyText: "If content page url match this url charactor then use this setting to parse it. If this value is empty then all url can use this parse setting to parse data. This field can have multiple value seperated by ;, this way can make different item parse according to different page url in one parse item settings. For example(taobao and tmall only has little different item parse settings, so can use this method to reduce parse settings count)"
 	    },{
 			xtype: 'WebDriverSearchByComboBox',			
 			fieldLabel: 'Parse Web Element By',
@@ -112,7 +112,7 @@ Ext.define('DC.comp.ParseTplItemListPanel', {
 			xtype: 'checkboxfield',
 	        grow : true,
 	        name : 'ifDirectGetText',
-	        fieldLabel: 'Use WebElement getText to Direct Get Text'
+	        fieldLabel: 'Use WebElement getText to Direct Get Text(If not check, then use getInnerHtml to get text and parse)'
 	    },{
 	        grow : true,
 	        fieldLabel: 'Parse By Tag Attribute',
@@ -130,7 +130,7 @@ Ext.define('DC.comp.ParseTplItemListPanel', {
 	        fieldLabel: 'Run this parse string to parse value',
 	        name: 'parseValueString',
 	        allowBlank: true,
-			emptyText: 'Run this string parse on above settings parsed out text if it is difficult to use regexp to parse, format is startStr1'+seperatorComplex1+'endStr1'+seperatorComplex+'startStr2'+seperatorComplex1+'endStr2'+seperatorComplex+'startStr3'+seperatorComplex1+'endStr3..., second parse string will be effect on first parse string parsed out text.'
+			emptyText: 'Run this string parse on above settings parsed out text if it is difficult to use regexp to parse, format is startStr1'+seperatorComplex1+'endStr1'+seperatorComplex+'startStr2'+seperatorComplex1+'endStr2'+seperatorComplex+'startStr3'+seperatorComplex1+'endStr3..., second parse string will be effect on first parse string parsed out text. Because item data will contain ; some time, so not use ; as seperator.'
 	    },{
 	        grow : true,
 	        name : 'charactor',

@@ -613,6 +613,10 @@ public class BrowserRunner {
 		if(StringTool.isEmpty(eleData))
 		{
 			//eleData = this.parseElementValueByJavaScript(parseTplItemDto);
+			if(!StringTool.isEmpty(parseTplItemDto.getDefaultVal()))
+			{
+				eleData = parseTplItemDto.getDefaultVal();
+			}
 		}		
 		return eleData;
 	}
@@ -653,10 +657,23 @@ public class BrowserRunner {
 					{
 						getDataFrom = Constants.WEB_ELEMENT_GET_DATA_FROM_TEXT;
 					}
-					eleData = this.getCorrectWebElementTextInList(eleList, parseTplItemDto.getParseValueRegExp(), parseTplItemDto.getParseValueString(), parseTplItemDto.getCharactor(), parseTplItemDto.getNotCharactor(), true, getDataFrom);
+					eleData = this.getCorrectWebElementTextInList(eleList, parseTplItemDto.getCharactor(), parseTplItemDto.getNotCharactor(), getDataFrom);
 				}else
 				{
 					eleData = this.getCorrectWebElementAttributeInList(eleList, parseTplItemDto.getByTagAttribute(), parseTplItemDto.getCharactor(), parseTplItemDto.getNotCharactor());
+				}
+				
+				if(!StringTool.isEmpty(eleData))
+				{
+					if(!StringTool.isEmpty(parseTplItemDto.getParseValueRegExp()))
+					{
+						String parseValueRegExpArr[] = parseTplItemDto.getParseValueRegExp().split(Constants.SEPERATOR_COMPLEX);
+						eleData = this.parseEleDataByValueRegExp(eleData, parseValueRegExpArr, true);
+					}else if(!StringTool.isEmpty(parseTplItemDto.getParseValueString()))
+					{
+						String parseValueStringArr[] = parseTplItemDto.getParseValueString().split(Constants.SEPERATOR_COMPLEX);
+						eleData = this.parseEleDataByParseString(eleData, parseValueStringArr);
+					}	
 				}
 			}	
 		}
@@ -700,7 +717,7 @@ public class BrowserRunner {
 		}
 	}
 	
-	private String getCorrectWebElementTextInList(List<WebElement> eleList, String parseValueRegExp, String parseValueString, String charactor, String notCharactor, boolean caseInsensitive, String getWebElementDataFrom)
+	private String getCorrectWebElementTextInList(List<WebElement> eleList, String charactor, String notCharactor, String getWebElementDataFrom)
 	{
 		String eleData = "";
 		
@@ -720,17 +737,7 @@ public class BrowserRunner {
 				}else if(Constants.WEB_ELEMENT_GET_DATA_FROM_OUTTER_HTML.equalsIgnoreCase(getWebElementDataFrom))
 				{
 					eleData = webEle.getAttribute("outerHTML");	
-				}				
-				
-				if(!StringTool.isEmpty(parseValueRegExp))
-				{
-					String parseValueRegExpArr[] = parseValueRegExp.split(Constants.SEPERATOR_COMPLEX);
-					eleData = this.parseEleDataByValueRegExp(eleData, parseValueRegExpArr, caseInsensitive);
-				}else if(!StringTool.isEmpty(parseValueString))
-				{
-					String parseValueStringArr[] = parseValueString.split(Constants.SEPERATOR_COMPLEX);
-					eleData = this.parseEleDataByParseString(eleData, parseValueStringArr);
-				}				
+				}								
 				
 				//verify wheher this eleData is correct or not
 				if(!StringTool.isEmpty(eleData))
@@ -1373,12 +1380,25 @@ public class BrowserRunner {
 					{
 						if(StringTool.isEmpty(dto.getByTagAttribute()))
 						{
-							eleData = this.getCorrectWebElementTextInList(eleList, dto.getParseValueRegExp(), dto.getParseValueString(), dto.getCharactor(), dto.getNotCharactor(), true, Constants.WEB_ELEMENT_GET_DATA_FROM_INNER_HTML);
+							eleData = this.getCorrectWebElementTextInList(eleList, dto.getCharactor(), dto.getNotCharactor(), Constants.WEB_ELEMENT_GET_DATA_FROM_INNER_HTML);
 						}else
 						{
 							eleData = this.getCorrectWebElementAttributeInList(eleList, dto.getByTagAttribute(), dto.getCharactor(), dto.getNotCharactor());
 						}
-					}		
+					}
+					
+					if(!StringTool.isEmpty(eleData))
+					{
+						if(!StringTool.isEmpty(dto.getParseValueRegExp()))
+						{
+							String parseValueRegExpArr[] = dto.getParseValueRegExp().split(Constants.SEPERATOR_COMPLEX);
+							eleData = this.parseEleDataByValueRegExp(eleData, parseValueRegExpArr, true);
+						}else if(!StringTool.isEmpty(dto.getParseValueString()))
+						{
+							String parseValueStringArr[] = dto.getParseValueString().split(Constants.SEPERATOR_COMPLEX);
+							eleData = this.parseEleDataByParseString(eleData, parseValueStringArr);
+						}	
+					}
 					
 					if(!StringTool.isEmpty(eleData))
 					{

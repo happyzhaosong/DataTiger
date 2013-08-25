@@ -365,6 +365,7 @@ public class StringTool extends BaseTool {
 			str = str.trim();
 			int startIdx = 0;
 			int endIdx = 0;
+			
 			if(!StringTool.isEmpty(startStr) && !StringTool.isEmpty(endStr))
 			{
 				startIdx = str.indexOf(startStr);
@@ -381,6 +382,33 @@ public class StringTool extends BaseTool {
 					}
 				}
 			}
+			//get the string from beginning of the string to the endStr
+			else if(StringTool.isEmpty(startStr) && !StringTool.isEmpty(endStr))
+			{
+				endIdx = str.indexOf(endStr, startIdx + 1);
+				if(endIdx!=-1)
+				{
+					if(startIdx < endIdx)
+					{
+						ret = str.substring(startIdx, endIdx);
+					}
+				}
+			}
+			//get the string from startStr to the end of the string
+			else if(!StringTool.isEmpty(startStr) && StringTool.isEmpty(endStr))
+			{
+				startIdx = str.indexOf(startStr);
+				endIdx = str.length();
+				if(startIdx!=-1)
+				{
+					startIdx = startIdx + startStr.length();
+					if(startIdx < endIdx)
+					{
+						ret = str.substring(startIdx, endIdx);
+					}
+				}
+			}
+			
 		}
 		return ret;
 	}
