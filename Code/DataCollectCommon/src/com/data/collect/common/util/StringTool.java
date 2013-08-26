@@ -69,8 +69,12 @@ public class StringTool extends BaseTool {
 	}
 
 	public static boolean isNumeric(String str){ 
-	    Pattern pattern = Pattern.compile("[0-9]*"); 
-	    return pattern.matcher(str).matches(); 
+		/*
+	    Pattern pattern = Pattern.compile("[0-9]+"); 
+	    return pattern.matcher(str).matches();
+	    */
+		
+		return (StringTool.isInteger(str) || StringTool.isDouble(str) || StringTool.isLong(str));	     
 	}
 	
 	public static boolean isLong(String str)

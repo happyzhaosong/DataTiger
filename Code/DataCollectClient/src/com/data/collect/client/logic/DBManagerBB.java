@@ -100,15 +100,15 @@ public class DBManagerBB extends BaseBB {
 		List<TypeDTO> dtoList = new ArrayList<TypeDTO>();
 		String byTypeNameArr[] = new String[5];
 		byTypeNameArr[0] = Constants.DATA_TYPE_STRING;
-		//byTypeNameArr[1] = Constants.DATA_TYPE_NUMBER;
-		//byTypeNameArr[2] = Constants.DATA_TYPE_BOOLEAN;
+		byTypeNameArr[1] = Constants.DATA_TYPE_NUMBER;
+		byTypeNameArr[2] = Constants.DATA_TYPE_BOOLEAN;
 		//byTypeNameArr[3] = Constants.DATA_TYPE_DATE;
 		//byTypeNameArr[4] = Constants.DATA_TYPE_DATE_TIME;
 		
 		String byTypeLabelArr[] = new String[5];
 		byTypeLabelArr[0] = "String";
-		//byTypeLabelArr[1] = "Number";
-		//byTypeLabelArr[2] = "Boolean";
+		byTypeLabelArr[1] = "Number";
+		byTypeLabelArr[2] = "Boolean";
 		//byTypeLabelArr[3] = "Date";
 		//byTypeLabelArr[4] = "Date Time";
 
