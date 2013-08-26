@@ -415,6 +415,10 @@ public class BrowserRunner {
 		    long scrollHeightLast = -1;
 		    long scrollHeight = -1;
 		   
+		    
+		    LogTool.debugText("**************************Start scroll down, pageUrl = " + pageUrl + "*******************************");
+		    
+		    int scrollDownCount = 1;
 		    while(true)
 		    {
 		    	Thread.currentThread().sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND);
@@ -427,9 +431,14 @@ public class BrowserRunner {
 			    
 			    if(scrollHeightLast==scrollHeight)
 			    {
+			    	LogTool.debugText("**************************End scroll down, pageUrl = " + pageUrl + "*******************************");
 			    	break;
 			    }
 			    scrollHeightLast = scrollHeight;
+			    
+			    LogTool.debugText("Scroll down count = " + scrollDownCount + " , scrollHeightLast = " + scrollHeightLast + " , scrollHeight = " + scrollHeight);
+			    
+			    scrollDownCount++;
 		    }	
 		}
 	}
@@ -498,8 +507,9 @@ public class BrowserRunner {
 						eleData = this.parseElementValue(parseTplItemDto, realPageUrl);
 						//LogTool.debugText("Parsed out data value = " + eleData);
 					}
-						
-					if(!StringTool.isEmpty(parseTplItemDto.getSrcRegExp()))
+					
+					eleData = StringTool.isEmpty(eleData, "");
+					if(!StringTool.isEmpty(eleData) && !StringTool.isEmpty(parseTplItemDto.getSrcRegExp()))
 					{
 						eleData = this.processRegExpValueReplace(eleData, parseTplItemDto);
 						LogTool.debugText("After run regexp on data value = " + eleData);
@@ -896,6 +906,11 @@ public class BrowserRunner {
 	
 	private String processRegExpValueReplace(String data, ParseTplItemDTO parseTplItemDto) throws Exception
 	{
+		if(StringTool.isEmpty(data.trim()))
+		{
+			return data.trim();
+		}
+		
 		String srcRegExp = parseTplItemDto.getSrcRegExp();
 		String destRegExp = parseTplItemDto.getDestRegExp();
 		String srcRegExpArr[] = srcRegExp.split(Constants.SEPERATOR_SEMICOLON);
@@ -917,8 +932,10 @@ public class BrowserRunner {
 				
 			    newData = StringTool.runRegExpToReplace(newData, srcRegExpTmp, destRegExpTmp);
 				
+			    //如果这些替换为or关系，则有一次替换成功就退出，
 				if(!parseTplItemDto.isRegExpItemRelation())
 				{
+					//因为文本字符串有变化，则代表有一次替换成功
 					if(!newData.equals(data))
 					{
 						break;
@@ -1066,17 +1083,20 @@ public class BrowserRunner {
 					    		By byCondition = byList.get(j);
 					    		if(byCondition!=null)
 					    		{
-						    		List<WebElement> eleList = driver.findElements(byCondition);	    			
-						    		List<String> tmpUrlList = this.getUrlListByWebElementClick(eleList, linkParseDto, parentTaskDto, byCondition, webSiteDto, realPageUrl);
-						    		getDltaTimeTool.getDeltaTime("webdriver not a tag use click parse new task list count " + urlList.size(), retBuf, 0, false);
-								    LogTool.debugText(retBuf.toString());
-								    
-								    urlList.addAll(tmpUrlList);
+						    		List<WebElement> eleList = driver.findElements(byCondition);
+						    		if(!ClassTool.isListEmpty(eleList))
+						    		{
+							    		List<String> tmpUrlList = this.getUrlListByWebElementClick(eleList, linkParseDto, parentTaskDto, byCondition, webSiteDto, realPageUrl);
+							    		getDltaTimeTool.getDeltaTime("webdriver not a tag use click parse new task list count " + urlList.size(), retBuf, 0, false);
+									    LogTool.debugText(retBuf.toString());
+									    
+									    urlList.addAll(tmpUrlList);
+						    		}
 					    		}
 							}
 						}
 					}
-	    			
+	    			    			
 	    			parsedOutUrlCount = parsedOutUrlCount + urlList.size();
 	    			
 	    			String createEachTaskDuration = this.createNewTaskURL(urlList, linkParseDto, parentTaskDto, webSiteDto);
@@ -1192,8 +1212,8 @@ public class BrowserRunner {
 	    				
 	    				if(!StringTool.isEmpty(url))
 	    				{
-	    	    			this.processUrlAndAddToList(url, retList, linkParseDto);
-		    			}
+	    					HtmlTool.processUrlAndAddToList(url, retList, linkParseDto);
+	    				}
     				}catch(Exception ex)
     				{
     					if(this.ifBrowserUnreach(ex))
@@ -1223,17 +1243,17 @@ public class BrowserRunner {
 					{
 						ele.click();
 						
-						Thread.currentThread().sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*3);
+						Thread.currentThread().sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*5);
 						
 						String url = this.getCurrentWebPageUrlByJS();
 			
 						//Thread.currentThread().sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*3);
 						
-		    			this.processUrlAndAddToList(url, urlList, linkParseDto);
+						HtmlTool.processUrlAndAddToList(url, urlList, linkParseDto);
 		    			
 		    			if(j<(eleListSize-1))
 		    			{	
-			    			Thread.currentThread().sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*3);
+			    			Thread.currentThread().sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*2);
 			    			try
 			    			{
 			    				this.driver.get(realPageUrl);
@@ -1259,7 +1279,8 @@ public class BrowserRunner {
 						    		throw ex;
 						    	}
 			    			}
-			    					    			
+			    			
+			    			Thread.currentThread().sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*5);
 			    			this.scrollDownTheWholePage(webSiteDto, realPageUrl);
 			    					    			
 			    			eleList = this.driver.findElements(byCondition);
@@ -1280,44 +1301,7 @@ public class BrowserRunner {
 		}
 		
 		return urlList;
-	}
-	
-	
-	private void processUrlAndAddToList(String url, List<String> urlList, WebSitePageLinkParseDTO linkParseDto ) throws Exception
-	{
-		if(!StringTool.isEmpty(url))
-		{
-			List<String> urlTrimList = new ArrayList<String>();
-			urlTrimList.add("%20");
-			urlTrimList.add("#");			
-			urlTrimList.add(".");
-			urlTrimList.add("&");
-			
-			url = StringTool.trimSpecialCharactor(url, urlTrimList);    				
-			url = url.replaceAll("&amp;", "&");
-			
-			if(HtmlTool.isCorrectUrl(url, linkParseDto.getUrlCharactor(), linkParseDto.getNotUrlCharactor(), linkParseDto.getUrlMatchRegExp()))
-			{
-				//remove no value url parameters
-				url = HtmlTool.removeNoValueUrlParameter(url);
-				
-				//run regexp on parsed out url
-				url = HtmlTool.runRegExpOnUrl(url, linkParseDto);
-				
-				//run string find on parsed out url
-				url = HtmlTool.runStringFindOnUrl(url, linkParseDto);
-								
-				url = StringTool.trimSpecialCharactor(url, urlTrimList);
-				
-				//remove duplicated url in url list, this way can improve efficiency.
-				if(!StringTool.isEmpty(url) && !StringTool.isStringEqualExistInArray(url, StringTool.stringListToStringArray(urlList)))
-				{
-					urlList.add(url);	
-				}
-			}
-		}
-	}
-	
+	}	
 	
 	private boolean ifResetAlertText(String alertText) throws Exception
 	{

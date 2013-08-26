@@ -247,6 +247,8 @@ public class Constants {
 	public static final String SEPERATOR_NAVIGATION_TITLE = " > ";
 	public static final String SEPERATOR_SPACE = " ";
 	public static final String SEPERATOR_UNDER_LINE = "_";
+	public static final String RESERVE_ALL_URL_PARAMETERS = "RESERVE_ALL_URL_PARAMETERS";
+	
 	
 	public static final String JSON_SUCCESS = "success";	
 	public static final String JSON_EXIST = "exist";	

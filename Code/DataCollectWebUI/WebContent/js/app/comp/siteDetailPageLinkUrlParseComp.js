@@ -95,8 +95,8 @@ Ext.define('DC.comp.SiteDetailPageLinkUrlParseListPanel', {
 	    },{
 	        grow : true,
 	        name : 'runStringFindOnUrl',
-	        fieldLabel: 'Run String Find On Url',
-	        emptyText: "如果正则表达式不好写，则用该字段进行解析，该字段的格式是   startStr1!@#endStr1;startStr2!@#endStr2;..., 将这些字符串截取之后的字符串再拼成一个字符串作为url， 如果startStr 是字符串开始则用空字符串代表，如果endStr是字符串结尾则用空字符串代表",
+	        fieldLabel: 'Reserved Params On Url(url中只保留如下参数名字的参数)',
+	        emptyText: "如果正则表达式不好写，则用该字段进行解析，该字段的格式是   reserveParam1;reserveParam2;reserveParam3;..., 只保留url中的这些有效参数及值，其他的参数过滤掉，对于taobao这样的网站因为taobao自动添加了很多无用的统计参数在url里面，所以需要过滤掉，只保留有用的参数. RESERVE_ALL_URL_PARAMETERS --- 保留所有的url参数",
 	        allowBlank: true
 	    },{
 	        grow : true,

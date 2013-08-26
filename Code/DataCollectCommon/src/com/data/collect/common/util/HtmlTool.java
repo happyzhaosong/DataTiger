@@ -54,18 +54,12 @@ public class HtmlTool extends BaseTool {
 							url = HtmlTool.getParentLevelUrlPathDirectory(currentUrl) + url.substring(2);
 						}
 						
+						
+						HtmlTool.processUrlAndAddToList(url, retList, linkParseDto);
+						
+						/*
 						if(HtmlTool.isCorrectUrl(url, linkParseDto.getUrlCharactor(), linkParseDto.getNotUrlCharactor(), linkParseDto.getUrlMatchRegExp()))
-						{
-							//remove no value url parameters
-							url = HtmlTool.removeNoValueUrlParameter(url);
-							
-							//run regexp on parsed out url
-							url = HtmlTool.runRegExpOnUrl(url, linkParseDto);
-							
-							//run string find on parsed out url
-							url = HtmlTool.runStringFindOnUrl(url, linkParseDto);
-							
-							
+						{						
 							List<String> urlTrimList = new ArrayList<String>();
 							urlTrimList.add("#");							
 							urlTrimList.add("&");
@@ -78,6 +72,7 @@ public class HtmlTool extends BaseTool {
 								retList.add(url);	
 							}
 						}
+						*/
 					}
 				}				
 			}
@@ -85,6 +80,96 @@ public class HtmlTool extends BaseTool {
 		}
 		return retList;
 	}
+	
+	
+	/*
+	 * 
+	 * Trim no value charactor in parsed out url.
+	 * Remove no value request parameter in parsed out url.
+	 * Run regexp on parsed out url if needed.
+	 * Reserve useful parameters on parsed out url if needed.
+	 * */
+	public static void processUrlAndAddToList(String url, List<String> urlList, WebSitePageLinkParseDTO linkParseDto ) throws Exception
+	{
+		if(!StringTool.isEmpty(url))
+		{
+			List<String> urlTrimList = new ArrayList<String>();
+			urlTrimList.add("%20");
+			urlTrimList.add("#");			
+			urlTrimList.add(".");
+			urlTrimList.add("&");			
+			url = StringTool.trimSpecialCharactor(url, urlTrimList);
+			
+			url = url.replaceAll("&amp;", "&");
+			
+			if(HtmlTool.isCorrectUrl(url, linkParseDto.getUrlCharactor(), linkParseDto.getNotUrlCharactor(), linkParseDto.getUrlMatchRegExp()))
+			{
+				//remove no value url parameters
+				url = HtmlTool.removeNoValueUrlParameter(url);
+				
+				//run regexp on parsed out url
+				url = HtmlTool.runRegExpOnUrl(url, linkParseDto);
+				
+				//run string find on parsed out url
+				url = HtmlTool.reserveParamsFindOnUrl(url, linkParseDto);
+								
+				url = StringTool.trimSpecialCharactor(url, urlTrimList);
+				
+				//remove duplicated url in url list, this way can improve efficiency.
+				if(!StringTool.isEmpty(url) && !StringTool.isStringEqualExistInArray(url, StringTool.stringListToStringArray(urlList)))
+				{
+					urlList.add(url);	
+				}
+			}
+		}
+	}
+	
+	/*
+	 * Process parsed out url in list and return after processed url list.
+	 * */
+	/*
+	public static List<String> decorateUrlInList(List<String> urlList, WebSitePageLinkParseDTO linkParseDto) throws Exception
+	{
+		List<String> ret = new ArrayList<String>();
+		
+		if(!ClassTool.isListEmpty(urlList))
+		{
+			List<String> urlTrimList = new ArrayList<String>();
+			urlTrimList.add("%20");
+			urlTrimList.add("#");			
+			urlTrimList.add(".");
+			urlTrimList.add("&");
+
+			int size = urlList.size();
+			for(int i=0;i<size;i++)
+			{			
+				String url = urlList.get(i);
+				
+				if(!StringTool.isEmpty(url))
+				{
+					url = StringTool.trimSpecialCharactor(url, urlTrimList);    				
+					url = url.replaceAll("&amp;", "&");
+					
+					//remove no value url parameters
+					url = HtmlTool.removeNoValueUrlParameter(url);
+					
+					//run regexp on parsed out url
+					url = HtmlTool.runRegExpOnUrl(url, linkParseDto);
+					
+					//run string find on parsed out url
+					url = HtmlTool.reserveParamsFindOnUrl(url, linkParseDto);
+					
+					if(!StringTool.isEmpty(url))
+					{
+						ret.add(url);
+					}
+				}
+			}
+		}
+		
+		return ret;
+	}
+	*/
 	
 	
 	//remove no value url parameters( parameter's value is '')
@@ -134,6 +219,99 @@ public class HtmlTool extends BaseTool {
 	}
 	
 	
+	
+	
+	//reserve valuable parameters find on parsed out url
+	public static String reserveParamsFindOnUrl(String url, WebSitePageLinkParseDTO linkParseDto) throws Exception
+	{
+		StringBuffer retUrlBuf = new StringBuffer();
+		String reservedParamNames = linkParseDto.getRunStringFindOnUrl();
+		if(StringTool.isEmpty(reservedParamNames))
+		{
+			return url;
+		}else
+		{
+			LogTool.debugText("url before run reserve parameters = " + url);
+			
+			String urlPrefix = "";
+			String urlSuffix = "";
+			String urlArr[] = url.split(Constants.SEPERATOR_BACK_SLASH + Constants.QUESTION_MARK);
+			if(!ClassTool.isNullObj(urlArr) && urlArr.length>0)
+			{
+				urlPrefix = urlArr[0];
+				if(urlArr.length>1)
+				{
+					retUrlBuf.append(urlPrefix);
+					retUrlBuf.append(Constants.QUESTION_MARK);
+					
+					urlSuffix = urlArr[1];					
+					String paramsArr[] = urlSuffix.split(Constants.AND_MARK);
+					if(!ClassTool.isNullObj(paramsArr))
+					{
+						int paramsSize = paramsArr.length;
+						for(int i=0;i<paramsSize;i++)
+						{
+							String paramStr = paramsArr[i];
+							if(HtmlTool.ifReservedParamInUrl(paramStr, reservedParamNames))
+							{
+								retUrlBuf.append(paramStr);
+								retUrlBuf.append(Constants.AND_MARK);
+							}
+						}
+					}			
+					
+				}else
+				{
+					return url;
+				}
+			}else
+			{
+				return url;
+			}
+		}
+		
+		String ret = retUrlBuf.toString().trim();
+		if(ret.endsWith(Constants.AND_MARK))
+		{
+			ret = ret.substring(0, ret.length()-1);
+		}		
+		return ret;
+	}
+
+	
+	private static boolean ifReservedParamInUrl(String paramStr, String reservedParamNames)
+	{
+		boolean ret = false;
+		if(Constants.RESERVE_ALL_URL_PARAMETERS.equalsIgnoreCase(reservedParamNames))
+		{
+			ret = true;
+		}else
+		{
+			if(!StringTool.isEmpty(reservedParamNames))
+			{
+				String reserveParamNameArr[] = reservedParamNames.split(Constants.SEPERATOR_SEMICOLON);
+				int arrSize = reserveParamNameArr.length;
+				for(int i = 0; i < arrSize; i++)
+				{
+					String reserveParamName = reserveParamNameArr[i].toLowerCase().trim();
+					if(!StringTool.isEmpty(reserveParamName))
+					{
+						paramStr = paramStr.toLowerCase().trim();
+						if(paramStr.startsWith(reserveParamName + Constants.EQUAL_MARK))
+						{
+							ret = true;
+							break;
+						}
+					}								
+				}
+			}
+		}
+		return ret;
+	}
+	
+	
+	
+	/*
 	//run string find on parsed out url
 	public static String runStringFindOnUrl(String url, WebSitePageLinkParseDTO linkParseDto) throws Exception
 	{
@@ -213,7 +391,7 @@ public class HtmlTool extends BaseTool {
 
 		return retUrl;
 	}
-	
+	*/
 	
 	//run regexp on parsed out url
 	public static String runRegExpOnUrl(String url, WebSitePageLinkParseDTO linkParseDto) throws Exception

@@ -177,12 +177,12 @@ Ext.define('DC.comp.ParseTplItemListPanel', {
 	        grow : true,
 	        name : 'srcRegExp',
 	        fieldLabel: 'Src Regular Exp',
-	        emptyText: 'Regular expression which will be runned on parsed out data value.eg(^Developer$'
+	        emptyText: 'Regular expression which will be runned on parsed out data value.eg(^Developer$), running this will replace srcRegExp to destRegExp in parsed out data.' + emptyTextMultipleValue
 	    },{
 	        grow : true,
 	        name : 'destRegExp',
 	        fieldLabel: 'Dest Regular Exp Or Value',
-	        emptyText: 'Use this value to replace Src Regular Exp place holder.eg(use space to replace data value from value begin to :)'
+	        emptyText: 'Use this value to replace Src Regular Exp place holder.eg(use space to replace data value from value begin to :)' + emptyTextMultipleValue
 	    },{
 			xtype: 'checkboxfield',
 	        grow : true,
