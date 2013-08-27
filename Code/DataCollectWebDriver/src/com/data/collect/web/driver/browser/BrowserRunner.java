@@ -516,6 +516,16 @@ public class BrowserRunner {
 					}
 					
 					eleData = StringTool.isEmpty(eleData, "");
+										
+					//If data is number type and numberMultiplyBy has been set then calculate it.
+					if(Constants.DATA_TYPE_NUMBER.equalsIgnoreCase(parseTplItemDto.getDataType()) &&  StringTool.isNumeric(eleData))
+					{
+						if(StringTool.isNumeric(parseTplItemDto.getNumberMultiplyBy()))
+						{
+							eleData = String.valueOf(Double.parseDouble(eleData)*Double.parseDouble(parseTplItemDto.getNumberMultiplyBy()));
+						}
+					}					
+					
 					columnDto.setColumnValue(eleData);
 					dataTableDto.getColumnList().add(columnDto);					
 				}catch(Exception ex)

@@ -34,7 +34,7 @@ Ext.define('DC.model.ParseTplItem', {
         {name: 'charactor', type: 'string'},  
         {name: 'notCharactor', type: 'string'},
         {name: 'defaultVal', type: 'string'},
-        {name: 'numberFormat', type: 'string'},
+        {name: 'numberMultiplyBy', type: 'string'},
         {name: 'dateFormat', type: 'string'},
         {name: 'srcRegExp', type: 'string'},         
         {name: 'destRegExp', type: 'string'},

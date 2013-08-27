@@ -69,8 +69,8 @@ public class ParseTplItemDTO extends BaseDTO {
 	@DBColumn(name="default_val")
 	private String defaultVal = "";
 	
-	@DBColumn(name="number_format")
-	private String numberFormat = "";
+	@DBColumn(name="number_multiply_by")
+	private String numberMultiplyBy = "1";
 	
 	@DBColumn(name="date_format")
 	private String dateFormat = "";
@@ -219,12 +219,12 @@ public class ParseTplItemDTO extends BaseDTO {
 		this.defaultVal = defaultVal;
 	}
 
-	public String getNumberFormat() {
-		return numberFormat;
+	public String getNumberMultiplyBy() {
+		return numberMultiplyBy;
 	}
 
-	public void setNumberFormat(String numberFormat) {
-		this.numberFormat = numberFormat;
+	public void setNumberMultiplyBy(String numberMultiplyBy) {
+		this.numberMultiplyBy = numberMultiplyBy;
 	}
 
 	public String getDateFormat() {

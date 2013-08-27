@@ -153,11 +153,19 @@ Ext.define('DC.comp.ParseTplItemListPanel', {
 	    },{
 	        grow : true,
 	        fieldLabel: 'Date Format',
-	        name: 'dateFormat'
+	        name: 'dateFormat',
+	        emptyText: 'If data type is date then use this date format to parse it.(not support now)'
 	    },{
+	    	xtype: 'numberfield',
+	    	maxValue: 99,
+	        minValue: 0,
+	        decimalSeparator: '.',
+	    	decimalPrecision: 5,
+	        value: 1,
 	        grow : true,
-	        name : 'numberFormat',
-	        fieldLabel: 'Number Format'
+	        name : 'numberMultiplyBy',
+	        fieldLabel: 'Number Multiply By',
+	        emptyText: 'If data type is number then use this field value to multiply parsed out data value.(This can be used to calculate unit price in taobao etc), can less than 1 but must big than 0 means division.'
 	    },{
 			xtype: 'checkboxfield',
 	        grow : true,
@@ -249,7 +257,7 @@ Ext.define('DC.comp.ParseTplItemListPanel', {
     		Ext.getCmp(this.getId() + "dataType").setValue(recordObj.dataType);
     		
     		Ext.getCmp(this.getId() + "dateFormat").setValue(recordObj.dateFormat);
-    		Ext.getCmp(this.getId() + "numberFormat").setValue(recordObj.numberFormat);
+    		Ext.getCmp(this.getId() + "numberMultiplyBy").setValue(recordObj.numberMultiplyBy);
     		Ext.getCmp(this.getId() + "ifCheckRepeatColumn").setValue(recordObj.ifCheckRepeatColumn);
     		Ext.getCmp(this.getId() + "ifUrl").setValue(recordObj.ifUrl);
     		Ext.getCmp(this.getId() + "srcRegExp").setValue(recordObj.srcRegExp);
