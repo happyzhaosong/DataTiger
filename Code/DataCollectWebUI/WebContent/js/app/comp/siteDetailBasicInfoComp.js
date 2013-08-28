@@ -30,11 +30,11 @@ Ext.define('DC.comp.SiteDetailBasicInfoPanel', {
 			allowBlank: false
 		}, {
 			xtype: 'checkboxfield',
-			fieldLabel: 'Multi country website(Need put $Country$ place holder in site url for replace)',
+			fieldLabel: 'Multi country website(Need put "$Country$" place holder in site top page url for replace). If use multiple country then use country iso name to replace the $Country$ placeholder in top url and create multiple download task when start download and parse.',
 			name: 'multiCountry'
 		}, {
 			xtype: 'textarea',
-			fieldLabel: 'Place Holders(Need put $PlaceHolders$ place holder in site url for replace)',
+			fieldLabel: 'Place Holders(Need put "$PlaceHolders$" place holder in site top page url for replace)',
 			name: 'placeHolders',
 			emptyText: emptyTextMultipleValue
 		}, {

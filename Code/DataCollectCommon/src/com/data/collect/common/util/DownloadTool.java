@@ -47,6 +47,8 @@ public class DownloadTool {
 		String topUrlArr[] = StringTool.splitString(topUrl, Constants.SEPERATOR_SEMICOLON);
 		
 		List<String> cRet = new ArrayList<String>();
+		
+		//If use multiple country then use country iso name to replace the $Country$ placeholder in top url.
 		if(webSiteDto.isMultiCountry())
 		{
 			int len = topUrlArr.length;
