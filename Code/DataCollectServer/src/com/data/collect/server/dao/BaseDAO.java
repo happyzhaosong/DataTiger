@@ -134,6 +134,11 @@ public class BaseDAO {
 		return this.selectDtoList(objClass, DBTool.getSelectSqlFromObjectClass(objClass), DBManager.getInstance().getMysqlDataSource());
 	}
 	
+	protected List<Object> selectDtoList(Class objClass, DataSource ds) throws Exception
+	{
+		return this.selectDtoList(objClass, DBTool.getSelectSqlFromObjectClass(objClass), ds);
+	}
+	
 	protected int selectDtoCount() throws Exception
 	{
 		int ret = 0;

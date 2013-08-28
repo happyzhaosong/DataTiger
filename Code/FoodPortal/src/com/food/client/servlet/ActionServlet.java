@@ -23,7 +23,7 @@ public class ActionServlet extends HttpServlet {
 			
 		try{
 			String action = WebTool.getStringAttributeBeforeParameter(Constants.ACTION, req);
-			if(Constants.ACTION_LOGIN.equals(action))
+			if(Constants.ACTION_SEARCH.equals(action))
 			{
 				//jsonDto = userBB.authUser(req);
 			}

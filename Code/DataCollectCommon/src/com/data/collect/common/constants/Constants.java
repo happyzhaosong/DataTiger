@@ -372,7 +372,7 @@ public class Constants {
 	public static final int TASK_LEVEL_HIGHT = 3;
 	public static final int TASK_LEVEL_MIDDLE = 2;
 
-	
+	public static final String ACTION_SEARCH = "ACTION_SEARCH";
 	
 	/* food search portal related constants */
 	

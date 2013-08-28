@@ -14,6 +14,16 @@
     padding: 8px;
     background: #fefefe;
 }
+
+.commonContainer
+{
+    border: 1px solid #cbcbcb;
+    border-radius: 3px;
+    padding: 8px;
+    background: #fefefe;
+    margin-top: 3px;	
+}
+
 #demo form input {
     font-size: 180%;
     padding: 3px 7px;
