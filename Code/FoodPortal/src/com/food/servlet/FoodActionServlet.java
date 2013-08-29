@@ -26,7 +26,7 @@ public class FoodActionServlet extends HttpServlet {
 		JsonDTO jsonDto = null;
 			
 		try{
-			String action = GeneralWebTool.getStringAttributeBeforeParameter(GeneralConstants.ACTION, req);
+			String action = GeneralWebTool.getStringAttributeBeforeParameter(GeneralConstants.ACTION, request);
 			if(GeneralConstants.ACTION_SEARCH.equals(action))
 			{
 				jsonDto = foodBB.searchFood(request);
@@ -54,7 +54,7 @@ public class FoodActionServlet extends HttpServlet {
 					LogTool.logError( ex);
 				}
 			}			
-			GeneralWebTool.writeAjaxResponse(resp, forwardBuf.toString());
+			GeneralWebTool.writeAjaxResponse(response, forwardBuf.toString());
 		}
 	}
 
