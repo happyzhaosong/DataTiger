@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.food.client.logic.FoodBB;
 import com.general.common.constants.GeneralConstants;
 import com.general.common.dto.JsonDTO;
 import com.general.common.util.GeneralWebTool;
@@ -16,8 +17,10 @@ import com.general.common.util.LogTool;
 
 public class FoodActionServlet extends HttpServlet {
 
+	FoodBB foodBB = new FoodBB(); 
+	
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		StringBuffer forwardBuf = new StringBuffer();
 		JsonDTO jsonDto = null;
@@ -26,7 +29,7 @@ public class FoodActionServlet extends HttpServlet {
 			String action = GeneralWebTool.getStringAttributeBeforeParameter(GeneralConstants.ACTION, req);
 			if(GeneralConstants.ACTION_SEARCH.equals(action))
 			{
-				//jsonDto = userBB.authUser(req);
+				jsonDto = foodBB.searchFood(request);
 			}
 		}catch(Exception ex)
 		{
