@@ -2,6 +2,7 @@ package com.data.collect.server.dao;
 
 import java.util.List;
 import com.data.collect.common.dto.UserDTO;
+import com.general.server.dao.BaseDAO;
 
 public class UserDAO extends BaseDAO {
 

@@ -1,9 +1,11 @@
 package com.data.collect.server.dao;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import com.data.collect.common.dto.RoleDTO;
-import com.data.collect.common.util.ClassTool;
+import com.general.common.util.ClassTool;
+import com.general.server.dao.BaseDAO;
 
 public class RoleDAO extends BaseDAO {
 

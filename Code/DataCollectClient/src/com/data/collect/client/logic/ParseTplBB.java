@@ -2,21 +2,23 @@ package com.data.collect.client.logic;
 
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.JsonDTO;
 import com.data.collect.common.dto.ParseTplCategoryDTO;
 import com.data.collect.common.dto.ParseTplDTO;
-import com.data.collect.common.dto.ParseTplItemDTO;
 import com.data.collect.common.dto.WebSiteDTO;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.JsonTool;
-import com.data.collect.common.util.StringTool;
 import com.data.collect.common.util.WebTool;
 import com.data.collect.server.dao.ParseTplDAO;
 import com.data.collect.server.dao.ParseTplItemDAO;
 import com.data.collect.server.dao.WebSiteDAO;
+import com.general.client.logic.BaseBB;
+import com.general.common.dto.JsonDTO;
+import com.general.common.dto.ParseTplItemDTO;
+import com.general.common.util.ClassTool;
+import com.general.common.util.JsonTool;
+import com.general.common.util.StringTool;
 
 
 public class ParseTplBB extends BaseBB {

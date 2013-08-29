@@ -1,22 +1,25 @@
 package com.data.collect.client.logic;
 
 import java.util.ArrayList;
+
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.BasePageDTO;
-import com.data.collect.common.dto.DBTableColumnDTO;
-import com.data.collect.common.dto.JsonDTO;
 import com.data.collect.common.dto.TypeDTO;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.JsonTool;
-import com.data.collect.common.util.StringTool;
-import com.data.collect.common.util.WebTool;
 import com.data.collect.server.dao.DBManagerDAO;
 import com.data.collect.server.dao.DownloadTaskDAO;
-import com.data.collect.server.manager.DBManager;
+import com.general.client.logic.BaseBB;
+import com.general.common.dto.BasePageDTO;
+import com.general.common.dto.DBTableColumnDTO;
+import com.general.common.dto.JsonDTO;
+import com.general.common.util.ClassTool;
+import com.general.common.util.JsonTool;
+import com.general.common.util.StringTool;
+import com.general.common.util.GeneralWebTool;
+import com.general.server.manager.DBManager;
 
 public class DBManagerBB extends BaseBB {
 	
@@ -32,7 +35,7 @@ public class DBManagerBB extends BaseBB {
 	
 	
 	public JsonDTO getDataTableDataListInJson(HttpServletRequest request) throws Exception {
-		String tableName = WebTool.getStringParameterBeforeAttribute(Constants.DATA_DB_TABLE_NAME, request);
+		String tableName = GeneralWebTool.getStringParameterBeforeAttribute(Constants.DATA_DB_TABLE_NAME, request);
 		StringTool.checkEmpty(tableName, "Please choose a data table then get it's data list.");
 
 		BasePageDTO pageDto = (BasePageDTO)ClassTool.extractValueFromRequest(BasePageDTO.class, request);					
@@ -40,15 +43,15 @@ public class DBManagerBB extends BaseBB {
 		
 		List<List<DBTableColumnDTO>> retDataColumnList = dbManagerDao.getDataTableDataList(tableName);
 				
-		String actionSub = WebTool.getStringParameterBeforeAttribute(Constants.ACTION_SUB, request);
+		String actionSub = GeneralWebTool.getStringParameterBeforeAttribute(Constants.ACTION_SUB, request);
 
 		if(!StringTool.isEmpty(actionSub))
 		{
 			if(Constants.RESET_ALL.equalsIgnoreCase(actionSub))
 			{
-				String resetApplyTime = WebTool.getStringParameterBeforeAttribute(Constants.RESET_APPLY_TIME, request);
+				String resetApplyTime = GeneralWebTool.getStringParameterBeforeAttribute(Constants.RESET_APPLY_TIME, request);
 
-				String taskLevel = WebTool.getStringParameterBeforeAttribute(Constants.DOWNLOAD_TASK_LEVEL, request);
+				String taskLevel = GeneralWebTool.getStringParameterBeforeAttribute(Constants.DOWNLOAD_TASK_LEVEL, request);
 				if(!StringTool.isInteger(taskLevel))
 				{
 					taskLevel = "0";
@@ -86,7 +89,7 @@ public class DBManagerBB extends BaseBB {
 	
 	
 	public JsonDTO getDataTableColumnListInJson(HttpServletRequest request) throws Exception {
-		String tableName = WebTool.getStringParameter(Constants.DATA_DB_TABLE_NAME, request);
+		String tableName = GeneralWebTool.getStringParameter(Constants.DATA_DB_TABLE_NAME, request);
 		StringTool.checkEmpty(tableName, "Please choose a table then get it's column list.");
 		
 		BasePageDTO pageDto = (BasePageDTO)ClassTool.extractValueFromRequest(BasePageDTO.class, request);					

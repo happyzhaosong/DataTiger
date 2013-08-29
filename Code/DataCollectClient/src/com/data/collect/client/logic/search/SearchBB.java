@@ -1,6 +1,6 @@
 package com.data.collect.client.logic.search;
 
-import com.data.collect.client.logic.BaseBB;
+import com.general.client.logic.BaseBB;
 
 public class SearchBB extends BaseBB {
 

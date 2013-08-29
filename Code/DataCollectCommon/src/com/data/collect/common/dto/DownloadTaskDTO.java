@@ -1,8 +1,9 @@
 package com.data.collect.common.dto;
 
-import com.data.collect.common.annotation.DBColumn;
-import com.data.collect.common.annotation.DBTable;
-import com.data.collect.common.util.StringTool;
+import com.general.common.annotation.DBColumn;
+import com.general.common.annotation.DBTable;
+import com.general.common.dto.BaseDTO;
+import com.general.common.util.StringTool;
 
 @DBTable(name="download_task")
 public class DownloadTaskDTO extends BaseDTO {

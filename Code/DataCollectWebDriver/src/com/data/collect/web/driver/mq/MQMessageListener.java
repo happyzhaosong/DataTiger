@@ -1,17 +1,18 @@
 package com.data.collect.web.driver.mq;
 
 import java.util.List;
+
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.MQMessageDTO;
-import com.data.collect.common.util.JsonTool;
-import com.data.collect.common.util.LogTool;
 import com.data.collect.server.dao.DownloadMqMessageDAO;
-import com.data.collect.server.manager.MQMessageManager;
 import com.data.collect.web.driver.thread.ThreadManager;
+import com.general.common.dto.MQMessageDTO;
+import com.general.common.util.JsonTool;
+import com.general.common.util.LogTool;
+import com.general.server.manager.MQMessageManager;
 
 public class MQMessageListener implements MessageListener {
 

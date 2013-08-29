@@ -2,20 +2,19 @@ package com.data.collect.client.logic;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.JsonDTO;
 import com.data.collect.common.dto.RoleDTO;
-import com.data.collect.common.dto.UserDTO;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.JsonTool;
-import com.data.collect.common.util.LogTool;
-import com.data.collect.common.util.StringTool;
 import com.data.collect.common.util.WebTool;
 import com.data.collect.server.dao.RoleDAO;
+import com.general.client.logic.BaseBB;
+import com.general.common.dto.JsonDTO;
+import com.general.common.util.ClassTool;
+import com.general.common.util.JsonTool;
+import com.general.common.util.LogTool;
+import com.general.common.util.StringTool;
 
 
 public class RoleBB extends BaseBB {

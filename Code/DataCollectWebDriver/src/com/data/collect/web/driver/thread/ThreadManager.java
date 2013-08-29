@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.data.collect.common.constants.Constants;
 import com.data.collect.common.dto.DownloadThreadDTO;
-import com.data.collect.common.dto.MQMessageDTO;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.LogTool;
 import com.data.collect.server.dao.DownloadMqMessageDAO;
 import com.data.collect.server.dao.DownloadThreadDAO;
+import com.general.common.dto.MQMessageDTO;
+import com.general.common.util.ClassTool;
+import com.general.common.util.LogTool;
 
 public class ThreadManager {
 	

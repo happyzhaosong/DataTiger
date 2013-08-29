@@ -1,6 +1,7 @@
 package com.data.collect.web.driver.thread;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Random;
 
@@ -9,21 +10,21 @@ import org.openqa.selenium.remote.SessionNotFoundException;
 import org.openqa.selenium.remote.UnreachableBrowserException;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.BasePageDTO;
 import com.data.collect.common.dto.DownloadTaskDTO;
-import com.data.collect.common.dto.MQMessageDTO;
 import com.data.collect.common.dto.WebSiteDTO;
 import com.data.collect.common.exception.DeleteThreadException;
 import com.data.collect.common.exception.ParsePageException;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.DBTool;
-import com.data.collect.common.util.ExceptionTool;
-import com.data.collect.common.util.GetDeltaTimeTool;
-import com.data.collect.common.util.LogTool;
-import com.data.collect.common.util.StringTool;
 import com.data.collect.server.dao.DownloadTaskDAO;
 import com.data.collect.server.dao.WebSiteDAO;
 import com.data.collect.web.driver.browser.BrowserRunner;
+import com.general.common.dto.BasePageDTO;
+import com.general.common.dto.MQMessageDTO;
+import com.general.common.util.ClassTool;
+import com.general.common.util.DBTool;
+import com.general.common.util.ExceptionTool;
+import com.general.common.util.GetDeltaTimeTool;
+import com.general.common.util.LogTool;
+import com.general.common.util.StringTool;
 
 public class ThreadRunner extends Thread {
 	

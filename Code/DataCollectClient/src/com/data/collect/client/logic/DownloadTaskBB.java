@@ -1,22 +1,24 @@
 package com.data.collect.client.logic;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.BasePageDTO;
 import com.data.collect.common.dto.DownloadTaskDTO;
-import com.data.collect.common.dto.JsonDTO;
 import com.data.collect.common.dto.TypeDTO;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.JsonTool;
-import com.data.collect.common.util.StringTool;
 import com.data.collect.common.util.WebTool;
 import com.data.collect.server.dao.DBManagerDAO;
 import com.data.collect.server.dao.DownloadTaskDAO;
-import com.data.collect.server.manager.DBManager;
+import com.general.client.logic.BaseBB;
+import com.general.common.dto.BasePageDTO;
+import com.general.common.dto.JsonDTO;
+import com.general.common.util.ClassTool;
+import com.general.common.util.JsonTool;
+import com.general.common.util.StringTool;
+import com.general.server.manager.DBManager;
 
 
 public class DownloadTaskBB extends BaseBB {

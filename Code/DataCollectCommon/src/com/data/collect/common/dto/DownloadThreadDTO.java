@@ -1,8 +1,9 @@
 package com.data.collect.common.dto;
 
-import com.data.collect.common.annotation.DBColumn;
-import com.data.collect.common.annotation.DBTable;
 import com.data.collect.common.constants.Constants;
+import com.general.common.annotation.DBColumn;
+import com.general.common.annotation.DBTable;
+import com.general.common.dto.BaseDTO;
 
 @DBTable(name="download_thread")
 public class DownloadThreadDTO extends BaseDTO {

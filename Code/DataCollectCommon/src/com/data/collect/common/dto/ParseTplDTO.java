@@ -3,8 +3,10 @@ package com.data.collect.common.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.data.collect.common.annotation.DBColumn;
-import com.data.collect.common.annotation.DBTable;
+import com.general.common.annotation.DBColumn;
+import com.general.common.annotation.DBTable;
+import com.general.common.dto.BaseDTO;
+import com.general.common.dto.ParseTplItemDTO;
 
 @DBTable(name="parse")
 public class ParseTplDTO extends BaseDTO {

@@ -9,18 +9,19 @@ import javax.servlet.http.HttpServletRequest;
 import com.data.collect.common.constants.Constants;
 import com.data.collect.common.dto.DownloadTaskDTO;
 import com.data.collect.common.dto.DownloadThreadDTO;
-import com.data.collect.common.dto.JsonDTO;
-import com.data.collect.common.dto.MQMessageDTO;
 import com.data.collect.common.dto.WebSiteDTO;
-import com.data.collect.common.util.ClassTool;
 import com.data.collect.common.util.DownloadTool;
-import com.data.collect.common.util.JsonTool;
-import com.data.collect.common.util.StringTool;
 import com.data.collect.common.util.WebTool;
 import com.data.collect.server.dao.DownloadMqMessageDAO;
 import com.data.collect.server.dao.DownloadTaskDAO;
 import com.data.collect.server.dao.DownloadThreadDAO;
-import com.data.collect.server.manager.MQMessageManager;
+import com.general.client.logic.BaseBB;
+import com.general.common.dto.JsonDTO;
+import com.general.common.dto.MQMessageDTO;
+import com.general.common.util.ClassTool;
+import com.general.common.util.JsonTool;
+import com.general.common.util.StringTool;
+import com.general.server.manager.MQMessageManager;
 
 public class DownloadThreadBB extends BaseBB {
 	private DownloadTaskDAO downloadTaskDao = new DownloadTaskDAO();

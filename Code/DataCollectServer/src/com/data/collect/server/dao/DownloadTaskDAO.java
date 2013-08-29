@@ -1,18 +1,20 @@
 package com.data.collect.server.dao;
 
 import java.util.ArrayList;
+
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.DBTableColumnDTO;
 import com.data.collect.common.dto.DownloadTaskDTO;
-import com.data.collect.common.exception.EmptyStringException;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.StringTool;
-import com.data.collect.server.manager.DBManager;
+import com.general.common.dto.DBTableColumnDTO;
+import com.general.common.exception.EmptyStringException;
+import com.general.common.util.ClassTool;
+import com.general.common.util.StringTool;
+import com.general.server.dao.BaseDAO;
+import com.general.server.manager.DBManager;
 
 public class DownloadTaskDAO extends BaseDAO {
 	

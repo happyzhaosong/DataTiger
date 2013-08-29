@@ -28,26 +28,26 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.DBTableColumnDTO;
 import com.data.collect.common.dto.DBTableDTO;
 import com.data.collect.common.dto.DownloadTaskDTO;
-import com.data.collect.common.dto.ParseTplItemActionDTO;
-import com.data.collect.common.dto.ParseTplItemDTO;
 import com.data.collect.common.dto.WebSiteContentPageCheckDTO;
 import com.data.collect.common.dto.WebSiteDTO;
 import com.data.collect.common.dto.WebSitePageLinkParseDTO;
 import com.data.collect.common.exception.ParsePageException;
 import com.data.collect.common.exception.ResetDownloadTaskException;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.ConfigTool;
-import com.data.collect.common.util.DateTool;
-import com.data.collect.common.util.GetDeltaTimeTool;
 import com.data.collect.common.util.HtmlTool;
-import com.data.collect.common.util.LogTool;
-import com.data.collect.common.util.StringTool;
 import com.data.collect.server.dao.DBManagerDAO;
 import com.data.collect.server.dao.DownloadTaskDAO;
 import com.data.collect.server.dao.WebSiteDAO;
+import com.general.common.dto.DBTableColumnDTO;
+import com.general.common.dto.ParseTplItemActionDTO;
+import com.general.common.dto.ParseTplItemDTO;
+import com.general.common.util.ClassTool;
+import com.general.common.util.ConfigTool;
+import com.general.common.util.DateTool;
+import com.general.common.util.GetDeltaTimeTool;
+import com.general.common.util.LogTool;
+import com.general.common.util.StringTool;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 public class BrowserRunner {

@@ -1,13 +1,16 @@
 package com.data.collect.server.dao;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import com.data.collect.common.constants.Constants;
 import com.data.collect.common.dto.ParseTplDTO;
 import com.data.collect.common.dto.ParseTplCategoryDTO;
-import com.data.collect.common.dto.ParseTplItemDTO;
-import com.data.collect.common.util.StringTool;
+import com.general.common.dto.ParseTplItemDTO;
+import com.general.common.util.StringTool;
+import com.general.server.dao.BaseDAO;
+
 
 public class ParseTplDAO extends BaseDAO {
 	

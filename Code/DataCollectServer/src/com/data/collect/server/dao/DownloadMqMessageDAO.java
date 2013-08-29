@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.data.collect.common.dto.ByValueDTO;
-import com.data.collect.common.dto.MQMessageDTO;
-import com.data.collect.common.exception.InvalidIdException;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.StringTool;
+import com.general.common.dto.MQMessageDTO;
+import com.general.common.exception.InvalidIdException;
+import com.general.common.util.ClassTool;
+import com.general.common.util.StringTool;
+import com.general.server.dao.BaseDAO;
 
 
 public class DownloadMqMessageDAO extends BaseDAO {

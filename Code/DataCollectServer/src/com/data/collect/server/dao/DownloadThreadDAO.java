@@ -1,11 +1,13 @@
 package com.data.collect.server.dao;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import com.data.collect.common.constants.Constants;
 import com.data.collect.common.dto.DownloadThreadDTO;
-import com.data.collect.common.util.StringTool;
+import com.general.common.util.StringTool;
+import com.general.server.dao.BaseDAO;
 
 public class DownloadThreadDAO extends BaseDAO {
 	

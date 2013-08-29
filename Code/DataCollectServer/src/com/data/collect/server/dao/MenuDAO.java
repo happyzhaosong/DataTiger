@@ -3,6 +3,7 @@ package com.data.collect.server.dao;
 import java.util.ArrayList;
 import java.util.List;
 import com.data.collect.common.dto.MenuDTO;
+import com.general.server.dao.BaseDAO;
 
 public class MenuDAO extends BaseDAO {
 	

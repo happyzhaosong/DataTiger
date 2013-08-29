@@ -3,8 +3,8 @@ package com.data.collect.web.driver.thread;
 import java.util.List;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.LogTool;
+import com.general.common.util.ClassTool;
+import com.general.common.util.LogTool;
 
 /*
  * Monitor each thread status, if one thread web driver hang, then 

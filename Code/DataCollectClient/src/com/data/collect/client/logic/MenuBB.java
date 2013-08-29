@@ -8,10 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.JsonDTO;
 import com.data.collect.common.dto.MenuDTO;
-import com.data.collect.common.util.ClassTool;
 import com.data.collect.server.dao.MenuDAO;
+import com.general.client.logic.BaseBB;
+import com.general.common.dto.JsonDTO;
+import com.general.common.util.ClassTool;
 
 public class MenuBB extends BaseBB{
 	

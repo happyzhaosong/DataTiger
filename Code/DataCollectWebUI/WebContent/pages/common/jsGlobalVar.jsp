@@ -1,4 +1,4 @@
-<%@ page import="com.data.collect.common.util.*,com.data.collect.common.constants.*,com.data.collect.common.dto.*,com.data.collect.client.logic.*,java.util.*,com.data.collect.server.manager.*"%>
+<%@ page import="com.general.common.util.*,com.data.collect.common.util.*,com.data.collect.common.constants.*,com.data.collect.common.dto.*,com.data.collect.client.logic.*,java.util.*,com.data.collect.server.manager.*"%>
 <script type="text/javascript">
 var loadMessage = "Loading...";
 

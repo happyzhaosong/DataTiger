@@ -1,5 +1,7 @@
 package com.data.collect.common.dto;
 
+import com.general.common.dto.BaseDTO;
+
 public class TypeDTO extends BaseDTO {
 	private String typeName = "";
 	private String typeLabel = "";

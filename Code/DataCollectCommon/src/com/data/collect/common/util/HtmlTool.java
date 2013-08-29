@@ -6,6 +6,11 @@ import java.util.List;
 import com.data.collect.common.constants.Constants;
 import com.data.collect.common.dto.WebSiteDTO;
 import com.data.collect.common.dto.WebSitePageLinkParseDTO;
+import com.general.common.util.BaseTool;
+import com.general.common.util.ClassTool;
+import com.general.common.util.GetDeltaTimeTool;
+import com.general.common.util.LogTool;
+import com.general.common.util.StringTool;
 
 
 public class HtmlTool extends BaseTool {

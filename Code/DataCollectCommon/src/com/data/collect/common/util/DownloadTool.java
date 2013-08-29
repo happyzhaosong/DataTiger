@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.DownloadTaskDTO;
-import com.data.collect.common.dto.JsonDTO;
 import com.data.collect.common.dto.WebSiteDTO;
+import com.general.common.constants.GeneralConstants;
+import com.general.common.dto.JsonDTO;
+import com.general.common.util.StringTool;
+
 
 public class DownloadTool {
 	
@@ -44,7 +46,7 @@ public class DownloadTool {
 		String topUrl = webSiteDto.getTopUrl();
 		StringTool.checkEmpty(topUrl, "Download web site top url can not be empty");
 		
-		String topUrlArr[] = StringTool.splitString(topUrl, Constants.SEPERATOR_SEMICOLON);
+		String topUrlArr[] = StringTool.splitString(topUrl, GeneralConstants.SEPERATOR_SEMICOLON);
 		
 		List<String> cRet = new ArrayList<String>();
 		
@@ -55,7 +57,7 @@ public class DownloadTool {
 			for(int i=0;i<len;i++)
 			{
 				String url = topUrlArr[i];
-				List<String> tmpList = StringTool.replacePlaceHolderInUrl(url, Constants.PLACE_HOLDER_COUNTRY, StringTool.getCountryIsoCodeArr().split(Constants.SEPERATOR_SPACE));
+				List<String> tmpList = StringTool.replacePlaceHolderInUrl(url, GeneralConstants.PLACE_HOLDER_COUNTRY, StringTool.getCountryIsoCodeArr().split(GeneralConstants.SEPERATOR_SPACE));
 				cRet.addAll(tmpList);
 			}
 		}
@@ -69,7 +71,7 @@ public class DownloadTool {
 				for(int i=0;i<cRet.size();i++)
 				{
 					String url = cRet.get(i);
-					List<String> tmpList = StringTool.replacePlaceHolderInUrl(url, Constants.PLACE_HOLDER_VALUE, webSiteDto.getPlaceHolders().split(Constants.SEPERATOR_SEMICOLON));
+					List<String> tmpList = StringTool.replacePlaceHolderInUrl(url, GeneralConstants.PLACE_HOLDER_VALUE, webSiteDto.getPlaceHolders().split(GeneralConstants.SEPERATOR_SEMICOLON));
 					ret.addAll(tmpList);					
 				}
 			}else
@@ -78,7 +80,7 @@ public class DownloadTool {
 				for(int i=0;i<len;i++)
 				{
 					String url = topUrlArr[i];
-					List<String> tmpList = StringTool.replacePlaceHolderInUrl(url, Constants.PLACE_HOLDER_VALUE, webSiteDto.getPlaceHolders().split(Constants.SEPERATOR_SEMICOLON));
+					List<String> tmpList = StringTool.replacePlaceHolderInUrl(url, GeneralConstants.PLACE_HOLDER_VALUE, webSiteDto.getPlaceHolders().split(GeneralConstants.SEPERATOR_SEMICOLON));
 					ret.addAll(tmpList);					
 				}
 			}

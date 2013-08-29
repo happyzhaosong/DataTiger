@@ -4,16 +4,18 @@ package com.data.collect.server.dao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import com.data.collect.common.constants.Constants;
-import com.data.collect.common.dto.DBTableColumnDTO;
 import com.data.collect.common.dto.DBTableDTO;
-import com.data.collect.common.dto.ParseTplItemDTO;
-import com.data.collect.common.util.ClassTool;
-import com.data.collect.common.util.ExceptionTool;
-import com.data.collect.common.util.GetDeltaTimeTool;
-import com.data.collect.common.util.LogTool;
-import com.data.collect.common.util.StringTool;
-import com.data.collect.server.manager.DBManager;
+import com.general.common.dto.DBTableColumnDTO;
+import com.general.common.dto.ParseTplItemDTO;
+import com.general.common.util.ClassTool;
+import com.general.common.util.ExceptionTool;
+import com.general.common.util.GetDeltaTimeTool;
+import com.general.common.util.LogTool;
+import com.general.common.util.StringTool;
+import com.general.server.dao.BaseDAO;
+import com.general.server.manager.DBManager;
 
 public class DBManagerDAO extends BaseDAO {
 	
