@@ -4,6 +4,8 @@ import com.general.common.constants.GeneralConstants;
 
 public class Constants extends GeneralConstants{
 	
+	public static final String DATA_COLLECT_SERVLET_NAME = "/action.do";
+	
 	//page title
 	public static final String PAGE_TITLE_PREFIX = "Data Collect ";	
 	public static final String PAGE_TITLE_LOGIN = PAGE_TITLE_PREFIX + "Login";	

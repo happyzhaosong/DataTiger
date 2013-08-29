@@ -2,8 +2,7 @@ package com.general.common.constants;
 
 public class GeneralConstants {
 	
-	//servlet path
-	public static final String DATA_COLLECT_SERVLET_NAME = "/action.do";
+	//servlet path	
 	public static final String PATH_APP_JS = "/js/app/";
 	public static final String PATH_EXT_JS = "/js/ext-4.1.1a/";
 
@@ -36,6 +35,7 @@ public class GeneralConstants {
 	public static final String ACTION_EDIT = "ACTION_EDIT";
 	public static final String ACTION_LOGIN = "ACTION_LOGIN";
 	public static final String ACTION_LOGOUT = "ACTION_LOGOUT";
+	public static final String ACTION_SEARCH = "ACTION_SEARCH";
 	
 	public static final String LIST = "_LIST";	
 	public static final String LIST_ALL = "_LIST_ALL";
@@ -176,9 +176,7 @@ public class GeneralConstants {
 	public static final String DB_ORDER_DESC = "DESC";
 	
 	public static final String DEFAULT_PAGE_SIZE = "100";
-	
-	public static final String ACTION_SEARCH = "ACTION_SEARCH";
-	
+		
 	public static final int DOWNLOAD_THREAD_TYPE_GET_WEB_PAGE = 2;	
 	
 	public static final String DOWNLOAD_THREAD_ACTION_START = "DOWNLOAD_THREAD_ACTION_START";		

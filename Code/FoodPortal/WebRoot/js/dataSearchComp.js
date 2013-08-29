@@ -329,7 +329,7 @@ YUI.add('DataSearchApp', function(Y){
             	ev.preventDefault();
             	var searchKeyword = ev.currentTarget.getHTML();    	
             	Y.one('#searchKeyword').set('value',searchKeyword);
-            	Y.one('form .yui3-button').simulate('click');    	
+            	Y.one('#searchBtn').simulate('click');    	
             });
 
         }    
@@ -338,7 +338,7 @@ YUI.add('DataSearchApp', function(Y){
     Y.one('#searchKeyword').on('keydown', function(ev){    	
     	if(ev.charCode==13)
     	{
-    		Y.one('form .yui3-button').focus();
+    		Y.one('#searchBtn').focus();
     	}
     });           
     
@@ -361,7 +361,7 @@ YUI.add('DataSearchApp', function(Y){
         
         // When our form is submitted, we run a new query on it
         events: {
-            'form .yui3-button': {
+            '#searchBtn': {
                 'click': '_afterFormSubmit'
             }
         },
@@ -432,7 +432,7 @@ YUI.add('DataSearchApp', function(Y){
                 api = this._api,
                 url = this.url;
 
-            api.page = page || 1;
+            api.page = page || 1;            
 
             url += Y.QueryString.stringify(api);
 
@@ -454,6 +454,17 @@ YUI.add('DataSearchApp', function(Y){
             });
         },
         
+        
+        /*
+         * Construct search params by usr input and selected search condition
+         * */
+        constructSearchParams: function()
+        {
+        	this._api.searchKeyword = Y.one('#searchKeyword').get("value");
+        	
+        	var orderBy1SelIdx = Y.one('#orderBy1').get('selectedIndex');        	
+        	this._api.orderBy1 = Y.one('#orderBy1').get('options')._nodes[orderBy1SelIdx].value
+        },
         
         // When we request a new photo, there are a few things that happen.
         //
@@ -484,7 +495,8 @@ YUI.add('DataSearchApp', function(Y){
                 this._pages.shift().destroy({ remove: true });
             }
 
-            this._api.text = this.get('container').one('form input').get('value');
+            //construct user input to search params.
+            this.constructSearchParams();
 
             this._isNewQuery = true;
 
@@ -501,7 +513,7 @@ YUI.add('DataSearchApp', function(Y){
         // have any pages to process and send the
         _processResults: function (resp) {
             this.setMessage( !resp.pages ?
-                'There are no images for "' + this._api.text + '"' :
+                'There are no images for "' + this._api.searchKeyword + '"' :
                 ''
             );
 
@@ -598,12 +610,9 @@ YUI.add('DataSearchApp', function(Y){
             // This will contain our settings for the  API
             apiConfig: {
                 value: {
-        			api_key: '0c13dc70aa7eb3df87b3fee5caf37080',
-                    method: 'flickr.photos.search',
-                    safe_search: 1,
-                    sort: 'relevance',
-                    format: 'json',
-                    license: 4,
+        			searchKeyword: 'ги©ка╕',                    
+                    orderBy1: 'jia_ge',
+                    orderBy2: '',
                     per_page: 16                    
                 }
             }

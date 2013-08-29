@@ -128,6 +128,7 @@ public class GeneralWebTool extends BaseTool {
 		retBuf.append(GeneralConstants.ACTION);
 		retBuf.append(GeneralConstants.EQUAL_MARK);
 		retBuf.append(action);
+		retBuf.append(GeneralConstants.AND_MARK);
 		return retBuf.toString();
 	}
 	
