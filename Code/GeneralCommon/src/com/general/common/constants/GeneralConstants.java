@@ -182,5 +182,14 @@ public class GeneralConstants {
 	public static final String DOWNLOAD_THREAD_ACTION_START = "DOWNLOAD_THREAD_ACTION_START";		
 
 	public static final String JSON_ROOT_ACTIVE_MQ_MESSAGE = "JSON_ROOT_ACTIVE_MQ_MESSAGE";
+	
+	public static final String ORDER_BY_ASC_SUFFIX = "_asc";
+	
+	public static final String ORDER_BY_DESC_SUFFIX = "_desc";
+	
+	public static final String ORDER_BY_ASC = "asc";
+	
+	public static final String ORDER_BY_DESC = "desc";
+
 
 }

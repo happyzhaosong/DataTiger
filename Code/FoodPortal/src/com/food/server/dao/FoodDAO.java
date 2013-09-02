@@ -3,15 +3,15 @@ package com.food.server.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.food.common.dto.FoodSearchParamsDTO;
 import com.food.common.dto.FoodDTO;
+import com.general.common.dto.search.BaseSearchParamsDTO;
 import com.general.common.util.StringTool;
 import com.general.server.dao.BaseDAO;
 import com.general.server.manager.DBManager;
 
 public class FoodDAO extends BaseDAO {
 
-	public List<FoodDTO> searchFood(FoodSearchParamsDTO searchParamsDto) throws Exception
+	public List<FoodDTO> searchFood(BaseSearchParamsDTO searchParamsDto) throws Exception
 	{
 		this.initStringBuffer();
 

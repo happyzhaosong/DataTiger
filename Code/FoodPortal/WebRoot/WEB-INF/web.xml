@@ -4,16 +4,16 @@
   <servlet>
     <description>
 	</description>
-    <display-name>ActionServlet</display-name>
-    <servlet-name>ActionServlet</servlet-name>
+    <display-name>FoodActionServlet</display-name>
+    <servlet-name>FoodActionServlet</servlet-name>
     <servlet-class>com.food.servlet.FoodActionServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ActionServlet</servlet-name>
+    <servlet-name>FoodActionServlet</servlet-name>
     <url-pattern>/foodAction.do</url-pattern>
   </servlet-mapping>
   <filter>
-    <filter-name>ActionFilter</filter-name>
+    <filter-name>FoodActionFilter</filter-name>
     <filter-class>com.food.servlet.filter.FoodActionFilter</filter-class>
     <init-param>
       <param-name>onError</param-name>
@@ -21,11 +21,11 @@
     </init-param>
   </filter>
   <filter-mapping>
-    <filter-name>ActionFilter</filter-name>
+    <filter-name>FoodActionFilter</filter-name>
     <url-pattern>*.do</url-pattern>
   </filter-mapping>
   <filter-mapping>
-    <filter-name>ActionFilter</filter-name>
+    <filter-name>FoodActionFilter</filter-name>
     <url-pattern>/pages/*</url-pattern>
   </filter-mapping>
   <welcome-file-list>

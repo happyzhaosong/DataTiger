@@ -6,13 +6,31 @@ import com.general.common.util.StringTool;
 
 public class BaseSearchParamsDTO extends BaseDTO {
 
-	private String searchKeyword = "";	
+	private String searchKeyword = "";
+	private String orderByWithDierction1 = "";
+	private String orderByWithDierction2 = "";
 	private String orderBy1 = "";
 	private String direction1 = "";	
 	private String orderBy2 = "";
 	private String direction2 = "";	
 	private int searchWebSite = -1;
 	
+	public String getOrderByWithDierction1() {
+		return orderByWithDierction1;
+	}
+
+	public void setOrderByWithDierction1(String orderByWithDierction1) {
+		this.orderByWithDierction1 = orderByWithDierction1;
+	}
+
+	public String getOrderByWithDierction2() {
+		return orderByWithDierction2;
+	}
+
+	public void setOrderByWithDierction2(String orderByWithDierction2) {
+		this.orderByWithDierction2 = orderByWithDierction2;
+	}
+
 	public String getDirection1() {
 		return direction1;
 	}

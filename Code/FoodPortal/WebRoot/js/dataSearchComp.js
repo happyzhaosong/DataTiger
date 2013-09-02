@@ -462,8 +462,8 @@ YUI.add('DataSearchApp', function(Y){
         {
         	this._api.searchKeyword = Y.one('#searchKeyword').get("value");
         	
-        	var orderBy1SelIdx = Y.one('#orderBy1').get('selectedIndex');        	
-        	this._api.orderBy1 = Y.one('#orderBy1').get('options')._nodes[orderBy1SelIdx].value
+        	var orderBy1SelIdx = Y.one('#orderByWithDierction1').get('selectedIndex');        	
+        	this._api.orderByWithDierction1 = Y.one('#orderByWithDierction1').get('options')._nodes[orderBy1SelIdx].value
         },
         
         // When we request a new photo, there are a few things that happen.
@@ -611,9 +611,10 @@ YUI.add('DataSearchApp', function(Y){
             apiConfig: {
                 value: {
         			searchKeyword: 'ги©ка╕',                    
-                    orderBy1: 'jia_ge',
-                    orderBy2: '',
-                    per_page: 16                    
+        			orderByWithDierction1: '',
+        			orderByWithDierction1: '',
+                    per_page: 16 ,
+                    charset: 'utf-8',
                 }
             }
         }

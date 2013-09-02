@@ -1,11 +1,11 @@
-<%@page import="com.food.common.util.FoodWebTool, com.food.common.constants.*"%>
+<%@page import="com.food.common.util.FoodWebTool, com.food.common.constants.*, com.general.common.constants.* "%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <link href="<%=basePath%>css/dataSearchComp.css" rel="stylesheet">
 
 <div id="demo" class="yui3-skin-sam hide-pg">
     <!-- search form area-->
     <form id="searchForm">
-        <input type="text" id="searchKeyword" name="searchKeyword" value="chocolate">
+        <input type="text" id="searchKeyword" name="searchKeyword" value="巧克力">
         <input type="submit" id="searchBtn" value="搜索" class="yui3-button">
         
         <p id="searchKeywordTag" class="searchKeywordTag">
@@ -16,17 +16,17 @@
     <!-- order area -->
     <div class="commonContainer">
     	排序：
-    	<select id="orderBy1">
-    		<option value="jia_ge_up">价格从低到高</option>
-			<option value="jia_ge_down">价格从高到低</option>
-			<option value="dan_jia_up">单价从低到高</option>
-			<option value="dan_jia_down">单价从高到低</option>
-			<option value="xiao_liang_up">销量从低到高</option>		
-			<option value="xiao_liang_down">销量从高到低</option>
-			<option value="ping_fen_up">评分从低到高</option>
-			<option value="ping_fen_down">评分从高到低</option>
-			<option value="cu_xiao_jia_up">促销价从低到高</option>
-			<option value="cu_xiao_jia_down">促销价从高到低</option>	 		    		
+    	<select id="orderByWithDierction1">
+    		<option value="jia_ge<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">价格从低到高</option>
+			<option value="jia_ge<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">价格从高到低</option>
+			<option value="dan_jia<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">单价从低到高</option>
+			<option value="dan_jia<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">单价从高到低</option>
+			<option value="xiao_liang<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">销量从低到高</option>		
+			<option value="xiao_liang<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">销量从高到低</option>
+			<option value="ping_fen<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">评分从低到高</option>
+			<option value="ping_fen<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">评分从高到低</option>
+			<option value="cu_xiao_jia<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">促销价从低到高</option>
+			<option value="cu_xiao_jia<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">促销价从高到低</option>	 		    		
     	</select>    
     </div>
  
