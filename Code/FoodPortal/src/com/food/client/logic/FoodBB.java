@@ -1,5 +1,6 @@
 package com.food.client.logic;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ public class FoodBB extends BaseBB {
 	
 	public JsonDTO searchFood(HttpServletRequest request) throws Exception
 	{	
-		BaseSearchParamsDTO searchParamsDto = this.getGeneralSearchParamsDTOFromRequest(request);		
+		BaseSearchParamsDTO searchParamsDto = this.getGeneralSearchParamsDTOFromRequest(request);	
 		List<FoodDTO> dtoList = this.foodDao.searchFood(searchParamsDto);
 		return JsonTool.getJsonDtoByObjList(FoodConstants.JSON_ROOT_FOOD_LIST, dtoList);
 	}

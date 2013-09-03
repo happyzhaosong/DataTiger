@@ -1,8 +1,3 @@
-<meta charset="utf-8">
-<meta http-equiv="pragma" content="no-cache">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="expires" content="0">    
-
 <link rel="stylesheet" href="<%=basePath%>yui_3.11.0/build/node-menunav/assets/skins/sam/node-menunav.css">
 <link href="<%=basePath%>yui_3.11.0/build/cssreset/cssreset.css" rel="stylesheet">
 <link href="<%=basePath%>yui_3.11.0/build/cssbase/cssbase.css" rel="stylesheet">

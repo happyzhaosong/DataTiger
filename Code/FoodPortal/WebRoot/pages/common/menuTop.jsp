@@ -1,4 +1,3 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <div class="yui3-g" id="bd">
     <div class="yui3-u-1" id="main">
        <div id="productsandservices" class="yui3-menu yui3-menu-horizontal">

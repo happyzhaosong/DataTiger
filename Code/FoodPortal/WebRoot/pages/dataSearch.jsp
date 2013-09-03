@@ -1,7 +1,7 @@
-<%@page import="com.food.common.util.FoodWebTool, com.food.common.constants.*, com.general.common.constants.* "%>
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*,com.food.common.util.FoodWebTool, com.food.common.constants.*, com.general.common.constants.*"  contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <link href="<%=basePath%>css/dataSearchComp.css" rel="stylesheet">
-
+<script src="<%=basePath%>js/utilTool.js"></script>
+<script src="<%=basePath%>js/dataSearchComp.js"></script>
 <div id="demo" class="yui3-skin-sam hide-pg">
     <!-- search form area-->
     <form id="searchForm">
@@ -34,7 +34,7 @@
     <div class="paginator"></div>
     <div class="loading"></div>
 </div>
-<script src="<%=basePath%>js/dataSearchComp.js"></script>
+
 <script>
 YUI().use('DataSearchApp', function (Y) {
     

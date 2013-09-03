@@ -434,8 +434,31 @@ YUI.add('DataSearchApp', function(Y){
 
             api.page = page || 1;            
 
-            url += Y.QueryString.stringify(api);
+            url += encodeURI(encodeURI(getParameterByProps(api)));
+            
+            /*
+            
+            Y.io(url, {
+                method: 'GET',
+                data: getParameterByProps(api),
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8'
+                },
+                on: {
+                	failure: Y.bind(function () {
+                        this.setLoading(false);
+                        this.setMessage('Oops!! something broke :(');
+                    }, self),
 
+                    success: Y.bind(function (resp) {
+                        this._processResults(resp.photos);
+                        this._isNewQuery = false;
+                    }, self)
+                }                
+            });
+            */
+            
+            
             Y.jsonp(url, {
                 format: function (url, proxy) {
                     return url + '&jsoncallback=' + proxy;
@@ -452,6 +475,7 @@ YUI.add('DataSearchApp', function(Y){
                     }, self)
                 }
             });
+            
         },
         
         
@@ -613,10 +637,9 @@ YUI.add('DataSearchApp', function(Y){
         			searchKeyword: 'ги©ка╕',                    
         			orderByWithDierction1: '',
         			orderByWithDierction1: '',
-                    per_page: 16 ,
-                    charset: 'utf-8',
+                    per_page: 16 
                 }
             }
         }
     });
-},'1.0',{requires:['paginator-core', 'model', 'view', 'transition', 'jsonp', 'querystring-stringify-simple', 'cssbutton', 'node-event-simulate']});
+},'1.0',{requires:['paginator-core', 'model', 'view', 'transition', 'Escape','jsonp','io-base', 'querystring-stringify-simple', 'cssbutton', 'node-event-simulate']});

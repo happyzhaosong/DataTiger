@@ -28,8 +28,9 @@ public class FoodActionFilter implements Filter {
 		this.request = (HttpServletRequest)req;
 		this.response = (HttpServletResponse)resp;			
 		
-		//request.setCharacterEncoding(GeneralConstants.PAGE_CHAR_SET_UTF8);
-		request.setCharacterEncoding(GeneralConstants.PAGE_CHAR_SET_GB2312);
+		request.setCharacterEncoding(GeneralConstants.PAGE_CHAR_SET_UTF8);
+		response.setCharacterEncoding(GeneralConstants.PAGE_CHAR_SET_UTF8);
+		//request.setCharacterEncoding(GeneralConstants.PAGE_CHAR_SET_GB2312);
 		chain.doFilter(req, resp);
 	}
 
