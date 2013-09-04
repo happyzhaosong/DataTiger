@@ -190,6 +190,10 @@ public class GeneralConstants {
 	public static final String ORDER_BY_ASC = "asc";
 	
 	public static final String ORDER_BY_DESC = "desc";
+	
+	
+	public static final String SEARCH_NO_RESULT_INFO_PREFIX = "没有找到与  \"";
+	public static final String SEARCH_NO_RESULT_INFO_SUFFIX = "\" 相关的信息";
 
 
 }

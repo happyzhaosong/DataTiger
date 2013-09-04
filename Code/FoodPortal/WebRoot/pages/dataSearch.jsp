@@ -5,7 +5,7 @@
 <div id="demo" class="yui3-skin-sam hide-pg">
     <!-- search form area-->
     <form id="searchForm">
-        <input type="text" id="searchKeyword" name="searchKeyword" value="巧克力">
+        <input type="text" id="searchKeyword" name="searchKeyword" value="">
         <input type="submit" id="searchBtn" value="搜索" class="yui3-button">
         
         <p id="searchKeywordTag" class="searchKeywordTag">
@@ -44,7 +44,9 @@ YUI().use('DataSearchApp', function (Y) {
     
     dataSearch.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH)%>';  
     dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px"></ul>';
-    dataSearch.dataItemTemplate = '<li class="yui3-u-1-4" style="height:300px"><div class="resultsItemDiv"><img width="100%" src="http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg"><div>标题:{title}<br/>ID:{id}</div></div></li>';  
+    dataSearch.dataItemTemplate = '<li class="yui3-u-1-4" style="height:300px"><div class="resultsItemDiv"><a href="{itemUrl}" target="_detail"><img width="100%" height="180px" src="{imgUrl}"><div>{biaoTi}</a></div></div></li>';
+    dataSearch.searchNoResultInfoPrefix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_PREFIX%>';
+    dataSearch.searchNoResultInfoSuffix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_SUFFIX%>';  
      
     dataSearch.searchKeywordTagView.url = 'www.baidu.com';
      

@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">    
     <title>秀好吃</title>
-	<%@ include file="/pages/common/header.jsp" %>
+	<%@ include file="/pages/common/header.jsp" %>	
   </head>
 <body class="yui3-skin-sam">
   <!-- <h1>淘宝广告位</h1> -->

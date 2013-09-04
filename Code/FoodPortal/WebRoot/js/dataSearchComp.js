@@ -359,6 +359,10 @@ YUI.add('DataSearchApp', function(Y){
         //the searchKeywordTag view of the search result
         searchKeywordTagView: null,
         
+        searchNoResultInfoPrefix: '',
+        
+        searchNoResultInfoSuffix: '',
+        
         // When our form is submitted, we run a new query on it
         events: {
             '#searchBtn': {
@@ -373,7 +377,7 @@ YUI.add('DataSearchApp', function(Y){
 
             this.paginator = new Y.DataSearchPaginator({
                 model:  new Y.DataSearchPaginatorModel({
-                    itemsPerPage: this._api.per_page
+                    itemsPerPage: this._api.limit
                 })
             });
 
@@ -426,39 +430,34 @@ YUI.add('DataSearchApp', function(Y){
         // If that request fails, we let the user know with a message
         // If the requst succeeds, we process the response data
         requestPhotos: function (page) {
-            this.setLoading(true);
+            this.setLoading(false);
 
             var self = this,
                 api = this._api,
                 url = this.url;
 
-            api.page = page || 1;            
+            api.page = page || 1;
+            api.start = api.limit*(page-1);
 
             url += encodeURI(encodeURI(getParameterByProps(api)));
             
-            /*
-            
             Y.io(url, {
                 method: 'GET',
-                data: getParameterByProps(api),
-                headers: {
-                    'Content-Type': 'application/json; charset=utf-8'
-                },
                 on: {
-                	failure: Y.bind(function () {
+                	failure: Y.bind(function (transactionid, response, arguments) {
                         this.setLoading(false);
                         this.setMessage('Oops!! something broke :(');
                     }, self),
 
-                    success: Y.bind(function (resp) {
-                        this._processResults(resp.photos);
+                    success: Y.bind(function (transactionid, response, arguments) {
+                    	var respJsonObj = Y.JSON.parse(response.responseText);
+                        this._processResults(respJsonObj);
                         this._isNewQuery = false;
                     }, self)
                 }                
             });
-            */
             
-            
+            /*
             Y.jsonp(url, {
                 format: function (url, proxy) {
                     return url + '&jsoncallback=' + proxy;
@@ -475,7 +474,7 @@ YUI.add('DataSearchApp', function(Y){
                     }, self)
                 }
             });
-            
+            */
         },
         
         
@@ -536,16 +535,19 @@ YUI.add('DataSearchApp', function(Y){
         // After we receive a response from the  API, we check if we
         // have any pages to process and send the
         _processResults: function (resp) {
-            this.setMessage( !resp.pages ?
-                'There are no images for "' + this._api.searchKeyword + '"' :
-                ''
-            );
-
+        	if(!resp.exist || resp.JSON_TOTAL_RESULT_COUNT==0)
+        	{
+        		this.setMessage(this.searchNoResultInfoPrefix + this._api.searchKeyword + this.searchNoResultInfoSuffix);	
+        	}else
+        	{
+        		this.setMessage(false);
+        	}
+            
             if (this._isNewQuery) {
-                this.paginator.set('totalItems', parseInt(resp.total, 10));
+                this.paginator.set('totalItems', parseInt(resp.JSON_TOTAL_RESULT_COUNT, 10));
             }
 
-            this._createNewPage(resp.photo);
+            this._createNewPage(resp.JSON_ROOT_FOOD_LIST);
         },
 
         // Once our data have been received by the Flicker API and the
@@ -606,6 +608,9 @@ YUI.add('DataSearchApp', function(Y){
                     //set height here can make the paginator div under the results div after all images loaded
                     resultsNode.setStyle('height', pageContainer.get('offsetHeight'));
 
+                }else
+                {
+                	resultsNode.setStyle('height', pageContainer.get('offsetHeight'));
                 }
             }, this);
 
@@ -637,9 +642,10 @@ YUI.add('DataSearchApp', function(Y){
         			searchKeyword: 'ги©ка╕',                    
         			orderByWithDierction1: '',
         			orderByWithDierction1: '',
-                    per_page: 16 
+        			start: 0,
+                    limit: 16
                 }
             }
         }
     });
-},'1.0',{requires:['paginator-core', 'model', 'view', 'transition', 'Escape','jsonp','io-base', 'querystring-stringify-simple', 'cssbutton', 'node-event-simulate']});
+},'1.0',{requires:['paginator-core', 'model', 'view', 'transition', 'Escape','jsonp','io-base','json', 'querystring-stringify-simple', 'cssbutton', 'node-event-simulate']});
