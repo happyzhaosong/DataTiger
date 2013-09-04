@@ -13,6 +13,7 @@ import com.general.common.dto.JsonDTO;
 import com.general.common.util.GeneralWebTool;
 import com.general.common.util.JsonTool;
 import com.general.common.util.LogTool;
+import com.general.common.util.search.SearchTool;
 
 
 public class FoodActionServlet extends HttpServlet {
@@ -29,7 +30,13 @@ public class FoodActionServlet extends HttpServlet {
 			String action = GeneralWebTool.getStringAttributeBeforeParameter(GeneralConstants.ACTION, request);
 			if(GeneralConstants.ACTION_SEARCH.equals(action))
 			{
-				jsonDto = foodBB.searchFood(request);
+				if(SearchTool.ifSearchTooFrequently(request))
+				{
+					
+				}else
+				{
+					jsonDto = foodBB.searchFood(request);
+				}
 			}
 		}catch(Exception ex)
 		{
