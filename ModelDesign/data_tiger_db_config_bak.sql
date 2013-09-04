@@ -82,6 +82,49 @@ insert  into `account_role_map`(`account_id`,`role_id`) values (1,2);
 
 UNLOCK TABLES;
 
+/*Table structure for table `data_search_log` */
+
+DROP TABLE IF EXISTS `data_search_log`;
+
+CREATE TABLE `data_search_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `search_keyword` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '搜索的关键词',
+  `last_search_date` bigint(20) NOT NULL COMMENT '最后一次搜索的时间,为 java 里面的 System.currentTimeMillis()',
+  `total_search_count` int(11) NOT NULL DEFAULT '0' COMMENT '本关键词总共被搜索的次数，按照这个排序',
+  `search_in` tinyint(4) NOT NULL DEFAULT '-1' COMMENT '搜索的范围 1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `data_search_log` */
+
+LOCK TABLES `data_search_log` WRITE;
+
+insert  into `data_search_log`(`id`,`search_keyword`,`last_search_date`,`total_search_count`,`search_in`) values (1,'巧克力',1378287460696,2,1);
+
+UNLOCK TABLES;
+
+/*Table structure for table `data_search_log_detail` */
+
+DROP TABLE IF EXISTS `data_search_log_detail`;
+
+CREATE TABLE `data_search_log_detail` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `search_keyword` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '搜索的关键词',
+  `search_date` bigint(20) NOT NULL COMMENT '搜索的时间, 为 java 里面的 System.currentTimeMillis()',
+  `searcher_ip` varchar(15) COLLATE utf8_bin NOT NULL COMMENT '搜索者的ip',
+  `searcher_area` varchar(15) COLLATE utf8_bin NOT NULL COMMENT '搜索者所在地名称',
+  `search_in` int(11) NOT NULL DEFAULT '-1' COMMENT '搜索的范围 1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+
+/*Data for the table `data_search_log_detail` */
+
+LOCK TABLES `data_search_log_detail` WRITE;
+
+insert  into `data_search_log_detail`(`id`,`search_keyword`,`search_date`,`searcher_ip`,`searcher_area`,`search_in`) values (1,'巧克力',1378286827772,'127.0.0.1','',1),(2,'巧克力',1378287460694,'127.0.0.1','',1);
+
+UNLOCK TABLES;
+
 /*Table structure for table `db_setting` */
 
 DROP TABLE IF EXISTS `db_setting`;
