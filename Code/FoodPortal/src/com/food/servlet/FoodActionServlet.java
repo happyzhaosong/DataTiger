@@ -32,7 +32,9 @@ public class FoodActionServlet extends HttpServlet {
 			{
 				if(SearchTool.ifSearchTooFrequently(request))
 				{
-					
+					jsonDto = new JsonDTO();
+					jsonDto.setSuccess(false);
+					jsonDto.setMessage("ÄúËÑË÷µÄÌ«Æµ·±£¬Çë5ÃëÖÓºóËÑË÷¡£");
 				}else
 				{
 					jsonDto = foodBB.searchFood(request);

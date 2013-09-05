@@ -45,6 +45,8 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH)%>';  
     dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px"></ul>';
     dataSearch.dataItemTemplate = '<li class="yui3-u-1-4" style="height:300px"><div class="resultsItemDiv"><a href="{itemUrl}" target="_detail"><img width="100%" height="180px" src="{imgUrl}"><div>{biaoTi}</a><br/>价格：{jiaGe} ,    评分：{pingFen}</div></div></li>';
+    
+    dataSearch.systemErrorMessageBusy = '<%=GeneralConstants.ERROR_MESSAGE_SYSTEM_BUSY%>';
     dataSearch.searchNoResultInfoPrefix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_PREFIX%>';
     dataSearch.searchNoResultInfoSuffix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_SUFFIX%>';  
      
@@ -52,10 +54,10 @@ YUI().use('DataSearchApp', function (Y) {
      
     dataSearch.render();
         
-    Y.one('#orderByWithDierction1').on('change', function(e){
+    Y.one('#orderByWithDierction1').on('change', function(e){      
     	Y.one('#searchBtn').simulate('click');	
     });    
-        
+          
     Y.one('#searchBtn').simulate('click');
 });
 </script>

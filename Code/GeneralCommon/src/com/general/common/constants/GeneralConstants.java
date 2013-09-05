@@ -195,10 +195,12 @@ public class GeneralConstants {
 	public static final String SEARCH_NO_RESULT_INFO_PREFIX = "没有找到与  \"";
 	public static final String SEARCH_NO_RESULT_INFO_SUFFIX = "\" 相关的信息";
 	
+	public static final String ERROR_MESSAGE_SYSTEM_BUSY = "系统忙，请稍后访问。";
+	
 	public static final int SEARCH_DATA_IN_XIU_HAO_CHI = 1;
 	public static final int SEARCH_DATA_IN_XIU_HAO_PU = 2;
 	
 	public static final String SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION = "SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION";
 	
-	public static final long SEARCH_FREQUENT_DURATION_IN_MILLION_SECONDS = 1000;
+	public static final long SEARCH_FREQUENT_DURATION_IN_SECONDS = 2;
 }

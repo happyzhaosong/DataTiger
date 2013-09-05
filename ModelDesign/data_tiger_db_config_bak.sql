@@ -93,13 +93,13 @@ CREATE TABLE `data_search_log` (
   `total_search_count` int(11) NOT NULL DEFAULT '0' COMMENT '本关键词总共被搜索的次数，按照这个排序',
   `search_in` tinyint(4) NOT NULL DEFAULT '-1' COMMENT '搜索的范围 1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Data for the table `data_search_log` */
 
 LOCK TABLES `data_search_log` WRITE;
 
-insert  into `data_search_log`(`id`,`search_keyword`,`last_search_date`,`total_search_count`,`search_in`) values (1,'巧克力',1378287460696,2,1);
+insert  into `data_search_log`(`id`,`search_keyword`,`last_search_date`,`total_search_count`,`search_in`) values (1,'核桃',1378361755591,1,1),(2,'核桃仁',1378362075761,1,1),(3,'巧克力',1378368517871,7,1);
 
 UNLOCK TABLES;
 
@@ -113,15 +113,18 @@ CREATE TABLE `data_search_log_detail` (
   `search_date` bigint(20) NOT NULL COMMENT '搜索的时间, 为 java 里面的 System.currentTimeMillis()',
   `searcher_ip` varchar(15) COLLATE utf8_bin NOT NULL COMMENT '搜索者的ip',
   `searcher_area` varchar(15) COLLATE utf8_bin NOT NULL COMMENT '搜索者所在地名称',
-  `search_in` int(11) NOT NULL DEFAULT '-1' COMMENT '搜索的范围 1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
+  `searcher_host` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT '搜索者的主机名称',
+  `search_in` int(2) NOT NULL DEFAULT '-1' COMMENT '搜索的范围 1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
+  `search_mall` int(3) NOT NULL COMMENT '搜索的商城的代号 1---淘宝，2---天猫，3---京东，4---苏宁，5---国美，6---亚马逊，7---当当，8---阿里巴巴，9---1号店，10---新蛋',
+  `order_by` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '本次搜索 orderby 的字段',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
 
 /*Data for the table `data_search_log_detail` */
 
 LOCK TABLES `data_search_log_detail` WRITE;
 
-insert  into `data_search_log_detail`(`id`,`search_keyword`,`search_date`,`searcher_ip`,`searcher_area`,`search_in`) values (1,'巧克力',1378286827772,'127.0.0.1','',1),(2,'巧克力',1378287460694,'127.0.0.1','',1);
+insert  into `data_search_log_detail`(`id`,`search_keyword`,`search_date`,`searcher_ip`,`searcher_area`,`searcher_host`,`search_in`,`search_mall`,`order_by`) values (1,'核桃',1378361755591,'127.0.0.1','','',1,0,''),(2,'核桃仁',1378362075761,'127.0.0.1','','',1,0,''),(3,'巧克力',1378363427048,'127.0.0.1','','127.0.0.1',1,0,''),(4,'巧克力',1378364838584,'127.0.0.1','','127.0.0.1',1,0,''),(5,'巧克力',1378364859270,'127.0.0.1','','127.0.0.1',1,0,''),(6,'巧克力',1378367585913,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num desc ,  '),(7,'巧克力',1378367601871,'127.0.0.1','','127.0.0.1',1,0,'ping_fen_num asc ,  '),(8,'巧克力',1378368256650,'127.0.0.1','','127.0.0.1',1,0,'ping_fen_num asc ,  '),(9,'巧克力',1378368517871,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num desc');
 
 UNLOCK TABLES;
 

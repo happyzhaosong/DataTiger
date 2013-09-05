@@ -2,6 +2,7 @@ package com.general.common.util;
 
 import java.text.Format;
 
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -147,6 +148,33 @@ public class DateTool extends BaseTool {
 		{
 			ret = true;
 		}
+		return ret;
+	}
+	
+	public static long getSecondsBetweenTwoTime(long currSystemTimeMilliSeconds, long lastSystemTimeMilliSeconds)
+	{
+		long ret = 0;
+		
+		Date currDate = new Date(currSystemTimeMilliSeconds);
+		Date lastDate = new Date(lastSystemTimeMilliSeconds);
+		
+		Calendar currCal = Calendar.getInstance();
+		currCal.setTimeInMillis(currSystemTimeMilliSeconds);
+
+		Calendar lastCal = Calendar.getInstance();
+		lastCal.setTimeInMillis(lastSystemTimeMilliSeconds);
+
+		
+		int deltaYear = currCal.get(Calendar.YEAR) - lastCal.get(Calendar.YEAR); 
+		int deltaMonth = currCal.get(Calendar.MONTH) - lastCal.get(Calendar.MONTH);
+		int deltaDate = currCal.get(Calendar.DAY_OF_MONTH) - lastCal.get(Calendar.DAY_OF_MONTH);
+		int deltaHour = currCal.get(Calendar.HOUR_OF_DAY) - lastCal.get(Calendar.HOUR_OF_DAY);
+		int deltaMinute = currCal.get(Calendar.MINUTE) - lastCal.get(Calendar.MINUTE);
+		int deltaSecond = currCal.get(Calendar.SECOND) - lastCal.get(Calendar.SECOND);
+		
+		ret = deltaYear * 365 * 24 * 60 * 60 + deltaMonth * 31 * 24 * 60 *60 + deltaDate * 24 * 60 *60 + deltaHour * 60 *60 + deltaMinute * 60 + deltaSecond;
+		
+		//System.out.println("ret = " + ret);
 		return ret;
 	}
 }

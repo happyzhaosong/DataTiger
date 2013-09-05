@@ -18,7 +18,6 @@ public class DataSearchLogDAO extends BaseDAO {
 			this.initStringBuffer();
 
 			//check whether the searchKeyword exist or not
-			
 			this.whereBuf.append(" search_in = ");
 			this.whereBuf.append(logDto.getSearchIn());
 			this.whereBuf.append(" and search_keyword = '");	
@@ -31,8 +30,14 @@ public class DataSearchLogDAO extends BaseDAO {
 			//if exist then update it's last search time and total search count
 			if(logList.size()>0)
 			{
+				long lastSearchDate = logDto.getLastSearchDate();
+				if(lastSearchDate==0)
+				{
+					lastSearchDate = System.currentTimeMillis();
+				}
+				
 				logDto = logList.get(0);
-				logDto.setLastSearchDate(System.currentTimeMillis());
+				logDto.setLastSearchDate(lastSearchDate);
 				logDto.setTotalSearchCount(logDto.getTotalSearchCount()+1);
 				
 				this.updateDto(logDto);

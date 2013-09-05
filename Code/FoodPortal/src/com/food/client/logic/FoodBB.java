@@ -31,7 +31,10 @@ public class FoodBB extends BaseBB {
 		
 		List<FoodDTO> dtoList = this.foodDao.searchFood(searchParamsDto);
 		
-		this.dataSearchLogBB.logSearchData(request, searchParamsDto.getSearchKeyword(), GeneralConstants.SEARCH_DATA_IN_XIU_HAO_CHI);		
+		if(searchParamsDto.isLogSearchKeyword())
+		{
+			this.dataSearchLogBB.logSearchData(request, searchParamsDto, GeneralConstants.SEARCH_DATA_IN_XIU_HAO_CHI);
+		}
 		
 		return JsonTool.getJsonDtoByObjList(FoodConstants.JSON_ROOT_FOOD_LIST, dtoList);
 	}

@@ -3,8 +3,10 @@ package com.general.client.logic.search;
 import javax.servlet.http.HttpServletRequest;
 
 import com.general.client.logic.BaseBB;
+import com.general.common.dto.search.BaseSearchParamsDTO;
 import com.general.common.dto.search.DataSearchLogDTO;
 import com.general.common.dto.search.DataSearchLogDetailDTO;
+import com.general.common.util.StringTool;
 import com.general.server.dao.search.DataSearchLogDAO;
 
 /*In product env, because for more speed and less db operation to save search time, we can use active mq to implement this feature, that way, search
@@ -14,30 +16,53 @@ public class DataSearchLogBB extends BaseBB {
 	
 	private DataSearchLogDAO dataSearchLogDao = new DataSearchLogDAO();
 	
-	public void logSearchData(HttpServletRequest request, String searchKeyword, int searchIn) throws Exception	
+	public void logSearchData(HttpServletRequest request, BaseSearchParamsDTO searchParamsDto, int searchIn) throws Exception	
 	{
-		DataSearchLogDTO logDto = this.createDataSearchLogDTO(request, searchKeyword, searchIn);
-		DataSearchLogDetailDTO logDetailDto = this.createDataSearchLogDetailDTO(request, searchKeyword, searchIn);
+		DataSearchLogDTO logDto = this.createDataSearchLogDTO(request, searchParamsDto, searchIn);
+		DataSearchLogDetailDTO logDetailDto = this.createDataSearchLogDetailDTO(request, searchParamsDto, searchIn);
 		this.dataSearchLogDao.logSearchData(logDto, logDetailDto);
 	}
 	
 	
-	private DataSearchLogDTO createDataSearchLogDTO(HttpServletRequest request, String searchKeyword, int searchIn)
+	private DataSearchLogDTO createDataSearchLogDTO(HttpServletRequest request, BaseSearchParamsDTO searchParamsDto, int searchIn)
 	{
 		DataSearchLogDTO ret = new DataSearchLogDTO();
-		ret.setSearchKeyword(searchKeyword);
+		ret.setSearchKeyword(searchParamsDto.getSearchKeyword());
 		ret.setLastSearchDate(System.currentTimeMillis());
 		ret.setSearchIn(searchIn);
 		return ret;
 	}
 	
-	private DataSearchLogDetailDTO createDataSearchLogDetailDTO(HttpServletRequest request, String searchKeyword, int searchIn)
+	private DataSearchLogDetailDTO createDataSearchLogDetailDTO(HttpServletRequest request, BaseSearchParamsDTO searchParamsDto, int searchIn)
 	{
 		DataSearchLogDetailDTO ret = new DataSearchLogDetailDTO();
-		ret.setSearchKeyword(searchKeyword);
+		ret.setSearchKeyword(searchParamsDto.getSearchKeyword());
 		ret.setSearchDate(System.currentTimeMillis());
 		ret.setSearcherIp(request.getRemoteAddr());
-		ret.setSearchIn(searchIn);		
+		ret.setSearcherHost(request.getRemoteHost());
+		ret.setSearchIn(searchIn);
+		
+		StringBuffer orderByBuf = new StringBuffer();
+		if(!StringTool.isEmpty(searchParamsDto.getOrderBy1()))
+		{
+			orderByBuf.append(searchParamsDto.getOrderBy1());
+			orderByBuf.append(" ");
+			orderByBuf.append(searchParamsDto.getDirection1());
+		}
+		
+		if(!StringTool.isEmpty(searchParamsDto.getOrderBy2()))
+		{
+			if(orderByBuf.length()!=0)
+			{
+				orderByBuf.append(" , ");
+				orderByBuf.append(searchParamsDto.getOrderBy2());
+				orderByBuf.append(" ");
+				orderByBuf.append(searchParamsDto.getDirection2());
+				
+			}
+		}
+		
+		ret.setOrderBy(orderByBuf.toString());		
 		return ret;		
 	}
 

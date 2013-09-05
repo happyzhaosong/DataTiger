@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import com.general.common.constants.GeneralConstants;
 import com.general.common.util.BaseTool;
+import com.general.common.util.DateTool;
 
 public class SearchTool extends BaseTool {
 
@@ -15,20 +16,18 @@ public class SearchTool extends BaseTool {
 	{
 		boolean ret = false;
 		
-		HttpSession session = request.getSession();		
+		HttpSession session = request.getSession();
 		Object lastSearchTimeObj = session.getAttribute(GeneralConstants.SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION);
+		long currTime = System.currentTimeMillis();
 		if(lastSearchTimeObj!=null)
 		{
-			long lastSearchTime = ((Long)lastSearchTimeObj).longValue();
-			long currTime = System.currentTimeMillis();
-			if((currTime - lastSearchTime) > GeneralConstants.SEARCH_FREQUENT_DURATION_IN_MILLION_SECONDS)
+			long lastSearchTime = ((Long)lastSearchTimeObj).longValue();			
+			if(DateTool.getSecondsBetweenTwoTime(currTime, lastSearchTime) < GeneralConstants.SEARCH_FREQUENT_DURATION_IN_SECONDS)
 			{
 				ret = true;
 			}
-		}else
-		{
-			session.setAttribute(GeneralConstants.SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION, System.currentTimeMillis());
-		}
+		}		
+		session.setAttribute(GeneralConstants.SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION, currTime);		
 		return ret;
 	}
 }

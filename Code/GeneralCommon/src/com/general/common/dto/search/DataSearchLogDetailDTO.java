@@ -22,9 +22,42 @@ public class DataSearchLogDetailDTO extends BaseDTO {
 
 	@DBColumn(name="searcher_area")
 	private String searcherArea = "";
-
+		
+	@DBColumn(name="searcher_host")
+	private String searcherHost = "";
+	
 	@DBColumn(name="search_in")
 	private int searchIn = 1;
+
+	@DBColumn(name="search_mall")
+	private int searchMall = 0;
+	
+	public int getSearchMall() {
+		return searchMall;
+	}
+
+	public void setSearchMall(int searchMall) {
+		this.searchMall = searchMall;
+	}
+
+	@DBColumn(name="order_by")
+	private String orderBy = "";
+
+	public String getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+
+	public String getSearcherHost() {
+		return searcherHost;
+	}
+
+	public void setSearcherHost(String searcherHost) {
+		this.searcherHost = searcherHost;
+	}
 
 	public int getId() {
 		return id;

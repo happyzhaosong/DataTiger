@@ -14,7 +14,16 @@ public class BaseSearchParamsDTO extends BaseDTO {
 	private String orderBy2 = "";
 	private String direction2 = "";	
 	private int searchWebSite = -1;
+	private boolean logSearchKeyword = true;
 	
+	public boolean isLogSearchKeyword() {
+		return logSearchKeyword;
+	}
+
+	public void setLogSearchKeyword(boolean logSearchKeyword) {
+		this.logSearchKeyword = logSearchKeyword;
+	}
+
 	public String getOrderByWithDierction1() {
 		return orderByWithDierction1;
 	}

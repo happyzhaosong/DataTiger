@@ -363,6 +363,8 @@ YUI.add('DataSearchApp', function(Y){
         
         searchNoResultInfoSuffix: '',
         
+        systemErrorMessageBusy: '',
+        
         // When our form is submitted, we run a new query on it
         events: {
             '#searchBtn': {
@@ -439,20 +441,38 @@ YUI.add('DataSearchApp', function(Y){
             api.page = page || 1;
             api.start = api.limit*(page-1);
 
-            url += encodeURI(encodeURI(getParameterByProps(api)));
+            //url += encodeURI(encodeURI(getParameterByProps(api)));
+            url += encodeURI(Y.QueryString.stringify(api));
             
             Y.io(url, {
                 method: 'GET',
                 on: {
                 	failure: Y.bind(function (transactionid, response, arguments) {
                         this.setLoading(false);
-                        this.setMessage('Oops!! something broke :(');
+                        var respJsonObj = Y.JSON.parse(response.responseText);
+                        var errMsg = respJsonObj.message; 
+                        if(errMsg=='')
+                        {
+                        	errMsg = systemErrorMessageBusy;
+                        }
+                        this.setMessage(errMsg);
                     }, self),
 
                     success: Y.bind(function (transactionid, response, arguments) {
                     	var respJsonObj = Y.JSON.parse(response.responseText);
-                        this._processResults(respJsonObj);
-                        this._isNewQuery = false;
+                    	if(respJsonObj.success)
+                    	{
+                    		this._processResults(respJsonObj);
+                    		this._isNewQuery = false;
+                    	}else
+                    	{
+                   		 	var errMsg = respJsonObj.message; 
+                   		 	if(errMsg=='')
+                   		 	{
+                   		 		errMsg = systemErrorMessageBusy;
+                   		 	}
+                   		 	this.setMessage(errMsg);                    		
+                    	}
                     }, self)
                 }                
             });
@@ -481,7 +501,7 @@ YUI.add('DataSearchApp', function(Y){
         /*
          * Construct search params by usr input and selected search condition
          * */
-        constructSearchParams: function()
+        _constructSearchParams: function()
         {
         	this._api.searchKeyword = Y.one('#searchKeyword').get("value");
         	
@@ -512,14 +532,16 @@ YUI.add('DataSearchApp', function(Y){
         // request we remove our old pages, ensure our paginator is set to
         // page 1 and request our new set of photos
         _afterFormSubmit: function (e) {
-            e.preventDefault();
+            e.preventDefault();                
 
+            this._api.logSearchKeyword = true;
+            
             while (this._pages.length) {
                 this._pages.shift().destroy({ remove: true });
             }
 
             //construct user input to search params.
-            this.constructSearchParams();
+            this._constructSearchParams();
 
             this._isNewQuery = true;
 
@@ -625,6 +647,7 @@ YUI.add('DataSearchApp', function(Y){
 
         // After our page changes, we request that page's photos
         _afterPageChange: function (e) {
+        	this._api.logSearchKeyword = false;
             this.requestPhotos(e.newVal);
         },
         
@@ -639,11 +662,13 @@ YUI.add('DataSearchApp', function(Y){
             // This will contain our settings for the  API
             apiConfig: {
                 value: {
-        			searchKeyword: '巧克力',                    
+        			searchKeyword: '巧克力',
+        			logSearchKeyword: true,
         			orderByWithDierction1: '',
         			orderByWithDierction1: '',
+        			page: 1,
         			start: 0,
-                    limit: 16
+                    limit: 16,                    
                 }
             }
         }
