@@ -48,15 +48,9 @@ YUI().use('DataSearchApp', function (Y) {
     
     dataSearch.systemErrorMessageBusy = '<%=GeneralConstants.ERROR_MESSAGE_SYSTEM_BUSY%>';
     dataSearch.searchNoResultInfoPrefix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_PREFIX%>';
-    dataSearch.searchNoResultInfoSuffix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_SUFFIX%>';  
-     
-    var dataSearchKeywordTag = new Y.DataSearchKeywordTagView({
-        container: '#searchKeywordTag'
-    }); 
-    dataSearchKeywordTag.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS)%>';     
-    dataSearchKeywordTag.requestSearchKeywordTags(1);
+    dataSearch.searchNoResultInfoSuffix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_SUFFIX%>';
     
-    dataSearch.searchKeywordTagView = dataSearchKeywordTag;
+    dataSearch.searchKeywordTagView.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS)%>';  
  
     dataSearch.render();
         

@@ -427,7 +427,7 @@ YUI.add('DataSearchApp', function(Y){
 
             this.paginator.get('model').after('pageChange', this._afterPageChange, this);
             
-            this.searchKeywordTagView = new Y.DataSearchKeywordTagView();
+            this.searchKeywordTagView = new Y.DataSearchKeywordTagView({container: '#searchKeywordTag'});
         },
 
         // We append our paginator to the paginator placeholder in our
@@ -574,7 +574,7 @@ YUI.add('DataSearchApp', function(Y){
                 this.requestPhotos();
             }
             
-            //this.searchKeywordTagView.requestSearchKeywordTags(1);
+            this.searchKeywordTagView.requestSearchKeywordTags(1);
         },
 
         // After we receive a response from the  API, we check if we
