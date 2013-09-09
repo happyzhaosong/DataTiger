@@ -13,6 +13,7 @@ import com.general.common.dto.JsonDTO;
 import com.general.common.util.GeneralWebTool;
 import com.general.common.util.JsonTool;
 import com.general.common.util.LogTool;
+import com.general.common.util.StringTool;
 import com.general.common.util.search.SearchTool;
 
 
@@ -27,19 +28,23 @@ public class FoodActionServlet extends HttpServlet {
 		JsonDTO jsonDto = null;
 			
 		try{
-			String action = GeneralWebTool.getStringAttributeBeforeParameter(GeneralConstants.ACTION, request);
-			if(GeneralConstants.ACTION_SEARCH.equals(action))
+			if(SearchTool.ifSearchTooFrequently(request))
 			{
-				if(SearchTool.ifSearchTooFrequently(request))
-				{
-					jsonDto = new JsonDTO();
-					jsonDto.setSuccess(false);
-					jsonDto.setMessage("ÄúËÑË÷µÄÌ«Æµ·±£¬Çë5ÃëÖÓºóËÑË÷¡£");
-				}else
+				jsonDto = new JsonDTO();
+				jsonDto.setSuccess(false);
+				jsonDto.setMessage("Äú·ÃÎÊµÄÌ«Æµ·±£¬Çë5ÃëÖÓºó·ÃÎÊ¡£");
+			}else
+			{
+				String action = GeneralWebTool.getStringAttributeBeforeParameter(GeneralConstants.ACTION, request);
+				
+				if(GeneralConstants.ACTION_SEARCH.equals(action))
 				{
 					jsonDto = foodBB.searchFood(request);
+				}else if(GeneralConstants.ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS.equals(action))
+				{
+					jsonDto = foodBB.getFoodSearchKeyword();
 				}
-			}
+			}		
 		}catch(Exception ex)
 		{
 			LogTool.logError( ex);
@@ -73,4 +78,7 @@ public class FoodActionServlet extends HttpServlet {
 		this.doGet(req, resp);
 	}
 
+	
+	
+	
 }

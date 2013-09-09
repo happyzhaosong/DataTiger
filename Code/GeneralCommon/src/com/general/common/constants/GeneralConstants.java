@@ -35,8 +35,10 @@ public class GeneralConstants {
 	public static final String ACTION_EDIT = "ACTION_EDIT";
 	public static final String ACTION_LOGIN = "ACTION_LOGIN";
 	public static final String ACTION_LOGOUT = "ACTION_LOGOUT";
-	public static final String ACTION_SEARCH = "ACTION_SEARCH";
 	
+	public static final String ACTION_SEARCH = "ACTION_SEARCH";
+	public static final String ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS = "ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS";
+		
 	public static final String LIST = "_LIST";	
 	public static final String LIST_ALL = "_LIST_ALL";
 	public static final String RESET = "_RESET";
@@ -154,6 +156,8 @@ public class GeneralConstants {
 	public static final String JSON_USER_ACCOUNT = "JSON_USER_ACCOUNT";
 	public static final String JSON_USER_ROLE = "JSON_USER_ROLE";
 	public static final String JSON_TOTAL_RESULT_COUNT = "JSON_TOTAL_RESULT_COUNT";
+	
+	public static final String JSON_SEARCH_KEYWORD_LIST = "JSON_SEARCH_KEYWORD_LIST";
 		
 	public static final String SERIAL_VERSION_UID = "serialVersionUID";
 	
@@ -201,6 +205,7 @@ public class GeneralConstants {
 	public static final int SEARCH_DATA_IN_XIU_HAO_PU = 2;
 	
 	public static final String SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION = "SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION";
+	public static final String SEARCH_LAST_SEARCH_ACTION = "SEARCH_LAST_SEARCH_ACTION";
 	
 	public static final long SEARCH_FREQUENT_DURATION_IN_SECONDS = 2;
 }

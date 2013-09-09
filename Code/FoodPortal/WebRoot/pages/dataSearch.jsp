@@ -50,8 +50,14 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.searchNoResultInfoPrefix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_PREFIX%>';
     dataSearch.searchNoResultInfoSuffix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_SUFFIX%>';  
      
-    dataSearch.searchKeywordTagView.url = 'www.baidu.com';
-     
+    var dataSearchKeywordTag = new Y.DataSearchKeywordTagView({
+        container: '#searchKeywordTag'
+    }); 
+    dataSearchKeywordTag.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS)%>';     
+    dataSearchKeywordTag.requestSearchKeywordTags(1);
+    
+    dataSearch.searchKeywordTagView = dataSearchKeywordTag;
+ 
     dataSearch.render();
         
     Y.one('#orderByWithDierction1').on('change', function(e){      

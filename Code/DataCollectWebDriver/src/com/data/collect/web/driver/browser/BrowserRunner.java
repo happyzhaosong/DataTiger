@@ -1064,25 +1064,27 @@ public class BrowserRunner {
     			List<String> urlList = new ArrayList<String>();
     			try
     			{    			
-	    			if(Constants.WEB_ELEMENT_TAG_NAME_A.equalsIgnoreCase(linkParseDto.getByEleVal()))
+	    			if(Constants.WEB_DRIVER_SEARCH_BY_TYPE_TAG_NAME.equalsIgnoreCase(linkParseDto.getByEleType()))
 					{
-		    			urlList = HtmlTool.parseOutUrlLinkList(pageSource, realPageUrl, webSiteDto, linkParseDto);
-		    			getDltaTimeTool.getDeltaTime("regexp parse new task list count " + urlList.size() + " ,<br/> HtmlTool.parseOutUrlLinkList", retBuf, 0, false);
-					    LogTool.debugText(retBuf.toString());
-					    
-		    			if(ClassTool.isListEmpty(urlList))
-		    			{
-		    				//if not parsed out url with regexp then use web driver to parse url out.
-		    				urlList = this.getUrlListByWebDriver(driver, linkParseDto);
-			    			getDltaTimeTool.getDeltaTime("webdriver parse new task list count " + urlList.size(), retBuf, 0, false);
+	    				if(Constants.WEB_ELEMENT_TAG_NAME_A.equalsIgnoreCase(linkParseDto.getByEleVal()))
+	    				{
+			    			urlList = HtmlTool.parseOutUrlLinkList(pageSource, realPageUrl, webSiteDto, linkParseDto);
+			    			getDltaTimeTool.getDeltaTime("regexp parse new task list count " + urlList.size() + " ,<br/> HtmlTool.parseOutUrlLinkList", retBuf, 0, false);
 						    LogTool.debugText(retBuf.toString());
-	
-		    				if(ClassTool.isListEmpty(urlList))
-		    				{
-		    					LogTool.logText("Prased out 0 url links, originalPageUrl = " + parentTaskDto.getPageUrl() + " , realPageUrl = " + realPageUrl);
-		    				}
-		    			} 	
-	
+						    
+			    			if(ClassTool.isListEmpty(urlList))
+			    			{
+			    				//if not parsed out url with regexp then use web driver to parse url out.
+			    				urlList = this.getUrlListByWebDriver(driver, linkParseDto);
+				    			getDltaTimeTool.getDeltaTime("webdriver parse new task list count " + urlList.size(), retBuf, 0, false);
+							    LogTool.debugText(retBuf.toString());
+		
+			    				if(ClassTool.isListEmpty(urlList))
+			    				{
+			    					LogTool.logText("Parsed out 0 url links, originalPageUrl = " + parentTaskDto.getPageUrl() + " , realPageUrl = " + realPageUrl);
+			    				}
+			    			}
+	    				}	
 					}else
 					{
 						if(!StringTool.isEmpty(linkParseDto.getByEleType()) && !StringTool.isEmpty(linkParseDto.getByEleVal()))

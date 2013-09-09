@@ -61,7 +61,8 @@ public class DBManagerBB extends BaseBB {
 				String whereClause = dbManagerDao.getWhereBuf().toString().trim();
 				if(whereClause.length()>0)
 				{
-					downloadTaskIdInWhereSql = downloadTaskIdInWhereSql + " where " + whereClause + " and download_task_level != '" + taskLevel + "'";
+					//downloadTaskIdInWhereSql = downloadTaskIdInWhereSql + " where " + whereClause + " and download_task_level != '" + taskLevel + "'";
+					downloadTaskIdInWhereSql = downloadTaskIdInWhereSql + " where " + whereClause;
 				}
 				//reset all search condition result apply time to '' and task level to user input task level.
 				String updateDownloadTaskIds = downloadTaskDao.resetDownloadTaskApplyTimeAndLevelByWebSiteId(downloadTaskIdInWhereSql, taskLevel, resetApplyTime);

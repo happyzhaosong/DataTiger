@@ -1,11 +1,14 @@
 package com.general.client.logic.search;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-
 import com.general.client.logic.BaseBB;
+import com.general.common.constants.GeneralConstants;
+import com.general.common.dto.JsonDTO;
 import com.general.common.dto.search.BaseSearchParamsDTO;
 import com.general.common.dto.search.DataSearchLogDTO;
 import com.general.common.dto.search.DataSearchLogDetailDTO;
+import com.general.common.util.JsonTool;
 import com.general.common.util.StringTool;
 import com.general.server.dao.search.DataSearchLogDAO;
 
@@ -15,6 +18,16 @@ import com.general.server.dao.search.DataSearchLogDAO;
 public class DataSearchLogBB extends BaseBB {
 	
 	private DataSearchLogDAO dataSearchLogDao = new DataSearchLogDAO();
+		
+	public JsonDTO getLogSearchDataListInJson(int searchIn) throws Exception	
+	{
+		return JsonTool.getJsonDtoByObjList(GeneralConstants.JSON_SEARCH_KEYWORD_LIST, this.getLogSearchDataList(searchIn));
+	}
+	
+	private List<DataSearchLogDTO> getLogSearchDataList(int searchIn) throws Exception	
+	{
+		return this.dataSearchLogDao.getLogSearchDataList(searchIn);
+	}
 	
 	public void logSearchData(HttpServletRequest request, BaseSearchParamsDTO searchParamsDto, int searchIn) throws Exception	
 	{

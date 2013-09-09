@@ -50,4 +50,23 @@ public class DataSearchLogDAO extends BaseDAO {
 			this.insertDto(logDetailDto);
 		}		
 	}
+	
+	
+	public List<DataSearchLogDTO> getLogSearchDataList(int searchIn) throws Exception	
+	{
+		this.initStringBuffer();
+
+		//check whether the searchKeyword exist or not
+		if(searchIn>0)
+		{
+			this.whereBuf.append(" search_in = ");
+			this.whereBuf.append(searchIn);
+		}
+		
+		this.orderByBuf.append(" last_search_date desc, total_search_count desc "); 
+		
+		List<DataSearchLogDTO> logList = new ArrayList<DataSearchLogDTO>();
+		logList = logList.getClass().cast(this.selectDtoList(DataSearchLogDTO.class, DBManager.getInstance().getMysqlDataSource()));
+		return logList;
+	}
 }

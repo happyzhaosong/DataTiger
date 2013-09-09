@@ -300,28 +300,71 @@ YUI.add('DataSearchApp', function(Y){
     	
     	    this.get('container').append(tagItems)
     	},
-    	    	
-        render: function () {
-        	this._processSearchKeywordTagResults();
-        	/*
-        	Y.jsonp(url, {
-        	     format: function (url, proxy) {
-        	        return url + '&jsoncallback=' + proxy;
-        	     },
-        	     on: {
-		        	     failure: Y.bind(function () {                        
-		        	        this.setMessage('Oops!! something broke :(');
-		        	     }, self),
-		        	
-		        	     success: Y.bind(function (resp) {
-		        	        this._processSearchKeywordTagResults(resp.searchKeywordTags);
-		        	     }, self)
-        	     }
-        	});
-        	*/
+    	    	      
+        // When we request a new photo, there are a few things that happen.
+        //
+        // * First we alert our app that something is loading
+        // * Then we construct our url based on the API configuration and the
+        //   page requested
+        // * Finally we request the API response through JSON-P
+        //
+        // If that request fails, we let the user know with a message
+        // If the requst succeeds, we process the response data
+        requestSearchKeywordTags: function (page) {            
+            Y.io(this.url, {
+                method: 'GET',
+                on: {
+                	failure: Y.bind(function (transactionid, response, arguments) {
+                        this.setLoading(false);
+                        var respJsonObj = Y.JSON.parse(response.responseText);
+                        var errMsg = respJsonObj.message; 
+                        if(errMsg=='')
+                        {
+                        	errMsg = systemErrorMessageBusy;
+                        }
+                        this.setMessage(errMsg);
+                    }, this),
+
+                    success: Y.bind(function (transactionid, response, arguments) {
+                    	var respJsonObj = Y.JSON.parse(response.responseText);
+                    	if(respJsonObj.success)
+                    	{
+                    		this._processSearchKeywordTagResults(respJsonObj);        		
+                    	}else
+                    	{
+                   		 	var errMsg = respJsonObj.message; 
+                   		 	if(errMsg=='')
+                   		 	{
+                   		 		errMsg = systemErrorMessageBusy;
+                   		 	}
+                   		 	this.setMessage(errMsg);                    		
+                    	}
+                    }, this)
+                }                
+            });
+        	
         },
         
-        _processSearchKeywordTagResults: function(){
+        // Our app needs a way to display a message to the user where there's
+        // an error or remove an error message if there is no longer a
+        // message that needs to be displayed
+        setMessage: function (msg) {
+            var container = this.get('container'),
+                msgNode = container.one('#searchKeywordTag .msg');
+
+            if (msg) {
+                container.one('#searchKeywordTag').setHTML('<div class="msg">' + msg + '</div>');
+                //container.removeClass('hide-pg');
+                this.setLoading(false);
+            } else {
+                if (msgNode) {
+                    msgNode.remove();
+                }
+            }
+        },
+        
+        
+        _processSearchKeywordTagResults: function(resp){
         	this.get('container').empty();
         	this.get('container').append('<a href="#">java</a>&nbsp;&nbsp;<a href="#">c</a>&nbsp;&nbsp;<a href="#">girl</a>');
         	
@@ -331,7 +374,6 @@ YUI.add('DataSearchApp', function(Y){
             	Y.one('#searchKeyword').set('value',searchKeyword);
             	Y.one('#searchBtn').simulate('click');    	
             });
-
         }    
     });
     
@@ -507,26 +549,7 @@ YUI.add('DataSearchApp', function(Y){
         	
         	var orderBy1SelIdx = Y.one('#orderByWithDierction1').get('selectedIndex');        	
         	this._api.orderByWithDierction1 = Y.one('#orderByWithDierction1').get('options')._nodes[orderBy1SelIdx].value
-        },
-        
-        // When we request a new photo, there are a few things that happen.
-        //
-        // * First we alert our app that something is loading
-        // * Then we construct our url based on the API configuration and the
-        //   page requested
-        // * Finally we request the API response through JSON-P
-        //
-        // If that request fails, we let the user know with a message
-        // If the requst succeeds, we process the response data
-        requestSearchKeywordTags: function (page) {
-        	var searchKeywordTagNode = Y.one('#demo .searchKeywordTag');
-        	if(searchKeywordTagNode!=null)
-        	{
-        		this.searchKeywordTagView.set('container', searchKeywordTagNode);
-        		this.searchKeywordTagView.render();
-        	}
-        },
-        
+        },        
 
         // When our form is submitted, we assume it's a new request. As a new
         // request we remove our old pages, ensure our paginator is set to
@@ -551,7 +574,7 @@ YUI.add('DataSearchApp', function(Y){
                 this.requestPhotos();
             }
             
-            this.requestSearchKeywordTags();
+            //this.searchKeywordTagView.requestSearchKeywordTags(1);
         },
 
         // After we receive a response from the  API, we check if we
