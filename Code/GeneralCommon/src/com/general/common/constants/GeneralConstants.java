@@ -207,5 +207,6 @@ public class GeneralConstants {
 	public static final String SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION = "SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION";
 	public static final String SEARCH_LAST_SEARCH_ACTION = "SEARCH_LAST_SEARCH_ACTION";
 	
-	public static final long SEARCH_FREQUENT_DURATION_IN_SECONDS = 2;
+	//100 MILLI SECONDS
+	public static final long SEARCH_FREQUENT_DURATION_IN_MILLISECONDS = 100;
 }

@@ -31,21 +31,22 @@ public class SearchTool extends BaseTool {
 			ret = true;
 		}else if(lastSearchActionObj!=null)
 		{
-			if(currAction.equalsIgnoreCase((String)lastSearchActionObj))
-			{
-				if(lastSearchTimeObj!=null)
-				{		
-					long lastSearchTime = ((Long)lastSearchTimeObj).longValue();			
-					if(DateTool.getSecondsBetweenTwoTime(currTime, lastSearchTime) < GeneralConstants.SEARCH_FREQUENT_DURATION_IN_SECONDS)
-					{
-						ret = true;
-					}
+			if(lastSearchTimeObj!=null)
+			{		
+				long lastSearchTime = ((Long)lastSearchTimeObj).longValue();		
+				//如果访问间隔小于 100 毫秒则认为是攻击访问
+				if(DateTool.getMilliSecondsBetweenTwoTime(currTime, lastSearchTime) < GeneralConstants.SEARCH_FREQUENT_DURATION_IN_MILLISECONDS)
+				{
+					ret = true;
 				}
-			}
+			}			
 		}
 		
-		session.setAttribute(GeneralConstants.SEARCH_LAST_SEARCH_ACTION, currAction);
-		session.setAttribute(GeneralConstants.SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION, currTime);	
+		if(GeneralConstants.ACTION_SEARCH.equalsIgnoreCase(currAction))
+		{
+			session.setAttribute(GeneralConstants.SEARCH_LAST_SEARCH_ACTION, currAction);
+			session.setAttribute(GeneralConstants.SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION, currTime);
+		}
 		return ret;
 	}
 }

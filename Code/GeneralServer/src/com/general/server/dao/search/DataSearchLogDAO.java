@@ -37,6 +37,11 @@ public class DataSearchLogDAO extends BaseDAO {
 				}
 				
 				logDto = logList.get(0);
+				
+				this.initStringBuffer();
+				this.whereBuf.append(" id = ");
+				this.whereBuf.append(logDto.getId());				
+				
 				logDto.setLastSearchDate(lastSearchDate);
 				logDto.setTotalSearchCount(logDto.getTotalSearchCount()+1);
 				

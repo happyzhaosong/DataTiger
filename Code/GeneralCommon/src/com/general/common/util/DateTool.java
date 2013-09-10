@@ -151,7 +151,7 @@ public class DateTool extends BaseTool {
 		return ret;
 	}
 	
-	public static long getSecondsBetweenTwoTime(long currSystemTimeMilliSeconds, long lastSystemTimeMilliSeconds)
+	public static long getMilliSecondsBetweenTwoTime(long currSystemTimeMilliSeconds, long lastSystemTimeMilliSeconds)
 	{
 		long ret = 0;
 		
@@ -171,10 +171,13 @@ public class DateTool extends BaseTool {
 		int deltaHour = currCal.get(Calendar.HOUR_OF_DAY) - lastCal.get(Calendar.HOUR_OF_DAY);
 		int deltaMinute = currCal.get(Calendar.MINUTE) - lastCal.get(Calendar.MINUTE);
 		int deltaSecond = currCal.get(Calendar.SECOND) - lastCal.get(Calendar.SECOND);
+		int deltaMilliSecond = currCal.get(Calendar.MILLISECOND) - lastCal.get(Calendar.MILLISECOND);
 		
 		ret = deltaYear * 365 * 24 * 60 * 60 + deltaMonth * 31 * 24 * 60 *60 + deltaDate * 24 * 60 *60 + deltaHour * 60 *60 + deltaMinute * 60 + deltaSecond;
 		
-		//System.out.println("ret = " + ret);
+		ret = ret*1000 + deltaMilliSecond;
+		
+		System.out.println("ret miliseconds = " + ret);
 		return ret;
 	}
 }

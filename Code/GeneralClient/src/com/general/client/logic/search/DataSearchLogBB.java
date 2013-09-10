@@ -4,10 +4,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import com.general.client.logic.BaseBB;
 import com.general.common.constants.GeneralConstants;
+import com.general.common.dto.BasePageDTO;
 import com.general.common.dto.JsonDTO;
 import com.general.common.dto.search.BaseSearchParamsDTO;
 import com.general.common.dto.search.DataSearchLogDTO;
 import com.general.common.dto.search.DataSearchLogDetailDTO;
+import com.general.common.util.ClassTool;
 import com.general.common.util.JsonTool;
 import com.general.common.util.StringTool;
 import com.general.server.dao.search.DataSearchLogDAO;
@@ -19,13 +21,20 @@ public class DataSearchLogBB extends BaseBB {
 	
 	private DataSearchLogDAO dataSearchLogDao = new DataSearchLogDAO();
 		
-	public JsonDTO getLogSearchDataListInJson(int searchIn) throws Exception	
+	public JsonDTO getLogSearchDataListInJson(HttpServletRequest request, int searchIn) throws Exception	
 	{
-		return JsonTool.getJsonDtoByObjList(GeneralConstants.JSON_SEARCH_KEYWORD_LIST, this.getLogSearchDataList(searchIn));
+		return JsonTool.getJsonDtoByObjList(GeneralConstants.JSON_SEARCH_KEYWORD_LIST, this.getLogSearchDataList(request, searchIn));
 	}
 	
-	private List<DataSearchLogDTO> getLogSearchDataList(int searchIn) throws Exception	
+	private List<DataSearchLogDTO> getLogSearchDataList(HttpServletRequest request, int searchIn) throws Exception	
 	{
+		BasePageDTO pageDto = (BasePageDTO)ClassTool.extractValueFromRequest(BasePageDTO.class, request);
+		pageDto.setLimit("10");
+		
+		int start = (Integer.parseInt(pageDto.getPage()) -1)*(Integer.parseInt(pageDto.getLimit()));
+		pageDto.setStart(String.valueOf(start));
+		
+		this.dataSearchLogDao.setPageDto(pageDto);
 		return this.dataSearchLogDao.getLogSearchDataList(searchIn);
 	}
 	

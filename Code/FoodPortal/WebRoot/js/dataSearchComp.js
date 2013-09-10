@@ -301,7 +301,7 @@ YUI.add('DataSearchApp', function(Y){
         // If the requst succeeds, we process the response data
         requestSearchKeywordTags: function() {
         	var url = this.url + 'page=' + this.page;
-            Y.io(this.url, {
+            Y.io(url, {
                 method: 'GET',
                 on: {
                 	failure: Y.bind(function (transactionid, response, arguments) {
@@ -319,15 +319,17 @@ YUI.add('DataSearchApp', function(Y){
                     	var respJsonObj = Y.JSON.parse(response.responseText);
                     	if(respJsonObj.success)
                     	{
-                    		this._processSearchKeywordTagResults(respJsonObj);        		
+                    		this._processSearchKeywordTagResults(respJsonObj, this);     		
                     	}else
                     	{
+                    		/*
                    		 	var errMsg = respJsonObj.message; 
                    		 	if(errMsg=='')
                    		 	{
                    		 		errMsg = systemErrorMessageBusy;
                    		 	}
-                   		 	this.setMessage(errMsg);                    		
+                   		 	this.setMessage(errMsg);
+                   		 	*/                    		
                     	}
                     }, this)
                 }                
@@ -339,22 +341,28 @@ YUI.add('DataSearchApp', function(Y){
         // an error or remove an error message if there is no longer a
         // message that needs to be displayed
         setMessage: function (msg) {
-            var container = this.get('container'),
-                msgNode = container.one('#searchKeywordTag .msg');
+            var container = Y.one('.results'),
+                msgNode = container.one('.msg');
 
             if (msg) {
-                container.one('#searchKeywordTag').setHTML('<div class="msg">' + msg + '</div>');
-                //container.removeClass('hide-pg');
+            	container.setHTML('<div class="msg">' + msg + '</div>');                
                 this.setLoading(false);
             } else {
                 if (msgNode) {
                     msgNode.remove();
                 }
             }
-        },
+        },               
         
-        
-        _processSearchKeywordTagResults: function(resp){
+        _processSearchKeywordTagResults: function(resp, context){
+        	if(!resp.exist)
+        	{
+        		if(this.page>1)
+        		{
+        			this.page--;
+        		}
+        		return;
+        	}
         	this.get('container').empty();
         	var searchkeywordTags = '';
         	var keywordList = resp.JSON_SEARCH_KEYWORD_LIST;
@@ -374,16 +382,31 @@ YUI.add('DataSearchApp', function(Y){
         	
             Y.all('#searchKeywordTag a').on('click',function(ev){
             	ev.preventDefault();
-            	var searchKeyword = ev.currentTarget.getHTML();    	
-            	Y.one('#searchKeyword').set('value',searchKeyword);
-            	Y.one('#searchBtn').simulate('click');    	
+            	var currTarget = ev.currentTarget._node;
+            	if(currTarget.id == 'searchKeywordPrev')
+            	{
+            		if(context.page>1)
+            		{
+            			context.page--;
+            		}
+            		context.requestSearchKeywordTags();
+            	}else if(currTarget.id == 'searchKeywordNext')
+            	{
+            		context.page++;
+            		context.requestSearchKeywordTags();
+            	}else
+            	{
+            		var searchKeyword = ev.currentTarget.getHTML();    	
+            		Y.one('#searchKeyword').set('value',searchKeyword);
+            		Y.one('#searchBtn').simulate('click');
+            	}
             });
         },
         
         
         _makeControl: function(){
-        	var control = '<li><a href="#" title="Previous" alt="Previous"><&nbsp;</a></li>';
-        	control += '<li><a href="#" title="Next" alt="Next">&nbsp;></a></li>';
+        	var control = '<li><a id="searchKeywordPrev" href="#" title="Previous" alt="Previous"><&nbsp;</a></li>';
+        	control += '<li><a id="searchKeywordNext" href="#" title="Next" alt="Next">&nbsp;></a></li>';
         	return control;
         }
     });

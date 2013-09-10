@@ -39,8 +39,8 @@ public class FoodBB extends BaseBB {
 		return JsonTool.getJsonDtoByObjList(FoodConstants.JSON_ROOT_FOOD_LIST, dtoList);
 	}
 	
-	public JsonDTO getFoodSearchKeyword() throws Exception
+	public JsonDTO getFoodSearchKeyword(HttpServletRequest request) throws Exception
 	{
-		return this.dataSearchLogBB.getLogSearchDataListInJson(GeneralConstants.SEARCH_DATA_IN_XIU_HAO_CHI);
+		return this.dataSearchLogBB.getLogSearchDataListInJson(request, GeneralConstants.SEARCH_DATA_IN_XIU_HAO_CHI);
 	}
 }

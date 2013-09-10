@@ -42,7 +42,7 @@ public class FoodActionServlet extends HttpServlet {
 					jsonDto = foodBB.searchFood(request);
 				}else if(GeneralConstants.ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS.equals(action))
 				{
-					jsonDto = foodBB.getFoodSearchKeyword();
+					jsonDto = foodBB.getFoodSearchKeyword(request);
 				}
 			}		
 		}catch(Exception ex)
