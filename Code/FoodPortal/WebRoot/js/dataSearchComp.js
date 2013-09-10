@@ -288,19 +288,8 @@ YUI.add('DataSearchApp', function(Y){
     	
     	dataItemTemplate: '',
     	
-    	addTags: function (searchKeyWordTags) {
-    	    var container = this.get('container'),
-    	   		tagItems = '',
-    	        i,
-    	        len;
-    	
-    	    for (i = 0, len = searchKeyWordTags.length; i < len; i++) {
-    	           	tagItems += Y.Lang.sub(this.dataItemTemplate, searchKeyWordTags[i]);
-    	    }
-    	
-    	    this.get('container').append(tagItems)
-    	},
-    	    	      
+    	page: 1,
+        	    	      
         // When we request a new photo, there are a few things that happen.
         //
         // * First we alert our app that something is loading
@@ -310,7 +299,8 @@ YUI.add('DataSearchApp', function(Y){
         //
         // If that request fails, we let the user know with a message
         // If the requst succeeds, we process the response data
-        requestSearchKeywordTags: function (page) {            
+        requestSearchKeywordTags: function() {
+        	var url = this.url + 'page=' + this.page;
             Y.io(this.url, {
                 method: 'GET',
                 on: {
@@ -366,7 +356,21 @@ YUI.add('DataSearchApp', function(Y){
         
         _processSearchKeywordTagResults: function(resp){
         	this.get('container').empty();
-        	this.get('container').append('<a href="#">java</a>&nbsp;&nbsp;<a href="#">c</a>&nbsp;&nbsp;<a href="#">girl</a>');
+        	var searchkeywordTags = '';
+        	var keywordList = resp.JSON_SEARCH_KEYWORD_LIST;
+        	
+        	if(keywordList)
+        	{
+        		this.dataItemTemplate = '<li><a href="#">{searchKeyword}</a>&nbsp;&nbsp;</li>';
+        		var len = keywordList.length;
+        		for(var i=0;i<len;i++)
+        		{
+        			searchkeywordTags += Y.Lang.sub(this.dataItemTemplate, keywordList[i]); 
+        		}
+        	}        	
+        	
+        	this.get('container').append(searchkeywordTags);
+        	this.get('container').append(this._makeControl());
         	
             Y.all('#searchKeywordTag a').on('click',function(ev){
             	ev.preventDefault();
@@ -374,7 +378,14 @@ YUI.add('DataSearchApp', function(Y){
             	Y.one('#searchKeyword').set('value',searchKeyword);
             	Y.one('#searchBtn').simulate('click');    	
             });
-        }    
+        },
+        
+        
+        _makeControl: function(){
+        	var control = '<li><a href="#" title="Previous" alt="Previous"><&nbsp;</a></li>';
+        	control += '<li><a href="#" title="Next" alt="Next">&nbsp;></a></li>';
+        	return control;
+        }
     });
     
     Y.one('#searchKeyword').on('keydown', function(ev){    	
@@ -582,7 +593,15 @@ YUI.add('DataSearchApp', function(Y){
         _processResults: function (resp) {
         	if(!resp.exist || resp.JSON_TOTAL_RESULT_COUNT==0)
         	{
-        		this.setMessage(this.searchNoResultInfoPrefix + this._api.searchKeyword + this.searchNoResultInfoSuffix);	
+        		var errMsg = this.searchNoResultInfoPrefix;
+        		if(this._api.searchKeyword!='')
+        		{
+        			errMsg += " '";
+        			errMsg += this._api.searchKeyword;
+        			errMsg += "' ";
+        		}
+        		errMsg += this.searchNoResultInfoSuffix;
+        		this.setMessage(errMsg);	
         	}else
         	{
         		this.setMessage(false);
@@ -685,7 +704,7 @@ YUI.add('DataSearchApp', function(Y){
             // This will contain our settings for the  API
             apiConfig: {
                 value: {
-        			searchKeyword: 'ги©ка╕',
+        			searchKeyword: '',
         			logSearchKeyword: true,
         			orderByWithDierction1: '',
         			orderByWithDierction1: '',

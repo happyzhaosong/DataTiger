@@ -51,6 +51,9 @@ public class ParseTplItemDTO extends BaseDTO {
 	@DBColumn(name="by_tag_attribute")
 	private String byTagAttribute = "";
 	
+	@DBColumn(name="by_tag_attribute_value_plus")
+	private boolean byTagAttributeValuePlus = false;
+	
 	@DBColumn(name="parse_value_reg_exp")
 	private String parseValueRegExp = "";
 	
@@ -89,6 +92,14 @@ public class ParseTplItemDTO extends BaseDTO {
 
 	private List<ParseTplItemActionDTO> parseItemActionList = new ArrayList<ParseTplItemActionDTO>();
 		
+	public boolean isByTagAttributeValuePlus() {
+		return byTagAttributeValuePlus;
+	}
+
+	public void setByTagAttributeValuePlus(boolean byTagAttributeValuePlus) {
+		this.byTagAttributeValuePlus = byTagAttributeValuePlus;
+	}
+
 	public String getUseThisSettingUrlCharactor() {
 		return useThisSettingUrlCharactor;
 	}

@@ -8,9 +8,9 @@
         <input type="text" id="searchKeyword" name="searchKeyword" value="">
         <input type="submit" id="searchBtn" value="搜索" class="yui3-button">
         
-        <p id="searchKeywordTag" class="searchKeywordTag">
+        <ul id="searchKeywordTag" class="searchKeywordTag">
         	
-        </p>
+        </ul>
     </form>
     
     <!-- order area -->

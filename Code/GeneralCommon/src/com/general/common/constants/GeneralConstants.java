@@ -196,8 +196,8 @@ public class GeneralConstants {
 	public static final String ORDER_BY_DESC = "desc";
 	
 	
-	public static final String SEARCH_NO_RESULT_INFO_PREFIX = "没有找到与  \"";
-	public static final String SEARCH_NO_RESULT_INFO_SUFFIX = "\" 相关的信息";
+	public static final String SEARCH_NO_RESULT_INFO_PREFIX = "没有找到";
+	public static final String SEARCH_NO_RESULT_INFO_SUFFIX = "相关的信息";
 	
 	public static final String ERROR_MESSAGE_SYSTEM_BUSY = "系统忙，请稍后访问。";
 	

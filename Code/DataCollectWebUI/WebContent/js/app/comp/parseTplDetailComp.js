@@ -118,7 +118,12 @@ Ext.define('DC.comp.ParseTplItemListPanel', {
 	        fieldLabel: 'Parse By Tag Attribute',
 	        name: 'byTagAttribute',
 	        allowBlank: true,
-			emptyText: 'element attribute can be multiple seperated by ; all return value will be added with one string',
+			emptyText: 'element attribute can be multiple seperated by ; return value will be decided by bellow config (byTagAttributeValuePlus) ',
+	    },{
+			xtype: 'checkboxfield',
+	        grow : true,
+	        name : 'byTagAttributeValuePlus',
+	        fieldLabel: 'If uncheck, return the first not empty attribute string, if check return all attribute string together in one string. Default uncheck.'
 	    },{
 	    	grow : true,
 			fieldLabel: 'Run this regexp to parse value',
@@ -247,6 +252,8 @@ Ext.define('DC.comp.ParseTplItemListPanel', {
     		Ext.getCmp(this.getId() + "ifDirectGetText").setValue(recordObj.ifDirectGetText);
     		
     		Ext.getCmp(this.getId() + "byTagAttribute").setValue(recordObj.byTagAttribute);
+    		Ext.getCmp(this.getId() + "byTagAttributeValuePlus").setValue(recordObj.byTagAttributeValuePlus);
+    		
     		Ext.getCmp(this.getId() + "parseValueRegExp").setValue(recordObj.parseValueRegExp);
     		Ext.getCmp(this.getId() + "parseValueString").setValue(recordObj.parseValueString);
 

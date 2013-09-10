@@ -546,6 +546,8 @@ public class BrowserRunner {
 					errBuf.append(parseTplItemDto.getByEleVal());
 					errBuf.append("; <br/>byTagAttribute = ");
 					errBuf.append(parseTplItemDto.getByTagAttribute());
+					errBuf.append("; <br/>byTagAttributeValuePlus = ");
+					errBuf.append(parseTplItemDto.isByTagAttributeValuePlus());					
 					errBuf.append("; <br/>parseValueRegExp = ");
 					errBuf.append(parseTplItemDto.getParseValueRegExp());
 					errBuf.append("; <br/>parseValueString = ");
@@ -680,7 +682,7 @@ public class BrowserRunner {
 					eleData = this.getCorrectWebElementTextInList(eleList, parseTplItemDto.getCharactor(), parseTplItemDto.getNotCharactor(), getDataFrom);
 				}else
 				{
-					eleData = this.getCorrectWebElementAttributeInList(eleList, parseTplItemDto.getByTagAttribute(), parseTplItemDto.getCharactor(), parseTplItemDto.getNotCharactor());
+					eleData = this.getCorrectWebElementAttributeInList(eleList, parseTplItemDto.getByTagAttribute(), parseTplItemDto.isByTagAttributeValuePlus(), parseTplItemDto.getCharactor(), parseTplItemDto.getNotCharactor());
 				}
 				
 				if(!StringTool.isEmpty(eleData))
@@ -821,7 +823,7 @@ public class BrowserRunner {
 		return ret;
 	}
 	
-	private String getCorrectWebElementAttributeInList(List<WebElement> eleList, String attributeNames, String charactor, String notCharactor) throws Exception
+	private String getCorrectWebElementAttributeInList(List<WebElement> eleList, String attributeNames, boolean attributeValuePlus, String charactor, String notCharactor) throws Exception
 	{
 		String eleData = "";
 		if(!ClassTool.isNullObj(eleList))
@@ -830,7 +832,7 @@ public class BrowserRunner {
 			for(int i=0;i<size;i++)
 			{
 				WebElement webEle = eleList.get(i);
-				eleData = this.getWebElementAttributeValues(webEle, attributeNames);
+				eleData = this.getWebElementAttributeValues(webEle, attributeNames, attributeValuePlus);
 				
 				//verify whther this eleData is correct or not
 				if(!StringTool.isEmpty(eleData))
@@ -956,7 +958,7 @@ public class BrowserRunner {
 		return newData;
 	}
 	
-	private String getWebElementAttributeValues(WebElement webEle, String attributeNames) throws Exception
+	private String getWebElementAttributeValues(WebElement webEle, String attributeNames, boolean attributeValuePlus) throws Exception
 	{
 		StringBuffer retBuf = new StringBuffer();
 		if(!StringTool.isEmpty(attributeNames))
@@ -973,7 +975,11 @@ public class BrowserRunner {
 						String attrValue = webEle.getAttribute(attrName);
 						if(!StringTool.isEmpty(attrValue))
 						{
-							retBuf.append(attrValue);
+							retBuf.append(attrValue);							
+							if(!attributeValuePlus)
+							{
+								break;
+							}							
 							retBuf.append(Constants.SEPERATOR_SPACE);
 						}
 					}catch(Exception ex)
@@ -1379,7 +1385,7 @@ public class BrowserRunner {
 							eleData = this.getCorrectWebElementTextInList(eleList, dto.getCharactor(), dto.getNotCharactor(), Constants.WEB_ELEMENT_GET_DATA_FROM_INNER_HTML);
 						}else
 						{
-							eleData = this.getCorrectWebElementAttributeInList(eleList, dto.getByTagAttribute(), dto.getCharactor(), dto.getNotCharactor());
+							eleData = this.getCorrectWebElementAttributeInList(eleList, dto.getByTagAttribute(), true, dto.getCharactor(), dto.getNotCharactor());
 						}
 					}
 					
