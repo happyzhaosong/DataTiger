@@ -32,6 +32,17 @@ public class DataSearchLogDetailDTO extends BaseDTO {
 	@DBColumn(name="search_mall")
 	private int searchMall = 0;
 	
+	@DBColumn(name="search_result_count")
+	private long searchResultCount = 0;
+	
+	public long getSearchResultCount() {
+		return searchResultCount;
+	}
+
+	public void setSearchResultCount(long searchResultCount) {
+		this.searchResultCount = searchResultCount;
+	}
+
 	public int getSearchMall() {
 		return searchMall;
 	}

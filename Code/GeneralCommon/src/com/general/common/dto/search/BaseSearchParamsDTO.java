@@ -15,7 +15,16 @@ public class BaseSearchParamsDTO extends BaseDTO {
 	private String direction2 = "";	
 	private int searchWebSite = -1;
 	private boolean logSearchKeyword = true;
+	private long searchResultCount = 0;
 	
+	public long getSearchResultCount() {
+		return searchResultCount;
+	}
+
+	public void setSearchResultCount(long searchResultCount) {
+		this.searchResultCount = searchResultCount;
+	}
+
 	public boolean isLogSearchKeyword() {
 		return logSearchKeyword;
 	}

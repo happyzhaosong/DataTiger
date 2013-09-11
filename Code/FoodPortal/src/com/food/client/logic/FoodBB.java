@@ -15,6 +15,8 @@ import com.general.common.dto.JsonDTO;
 import com.general.common.dto.search.BaseSearchParamsDTO;
 import com.general.common.util.ClassTool;
 import com.general.common.util.JsonTool;
+import com.general.common.util.LogTool;
+import com.general.common.util.StringTool;
 
 
 public class FoodBB extends BaseBB {
@@ -31,8 +33,16 @@ public class FoodBB extends BaseBB {
 		
 		List<FoodDTO> dtoList = this.foodDao.searchFood(searchParamsDto);
 		
-		if(searchParamsDto.isLogSearchKeyword())
+		if(!StringTool.isEmpty(searchParamsDto.getSearchKeyword()) && searchParamsDto.isLogSearchKeyword())
 		{
+			LogTool.logText("Will log search keyword is " + searchParamsDto.getSearchKeyword());
+			if(dtoList.size()>0)
+			{
+				searchParamsDto.setSearchResultCount(dtoList.get(0).getTotalRecordsCountInThisSearch());
+			}else
+			{
+				searchParamsDto.setSearchResultCount(0);
+			}
 			this.dataSearchLogBB.logSearchData(request, searchParamsDto, GeneralConstants.SEARCH_DATA_IN_XIU_HAO_CHI);
 		}
 		

@@ -19,7 +19,7 @@ public class BasePageDTO implements Serializable {
 	
 	//record total record count(not only this page) for this search condition
 	//always save this information in the first DTO element in return List array.
-	private long totalRecordsCountInThisSearch = -1;
+	private long totalRecordsCountInThisSearch = 0;
 		
 	public String getFilterValue() {
 		filterValue = StringTool.isEmpty(filterValue, "");

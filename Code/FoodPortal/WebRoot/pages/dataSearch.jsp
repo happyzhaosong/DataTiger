@@ -6,6 +6,7 @@
     <!-- search form area-->
     <form id="searchForm">
         <input type="text" id="searchKeyword" name="searchKeyword" value="">
+        <input type="reset" id="resetBtn" value="清空" class="yui3-button">
         <input type="submit" id="searchBtn" value="搜索" class="yui3-button">
         
         <ul id="searchKeywordTag" class="searchKeywordTag">
@@ -38,6 +39,8 @@
 <script>
 YUI().use('DataSearchApp', function (Y) {
     
+    Y.one('#resetBtn').hide();
+    
     var dataSearch = new Y.DataSearchApp({
         container: '#demo'
     });
@@ -52,7 +55,7 @@ YUI().use('DataSearchApp', function (Y) {
     
     dataSearch.searchKeywordTagView.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS)%>';  
  
-    dataSearch.render();
+    dataSearch.render();       
         
     Y.one('#orderByWithDierction1').on('change', function(e){      
     	Y.one('#searchBtn').simulate('click');	

@@ -31,7 +31,7 @@ public class SearchTool extends BaseTool {
 			ret = true;
 		}else if(lastSearchActionObj!=null)
 		{
-			if(lastSearchTimeObj!=null)
+			if(GeneralConstants.ACTION_SEARCH.equalsIgnoreCase(currAction) && lastSearchTimeObj!=null)
 			{		
 				long lastSearchTime = ((Long)lastSearchTimeObj).longValue();		
 				//如果访问间隔小于 100 毫秒则认为是攻击访问

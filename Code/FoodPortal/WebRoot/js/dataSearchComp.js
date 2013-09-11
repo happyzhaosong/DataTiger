@@ -289,6 +289,8 @@ YUI.add('DataSearchApp', function(Y){
     	dataItemTemplate: '',
     	
     	page: 1,
+    	
+    	pageSize: 10,
         	    	      
         // When we request a new photo, there are a few things that happen.
         //
@@ -322,14 +324,14 @@ YUI.add('DataSearchApp', function(Y){
                     		this._processSearchKeywordTagResults(respJsonObj, this);     		
                     	}else
                     	{
-                    		/*
+                    	
                    		 	var errMsg = respJsonObj.message; 
                    		 	if(errMsg=='')
                    		 	{
                    		 		errMsg = systemErrorMessageBusy;
                    		 	}
                    		 	this.setMessage(errMsg);
-                   		 	*/                    		
+                   		 	                   		
                     	}
                     }, this)
                 }                
@@ -378,7 +380,10 @@ YUI.add('DataSearchApp', function(Y){
         	}        	
         	
         	this.get('container').append(searchkeywordTags);
-        	this.get('container').append(this._makeControl());
+        	if(resp.JSON_TOTAL_RESULT_COUNT > this.pageSize)
+        	{
+        		this.get('container').append(this._makeControl(this.page, resp.JSON_TOTAL_RESULT_COUNT, this.pageSize));	
+        	}       	
         	
             Y.all('#searchKeywordTag a').on('click',function(ev){
             	ev.preventDefault();
@@ -404,19 +409,49 @@ YUI.add('DataSearchApp', function(Y){
         },
         
         
-        _makeControl: function(){
-        	var control = '<li><a id="searchKeywordPrev" href="#" title="Previous" alt="Previous"><&nbsp;</a></li>';
-        	control += '<li><a id="searchKeywordNext" href="#" title="Next" alt="Next">&nbsp;></a></li>';
+        _makeControl: function(currPage, totalResultCount, pageSize){
+        	var control = '';
+        	if(currPage > 1)
+        	{
+        		control += '<li><a id="searchKeywordPrev" href="#" title="Previous" alt="Previous"><&nbsp;</a></li>';
+        	}
+        	
+        	if(currPage*pageSize < totalResultCount)
+        	{
+        		control += '<li><a id="searchKeywordNext" href="#" title="Next" alt="Next">&nbsp;></a></li>';
+        	}
         	return control;
         }
     });
     
-    Y.one('#searchKeyword').on('keydown', function(ev){    	
+    Y.one('#searchKeyword').on('keydown', function(ev){  
     	if(ev.charCode==13)
     	{
     		Y.one('#searchBtn').focus();
     	}
     });           
+
+    
+    Y.one('#resetBtn').on('click', function(ev){  
+    	Y.one('#resetBtn').hide();
+    });
+     
+    
+    Y.one('#searchKeyword').on('keyup', function(ev){  
+    	showResetBtn(ev);
+    }); 
+    
+    function showResetBtn(ev)
+    {
+    	if(Y.one('#searchKeyword').get('value').length>0)
+    	{
+    		Y.one('#resetBtn').show();
+    	}else
+    	{
+    		Y.one('#resetBtn').hide();
+    	}
+    }
+
     
     Y.DataSearchApp = Y.Base.create('search', Y.View, [], {
 
@@ -508,7 +543,7 @@ YUI.add('DataSearchApp', function(Y){
         // If that request fails, we let the user know with a message
         // If the requst succeeds, we process the response data
         requestPhotos: function (page) {
-            this.setLoading(false);
+            this.setLoading(true);
 
             var self = this,
                 api = this._api,
@@ -540,6 +575,7 @@ YUI.add('DataSearchApp', function(Y){
                     	{
                     		this._processResults(respJsonObj);
                     		this._isNewQuery = false;
+                    		this.searchKeywordTagView.requestSearchKeywordTags(1);
                     	}else
                     	{
                    		 	var errMsg = respJsonObj.message; 
@@ -589,8 +625,8 @@ YUI.add('DataSearchApp', function(Y){
         // request we remove our old pages, ensure our paginator is set to
         // page 1 and request our new set of photos
         _afterFormSubmit: function (e) {
-            e.preventDefault();                
-
+            e.preventDefault();    
+            
             this._api.logSearchKeyword = true;
             
             while (this._pages.length) {
@@ -607,8 +643,6 @@ YUI.add('DataSearchApp', function(Y){
             } else {
                 this.requestPhotos();
             }
-            
-            this.searchKeywordTagView.requestSearchKeywordTags(1);
         },
 
         // After we receive a response from the  API, we check if we
@@ -712,7 +746,13 @@ YUI.add('DataSearchApp', function(Y){
 
         // After our page changes, we request that page's photos
         _afterPageChange: function (e) {
-        	this._api.logSearchKeyword = false;
+        	if(this._isNewQuery)
+        	{
+        		this._api.logSearchKeyword = true;
+        	}else
+        	{
+        		this._api.logSearchKeyword = false;
+        	}
             this.requestPhotos(e.newVal);
         },
         
@@ -733,7 +773,7 @@ YUI.add('DataSearchApp', function(Y){
         			orderByWithDierction1: '',
         			page: 1,
         			start: 0,
-                    limit: 16,                    
+                    limit: 16                 
                 }
             }
         }

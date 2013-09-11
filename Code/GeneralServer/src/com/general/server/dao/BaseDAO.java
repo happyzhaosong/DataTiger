@@ -315,6 +315,9 @@ public class BaseDAO {
 			this.appendLimitBuffer(sqlBuf);			
 			
 			String sql = sqlBuf.toString();
+			
+			LogTool.debugText("sql = " + sql);
+			
 			conn = ds.getConnection();
 			Statement stmt = conn.createStatement();			 
 			ResultSet rs = stmt.executeQuery(sql);

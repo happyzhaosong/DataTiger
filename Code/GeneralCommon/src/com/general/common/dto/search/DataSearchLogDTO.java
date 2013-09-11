@@ -17,11 +17,22 @@ public class DataSearchLogDTO extends BaseDTO {
 	@DBColumn(name="total_search_count")
 	private int totalSearchCount = 1;
 	
+	@DBColumn(name="search_result_count")
+	private long searchResultCount = 0;
+		
 	@DBColumn(name="search_in")
 	private int searchIn = 1;
 	
 	@DBColumn(name="last_search_date")
 	private long lastSearchDate = System.currentTimeMillis();
+
+	public long getSearchResultCount() {
+		return searchResultCount;
+	}
+
+	public void setSearchResultCount(long searchResultCount) {
+		this.searchResultCount = searchResultCount;
+	}
 
 	public int getId() {
 		return id;

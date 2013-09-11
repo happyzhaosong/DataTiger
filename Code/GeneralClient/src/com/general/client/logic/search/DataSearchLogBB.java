@@ -41,7 +41,7 @@ public class DataSearchLogBB extends BaseBB {
 	public void logSearchData(HttpServletRequest request, BaseSearchParamsDTO searchParamsDto, int searchIn) throws Exception	
 	{
 		DataSearchLogDTO logDto = this.createDataSearchLogDTO(request, searchParamsDto, searchIn);
-		DataSearchLogDetailDTO logDetailDto = this.createDataSearchLogDetailDTO(request, searchParamsDto, searchIn);
+		DataSearchLogDetailDTO logDetailDto = this.createDataSearchLogDetailDTO(request, searchParamsDto, searchIn);		
 		this.dataSearchLogDao.logSearchData(logDto, logDetailDto);
 	}
 	
@@ -50,6 +50,7 @@ public class DataSearchLogBB extends BaseBB {
 	{
 		DataSearchLogDTO ret = new DataSearchLogDTO();
 		ret.setSearchKeyword(searchParamsDto.getSearchKeyword());
+		ret.setSearchResultCount(searchParamsDto.getSearchResultCount());
 		ret.setLastSearchDate(System.currentTimeMillis());
 		ret.setSearchIn(searchIn);
 		return ret;
@@ -63,6 +64,7 @@ public class DataSearchLogBB extends BaseBB {
 		ret.setSearcherIp(request.getRemoteAddr());
 		ret.setSearcherHost(request.getRemoteHost());
 		ret.setSearchIn(searchIn);
+		ret.setSearchResultCount(searchParamsDto.getSearchResultCount());
 		
 		StringBuffer orderByBuf = new StringBuffer();
 		if(!StringTool.isEmpty(searchParamsDto.getOrderBy1()))
