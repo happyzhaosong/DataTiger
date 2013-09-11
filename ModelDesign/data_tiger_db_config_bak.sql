@@ -82,6 +82,54 @@ insert  into `account_role_map`(`account_id`,`role_id`) values (1,2);
 
 UNLOCK TABLES;
 
+/*Table structure for table `data_search_log` */
+
+DROP TABLE IF EXISTS `data_search_log`;
+
+CREATE TABLE `data_search_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `search_keyword` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '搜索的关键词',
+  `last_search_date` bigint(20) NOT NULL COMMENT '最后一次搜索的时间,为 java 里面的 System.currentTimeMillis()',
+  `total_search_count` int(11) NOT NULL DEFAULT '0' COMMENT '本关键词总共被搜索的次数，按照这个排序',
+  `search_result_count` bigint(10) DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
+  `search_in` tinyint(4) NOT NULL DEFAULT '0' COMMENT '搜索的范围 0---全部，1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `data_search_log` */
+
+LOCK TABLES `data_search_log` WRITE;
+
+insert  into `data_search_log`(`id`,`search_keyword`,`last_search_date`,`total_search_count`,`search_result_count`,`search_in`) values (1,'大衣',1378884616647,2,86,1),(2,'棉衣',1378881801985,1,44,1),(3,'海鲜',1378881819774,1,13,1),(4,'手机',1378882321436,2,39,1),(5,'挎包',1378881875145,2,435,1),(6,'polo',1378882226465,2,7,1),(7,'gucci',1378881997056,1,0,1),(8,'guci',1378881999706,1,0,1),(9,'gooci',1378882003994,1,0,1),(10,'保罗',1378882318063,2,10,1),(11,'衬衫',1378882231969,2,212,1),(12,'网拍 商品 挂拍平铺拍摄',1378883532899,2,1,1),(13,'dfdfdffdfdsfsff',1378884608225,1,0,1);
+
+UNLOCK TABLES;
+
+/*Table structure for table `data_search_log_detail` */
+
+DROP TABLE IF EXISTS `data_search_log_detail`;
+
+CREATE TABLE `data_search_log_detail` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `search_keyword` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '搜索的关键词',
+  `search_date` bigint(20) NOT NULL COMMENT '搜索的时间, 为 java 里面的 System.currentTimeMillis()',
+  `searcher_ip` varchar(15) COLLATE utf8_bin NOT NULL COMMENT '搜索者的ip',
+  `searcher_area` varchar(15) COLLATE utf8_bin NOT NULL COMMENT '搜索者所在地名称',
+  `searcher_host` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT '搜索者的主机名称',
+  `search_in` int(2) NOT NULL DEFAULT '-1' COMMENT '搜索的范围 1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
+  `search_mall` int(3) NOT NULL COMMENT '搜索的商城的代号 1---淘宝，2---天猫，3---京东，4---苏宁，5---国美，6---亚马逊，7---当当，8---阿里巴巴，9---1号店，10---新蛋',
+  `order_by` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '本次搜索 orderby 的字段',
+  `search_result_count` bigint(10) NOT NULL DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+
+/*Data for the table `data_search_log_detail` */
+
+LOCK TABLES `data_search_log_detail` WRITE;
+
+insert  into `data_search_log_detail`(`id`,`search_keyword`,`search_date`,`searcher_ip`,`searcher_area`,`searcher_host`,`search_in`,`search_mall`,`order_by`,`search_result_count`) values (1,'大衣',1378881730821,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',86),(2,'棉衣',1378881801985,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',44),(3,'海鲜',1378881819774,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',13),(4,'手机',1378881830796,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',39),(5,'挎包',1378881848663,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',435),(6,'挎包',1378881875145,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',435),(7,'polo',1378881908457,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',7),(8,'polo',1378881952350,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',7),(9,'polo',1378881979242,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',7),(10,'gucci',1378881997056,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',0),(11,'guci',1378881999706,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',0),(12,'gooci',1378882003994,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',0),(13,'polo',1378882075402,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',7),(14,'保罗',1378882096113,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',10),(15,'衬衫',1378882125538,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',212),(16,'保罗',1378882223182,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',10),(17,'polo',1378882226465,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',7),(18,'衬衫',1378882231969,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',212),(19,'保罗',1378882318063,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',10),(20,'手机',1378882321436,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',39),(21,'大衣',1378882325034,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',86),(22,'网拍 商品 挂拍平铺拍摄',1378883521806,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',1),(23,'网拍 商品 挂拍平铺拍摄',1378883532899,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',1),(24,'dfdfdffdfdsfsff',1378884608232,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',0),(25,'大衣',1378884616647,'127.0.0.1','','127.0.0.1',1,0,'jia_ge_num asc',86);
+
+UNLOCK TABLES;
+
 /*Table structure for table `db_setting` */
 
 DROP TABLE IF EXISTS `db_setting`;
