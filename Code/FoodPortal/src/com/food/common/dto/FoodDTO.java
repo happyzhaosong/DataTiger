@@ -22,6 +22,8 @@ public class FoodDTO extends BaseDTO {
 	@DBColumn(name="biao_ti")
 	private String biaoTi = "";
 	
+	private String biaoTiSummary = "";
+	
 	@DBColumn(name="jia_ge")
 	private String jiaGe = "";
 	
@@ -48,6 +50,43 @@ public class FoodDTO extends BaseDTO {
 	
 	@DBColumn(name="shang_pin_lai_yuan")
 	private int shangPinLaiYuan = -1;
+	
+	@DBColumn(name="jiao_yi")
+	private String jiaoYi = "0";
+	
+	@DBColumn(name="jiao_yi_success")
+	private String jiaoYiSuccess = "0";
+
+	public String getJiaoYi() {
+		return jiaoYi;
+	}
+
+	public void setJiaoYi(String jiaoYi) {
+		this.jiaoYi = jiaoYi;
+	}
+
+	public String getJiaoYiSuccess() {
+		return jiaoYiSuccess;
+	}
+
+	public void setJiaoYiSuccess(String jiaoYiSuccess) {
+		this.jiaoYiSuccess = jiaoYiSuccess;
+	}
+
+	public String getBiaoTiSummary() {
+		if(this.biaoTi.length()>15)
+		{
+			biaoTiSummary = biaoTi.substring(0, 15) + "...";
+		}else
+		{
+			biaoTiSummary = biaoTi;
+		}
+		return biaoTiSummary;
+	}
+
+	public void setBiaoTiSummary(String biaoTiSummary) {
+		this.biaoTiSummary = biaoTiSummary;
+	}
 
 	public int getId() {
 		return id;

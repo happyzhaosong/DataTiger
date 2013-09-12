@@ -128,6 +128,13 @@ Ext.define('DC.tool.RendererTool', {
 		if("DATA_TYPE_STRING"==value)
 		{
 			return "String";
-		}				
+		}else if("DATA_TYPE_NUMBER"==value)
+		{
+			return "Number";
+		}else if("DATA_TYPE_BOOLEAN"==value)
+		{
+			return "Boolean";
+		} 
+			
 	}
 });
