@@ -26,6 +26,8 @@
 			<option value="jiao_yi_success_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">销量从高到低</option>
 			<option value="ping_fen_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">评分从低到高</option>
 			<option value="ping_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">评分从高到低</option>
+			<option value="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">好评率从低到高</option>
+			<option value="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">好评率从高到低</option>			
 			<option value="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">促销价从低到高</option>
 			<option value="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">促销价从高到低</option>	 		    		
     	</select>    

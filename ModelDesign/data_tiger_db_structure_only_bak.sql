@@ -111,7 +111,7 @@ CREATE TABLE `data_search_log` (
   `search_result_count` bigint(10) DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   `search_in` tinyint(4) NOT NULL DEFAULT '0' COMMENT '搜索的范围 0---全部，1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `data_search_log_detail` */
 
@@ -129,7 +129,7 @@ CREATE TABLE `data_search_log_detail` (
   `order_by` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '本次搜索 orderby 的字段',
   `search_result_count` bigint(10) NOT NULL DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
 
 /*Table structure for table `data_tao_bao_jie` */
 
@@ -233,7 +233,10 @@ CREATE TABLE `data_xiu_hao_chi` (
   `meta_search_keyword` varchar(2000) COLLATE utf8_bin NOT NULL COMMENT '商品 meta keywords 关键词信息, example: <meta name="keywords"',
   `meta_desc` varchar(2000) COLLATE utf8_bin NOT NULL COMMENT '商品 meta description 描述信息, example: <meta name="description"',
   `item_url` text COLLATE utf8_bin NOT NULL COMMENT '商品url链接地址',
-  `shang_pin_lai_yuan` tinyint(1) NOT NULL COMMENT '商品来源，1---天猫， 2---淘宝， 3---京东',
+  `shang_pin_lai_yuan` tinyint(1) NOT NULL DEFAULT '1' COMMENT '商品来源，1---天猫， 2---淘宝， 3---京东',
+  `hao_ping_lv` varchar(10) COLLATE utf8_bin NOT NULL COMMENT '店铺好评率',
+  `hao_ping_lv_num` double(5,2) NOT NULL DEFAULT '0.00' COMMENT '店铺好评率数值',
+  `wang_wang_url` varchar(2000) COLLATE utf8_bin NOT NULL COMMENT '掌柜旺旺链接',
   `download_task_page_url` text COLLATE utf8_bin NOT NULL,
   `download_task_id` bigint(20) NOT NULL,
   `download_task_level` int(11) NOT NULL,
@@ -275,7 +278,7 @@ CREATE TABLE `download_mq_message` (
   `fail_reason` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'MQ action 失败的原因',
   `create_thread_count` int(11) DEFAULT NULL COMMENT '创建的线程数量，范围为 1 - 5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_setting` */
 
@@ -330,7 +333,7 @@ CREATE TABLE `download_thread` (
   `site_id` bigint(20) DEFAULT NULL COMMENT '线程访问的网站id',
   `webdriver_each_browse_start_time` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '每次 webdriver 访问网页的开始时间，webdriver每次访问一个网页都会更新这个时间，有一个监控线程轮询查看，如果 webdriver 开始访问页面时间和当前的时间之差大于10分钟，则认为 webdriver 挂起，则重新启动那个线程 ',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=179 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=184 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_thread_apply_task_status` */
 
@@ -413,7 +416,7 @@ CREATE TABLE `parse_item` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_9` (`parse_id`),
   CONSTRAINT `FK_Reference_9` FOREIGN KEY (`parse_id`) REFERENCES `parse` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=185 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=188 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `parse_item_action` */
 

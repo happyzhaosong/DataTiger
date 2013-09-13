@@ -56,6 +56,28 @@ public class FoodDTO extends BaseDTO {
 	
 	@DBColumn(name="jiao_yi_success")
 	private String jiaoYiSuccess = "0";
+	
+	@DBColumn(name="hao_ping_lv")
+	private String haoPingLv = "0%";
+	
+	@DBColumn(name="wang_wang_url")
+	private String wangWangUrl = "0";
+
+	public String getHaoPingLv() {
+		return haoPingLv;
+	}
+
+	public void setHaoPingLv(String haoPingLv) {
+		this.haoPingLv = haoPingLv;
+	}
+
+	public String getWangWangUrl() {
+		return wangWangUrl;
+	}
+
+	public void setWangWangUrl(String wangWangUrl) {
+		this.wangWangUrl = wangWangUrl;
+	}
 
 	public String getJiaoYi() {
 		return jiaoYi;
