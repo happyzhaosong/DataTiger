@@ -435,7 +435,10 @@ YUI.add('DataSearchApp', function(Y){
     Y.one('#resetBtn').on('click', function(ev){  
     	Y.one('#resetBtn').hide();
     });
-     
+
+    Y.one('#searchKeyword').on('focus', function(ev){  
+    	showResetBtn(ev);
+    });
     
     Y.one('#searchKeyword').on('keyup', function(ev){  
     	showResetBtn(ev);

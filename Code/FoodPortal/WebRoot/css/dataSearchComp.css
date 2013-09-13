@@ -47,7 +47,7 @@
     transition: all 0.2s ease-in-out 0s;
     align: center;
     width: 90%;
-    heigth: 90%;
+    heigth: 300px;
 }
 
 .resultsItemDiv a{
@@ -210,3 +210,27 @@
 .searchKeywordTag li a{
     text-decoration:none;
 }
+
+.itemText {
+	font-family: arial; 
+	font-size: 12px; 
+}
+
+.itemTextFloatLeft {
+	font-family: arial; 
+	font-size: 12px; 
+	float: left;
+}
+	
+.itemTextFloatRight {
+	font-family: arial; 
+	font-size: 12px; 
+	float: right;
+}	
+	
+	
+	
+	
+	
+	
+	

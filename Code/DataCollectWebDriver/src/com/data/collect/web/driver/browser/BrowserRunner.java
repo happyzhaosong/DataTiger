@@ -229,11 +229,10 @@ public class BrowserRunner {
 
 			    	  //first to check whether this page is content page or not
 			    	  boolean isContentPage = taskDto.isIfContentPage();
-			    	  if(!isContentPage)
-			    	  {
-			    		  isContentPage = this.checkIsContentPage(this.driver, webSiteDto);
-			    	  }
 			    	  
+			    	  //check whether this link is really a content page or not in run time.
+			    	  isContentPage = this.checkIsContentPage(this.driver, webSiteDto);
+			    	  			    	  
 					  //if content page then parse it
 				      if(isContentPage)
 				      {

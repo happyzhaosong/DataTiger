@@ -78,12 +78,13 @@ Ext.define('DC.comp.SiteDetailContentPageCheckListPanel', {
 	        name : 'charactor',
 	        fieldLabel: 'Content Page Charactor',
 	        emptyText: emptyTextMultipleValue,
-	        allowBlank: false
+	        allowBlank: true
 	    },{
 	        grow : true,
 	        name : 'notCharactor',
 	        emptyText: emptyTextMultipleValue,
-	        fieldLabel: 'Not Content Page Charactor'
+	        fieldLabel: 'Not Content Page Charactor',
+	        allowBlank: true
 	    }];
     	
 		

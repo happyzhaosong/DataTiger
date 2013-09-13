@@ -51,12 +51,16 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px"></ul>';
     
     dataSearch.dataItemTemplate = '<li class="yui3-u-1-4" style="height:300px">';    
+
     dataSearch.dataItemTemplate += '<div class="resultsItemDiv">';
+
     dataSearch.dataItemTemplate += '<a href="{itemUrl}" title="{biaoTi}" target="_detail"><img width="100%" height="180px" src="{imgUrl}"><div>{biaoTiSummary}</a>';
-    dataSearch.dataItemTemplate += '<div style="display: block;"><strong style="font-family: arial;color: #f40">{jiaGe}</strong> <strong style="font-family: arial; font-size: 12px; float: right">评分：{pingFen}</strong></div>';
-    dataSearch.dataItemTemplate += '<a href="{shopUrl}" target="_shop" style="color: #666;display: block;">{shopName}</a>';
-    dataSearch.dataItemTemplate += '<image src="{shopLevelImgUrl}"/>';    
+    dataSearch.dataItemTemplate += '<div style="display: block;"><strong style="font-family: arial;color: #f40">{jiaGe}</strong> <strong class="itemText">{danJia}</strong> <strong class="itemTextFloatRight">{pingFen}</strong></div>';
+    dataSearch.dataItemTemplate += '<div style="display: block;"><a href="{shopUrl}" target="_shop" style="color: #666;">{shopName}</a></div>';
+    dataSearch.dataItemTemplate += '<image src="{shopLevelImgUrl}"/> <strong class="itemTextFloatRight">好评率:{haoPingLv}</strong>';
+
     dataSearch.dataItemTemplate += '</div>';
+
     dataSearch.dataItemTemplate += '</li>';
     
     dataSearch.systemErrorMessageBusy = '<%=GeneralConstants.ERROR_MESSAGE_SYSTEM_BUSY%>';
