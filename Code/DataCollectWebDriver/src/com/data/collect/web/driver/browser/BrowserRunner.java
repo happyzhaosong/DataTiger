@@ -230,8 +230,13 @@ public class BrowserRunner {
 			    	  //first to check whether this page is content page or not
 			    	  boolean isContentPage = taskDto.isIfContentPage();
 			    	  
-			    	  //check whether this link is really a content page or not in run time.
-			    	  isContentPage = this.checkIsContentPage(this.driver, webSiteDto);
+			    	  /*check whether this link is really a content page or not in run time. Because some content page url redirect to other url in run time
+			    	  *for example item.taobao.com maybe redirect to detail.tmall.com some time
+			    	  */
+			    	  if(isContentPage)
+			    	  {
+			    		  isContentPage = this.checkIsContentPage(this.driver, webSiteDto);
+			    	  }
 			    	  			    	  
 					  //if content page then parse it
 				      if(isContentPage)
@@ -1388,7 +1393,7 @@ public class BrowserRunner {
 						}
 					}
 					
-					if(!StringTool.isEmpty(eleData))
+					if(!StringTool.isEmpty(eleData) && this.isCorrectWebElement(eleData, dto.getCharactor(), dto.getNotCharactor()))
 					{
 						if(!StringTool.isEmpty(dto.getParseValueRegExp()))
 						{
@@ -1399,6 +1404,9 @@ public class BrowserRunner {
 							String parseValueStringArr[] = dto.getParseValueString().split(Constants.SEPERATOR_COMPLEX);
 							eleData = this.parseEleDataByParseString(eleData, parseValueStringArr);
 						}	
+					}else
+					{
+						eleData = "";
 					}
 					
 					if(!StringTool.isEmpty(eleData))
