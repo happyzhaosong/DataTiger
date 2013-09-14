@@ -16,7 +16,7 @@
     </form>
     
     <!-- order area -->
-    <div class="commonContainer">
+    <div id="commonContainer" class="commonContainer">
     	排序：
     	<select id="orderByWithDierction1">
     		<option value="jia_ge_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">价格从低到高</option>
@@ -29,7 +29,13 @@
 			<option value="ping_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">评分从高到低</option>
 			<option value="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">好评率从低到高</option>
 			<option value="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">好评率从高到低</option>				 		    		
-    	</select>    
+    	</select>
+    	
+    	<div id="searchIn" style="position: relative; left: 25; display: inline-block">
+	    	<input type="checkbox" name="all" value="0">全选&nbsp;&nbsp;
+	    	<input type="checkbox" name="taobao" value="1">淘宝
+	    	<input type="checkbox" name="tmall" value="2">天猫
+    	</div>
     </div>
  
     <div class="results"></div>
@@ -77,5 +83,19 @@ YUI().use('DataSearchApp', function (Y) {
     });    
           
     Y.one('#searchBtn').simulate('click');
+    
+    Y.all('#searchIn input').on('click', function(e){ 
+    	var currTarget = e.currentTarget;
+    	if(currTarget._node.value==0)
+    	{
+    		if(currTarget._node.checked)
+    		{
+    			Y.all('#searchIn input').setAttribute("checked", "true");
+    		}else
+    		{
+    			Y.all('#searchIn input').removeAttribute("checked");
+    		}
+    	}
+    });    
 });
 </script>
