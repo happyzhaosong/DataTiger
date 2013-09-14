@@ -1544,6 +1544,7 @@ public class BrowserRunner {
 					
 			DownloadTaskDTO newTaskDto = new DownloadTaskDTO();
 			newTaskDto.setId(-1);
+			newTaskDto.setParentPageUrl(parentTaskDto.getPageUrl());
 			newTaskDto.setPageUrl(url);
 			newTaskDto.setSiteId(linkParseDto.getSiteId());
 			newTaskDto.setIfContentPage(ifContentPage);

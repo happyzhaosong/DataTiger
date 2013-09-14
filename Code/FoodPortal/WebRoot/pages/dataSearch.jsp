@@ -3,6 +3,7 @@
 <script src="<%=basePath%>js/utilTool.js"></script>
 <script src="<%=basePath%>js/dataSearchComp.js"></script>
 <div id="demo" class="yui3-skin-sam hide-pg">
+	<a name="top"></a>
     <!-- search form area-->
     <form id="searchForm">
         <input type="text" id="searchKeyword" name="searchKeyword" value="">
@@ -27,9 +28,7 @@
 			<option value="ping_fen_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">评分从低到高</option>
 			<option value="ping_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">评分从高到低</option>
 			<option value="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">好评率从低到高</option>
-			<option value="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">好评率从高到低</option>			
-			<option value="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">促销价从低到高</option>
-			<option value="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">促销价从高到低</option>	 		    		
+			<option value="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">好评率从高到低</option>				 		    		
     	</select>    
     </div>
  
@@ -37,6 +36,7 @@
     <div class="paginator"></div>
     <div class="loading"></div>
 </div>
+<center><a href="#top" style="position: relative; top: 25;">回顶部</a></center>
 
 <script>
 YUI().use('DataSearchApp', function (Y) {
@@ -55,8 +55,9 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.dataItemTemplate += '<div class="resultsItemDiv">';
 
     dataSearch.dataItemTemplate += '<a href="{itemUrl}" title="{biaoTi}" target="_detail"><img width="100%" height="180px" src="{imgUrl}"><div>{biaoTiSummary}</a>';
-    dataSearch.dataItemTemplate += '<div style="display: block;"><strong style="font-family: arial;color: #f40">{jiaGe}</strong> &nbsp;&nbsp;&nbsp; <strong class="itemText">{danJia}</strong> <strong class="itemTextFloatRight">{pingFen}</strong></div>';
-    dataSearch.dataItemTemplate += '<a href="{shopUrl}" target="_shop" style="color: #666; display: block;">{shopName}</a> <a href="{wangWangUrl}" target="_wangwang" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。" class="itemText">旺旺交流</a>';
+    dataSearch.dataItemTemplate += '<div style="display: block;"><strong class="itemTextJiaGe">{jiaGe}</strong> <strong class="itemTextDanJia">{danJia}</strong> </div>';
+    dataSearch.dataItemTemplate += '<div style="display: block;"><strong class="itemText">销量:{jiaoYi}</strong>  <strong class="itemTextFloatRight">评分:{pingFen}</strong></div>';
+    dataSearch.dataItemTemplate += '<a href="{shopUrl}" target="_shop" style="color: #666;display: inline;" title="点击访问本店">{shopName}</a> <a href="{wangWangUrl}" target="_wangwang" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。" style="display: inline; float:right"><img src="img/wangwangContact.jpg" width="50px"/></a></div>';
     dataSearch.dataItemTemplate += '<image src="{shopLevelImgUrl}"/> <strong class="itemTextFloatRight">好评率:{haoPingLv}</strong>';
 
     dataSearch.dataItemTemplate += '</div>';

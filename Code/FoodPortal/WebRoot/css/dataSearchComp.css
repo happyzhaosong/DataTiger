@@ -207,13 +207,39 @@
     list-style: none;
 }
 
-.searchKeywordTag li a{
-    text-decoration:none;
+a{
+	text-decoration:none;
 }
 
 .itemText {
 	font-family: arial; 
 	font-size: 12px; 
+	display: inline;
+}
+
+/*
+.itemTextGoToTop {
+	font-family: arial; 
+	display: inline;
+	position: relative; 
+	left: 800;
+}
+*/
+
+.itemTextJiaGe {
+	font-family: tahoma, arial, ËÎÌו; 
+	font-size: 13px; 
+	display: inline;
+	color: #f40
+}
+
+
+.itemTextDanJia {
+	font-family: tahoma, arial, ËÎÌו; 
+	font-size: 8px; 
+	display: inline;
+	color: #a0a0a0;
+	float: right;
 }
 
 .itemTextFloatLeft {

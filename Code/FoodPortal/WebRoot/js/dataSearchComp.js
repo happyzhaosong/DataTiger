@@ -1,4 +1,4 @@
-YUI.add('DataSearchApp', function(Y){
+﻿YUI.add('DataSearchApp', function(Y){
 		
 	Y.DataSearchPaginatorModel = Y.Base.create('pager-model', Y.Model, [Y.Paginator.Core]);
 
@@ -133,12 +133,12 @@ YUI.add('DataSearchApp', function(Y){
                 lastControls;
 
             // build first and prev controls
-            firstControls = this._makeControl('first');
-            firstControls += this._makeControl('prev', 'Previous');
+            firstControls = this._makeControl('first','第一页');
+            firstControls += this._makeControl('prev', '上一页');
 
             // build next and last controls
-            lastControls = this._makeControl('next');
-            lastControls += this._makeControl('last');
+            lastControls = this._makeControl('next','下一页');
+            lastControls += this._makeControl('last','最后页');
 
             // add the controls and page items to the container
             container.append(firstControls);

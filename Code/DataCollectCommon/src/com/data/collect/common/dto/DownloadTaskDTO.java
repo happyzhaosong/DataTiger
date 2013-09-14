@@ -14,6 +14,9 @@ public class DownloadTaskDTO extends BaseDTO {
 	@DBColumn(name="parsed_out_url_count")
 	private int parsedOutUrlCount = -1;
 	
+	@DBColumn(name="parent_page_url")
+	private String parentPageUrl = "";
+	
 	@DBColumn(name="page_url")
 	private String pageUrl = "";
 	
@@ -71,6 +74,14 @@ public class DownloadTaskDTO extends BaseDTO {
 	@DBColumn(name="reset_apply_time_time")
 	private String resetApplyTimeTime = "";
 		
+	public String getParentPageUrl() {
+		return parentPageUrl;
+	}
+
+	public void setParentPageUrl(String parentPageUrl) {
+		this.parentPageUrl = parentPageUrl;
+	}
+
 	public String getResetApplyTimeTime() {
 		return resetApplyTimeTime;
 	}
