@@ -13,7 +13,7 @@ public class BaseSearchParamsDTO extends BaseDTO {
 	private String direction1 = "";	
 	private String orderBy2 = "";
 	private String direction2 = "";	
-	private int searchWebSite = -1;
+	private String searchWebSite = "";
 	private boolean logSearchKeyword = true;
 	private long searchResultCount = 0;
 	
@@ -90,11 +90,11 @@ public class BaseSearchParamsDTO extends BaseDTO {
 		this.orderBy2 = orderBy2;
 	}
 
-	public int getSearchWebSite() {
+	public String getSearchWebSite() {
 		return searchWebSite;
 	}
 
-	public void setSearchWebSite(int searchWebSite) {
+	public void setSearchWebSite(String searchWebSite) {
 		this.searchWebSite = searchWebSite;
 	}
 }

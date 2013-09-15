@@ -63,6 +63,52 @@ public class BaseDAO {
 		this.pageDto = pageDto;
 	}
 	
+	
+	protected void addMultipleValueClauseInWhereClause(String columnName, String multipleValue, String relation)
+	{
+		if(!StringTool.isEmpty(multipleValue))
+		{
+			String valueArr[] = multipleValue.split(GeneralConstants.SEPERATOR_COMMA);
+			int size = valueArr.length;
+			if(size>0)
+			{
+				this.whereBuf.append(" (");
+			}
+			for(int i=0;i<size;i++)
+			{
+				String value = valueArr[i].trim();
+				if(!StringTool.isEmpty(value))
+				{
+					if(GeneralConstants.SEARCH_IN_WEB_SITE_ALL.equals(value))
+					{
+						this.whereBuf = new StringBuffer();
+						break;
+					}else
+					{
+						this.whereBuf.append(" ");
+						this.whereBuf.append(columnName);
+						this.whereBuf.append(" = ");
+						this.whereBuf.append(value);
+						this.whereBuf.append(" ");
+						this.whereBuf.append(relation);
+					}
+				}
+			}
+			
+			String whereStr = this.whereBuf.toString();
+			if(whereStr.endsWith(relation))
+			{
+				this.whereBuf.delete(this.whereBuf.length()-2, this.whereBuf.length());
+				this.whereBuf.append(") ");
+			}else
+			{
+				this.whereBuf = new StringBuffer();
+			}
+		}
+
+	}
+	
+	
 	private void insertDto(Object dto, String idFieldName) throws Exception
 	{
 		Connection conn = null;

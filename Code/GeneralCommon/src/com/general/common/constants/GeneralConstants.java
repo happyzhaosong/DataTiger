@@ -201,8 +201,14 @@ public class GeneralConstants {
 	
 	public static final String ERROR_MESSAGE_SYSTEM_BUSY = "系统忙，请稍后访问。";
 	
+	//从哪些表里面搜索
 	public static final int SEARCH_DATA_IN_XIU_HAO_CHI = 1;
 	public static final int SEARCH_DATA_IN_XIU_HAO_PU = 2;
+	
+	//搜索哪些网站里面的信息
+	public static final String SEARCH_IN_WEB_SITE_ALL = "0";
+	public static final String SEARCH_IN_WEB_SITE_TAOBAO = "1";
+	public static final String SEARCH_IN_WEB_SITE_TMALL = "2";
 	
 	public static final String SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION = "SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION";
 	public static final String SEARCH_LAST_SEARCH_ACTION = "SEARCH_LAST_SEARCH_ACTION";

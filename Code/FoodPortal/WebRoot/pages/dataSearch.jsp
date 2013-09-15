@@ -33,8 +33,8 @@
     	
     	<div id="searchIn" style="position: relative; left: 25; display: inline-block">
 	    	<input type="checkbox" name="all" value="0">全选&nbsp;&nbsp;
-	    	<input type="checkbox" name="taobao" value="1">淘宝
-	    	<input type="checkbox" name="tmall" value="2">天猫
+	    	<input type="checkbox" name="taobao" value="1">天猫
+	    	<input type="checkbox" name="tmall" value="2">淘宝
     	</div>
     </div>
  
@@ -90,10 +90,10 @@ YUI().use('DataSearchApp', function (Y) {
     	{
     		if(currTarget._node.checked)
     		{
-    			Y.all('#searchIn input').setAttribute("checked", "true");
+    			Y.all('#searchIn input').set('checked', true);
     		}else
     		{
-    			Y.all('#searchIn input').removeAttribute("checked");
+    			Y.all('#searchIn input').set('checked', false);
     		}
     	}
     });    

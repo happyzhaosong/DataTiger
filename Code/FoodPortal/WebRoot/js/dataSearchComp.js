@@ -622,6 +622,24 @@
         	
         	var orderBy1SelIdx = Y.one('#orderByWithDierction1').get('selectedIndex');        	
         	this._api.orderByWithDierction1 = Y.one('#orderByWithDierction1').get('options')._nodes[orderBy1SelIdx].value
+        	
+        	var searchWebSite = '';
+        	var searchWebSiteNodeList = Y.all('#searchIn input');
+        	
+        	if(searchWebSiteNodeList)
+        	{
+        		searchWebSiteNodeList.each(function(node){
+        			var value = node.get('value');
+        			var checked = node.get('checked');
+        			if(checked)
+        			{
+        				searchWebSite += value;
+        				searchWebSite += ",";
+        			}
+        		});
+        	}
+        	
+        	this._api.searchWebSite = searchWebSite;
         },        
 
         // When our form is submitted, we assume it's a new request. As a new
@@ -776,7 +794,8 @@
         			orderByWithDierction1: '',
         			page: 1,
         			start: 0,
-                    limit: 16                 
+                    limit: 16,
+                    searchWebSite: 0
                 }
             }
         }

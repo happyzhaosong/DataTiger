@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.food.common.dto.FoodDTO;
+import com.general.common.constants.GeneralConstants;
 import com.general.common.dto.search.BaseSearchParamsDTO;
 import com.general.common.util.StringTool;
 import com.general.server.dao.BaseDAO;
@@ -15,10 +16,9 @@ public class FoodDAO extends BaseDAO {
 	{
 		this.initStringBuffer();
 
-		if(searchParamsDto.getSearchWebSite()!=-1)
+		if(!StringTool.isEmpty(searchParamsDto.getSearchWebSite()))
 		{
-			this.whereBuf.append(" shang_pin_lai_yuan = ");	
-			this.whereBuf.append(searchParamsDto.getSearchWebSite());
+			this.addMultipleValueClauseInWhereClause("shang_pin_lai_yuan", searchParamsDto.getSearchWebSite(), "or");
 		}
 		
 		if(!StringTool.isEmpty(searchParamsDto.getSearchKeyword().trim()))
