@@ -28,10 +28,11 @@ public class FoodBB extends BaseBB {
 	{	
 		BaseSearchParamsDTO searchParamsDto = this.getGeneralSearchParamsDTOFromRequest(request);
 		
-		BasePageDTO pageDto = (BasePageDTO)ClassTool.extractValueFromRequest(BasePageDTO.class, request);					
+		BasePageDTO pageDto = (BasePageDTO)ClassTool.extractValueFromRequest(BasePageDTO.class, request);				
 		this.foodDao.setPageDto(pageDto);
 		
 		List<FoodDTO> dtoList = this.foodDao.searchFood(searchParamsDto);
+		this.limitSearchResult(dtoList);
 		
 		if(!StringTool.isEmpty(searchParamsDto.getSearchKeyword()) && searchParamsDto.isLogSearchKeyword())
 		{

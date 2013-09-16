@@ -261,7 +261,7 @@ public class BrowserRunner {
 			    	  ifBrowserUnreach = ifBrowserUnreach(ex);
 			      }finally
 			      {
-			    	  if(!ifBrowserUnreach)
+			    	  if(!ifBrowserUnreach && !taskDto.isIfContentPage())
 			    	  {
 			    		  LogTool.debugText("Start parse url link in page");
 						  String parseUrlLinkDuration = this.parseUrlLinkInPage(driver, webSiteDto, taskDto, realPageUrl);	  			      					  

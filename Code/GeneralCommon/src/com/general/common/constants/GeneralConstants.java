@@ -180,6 +180,8 @@ public class GeneralConstants {
 	public static final String DB_ORDER_DESC = "DESC";
 	
 	public static final String DEFAULT_PAGE_SIZE = "100";
+	
+	public static final int MAX_SEARCH_RESULT_PAGE_NUMBER = 100;
 		
 	public static final int DOWNLOAD_THREAD_TYPE_GET_WEB_PAGE = 2;	
 	

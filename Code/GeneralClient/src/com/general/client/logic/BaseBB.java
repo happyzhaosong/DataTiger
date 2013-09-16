@@ -2,10 +2,9 @@ package com.general.client.logic;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import com.general.common.constants.GeneralConstants;
+import com.general.common.dto.BasePageDTO;
 import com.general.common.dto.search.BaseSearchParamsDTO;
 import com.general.common.util.ClassTool;
 import com.general.common.util.LogTool;
@@ -120,4 +119,33 @@ public class BaseBB {
 			return ret;
 		}
 	}
+	
+	/*
+	 * 限制返回的数据数量，这样可以避免所有的记录都被搜索出来被爬虫抓取。
+	 * */
+	protected <T> void limitSearchResult(List<T> dtoList)
+	{
+		if(!ClassTool.isListEmpty(dtoList))
+		{
+			int size = dtoList.size();
+			long maxShowItemCount = -1;
+			for(int i=0;i<size;i++)
+			{
+				T dtoT = dtoList.get(0);
+				if(dtoT instanceof BasePageDTO)
+				{
+					BasePageDTO dto = (BasePageDTO)dtoT; 
+					if(maxShowItemCount==-1)
+					{
+						maxShowItemCount = GeneralConstants.MAX_SEARCH_RESULT_PAGE_NUMBER*Integer.parseInt(dto.getLimit());
+					}
+					
+					if(dto.getTotalRecordsCountInThisSearch()>maxShowItemCount)
+					{
+						dto.setTotalRecordsCountInThisSearch(maxShowItemCount);
+					}
+				}
+			}
+		}
+	}	
 }

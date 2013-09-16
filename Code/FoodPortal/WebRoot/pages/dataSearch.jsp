@@ -3,7 +3,7 @@
 <script src="<%=basePath%>js/utilTool.js"></script>
 <script src="<%=basePath%>js/dataSearchComp.js"></script>
 <div id="demo" class="yui3-skin-sam hide-pg">
-	<a name="top"></a>
+	<a name="top"> </a>
     <!-- search form area-->
     <form id="searchForm">
         <input type="text" id="searchKeyword" name="searchKeyword" value="">
@@ -42,7 +42,7 @@
     <div class="paginator"></div>
     <div class="loading"></div>
 </div>
-<center><a href="#top" style="position: relative; top: 25;">回顶部</a></center>
+<center><a href="pages/index.jsp#top" style="position: relative; top: 25;">回顶部</a></center>
 
 <script>
 YUI().use('DataSearchApp', function (Y) {
