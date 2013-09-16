@@ -225,12 +225,12 @@ public class DBManagerDAO extends BaseDAO {
 		{
 			updateSqlBuf.append(columnDto.getColumnName());
 			updateSqlBuf.append(" = ");
-			updateSqlBuf.append(this.getColumnValueByColumnType(columnDto.getColumnType(), cValue));
+			updateSqlBuf.append(this.getColumnValueByColumnType(columnDto.getColumnName(), columnDto.getColumnType(), cValue));
 			updateSqlBuf.append(Constants.SEPERATOR_COMMA);
 		}
 	}
 	
-	private String getColumnValueByColumnType(String cType, String cValue)
+	private String getColumnValueByColumnType(String cName, String cType, String cValue) throws Exception
 	{
 		StringBuffer retBuf = new StringBuffer();
 		cType = StringTool.isEmpty(cType, Constants.DATA_TYPE_STRING);
@@ -247,6 +247,7 @@ public class DBManagerDAO extends BaseDAO {
 				retBuf.append(cValue.trim());	
 			}else
 			{
+				LogTool.debugText("Not a number value, column name : " + cName + ", parsed out value : " + cValue);
 				retBuf.append(-1);
 			}
 		}else if(Constants.DATA_TYPE_BOOLEAN.equalsIgnoreCase(cType))
@@ -256,6 +257,7 @@ public class DBManagerDAO extends BaseDAO {
 				retBuf.append(0);
 			}else
 			{
+				LogTool.debugText("Boolean value check , column name : " + cName + ", parsed out value : " + cValue);
 				retBuf.append(1);
 			}
 		}
@@ -270,7 +272,7 @@ public class DBManagerDAO extends BaseDAO {
 	private void buildInsertSql(StringBuffer insertSqlBuf, StringBuffer insertValueBuf, DBTableColumnDTO columnDto) throws Exception
 	{
 		insertSqlBuf.append(columnDto.getColumnName());		
-		insertValueBuf.append(this.getColumnValueByColumnType(columnDto.getColumnType(), columnDto.getColumnValue()));
+		insertValueBuf.append(this.getColumnValueByColumnType(columnDto.getColumnName(), columnDto.getColumnType(), columnDto.getColumnValue()));
 	}
 	
 	
@@ -286,7 +288,7 @@ public class DBManagerDAO extends BaseDAO {
 				selectSqlBuf.append(columnDto.getColumnName());
 				selectSqlBuf.append(" = ");
 				
-				selectSqlBuf.append(this.getColumnValueByColumnType(columnDto.getColumnType(), columnDto.getColumnValue()));
+				selectSqlBuf.append(this.getColumnValueByColumnType(columnDto.getColumnName(), columnDto.getColumnType(), columnDto.getColumnValue()));
 	
 				selectSqlBuf.append(" and ");
 			}
