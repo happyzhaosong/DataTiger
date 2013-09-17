@@ -51,10 +51,7 @@ public class HtmlTool extends BaseTool {
 						//这种情况就相当于http:// (http://stackoverflow.com/questions/4831741/can-i-change-all-my-http-links-to-just)
 						if(url.startsWith("//"))
 						{
-							if(url.length()>2)
-							{
-								url = url.substring(2);
-							}
+							url = "http:" + url;							
 						}else if(url.startsWith("/") || url.startsWith("\\"))
 						{
 							url = HtmlTool.getRootUrl(currentUrl) + url;
