@@ -38,7 +38,8 @@ public class GeneralConstants {
 	
 	public static final String ACTION_SEARCH = "ACTION_SEARCH";
 	public static final String ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS = "ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS";
-		
+	public static final String ACTION_SEARCH_CLICK_ITEM = "ACTION_SEARCH_CLICK_ITEM";
+	
 	public static final String LIST = "_LIST";	
 	public static final String LIST_ALL = "_LIST_ALL";
 	public static final String RESET = "_RESET";
@@ -217,4 +218,6 @@ public class GeneralConstants {
 	
 	//100 MILLI SECONDS
 	public static final long SEARCH_FREQUENT_DURATION_IN_MILLISECONDS = 100;
+	
+	public static final String TABLE_DATA_XIU_HAO_CHI = "data_xiu_hao_chi";
 }

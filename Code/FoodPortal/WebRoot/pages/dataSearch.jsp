@@ -19,6 +19,7 @@
     <div id="commonContainer" class="commonContainer">
     	排序：
     	<select id="orderByWithDierction1">
+    		<option value="click_count<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">选择排序方式</option>
     		<option value="jia_ge_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">价格从低到高</option>
 			<option value="jia_ge_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">价格从高到低</option>
 			<option value="dan_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">单价从低到高</option>
@@ -42,9 +43,10 @@
     <div class="paginator"></div>
     <div class="loading"></div>
 </div>
-<center style="position: relative; top: 25;"><a href="tencent://message/?uin=5495051&Site=QQ交谈&Menu=yes" target="_blank" title="有事Q我吧">
-         <img border="0" src="img/qq.jpg" alt="有事Q我吧"/>
-</a><a href="pages/index.jsp#top">回顶部</a></center>
+
+<center>
+	<a href="pages/index.jsp#top" style="position: relative; top: 25;">回顶部</a>
+</center>
 
 <script>
 YUI().use('DataSearchApp', function (Y) {
@@ -62,11 +64,11 @@ YUI().use('DataSearchApp', function (Y) {
 
     dataSearch.dataItemTemplate += '<div class="resultsItemDiv">';
 
-    dataSearch.dataItemTemplate += '<a href="{itemUrl}" title="{biaoTi}" target="_detail"><img width="100%" height="180px" src="{imgUrl}"><div>{biaoTiSummary}</a>';
+    dataSearch.dataItemTemplate += '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail"><img width="100%" height="180px" src="{imgUrl}" />{biaoTiSummary}</a>';
     dataSearch.dataItemTemplate += '<div style="display: block;"><strong class="itemTextJiaGe">{jiaGe}</strong> <strong class="itemTextDanJia">{danJia}</strong> </div>';
     dataSearch.dataItemTemplate += '<div style="display: block;"><strong class="itemText">销量:{jiaoYiSuccess}</strong>  <strong class="itemTextFloatRight">评分:{pingFen}</strong></div>';
-    dataSearch.dataItemTemplate += '<a href="{shopUrl}" target="_shop" style="color: #666;display: inline;" title="点击访问本店">{shopName}</a> <a href="{wangWangUrl}" target="_wangwang" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。" style="display: inline; float:right"><img src="img/wangwangContact.jpg" width="50px"/></a></div>';
-    dataSearch.dataItemTemplate += '<image src="{shopLevelImgUrl}" height="16px"/> <strong class="itemTextFloatRight">好评率:{haoPingLv}</strong>';
+    dataSearch.dataItemTemplate += '<div style="display: block;"><a href="{shopUrl}" target="_shop" style="color: #666;display: inline;" title="点击访问本店">{shopName}</a> <a href="{wangWangUrl}" target="_wangwang" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。" style="display: inline; float:right"><img src="img/wangwangContact.jpg" width="50px"/></a></div>';
+    dataSearch.dataItemTemplate += '<div style="display: block;"><image src="{shopLevelImgUrl}" height="16px"/> <strong class="itemTextFloatRight">好评率:{haoPingLv}</strong></div>';
 
     dataSearch.dataItemTemplate += '</div>';
 
@@ -98,6 +100,6 @@ YUI().use('DataSearchApp', function (Y) {
     			Y.all('#searchIn input').set('checked', false);
     		}
     	}
-    });    
+    });
 });
 </script>

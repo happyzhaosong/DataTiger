@@ -129,7 +129,7 @@ CREATE TABLE `data_search_log_detail` (
   `order_by` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '本次搜索 orderby 的字段',
   `search_result_count` bigint(10) NOT NULL DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
 
 /*Table structure for table `data_tao_bao_jie` */
 
@@ -236,6 +236,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `shang_pin_lai_yuan` tinyint(1) NOT NULL DEFAULT '1' COMMENT '商品来源，1---天猫， 2---淘宝， 3---京东',
   `hao_ping_lv` varchar(10) COLLATE utf8_bin NOT NULL COMMENT '店铺好评率',
   `hao_ping_lv_num` double(5,2) NOT NULL DEFAULT '0.00' COMMENT '店铺好评率数值',
+  `click_count` int(10) NOT NULL DEFAULT '0' COMMENT '商品被点击的次数，缺省按照这个次数降序排列',
   `wang_wang_url` varchar(2000) COLLATE utf8_bin NOT NULL COMMENT '掌柜旺旺链接',
   `download_task_page_url` text COLLATE utf8_bin NOT NULL,
   `download_task_id` bigint(20) NOT NULL,
@@ -245,7 +246,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `download_task_useless_content_page` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   FULLTEXT KEY `NewIndex1` (`biao_ti`,`meta_search_keyword`)
-) ENGINE=MyISAM AUTO_INCREMENT=862 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
+) ENGINE=MyISAM AUTO_INCREMENT=23729 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
 
 /*Table structure for table `db_setting` */
 
@@ -317,7 +318,7 @@ CREATE TABLE `download_task` (
   PRIMARY KEY (`id`),
   KEY `site_id` (`site_id`,`useless_content_page`,`apply_time`,`if_content_page`),
   KEY `task_level_id` (`task_level`)
-) ENGINE=MyISAM AUTO_INCREMENT=4810 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=32279 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `download_thread` */
 

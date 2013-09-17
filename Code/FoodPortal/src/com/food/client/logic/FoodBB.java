@@ -3,6 +3,7 @@ package com.food.client.logic;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.food.common.constants.FoodConstants;
 import com.food.common.dto.FoodDTO;
@@ -14,6 +15,7 @@ import com.general.common.dto.BasePageDTO;
 import com.general.common.dto.JsonDTO;
 import com.general.common.dto.search.BaseSearchParamsDTO;
 import com.general.common.util.ClassTool;
+import com.general.common.util.GeneralWebTool;
 import com.general.common.util.JsonTool;
 import com.general.common.util.LogTool;
 import com.general.common.util.StringTool;
@@ -32,7 +34,7 @@ public class FoodBB extends BaseBB {
 		this.foodDao.setPageDto(pageDto);
 		
 		List<FoodDTO> dtoList = this.foodDao.searchFood(searchParamsDto);
-		this.limitSearchResult(dtoList);
+		//this.limitSearchResult(dtoList);
 		
 		if(!StringTool.isEmpty(searchParamsDto.getSearchKeyword()) && searchParamsDto.isLogSearchKeyword())
 		{
@@ -53,5 +55,14 @@ public class FoodBB extends BaseBB {
 	public JsonDTO getFoodSearchKeyword(HttpServletRequest request) throws Exception
 	{
 		return this.dataSearchLogBB.getLogSearchDataListInJson(request, GeneralConstants.SEARCH_DATA_IN_XIU_HAO_CHI);
+	}
+	
+	public void clickItem(HttpServletRequest request, HttpServletResponse response) throws Exception
+	{
+		String id = GeneralWebTool.getStringParameterBeforeAttribute("id", request);
+		String itemUrl = GeneralWebTool.getStringParameterBeforeAttribute("itemUrl", request);
+		
+		this.foodDao.updateClickCount(id);		
+		response.sendRedirect(itemUrl);		
 	}
 }

@@ -62,6 +62,17 @@ public class FoodDTO extends BaseDTO {
 	
 	@DBColumn(name="wang_wang_url")
 	private String wangWangUrl = "0";
+	
+	@DBColumn(name="click_count")
+	private int clickCount = 0;
+
+	public int getClickCount() {
+		return clickCount;
+	}
+
+	public void setClickCount(int clickCount) {
+		this.clickCount = clickCount;
+	}
 
 	public String getHaoPingLv() {
 		return haoPingLv;

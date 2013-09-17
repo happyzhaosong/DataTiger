@@ -57,4 +57,18 @@ public class FoodDAO extends BaseDAO {
 		ret = ret.getClass().cast(this.selectDtoList(FoodDTO.class, DBManager.getInstance().getMysqlDataSource()));		
 		return ret;
 	}
+	
+	public void updateClickCount(String id) throws Exception
+	{
+		if(StringTool.isInteger(id))
+		{
+			StringBuffer sqlBuf = new StringBuffer();
+			sqlBuf.append(" update ");
+			sqlBuf.append(GeneralConstants.TABLE_DATA_XIU_HAO_CHI);
+			sqlBuf.append(" set click_count = click_count + 1 where id = ");
+			sqlBuf.append(id);		
+			this.executeUpdateOrDeleteSql(sqlBuf.toString(), DBManager.getInstance().getMysqlDataSource());
+		}
+	}
+
 }

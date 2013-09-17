@@ -43,6 +43,9 @@ public class FoodActionServlet extends HttpServlet {
 				}else if(GeneralConstants.ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS.equals(action))
 				{
 					jsonDto = foodBB.getFoodSearchKeyword(request);
+				}else if(GeneralConstants.ACTION_SEARCH_CLICK_ITEM.equals(action))
+				{
+					foodBB.clickItem(request, response);
 				}
 			}		
 		}catch(Exception ex)
