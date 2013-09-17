@@ -65,6 +65,17 @@ public class FoodDTO extends BaseDTO {
 	
 	@DBColumn(name="click_count")
 	private int clickCount = 0;
+	
+	@DBColumn(name="pin_pai_zhi_xiao")
+	private int pinPaiZhiXiao = 0;
+	
+	public int getPinPaiZhiXiao() {
+		return pinPaiZhiXiao;
+	}
+
+	public void setPinPaiZhiXiao(int pinPaiZhiXiao) {
+		this.pinPaiZhiXiao = pinPaiZhiXiao;
+	}
 
 	public int getClickCount() {
 		return clickCount;

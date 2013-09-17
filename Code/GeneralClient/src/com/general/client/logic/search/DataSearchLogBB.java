@@ -65,6 +65,7 @@ public class DataSearchLogBB extends BaseBB {
 		ret.setSearcherHost(request.getRemoteHost());
 		ret.setSearchIn(searchIn);
 		ret.setSearchResultCount(searchParamsDto.getSearchResultCount());
+		ret.setSearchWebSite(searchParamsDto.getSearchWebSite());
 		
 		StringBuffer orderByBuf = new StringBuffer();
 		if(!StringTool.isEmpty(searchParamsDto.getOrderBy1()))

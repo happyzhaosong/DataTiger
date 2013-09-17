@@ -29,11 +29,14 @@ public class DataSearchLogDetailDTO extends BaseDTO {
 	@DBColumn(name="search_in")
 	private int searchIn = 1;
 
-	@DBColumn(name="search_mall")
-	private int searchMall = 0;
+	@DBColumn(name="search_web_site")
+	private String searchWebSite = "0";
 	
 	@DBColumn(name="search_result_count")
 	private long searchResultCount = 0;
+	
+	@DBColumn(name="order_by")
+	private String orderBy = "";
 	
 	public long getSearchResultCount() {
 		return searchResultCount;
@@ -43,16 +46,14 @@ public class DataSearchLogDetailDTO extends BaseDTO {
 		this.searchResultCount = searchResultCount;
 	}
 
-	public int getSearchMall() {
-		return searchMall;
+
+	public String getSearchWebSite() {
+		return searchWebSite;
 	}
 
-	public void setSearchMall(int searchMall) {
-		this.searchMall = searchMall;
+	public void setSearchWebSite(String searchWebSite) {
+		this.searchWebSite = searchWebSite;
 	}
-
-	@DBColumn(name="order_by")
-	private String orderBy = "";
 
 	public String getOrderBy() {
 		return orderBy;

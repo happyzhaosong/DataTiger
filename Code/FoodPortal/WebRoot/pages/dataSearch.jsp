@@ -64,7 +64,8 @@ YUI().use('DataSearchApp', function (Y) {
 
     dataSearch.dataItemTemplate += '<div class="resultsItemDiv">';
 
-    dataSearch.dataItemTemplate += '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail"><img width="100%" height="180px" src="{imgUrl}" />{biaoTiSummary}</a>';
+    dataSearch.dataItemTemplate += '<div style="display: block;"><a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail"><img width="100%" height="180px" src="{imgUrl}" /></a></div>';
+    dataSearch.dataItemTemplate += '<div style="display: block;"><a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail">{biaoTiSummary}</a></div>';    
     dataSearch.dataItemTemplate += '<div style="display: block;"><strong class="itemTextJiaGe">{jiaGe}</strong> <strong class="itemTextDanJia">{danJia}</strong> </div>';
     dataSearch.dataItemTemplate += '<div style="display: block;"><strong class="itemText">销量:{jiaoYiSuccess}</strong>  <strong class="itemTextFloatRight">评分:{pingFen}</strong></div>';
     dataSearch.dataItemTemplate += '<div style="display: block;"><a href="{shopUrl}" target="_shop" style="color: #666;display: inline;" title="点击访问本店">{shopName}</a> <a href="{wangWangUrl}" target="_wangwang" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。" style="display: inline; float:right"><img src="img/wangwangContact.jpg" width="50px"/></a></div>';
