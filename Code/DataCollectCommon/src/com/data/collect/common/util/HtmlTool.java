@@ -6,6 +6,7 @@ import java.util.List;
 import com.data.collect.common.constants.Constants;
 import com.data.collect.common.dto.WebSiteDTO;
 import com.data.collect.common.dto.WebSitePageLinkParseDTO;
+import com.general.common.constants.GeneralConstants;
 import com.general.common.util.BaseTool;
 import com.general.common.util.ClassTool;
 import com.general.common.util.GetDeltaTimeTool;
@@ -61,6 +62,9 @@ public class HtmlTool extends BaseTool {
 						}else if(url.startsWith("../"))
 						{
 							url = HtmlTool.getParentLevelUrlPathDirectory(currentUrl) + url.substring(2);
+						}else if(url.startsWith(GeneralConstants.QUESTION_MARK))
+						{
+							url = HtmlTool.getUrlPathBeforeQuestionMark(currentUrl) + url;
 						}
 						
 						
@@ -549,6 +553,20 @@ public class HtmlTool extends BaseTool {
 	{
 		String ret = HtmlTool.getCurrentLevelUrlPathDirectory(currentUrl);
 		ret = HtmlTool.getCurrentLevelUrlPathDirectory(ret);
+		return ret;
+	}
+	
+	public static String getUrlPathBeforeQuestionMark(String currentUrl)
+	{
+		String ret = "";
+		if(!StringTool.isEmpty(currentUrl))
+		{
+			int endIdx = currentUrl.indexOf(GeneralConstants.QUESTION_MARK);
+			if(endIdx!=-1)
+			{
+				ret = currentUrl.substring(0, endIdx);
+			}
+		}
 		return ret;
 	}
 	
