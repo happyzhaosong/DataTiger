@@ -174,9 +174,16 @@ a{
 }
 
 .itemText {
-	font-family: arial; 
+	font-family: tahoma, arial, ËÎÌו; 
 	font-size: 12px; 
 	display: inline;
+}
+
+.itemTextShopName {
+	color: #666;
+	font-family: tahoma, arial, ËÎÌו;
+	font-size: 12px;
+	display: inline; 
 }
 
 .itemTextJiaGe {

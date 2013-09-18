@@ -60,20 +60,25 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH)%>';  
     dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px"></ul>';
     
-    dataSearch.dataItemTemplate = '<li class="yui3-u-1-4" style="height:300px">';    
-
-    dataSearch.dataItemTemplate += '<div class="resultsItemDiv">';
-
-    dataSearch.dataItemTemplate += '<div style="display: block;"><a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail"><img width="100%" height="180px" src="{imgUrl}" /></a></div>';
-    dataSearch.dataItemTemplate += '<div style="display: block;"><a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail">{biaoTiSummary}</a></div>';    
-    dataSearch.dataItemTemplate += '<div style="display: block;"><strong class="itemTextJiaGe">{jiaGe}</strong> <strong class="itemTextDanJia">{danJia}</strong> </div>';
-    dataSearch.dataItemTemplate += '<div style="display: block;"><strong class="itemText">销量:{jiaoYiSuccess}</strong>  <strong class="itemTextFloatRight">评分:{pingFen}</strong></div>';
-    dataSearch.dataItemTemplate += '<div style="display: block;"><a href="{shopUrl}" target="_shop" style="color: #666;display: inline;" title="点击访问本店">{shopName}</a> <a href="{wangWangUrl}" target="_wangwang" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。" style="display: inline; float:right"><img src="img/wangwangContact.jpg" width="50px"/></a></div>';
+    var templatePrefix = '<li class="yui3-u-1-4" style="height:300px">';    
+	templatePrefix += '<div class="resultsItemDiv">';
+	templatePrefix += '<div style="display: block;"><a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail"><img width="100%" height="180px" src="{imgUrl}" /></a></div>';
+    templatePrefix += '<div style="display: block;"><a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail">{biaoTiSummary}</a></div>';    
+    templatePrefix += '<div style="display: block;"><strong class="itemTextJiaGe">{jiaGe}</strong> <strong class="itemTextDanJia" title="{danJia}"">{danJiaSummary}</strong> </div>';
+    templatePrefix += '<div style="display: block;"><strong class="itemText">销量:{jiaoYiSuccess}</strong>  <strong class="itemTextFloatRight">评分:{pingFen}</strong></div>';
+    templatePrefix += '<div style="display: block;"><a href="{shopUrl}" target="_shop" class="itemTextShopName" style="display:inline" title="{shopName}">{shopNameSummary}</a> <a href="{wangWangUrl}" target="_wangwang" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。" style="display: inline; float:right"><img src="img/wangwangContact.jpg" width="50px"/></a></div>';
+     
+   
+    var templateSuffix = '<div style="display: block;"><image src="img/mall_{shangPinLaiYuan}.jpg" height="16px"/></div>';
+    templateSuffix += '</div>';
+    templateSuffix += '</li>';
+    
+    dataSearch.dataItemTemplate = templatePrefix;
     dataSearch.dataItemTemplate += '<div style="display: block;"><image src="{shopLevelImgUrl}" height="16px"/> <strong class="itemTextFloatRight">好评率:{haoPingLv}</strong></div>';
-
-    dataSearch.dataItemTemplate += '</div>';
-
-    dataSearch.dataItemTemplate += '</li>';
+    dataSearch.dataItemTemplate += templateSuffix;    
+        
+    dataSearch.dataItemTemplateTMall = templatePrefix;
+    dataSearch.dataItemTemplateTMall += templateSuffix;
     
     dataSearch.systemErrorMessageBusy = '<%=GeneralConstants.ERROR_MESSAGE_SYSTEM_BUSY%>';
     dataSearch.searchNoResultInfoPrefix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_PREFIX%>';

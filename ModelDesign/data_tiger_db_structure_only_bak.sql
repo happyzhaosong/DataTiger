@@ -111,7 +111,7 @@ CREATE TABLE `data_search_log` (
   `search_result_count` bigint(10) DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   `search_in` tinyint(4) NOT NULL DEFAULT '0' COMMENT '搜索的范围 0---全部，1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `data_search_log_detail` */
 
@@ -129,7 +129,7 @@ CREATE TABLE `data_search_log_detail` (
   `order_by` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '本次搜索 orderby 的字段',
   `search_result_count` bigint(10) NOT NULL DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
 
 /*Table structure for table `data_tao_bao_jie` */
 
@@ -213,41 +213,41 @@ DROP TABLE IF EXISTS `data_xiu_hao_chi`;
 
 CREATE TABLE `data_xiu_hao_chi` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `shop_name` varchar(200) CHARACTER SET utf8 NOT NULL COMMENT '店铺名称',
+  `shop_name` varchar(200) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '店铺名称',
   `shop_url` text CHARACTER SET utf8 NOT NULL COMMENT '店铺链接地址',
-  `shop_level_img_url` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '店铺评级，皇冠数，图片地址',
-  `biao_ti` varchar(1000) COLLATE utf8_bin NOT NULL COMMENT '商品标题',
-  `jia_ge` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '商品价格',
-  `jia_ge_num` double(10,3) NOT NULL COMMENT '商品价格数值',
-  `dan_jia` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '商品单价',
-  `dan_jia_num` double(10,3) NOT NULL COMMENT '商品单价数值',
-  `cu_xiao_jia` varchar(200) COLLATE utf8_bin NOT NULL COMMENT '促销价',
-  `cu_xiao_jia_num` double(10,3) NOT NULL COMMENT '促销价数值',
-  `ping_fen` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '商品评分',
-  `ping_fen_num` double(5,2) NOT NULL COMMENT '商品评分数值',
-  `jiao_yi` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '0' COMMENT '交易的数量',
-  `jiao_yi_num` bigint(10) DEFAULT '0' COMMENT '交易的数量数值',
-  `jiao_yi_success` varchar(10) COLLATE utf8_bin DEFAULT '0' COMMENT '交易成功的数量',
-  `jiao_yi_success_num` bigint(10) DEFAULT '0' COMMENT '交易成功的数量数值',
-  `img_url` varchar(2000) COLLATE utf8_bin NOT NULL COMMENT '图片链接url',
-  `meta_search_keyword` varchar(2000) COLLATE utf8_bin NOT NULL COMMENT '商品 meta keywords 关键词信息, example: <meta name="keywords"',
-  `meta_desc` varchar(2000) COLLATE utf8_bin NOT NULL COMMENT '商品 meta description 描述信息, example: <meta name="description"',
+  `shop_level_img_url` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '店铺评级，皇冠数，图片地址',
+  `biao_ti` varchar(1000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品标题',
+  `jia_ge` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品价格',
+  `jia_ge_num` double(10,3) NOT NULL DEFAULT '-1.000' COMMENT '商品价格数值',
+  `dan_jia` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品单价',
+  `dan_jia_num` double(10,3) NOT NULL DEFAULT '-1.000' COMMENT '商品单价数值',
+  `cu_xiao_jia` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '促销价',
+  `cu_xiao_jia_num` double(10,3) NOT NULL DEFAULT '-1.000' COMMENT '促销价数值',
+  `ping_fen` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品评分',
+  `ping_fen_num` double(5,2) NOT NULL DEFAULT '-1.00' COMMENT '商品评分数值',
+  `jiao_yi` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '''0''' COMMENT '交易的数量',
+  `jiao_yi_num` bigint(10) NOT NULL DEFAULT '0' COMMENT '交易的数量数值',
+  `jiao_yi_success` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '''0''' COMMENT '交易成功的数量',
+  `jiao_yi_success_num` bigint(10) NOT NULL DEFAULT '0' COMMENT '交易成功的数量数值',
+  `img_url` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '图片链接url',
+  `meta_search_keyword` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品 meta keywords 关键词信息, example: <meta name="keywords"',
+  `meta_desc` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品 meta description 描述信息, example: <meta name="description"',
   `item_url` text COLLATE utf8_bin NOT NULL COMMENT '商品url链接地址',
   `shang_pin_lai_yuan` tinyint(1) NOT NULL DEFAULT '1' COMMENT '商品来源，1---天猫， 2---淘宝， 3---京东',
-  `hao_ping_lv` varchar(10) COLLATE utf8_bin NOT NULL COMMENT '店铺好评率',
+  `hao_ping_lv` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '店铺好评率',
   `hao_ping_lv_num` double(5,2) NOT NULL DEFAULT '0.00' COMMENT '店铺好评率数值',
   `click_count` int(10) NOT NULL DEFAULT '0' COMMENT '商品被点击的次数，缺省按照这个次数降序排列',
-  `wang_wang_url` varchar(2000) COLLATE utf8_bin NOT NULL COMMENT '掌柜旺旺链接',
+  `wang_wang_url` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '掌柜旺旺链接',
   `pin_pai_zhi_xiao` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是品牌直销',
   `download_task_page_url` text COLLATE utf8_bin NOT NULL,
-  `download_task_id` bigint(20) NOT NULL,
-  `download_task_level` int(11) NOT NULL,
-  `download_task_data_parse_time` varchar(20) COLLATE utf8_bin NOT NULL,
-  `download_task_data_parse_time_number` bigint(100) NOT NULL,
-  `download_task_useless_content_page` tinyint(1) NOT NULL,
+  `download_task_id` bigint(20) NOT NULL DEFAULT '-1',
+  `download_task_level` int(11) NOT NULL DEFAULT '1',
+  `download_task_data_parse_time` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '',
+  `download_task_data_parse_time_number` bigint(100) NOT NULL DEFAULT '1',
+  `download_task_useless_content_page` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `NewIndex1` (`biao_ti`,`meta_search_keyword`)
-) ENGINE=MyISAM AUTO_INCREMENT=23879 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
+) ENGINE=MyISAM AUTO_INCREMENT=24724 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
 
 /*Table structure for table `db_setting` */
 
@@ -280,7 +280,7 @@ CREATE TABLE `download_mq_message` (
   `fail_reason` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'MQ action 失败的原因',
   `create_thread_count` int(11) DEFAULT NULL COMMENT '创建的线程数量，范围为 1 - 5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_setting` */
 
@@ -319,7 +319,7 @@ CREATE TABLE `download_task` (
   PRIMARY KEY (`id`),
   KEY `site_id` (`site_id`,`useless_content_page`,`apply_time`,`if_content_page`),
   KEY `task_level_id` (`task_level`)
-) ENGINE=MyISAM AUTO_INCREMENT=32683 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=45010 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `download_thread` */
 
@@ -336,7 +336,7 @@ CREATE TABLE `download_thread` (
   `site_id` bigint(20) DEFAULT NULL COMMENT '线程访问的网站id',
   `webdriver_each_browse_start_time` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '每次 webdriver 访问网页的开始时间，webdriver每次访问一个网页都会更新这个时间，有一个监控线程轮询查看，如果 webdriver 开始访问页面时间和当前的时间之差大于10分钟，则认为 webdriver 挂起，则重新启动那个线程 ',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=263 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=296 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_thread_apply_task_status` */
 
@@ -557,7 +557,7 @@ CREATE TABLE `site_content_page_check` (
   `parse_value_reg_exp` varchar(2000) DEFAULT NULL COMMENT '对上面解析出来的值执行正则表达式得到想要的值,该字段的格式为 regexp1;regexp2;regexp3...',
   `parse_value_string` text COMMENT '如果该值很难用正则表达式解析，就用这个字段进行字符串解析，该字段内容格式startStr1,endStr1;startStr1,endStr1;startStr1,endStr1;...',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `site_url_parse` */
 

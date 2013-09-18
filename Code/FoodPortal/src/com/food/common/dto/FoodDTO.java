@@ -12,7 +12,9 @@ public class FoodDTO extends BaseDTO {
 	
 	@DBColumn(name="shop_name")
 	private String shopName = "";
-
+	
+	private String shopNameSummary = "";
+	
 	@DBColumn(name="shop_url")
 	private String shopUrl = "";
 	
@@ -29,6 +31,8 @@ public class FoodDTO extends BaseDTO {
 	
 	@DBColumn(name="dan_jia")
 	private String danJia = "";
+	
+	private String danJiaSummary = "";
 	
 	@DBColumn(name="cu_xiao_jia")
 	private String cuXiaoJia = "";
@@ -69,6 +73,36 @@ public class FoodDTO extends BaseDTO {
 	@DBColumn(name="pin_pai_zhi_xiao")
 	private int pinPaiZhiXiao = 0;
 	
+	public String getDanJiaSummary() {
+		if(this.danJia.length()>15)
+		{
+			danJiaSummary = this.danJia.substring(0, 10) + "...";
+		}else
+		{
+			danJiaSummary = this.danJia;
+		}
+		return danJiaSummary;
+	}
+
+	public void setDanJiaSummary(String danJiaSummary) {
+		this.danJiaSummary = danJiaSummary;
+	}
+
+	public String getShopNameSummary() {
+		if(this.shopName.length()>8)
+		{
+			shopNameSummary = this.shopName.substring(0, 8) + "...";
+		}else
+		{
+			shopNameSummary = this.shopName;
+		}
+		return shopNameSummary;
+	}
+
+	public void setShopNameSummary(String shopNameSummary) {
+		this.shopNameSummary = shopNameSummary;
+	}
+
 	public int getPinPaiZhiXiao() {
 		return pinPaiZhiXiao;
 	}
