@@ -1,8 +1,9 @@
 package com.general.common.util;
 
 import java.util.ArrayList;
-
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,16 +13,54 @@ import com.general.common.exception.EmptyStringException;
 public class StringTool extends BaseTool {
 	
 	/*
-	public static String replaceMySqlUnallowedCharactor(String data)
+	 * parse srcStr use following 3 seperator, example:
+	 * srcStr : list.tmall.com=//*[@id="J_FilterNavForm"]/div/div[1],//*[@id="select-hold"];detail.tmall.com=//*[@id="J_FilterNavForm"]/div/div[2],//*[@id="select-hold"]
+	 * seperator1 : ;
+	 * seperator2 : =
+	 * seperator3 : ,
+	 * */
+	private static Map<String, String[]> parseStringReturnStringListMap(String srcStr, String seperator1, String seperator2, String seperator3)
 	{
-		String ret = "";
-		if(!StringTool.isEmpty(data))
+		Map<String, String[]> ret = new Hashtable<String, String[]>();
+		if(!StringTool.isEmpty(srcStr))
 		{
-			ret = data.replaceAll("'", "\\'").trim();
+			String arr1[] = srcStr.split(seperator1);
+			if(arr1!=null)
+			{
+				int size1 = arr1.length;
+				 for(int i=0;i<size1;i++)
+				 {
+					 String str1 = arr1[i];
+					 if(!StringTool.isEmpty(str1))
+					 {
+						 String arr2[] = str1.split(seperator2);
+						 if(arr2!=null)
+						 {
+							 int size2 = arr2.length;
+							 if(size2>=2)
+							 {
+								 String key = arr2[0];
+								 String value = arr2[1];
+								 
+								 if(!StringTool.isEmpty(value))
+								 {
+									 String arr3[] = value.split(seperator3);
+									 ret.put(key, arr3);
+								 }
+							 }
+						 }
+					 }
+				 }
+			}
 		}
-		return ret; 
+		return ret;
 	}
-	*/
+	
+	
+	public static Map<String, String[]> parseStringReturnStringListMapCommonSeperator(String srcStr)
+	{
+		return StringTool.parseStringReturnStringListMap(srcStr, GeneralConstants.SEPERATOR_SEMICOLON, GeneralConstants.SEPERATOR_COMPLEX, GeneralConstants.SEPERATOR_COMMA);
+	}
 	
 	public static String getStringFromObjectArray(Object objArr[], String seperator)
 	{
