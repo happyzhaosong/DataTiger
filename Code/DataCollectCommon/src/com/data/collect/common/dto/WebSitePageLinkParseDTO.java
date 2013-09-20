@@ -14,6 +14,9 @@ public class WebSitePageLinkParseDTO extends BaseDTO {
 	@DBColumn(name="site_id")
 	private int siteId = -1;
 	
+	@DBColumn(name="click_ele_xpath_before_parse_url")
+	private String clickEleXPathBeforeParseUrl = "";	
+	
 	@DBColumn(name="by_ele_type")
 	private String byEleType = "";
 
@@ -46,6 +49,14 @@ public class WebSitePageLinkParseDTO extends BaseDTO {
 	
 	@DBColumn(name="run_string_find_on_url")
 	private String runStringFindOnUrl = "";
+
+	public String getClickEleXPathBeforeParseUrl() {
+		return clickEleXPathBeforeParseUrl;
+	}
+
+	public void setClickEleXPathBeforeParseUrl(String clickEleXPathBeforeParseUrl) {
+		this.clickEleXPathBeforeParseUrl = clickEleXPathBeforeParseUrl;
+	}
 
 	public String getRunRegexpOnUrl() {
 		runRegexpOnUrl = StringTool.isEmpty(runRegexpOnUrl, "");

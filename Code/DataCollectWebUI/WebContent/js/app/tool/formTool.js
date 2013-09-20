@@ -448,7 +448,7 @@ Ext.define('DC.tool.FormTool', {
     		layout: 'vbox',
     	    defaultType: formItemDefaultType,
     	    defaults:{
-				width:800,
+				width:800,				
 	    		labelWidth:200,
 	    		labelAlign:'right',
 				anchor: '100%',

@@ -39,6 +39,7 @@ import com.data.collect.common.util.HtmlTool;
 import com.data.collect.server.dao.DBManagerDAO;
 import com.data.collect.server.dao.DownloadTaskDAO;
 import com.data.collect.server.dao.WebSiteDAO;
+import com.general.common.constants.GeneralConstants;
 import com.general.common.dto.DBTableColumnDTO;
 import com.general.common.dto.ParseTplItemActionDTO;
 import com.general.common.dto.ParseTplItemDTO;
@@ -1035,6 +1036,24 @@ public class BrowserRunner {
 		return ret;
 	}
 	
+	private void clickWebElementsBeforeParseUrl(WebDriver driver, String clickEleXPathBeforeParseUrlStr, String realPageUrl) throws Exception
+	{
+		 if(!StringTool.isEmpty(clickEleXPathBeforeParseUrlStr))
+		 {
+			 String clickEleArr[] = clickEleXPathBeforeParseUrlStr.split(GeneralConstants.SEPERATOR_SEMICOLON);
+			 if(!ClassTool.isNullObj(clickEleArr))
+			 {
+				 int size = clickEleArr.length;
+				 for(int i=0;i<size;i++)
+				 {
+					 String clickEle = clickEleArr[i];
+					 String clickElePairArr[] = clickEle.split(GeneralConstants.EQUAL_MARK);
+					 
+				 }
+			 }
+		 }
+	}
+	
 	
 	/*
 	 * return duration time in every step in this function
@@ -1070,6 +1089,8 @@ public class BrowserRunner {
     		for(int i=0;i<linkListSize;i++)
     		{
     			WebSitePageLinkParseDTO linkParseDto = linkParseList.get(i);
+    			
+    			linkParseDto.getClickEleXPathBeforeParseUrl();
     			
     			List<String> urlList = new ArrayList<String>();
     			try

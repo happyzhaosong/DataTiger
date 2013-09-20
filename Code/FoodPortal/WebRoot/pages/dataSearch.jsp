@@ -57,6 +57,8 @@ YUI().use('DataSearchApp', function (Y) {
         container: '#demo'
     });
     
+    var emptyRowHtmlCode = '<image src="" height="16px" style="display: block"/>';
+    
     dataSearch.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH)%>';  
     dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px"></ul>';
     
@@ -78,6 +80,7 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.dataItemTemplate += templateSuffix;    
         
     dataSearch.dataItemTemplateTMall = templatePrefix;
+    dataSearch.dataItemTemplateTMall += emptyRowHtmlCode;
     dataSearch.dataItemTemplateTMall += templateSuffix;
     
     dataSearch.systemErrorMessageBusy = '<%=GeneralConstants.ERROR_MESSAGE_SYSTEM_BUSY%>';
