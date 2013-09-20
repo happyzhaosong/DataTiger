@@ -1041,14 +1041,74 @@ public class BrowserRunner {
 		 if(!StringTool.isEmpty(clickEleXPathBeforeParseUrlStr))
 		 {
 			 String clickEleArr[] = clickEleXPathBeforeParseUrlStr.split(GeneralConstants.SEPERATOR_SEMICOLON);
-			 if(!ClassTool.isNullObj(clickEleArr))
+			 if(clickEleArr!=null)
 			 {
 				 int size = clickEleArr.length;
 				 for(int i=0;i<size;i++)
 				 {
 					 String clickEle = clickEleArr[i];
-					 String clickElePairArr[] = clickEle.split(GeneralConstants.EQUAL_MARK);
-					 
+					 if(!StringTool.isEmpty(clickEle))
+					 {
+						 String clickElePairArr[] = clickEle.split(GeneralConstants.EQUAL_MARK);
+						 if(clickElePairArr!=null)
+						 {
+							 if(clickElePairArr.length>=2)
+							 {
+								 String urlCharactor = clickElePairArr[0];
+								 String clickEleXPaths = clickElePairArr[1];
+								 
+								 if(!StringTool.isEmpty(urlCharactor) && !StringTool.isEmpty(clickEleXPaths))
+								 {
+									 if(realPageUrl.indexOf(urlCharactor)!=-1)
+									 {
+										 String clickEleXPathsArr[] = clickEleXPaths.split(GeneralConstants.SEPERATOR_COMMA);
+										 if(clickEleXPathsArr!=null)
+										 {
+											 int xpathSize = clickEleXPathsArr.length;
+											 for(int j=0;j<xpathSize;j++)
+											 {
+												 String clickEleXPath = clickEleXPathsArr[j];
+												
+												 List<By> byList = this.getSearchByConditionList(Constants.WEB_DRIVER_SEARCH_BY_TYPE_XPATH, clickEleXPath);						
+												 for(int k=0;k<byList.size();k++)
+												 {
+											    	By byCondition = byList.get(j);
+											    	if(byCondition!=null)
+											    	{
+												   		List<WebElement> eleList = driver.findElements(byCondition);
+												   		if(!ClassTool.isListEmpty(eleList))
+												   		{
+												   			int eleListSize = eleList.size();
+															for(int l=0;l<eleListSize;l++)
+															{
+																try
+																{
+																	WebElement ele = eleList.get(j);
+																	if(ele.isDisplayed() && ele.isEnabled() && ele.getSize().getWidth()>0 && ele.getSize().getHeight()>0)
+																	{
+																		ele.click();
+																	}
+																}catch(Exception ex)
+																{
+																	if(this.ifBrowserUnreach(ex))
+																	{
+																		throw ex;
+																	}else
+																	{
+																		LogTool.logError(ex);
+																	}
+																}
+															}
+												   		}
+											    	}
+												 }
+											 }
+										 }
+									 }
+								 }
+							 }
+						 }
+					 }
 				 }
 			 }
 		 }
