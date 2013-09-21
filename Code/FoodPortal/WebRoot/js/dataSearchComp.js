@@ -379,7 +379,7 @@
         	
         	if(keywordList)
         	{
-        		this.dataItemTemplate = '<li><a href="#">{searchKeyword}</a>&nbsp;&nbsp;</li>';
+        		this.dataItemTemplate = '<li><a href="#" title="{searchKeyword}">{searchKeywordSummary}</a>&nbsp;&nbsp;</li>';
         		var len = keywordList.length;
         		for(var i=0;i<len;i++)
         		{
@@ -409,7 +409,7 @@
             		context.requestSearchKeywordTags();
             	}else
             	{
-            		var searchKeyword = ev.currentTarget.getHTML();    	
+            		var searchKeyword = ev.currentTarget.getAttribute('title');    	
             		Y.one('#searchKeyword').set('value',searchKeyword);
             		Y.one('#searchBtn').simulate('click');
             	}

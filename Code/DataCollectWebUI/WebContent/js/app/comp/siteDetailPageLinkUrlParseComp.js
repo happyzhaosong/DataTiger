@@ -51,7 +51,7 @@ Ext.define('DC.comp.SiteDetailPageLinkUrlParseListPanel', {
 	    	xtype: 'textareafield',
 	    	height:100,
 	        grow : true,
-	        fieldLabel: 'Click These Web Elements By XPath Before Parse URL. Format is urlCharactor1!@#xpath1,xpath2;<br/>urlCharactor2!@#xpath3,xpath4;<br/>urlCharactor3!@#xpath5,xpath6',
+	        fieldLabel: 'Click These Web Elements By XPath Before Parse URL. Format is urlCharactor1!@#xpath1,xpath2;<br/>urlCharactor2!@#xpath3,xpath4;<br/>urlCharactor3!@#xpath5,xpath6<br/>Only useful for parse url link in one page by a html tag.',
 	        name: 'clickEleXPathBeforeParseUrl',
 	        allowBlank: true,
 			emptyText: 'For parse more element in taobao, tmall, jd etc. All values here should be xpath of elements which need to be clicked before parse url link in this page. If this field is empty then not click any element before parse url link. Format is urlCharactor1!@#xpath1,xpath2;urlCharactor2!@#xpath3,xpath4;urlCharactor3!@#xpath5,xpath6'

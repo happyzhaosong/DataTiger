@@ -25,6 +25,24 @@ public class DataSearchLogDTO extends BaseDTO {
 	
 	@DBColumn(name="last_search_date")
 	private long lastSearchDate = System.currentTimeMillis();
+	
+	private String searchKeywordSummary = "";
+
+	public String getSearchKeywordSummary() {
+		if(searchKeyword.length()>5)
+		{
+			searchKeywordSummary = searchKeyword.substring(0, 6);
+			searchKeywordSummary += "...";
+		}else
+		{
+			searchKeywordSummary = searchKeyword;
+		}
+		return searchKeywordSummary;
+	}
+
+	public void setSearchKeywordSummary(String searchKeywordSummary) {
+		this.searchKeywordSummary = searchKeywordSummary;
+	}
 
 	public long getSearchResultCount() {
 		return searchResultCount;

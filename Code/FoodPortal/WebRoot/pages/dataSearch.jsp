@@ -6,7 +6,7 @@
 	<a name="top"> </a>
     <!-- search form area-->
     <form id="searchForm">
-        <input type="text" id="searchKeyword" name="searchKeyword" value="">
+        <input type="text" id="searchKeyword" name="searchKeyword" value="" maxlength="100">
         <input type="reset" id="resetBtn" value="清空" class="yui3-button">
         <input type="submit" id="searchBtn" value="搜索" class="yui3-button">
         
