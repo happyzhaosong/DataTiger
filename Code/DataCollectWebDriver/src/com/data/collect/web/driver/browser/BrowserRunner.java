@@ -574,7 +574,14 @@ public class BrowserRunner {
 				}
 			}			
 			
-			//each data table must has a column 'download_task_page_url'
+			//each data table must has a column 'download_task_parent_page_url', for search and manipulate data in data table by data url
+			DBTableColumnDTO downloadTaskParentPageUrlColumnDto = new DBTableColumnDTO();
+			downloadTaskParentPageUrlColumnDto.setColumnName(Constants.DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PARENT_PAGE_URL);			
+			downloadTaskParentPageUrlColumnDto.setColumnType(Constants.DATA_TYPE_STRING);
+			downloadTaskParentPageUrlColumnDto.setColumnValue(parentTaskDto.getParentPageUrl());
+			dataTableDto.getColumnList().add(downloadTaskParentPageUrlColumnDto);
+			
+			//each data table must has a column 'download_task_page_url', for search and manipulate data in data table by data url
 			DBTableColumnDTO downloadTaskPageUrlColumnDto = new DBTableColumnDTO();
 			downloadTaskPageUrlColumnDto.setColumnName(Constants.DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PAGE_URL);			
 			downloadTaskPageUrlColumnDto.setColumnType(Constants.DATA_TYPE_STRING);

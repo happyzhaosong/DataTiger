@@ -3,7 +3,7 @@ Ext.define('DC.tool.RendererTool', {
 		if(value)
 		{
 		    return Ext.String.format(
-		        '<a href="#">{0}</a>',
+		        '<a href="#" title="{0}">{0}</a>',
 		        value
 		    );
 		}else
@@ -12,7 +12,7 @@ Ext.define('DC.tool.RendererTool', {
 			if(dataObj.tableName)
 			{
 			    return Ext.String.format(
-				        '<a href="#">List Table Data</a>'				        
+				        '<a href="#" title="' + dataObj.tableName + '">List Table Data</a>'				        
 				 );
 			}else
 			{
@@ -24,7 +24,7 @@ Ext.define('DC.tool.RendererTool', {
 	
 	renderUrlLink: function(value, p, record) {
 	    return Ext.String.format(
-	        '<a href="{0}" target="blank">{0}</a>',
+	        '<a href="{0}" target="blank" title="{0}">{0}</a>',
 	        value
 	    );
 	},

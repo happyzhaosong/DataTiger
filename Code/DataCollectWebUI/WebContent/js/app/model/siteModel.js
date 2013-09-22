@@ -103,6 +103,7 @@ Ext.define('DC.model.SiteTestTaskListInfo', {
     extend: 'Ext.data.Model',
     fields: [
         {name: 'id', type: 'int'},
+        {name: 'parentPageUrl', type: 'string'},
         {name: 'pageUrl', type: 'string'},
         {name: 'siteId', type: 'int'},
         {name: 'ifContentPage', type: 'string'},        

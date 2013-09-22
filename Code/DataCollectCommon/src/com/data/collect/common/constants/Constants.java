@@ -165,6 +165,7 @@ public class Constants extends GeneralConstants{
 	//5---Worker thread
 	public static final int DOWNLOAD_THREAD_TYPE_WORKER = 5;
 	
+	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PARENT_PAGE_URL = "download_task_parent_page_url";
 	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PAGE_URL = "download_task_page_url";
 	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_ID = "download_task_id";
 	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_LEVEL = "download_task_level";

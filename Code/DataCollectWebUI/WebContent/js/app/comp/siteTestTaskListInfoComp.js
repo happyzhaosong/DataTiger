@@ -19,6 +19,7 @@ Ext.define('DC.comp.SiteTestTaskListInfoPanel', {
         { xtype: 'rownumberer', width: 50, sortable: false},
         { text: 'Table Id', dataIndex: 'id', flex: 1 , sortable: true, hideable: true},
         { text: 'Task Level', dataIndex: 'taskLevel', flex: 1 , sortable: true, hideable: true},
+        { text: 'Parent Page Url', dataIndex: 'parentPageUrl', flex: 5 , sortable: true, hideable: true, renderer: rendererToolGlobal.renderUrlLinkStyle},
         { text: 'Page Url', dataIndex: 'pageUrl', flex: 5 , sortable: true, hideable: true, renderer: rendererToolGlobal.renderUrlLinkStyle},
         //{ text: 'Site Id', dataIndex: 'siteId', flex: 1 , sortable: true, hideable: true},
         //{ text: 'If Content Page', dataIndex: 'ifContentPage', flex: 1 , sortable: true, hideable: true},
@@ -50,16 +51,24 @@ Ext.define('DC.comp.SiteTestTaskListInfoPanel', {
     		fn: function(obj,td,cIdx,record,tr,rIdx)
     		{
     			var data = utilToolGlobal.getRecordDataObj(record);
-    			if(cIdx==4)
+    			if(cIdx==4 || cIdx==5)
     			{
-    				if(stringToolGlobal.isEmpty(data.pageUrl))
+    				var url = '';
+    				if(cIdx==4)
+    				{
+    					url = data.parentPageUrl;
+    				}else if(cIdx==5)
+    				{
+    					url = data.pageUrl;
+    				}
+    				if(stringToolGlobal.isEmpty(url))
     				{
     					Ext.Msg.alert('Alert', "Download task page url can not be empty.");	
     				}else
     				{
-    					window.open(data.pageUrl,'newWindow','height=800,width=1000,top=0,left=0,toolbar=yes,menubar=yes,scrollbars=yes, resizable=yes,location=yes, status=yes'); 
+    					window.open(url,'newWindow','height=800,width=1000,top=0,left=0,toolbar=yes,menubar=yes,scrollbars=yes, resizable=yes,location=yes, status=yes'); 
     				}    				
-    			}else if(cIdx==15)
+    			}else if(cIdx==16)
     			{
     				if(!stringToolGlobal.isEmpty(data.errorMessage))
     				{

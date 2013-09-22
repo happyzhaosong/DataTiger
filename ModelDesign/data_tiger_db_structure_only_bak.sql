@@ -111,7 +111,7 @@ CREATE TABLE `data_search_log` (
   `search_result_count` bigint(10) DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   `search_in` tinyint(4) NOT NULL DEFAULT '0' COMMENT '搜索的范围 0---全部，1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `data_search_log_detail` */
 
@@ -129,7 +129,7 @@ CREATE TABLE `data_search_log_detail` (
   `order_by` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '本次搜索 orderby 的字段',
   `search_result_count` bigint(10) NOT NULL DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
 
 /*Table structure for table `data_tao_bao_jie` */
 
@@ -239,15 +239,16 @@ CREATE TABLE `data_xiu_hao_chi` (
   `click_count` int(10) NOT NULL DEFAULT '0' COMMENT '商品被点击的次数，缺省按照这个次数降序排列',
   `wang_wang_url` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '掌柜旺旺链接',
   `pin_pai_zhi_xiao` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是品牌直销',
-  `download_task_page_url` text COLLATE utf8_bin NOT NULL,
-  `download_task_id` bigint(20) NOT NULL DEFAULT '-1',
-  `download_task_level` int(11) NOT NULL DEFAULT '1',
-  `download_task_data_parse_time` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '',
-  `download_task_data_parse_time_number` bigint(100) NOT NULL DEFAULT '1',
-  `download_task_useless_content_page` tinyint(1) NOT NULL DEFAULT '0',
+  `download_task_parent_page_url` text COLLATE utf8_bin NOT NULL COMMENT 'Must have for each data table, 本下载任务的父下载任务url链接地址，方便搜索并删除相应的data内容',
+  `download_task_page_url` text COLLATE utf8_bin NOT NULL COMMENT 'Must have for each data table, 本下载任务的url链接地址',
+  `download_task_id` bigint(20) NOT NULL DEFAULT '-1' COMMENT 'Must have for each data table, download_task 表 id',
+  `download_task_level` int(11) NOT NULL DEFAULT '1' COMMENT 'Must have for each data table, download_task 级别',
+  `download_task_data_parse_time` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Must have for each data table, 下载的内容页面的解析时间字符串格式',
+  `download_task_data_parse_time_number` bigint(100) NOT NULL DEFAULT '1' COMMENT 'Must have for each data table, 下载的内容页面的解析时间数字格式',
+  `download_task_useless_content_page` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Must have for each data table, 下载的页面是否是无效的内容页面，1 --- 是无效内容页面，0 --- 有效的内容页面',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `NewIndex1` (`biao_ti`,`meta_search_keyword`)
-) ENGINE=MyISAM AUTO_INCREMENT=53953 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
+) ENGINE=MyISAM AUTO_INCREMENT=87718 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
 
 /*Table structure for table `db_setting` */
 
@@ -280,7 +281,7 @@ CREATE TABLE `download_mq_message` (
   `fail_reason` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'MQ action 失败的原因',
   `create_thread_count` int(11) DEFAULT NULL COMMENT '创建的线程数量，范围为 1 - 5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_setting` */
 
@@ -319,7 +320,7 @@ CREATE TABLE `download_task` (
   PRIMARY KEY (`id`),
   KEY `site_id` (`site_id`,`useless_content_page`,`apply_time`,`if_content_page`),
   KEY `task_level_id` (`task_level`)
-) ENGINE=MyISAM AUTO_INCREMENT=42959 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=79634 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `download_thread` */
 
