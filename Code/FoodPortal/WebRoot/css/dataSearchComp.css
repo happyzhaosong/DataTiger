@@ -47,7 +47,7 @@
     transition: all 0.2s ease-in-out 0s;
     align: center;
     width: 90%;
-    heigth: 300px;
+    heigth: 90%;
 }
 
 .resultsItemDiv a{
@@ -217,7 +217,22 @@ a{
 .itemUrlClass {
 	
 }
-	
+
+.shangChengPeiSongItem_1 {
+	font-family: tahoma, arial, ËÎÌו; 
+	font-size: 8px; 
+	display: inline;
+	float: right;
+}
+
+.shangChengPeiSongItem_0 {
+	font-family: tahoma, arial, ËÎÌו; 
+	font-size: 8px;
+	font-color: white; 
+	display: inline;
+	float: right;
+	color: white; 
+}
 	
 	
 	

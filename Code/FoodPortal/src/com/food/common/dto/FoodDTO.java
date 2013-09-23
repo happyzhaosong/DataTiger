@@ -37,6 +37,8 @@ public class FoodDTO extends BaseDTO {
 	@DBColumn(name="cu_xiao_jia")
 	private String cuXiaoJia = "";
 	
+	private String cuXiaoJiaSummary = "";
+	
 	@DBColumn(name="ping_fen")
 	private String pingFen = "";
 	
@@ -72,7 +74,33 @@ public class FoodDTO extends BaseDTO {
 	
 	@DBColumn(name="pin_pai_zhi_xiao")
 	private int pinPaiZhiXiao = 0;
+
+	@DBColumn(name="shang_cheng_pei_song")
+	private int shangChengPeiSong = 0;
 	
+	public String getCuXiaoJiaSummary() {
+		if(this.cuXiaoJia.length()>15)
+		{
+			cuXiaoJiaSummary = cuXiaoJia.substring(0, 15) + "...";
+		}else
+		{
+			cuXiaoJiaSummary = cuXiaoJia;
+		}
+		return cuXiaoJiaSummary;
+	}
+
+	public void setCuXiaoJiaSummary(String cuXiaoJiaSummary) {
+		this.cuXiaoJiaSummary = cuXiaoJiaSummary;
+	}
+
+	public int getShangChengPeiSong() {
+		return shangChengPeiSong;
+	}
+
+	public void setShangChengPeiSong(int shangChengPeiSong) {
+		this.shangChengPeiSong = shangChengPeiSong;
+	}
+
 	public String getDanJiaSummary() {
 		if(this.danJia.length()>15)
 		{

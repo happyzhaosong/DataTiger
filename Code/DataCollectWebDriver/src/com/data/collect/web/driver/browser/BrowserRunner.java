@@ -108,7 +108,7 @@ public class BrowserRunner {
 	            //Disable images
 	            //Disable CSS
 				//fireFoxProfile.setPreference("permissions.default.stylesheet", 2);
-	            fireFoxProfile.setPreference("permissions.default.image", 2);
+	            //fireFoxProfile.setPreference("permissions.default.image", 2);
 	            //Disable flash
 	            fireFoxProfile.setPreference("dom.ipc.plugins.enabled.libflashplayer.so", "false");
 	            fireFoxProfile.setPreference("webdriver.load.strategy", "fast");
@@ -532,7 +532,14 @@ public class BrowserRunner {
 						{
 							eleData = String.valueOf(Double.parseDouble(eleData)*Double.parseDouble(parseTplItemDto.getNumberMultiplyBy()));
 						}
-					}					
+					}else if(Constants.DATA_TYPE_BOOLEAN.equalsIgnoreCase(parseTplItemDto.getDataType()))
+					{
+						//if not correct web element then set eleData to "", then will set it to false when insert it to db.
+						if(!this.isCorrectWebElement(eleData, parseTplItemDto.getCharactor(), parseTplItemDto.getNotCharactor()))
+						{
+							eleData = "";
+						}
+					}
 					
 					columnDto.setColumnValue(eleData);
 					dataTableDto.getColumnList().add(columnDto);					
@@ -1438,10 +1445,12 @@ public class BrowserRunner {
 		}
 	}
 	
-	
+	/*
+	 * check before parse content page, because some content page will redirect to other pages so need to check if config
+	 * */
 	private boolean checkIsContentPage(WebDriver driver, WebSiteDTO webSiteDto) throws Exception
 	{
-		boolean ret = false;
+		boolean ret = true;
 		Exception throwEx = null;
 		try
 		{
@@ -1463,6 +1472,16 @@ public class BrowserRunner {
 						{
 							eleData = this.getCorrectWebElementAttributeInList(eleList, dto.getByTagAttribute(), true, dto.getCharactor(), dto.getNotCharactor());
 						}
+					}else
+					{
+						if(!StringTool.isEmpty(dto.getCharactor()))
+						{
+							ret = false;
+						}else if(!StringTool.isEmpty(dto.getNotCharactor()))
+						{
+							ret = true;							
+						}
+						return ret;
 					}
 					
 					if(!StringTool.isEmpty(eleData) && this.isCorrectWebElement(eleData, dto.getCharactor(), dto.getNotCharactor()))
@@ -1481,9 +1500,9 @@ public class BrowserRunner {
 						eleData = "";
 					}
 					
-					if(!StringTool.isEmpty(eleData))
+					if(StringTool.isEmpty(eleData))
 					{
-						ret = true;
+						ret = false;
 					}
 				}
 			}

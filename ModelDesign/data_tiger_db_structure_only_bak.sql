@@ -111,7 +111,7 @@ CREATE TABLE `data_search_log` (
   `search_result_count` bigint(10) DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   `search_in` tinyint(4) NOT NULL DEFAULT '0' COMMENT '搜索的范围 0---全部，1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `data_search_log_detail` */
 
@@ -129,7 +129,7 @@ CREATE TABLE `data_search_log_detail` (
   `order_by` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '本次搜索 orderby 的字段',
   `search_result_count` bigint(10) NOT NULL DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
 
 /*Table structure for table `data_tao_bao_jie` */
 
@@ -217,6 +217,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `shop_url` text CHARACTER SET utf8 NOT NULL COMMENT '店铺链接地址',
   `shop_level_img_url` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '店铺评级，皇冠数，图片地址',
   `biao_ti` varchar(1000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品标题',
+  `fen_lei` varchar(1000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品分类路径',
   `jia_ge` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品价格',
   `jia_ge_num` double(10,3) NOT NULL DEFAULT '-1.000' COMMENT '商品价格数值',
   `dan_jia` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品单价',
@@ -238,6 +239,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `hao_ping_lv_num` double(5,2) NOT NULL DEFAULT '0.00' COMMENT '店铺好评率数值',
   `click_count` int(10) NOT NULL DEFAULT '0' COMMENT '商品被点击的次数，缺省按照这个次数降序排列',
   `wang_wang_url` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '掌柜旺旺链接',
+  `shang_cheng_pei_song` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否由商城进行配送发货',
   `pin_pai_zhi_xiao` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是品牌直销',
   `download_task_parent_page_url` text COLLATE utf8_bin NOT NULL COMMENT 'Must have for each data table, 本下载任务的父下载任务url链接地址，方便搜索并删除相应的data内容',
   `download_task_page_url` text COLLATE utf8_bin NOT NULL COMMENT 'Must have for each data table, 本下载任务的url链接地址',
@@ -248,7 +250,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `download_task_useless_content_page` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Must have for each data table, 下载的页面是否是无效的内容页面，1 --- 是无效内容页面，0 --- 有效的内容页面',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `NewIndex1` (`biao_ti`,`meta_search_keyword`)
-) ENGINE=MyISAM AUTO_INCREMENT=87718 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
+) ENGINE=MyISAM AUTO_INCREMENT=87858 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
 
 /*Table structure for table `db_setting` */
 
@@ -281,7 +283,7 @@ CREATE TABLE `download_mq_message` (
   `fail_reason` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'MQ action 失败的原因',
   `create_thread_count` int(11) DEFAULT NULL COMMENT '创建的线程数量，范围为 1 - 5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=239 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_setting` */
 
@@ -320,7 +322,7 @@ CREATE TABLE `download_task` (
   PRIMARY KEY (`id`),
   KEY `site_id` (`site_id`,`useless_content_page`,`apply_time`,`if_content_page`),
   KEY `task_level_id` (`task_level`)
-) ENGINE=MyISAM AUTO_INCREMENT=79634 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=80320 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `download_thread` */
 
@@ -337,7 +339,7 @@ CREATE TABLE `download_thread` (
   `site_id` bigint(20) DEFAULT NULL COMMENT '线程访问的网站id',
   `webdriver_each_browse_start_time` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '每次 webdriver 访问网页的开始时间，webdriver每次访问一个网页都会更新这个时间，有一个监控线程轮询查看，如果 webdriver 开始访问页面时间和当前的时间之差大于10分钟，则认为 webdriver 挂起，则重新启动那个线程 ',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=332 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=344 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_thread_apply_task_status` */
 
@@ -373,7 +375,7 @@ CREATE TABLE `parse` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_8` (`category_id`),
   CONSTRAINT `FK_Reference_8` FOREIGN KEY (`category_id`) REFERENCES `parse_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `parse_category` */
 
@@ -420,7 +422,7 @@ CREATE TABLE `parse_item` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_9` (`parse_id`),
   CONSTRAINT `FK_Reference_9` FOREIGN KEY (`parse_id`) REFERENCES `parse` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=239 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `parse_item_action` */
 
@@ -513,7 +515,7 @@ CREATE TABLE `site` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_10` (`parse_id`),
   KEY `FK_Reference_5` (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `site_auth` */
 
@@ -558,7 +560,7 @@ CREATE TABLE `site_content_page_check` (
   `parse_value_reg_exp` varchar(2000) DEFAULT NULL COMMENT '对上面解析出来的值执行正则表达式得到想要的值,该字段的格式为 regexp1;regexp2;regexp3...',
   `parse_value_string` text COMMENT '如果该值很难用正则表达式解析，就用这个字段进行字符串解析，该字段内容格式startStr1,endStr1;startStr1,endStr1;startStr1,endStr1;...',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `site_url_parse` */
 
@@ -582,7 +584,7 @@ CREATE TABLE `site_url_parse` (
   `run_string_find_on_url` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '如果正则表达式不好写，则用该字段进行解析，该字段的格式是   startStr1!@#endStr1;startStr2!@#endStr2;..., 将这些字符串截取之后的字符串再拼成一个字符串作为url， 如果startStr 是字符串开始则用空字符串代表，如果endStr是字符串结尾则用空字符串代表',
   PRIMARY KEY (`id`),
   KEY `FK_Reference_7` (`site_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
