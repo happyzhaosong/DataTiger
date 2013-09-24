@@ -75,7 +75,7 @@ YUI().use('DataSearchApp', function (Y) {
     templateSuffix += '</li>';
     
     var imgItem = '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail"><img width="100%" height="180px" src="{imgUrl}" /></a>';
-    var biaoTiItem = '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail">{biaoTiSummary}</a>';
+    var biaoTiItem = '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail" class="biaoTiClass">{biaoTiSummary}</a>';
     var jiaGeItem = '<strong class="itemTextJiaGe">{jiaGe}</strong>';
     var danJiaItem = '<strong class="itemTextDanJia" title="{danJia}"">{danJiaSummary}</strong>';
     var xiaoLiangItem = '<strong class="itemText">销量:{jiaoYiSuccess}</strong>';
@@ -86,7 +86,7 @@ YUI().use('DataSearchApp', function (Y) {
 	var shopLevelImgItem = '<image src="{shopLevelImgUrl}" height="16px"/>';
 	var haoPingLvItem = '<strong class="itemTextFloatRight">好评率:{haoPingLv}</strong>';  
 	var shangChengPeiSongItem = '<strong class="shangChengPeiSongItem_{shangChengPeiSong}">京东配送</strong>';
-	var cuXiaoJiaItem = '<strong class="itemTextJiaGe" title="{cuXiaoJia}">{cuXiaoJiaSummary}</strong>';
+	var cuXiaoJiaItem = '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{cuXiaoJia}" target="_detail" class="cuXiaoClass">{cuXiaoJiaSummary}</a>';
 	
 	templateSuffix = divPrefix + shangPinLaiYuanItem + divSuffix + templateSuffix; 
     

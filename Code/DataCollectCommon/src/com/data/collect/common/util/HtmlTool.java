@@ -12,6 +12,7 @@ import com.general.common.util.ClassTool;
 import com.general.common.util.GetDeltaTimeTool;
 import com.general.common.util.LogTool;
 import com.general.common.util.StringTool;
+import com.general.common.util.URLTool;
 
 
 public class HtmlTool extends BaseTool {
@@ -65,27 +66,21 @@ public class HtmlTool extends BaseTool {
 						}else if(url.startsWith(GeneralConstants.QUESTION_MARK))
 						{
 							url = HtmlTool.getUrlPathBeforeQuestionMark(currentUrl) + url;
+						}else 
+						{
+							String urlLower = url.toLowerCase().trim();
+							if(URLTool.isRegularUrl(url) && !urlLower.startsWith("http"))
+							{
+								String rootUrl = HtmlTool.getRootUrl(url);
+								if(!URLTool.isValidDomain(rootUrl))
+								{
+									url = HtmlTool.getCurrentLevelUrlPathDirectory(currentUrl) + GeneralConstants.SEPERATOR_SLASH + url;		
+								}
+							}
 						}
 						
 						
 						HtmlTool.processUrlAndAddToList(url, retList, linkParseDto);
-						
-						/*
-						if(HtmlTool.isCorrectUrl(url, linkParseDto.getUrlCharactor(), linkParseDto.getNotUrlCharactor(), linkParseDto.getUrlMatchRegExp()))
-						{						
-							List<String> urlTrimList = new ArrayList<String>();
-							urlTrimList.add("#");							
-							urlTrimList.add("&");
-							
-							url = StringTool.trimSpecialCharactor(url, urlTrimList);
-							
-							//remove duplicated url in url list, this way can improve efficiency.
-							if(!StringTool.isEmpty(url) && !StringTool.isStringEqualExistInArray(url, StringTool.stringListToStringArray(retList)))
-							{
-								retList.add(url);	
-							}
-						}
-						*/
 					}
 				}				
 			}
@@ -488,14 +483,14 @@ public class HtmlTool extends BaseTool {
 		String ret = "";
 		if(!StringTool.isEmpty(currentUrl))
 		{
-			String parseUrlRootRegExp = "http://((?!/).)*/";
+			String parseUrlRootRegExp = "^((?!/).)*/";
 			List<String> urlTagList = StringTool.runRegExpToGetStringList(currentUrl, parseUrlRootRegExp, true);
 			if(!ClassTool.isListEmpty(urlTagList))
 			{
 				ret = urlTagList.get(0);
 			}else
 			{
-				parseUrlRootRegExp = "https://((?!/).)*/";
+				parseUrlRootRegExp = "^((?!/).)*/";
 				urlTagList = StringTool.runRegExpToGetStringList(currentUrl, parseUrlRootRegExp, true);
 				if(!ClassTool.isListEmpty(urlTagList))
 				{

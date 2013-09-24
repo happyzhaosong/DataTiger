@@ -233,7 +233,16 @@ a{
 	float: right;
 	color: white; 
 }
-	
+
+.cuXiaoClass {
+	font-family: tahoma, arial, ËÎÌו;	 
+	display: inline;
+	color: #f40
+}
+
+.biaoTiClass {
+	color: #0000FF;	
+}
 	
 	
 	

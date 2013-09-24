@@ -1157,14 +1157,15 @@ public class BrowserRunner {
 					{
 	    				if(Constants.WEB_ELEMENT_TAG_NAME_A.equalsIgnoreCase(linkParseDto.getByEleVal()))
 	    				{
-			    			urlList = HtmlTool.parseOutUrlLinkList(pageSource, realPageUrl, webSiteDto, linkParseDto);
+	    					//parsed out url link with web driver
+	    					urlList = this.getUrlListByWebDriver(driver, linkParseDto);
 			    			getDltaTimeTool.getDeltaTime("regexp parse new task list count " + urlList.size() + " ,<br/> HtmlTool.parseOutUrlLinkList", retBuf, 0, false);
 						    LogTool.debugText(retBuf.toString());
 						    
 			    			if(ClassTool.isListEmpty(urlList))
 			    			{
-			    				//if not parsed out url with regexp then use web driver to parse url out.
-			    				urlList = this.getUrlListByWebDriver(driver, linkParseDto);
+			    				//if not parsed out url with web driver then use regexp to parse url out.
+			    				urlList = HtmlTool.parseOutUrlLinkList(pageSource, realPageUrl, webSiteDto, linkParseDto);			    				
 				    			getDltaTimeTool.getDeltaTime("webdriver parse new task list count " + urlList.size(), retBuf, 0, false);
 							    LogTool.debugText(retBuf.toString());
 		
