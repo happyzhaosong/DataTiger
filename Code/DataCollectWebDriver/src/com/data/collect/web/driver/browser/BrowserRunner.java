@@ -818,9 +818,9 @@ public class BrowserRunner {
 					{
 						break;
 					}
+					ret = tmpParseOut;
 				}
-			}
-			ret = tmpParseOut;
+			}			
 		}
 		return ret;
 	}

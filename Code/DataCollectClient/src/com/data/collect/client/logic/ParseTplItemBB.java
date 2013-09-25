@@ -93,7 +93,7 @@ public class ParseTplItemBB extends BaseBB {
 				{
 					ParseTplItemDTO dto = parseTplItemDtoList.get(0);
 					dto.setId(-1);
-					dto.setByEleVal(Constants.TEXT_COPY_OF + dto.getByEleVal());
+					dto.setByEleVal(Constants.TEXT_COPY_OF + dto.getByEleVal() + System.currentTimeMillis());
 					this.parseTplItemDao.saveParseTplItem(dto);
 				}
 			}

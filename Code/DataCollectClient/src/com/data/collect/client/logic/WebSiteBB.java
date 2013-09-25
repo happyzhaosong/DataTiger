@@ -284,6 +284,37 @@ public class WebSiteBB extends BaseBB {
 		}
 	}	
 	
+	
+	public JsonDTO copyWebSiteCategory(HttpServletRequest request) throws Exception
+	{			
+		String ids = this.getDataIdsRetString(request);
+		if(!StringTool.isEmpty(ids))
+		{
+			String idArr[] = ids.split(Constants.SEPERATOR_COMMA);
+			int len = idArr.length;
+			for(int i=0;i<len;i++)
+			{
+				String id = idArr [i];				
+				List<WebSiteCategoryDTO> webSiteCatDtoList = webSiteDao.getWebSiteCategoryListById(Integer.parseInt(id));
+				if(!ClassTool.isListEmpty(webSiteCatDtoList))
+				{
+					WebSiteCategoryDTO catDto = webSiteCatDtoList.get(0);
+					int srcCatId = catDto.getId();
+					catDto.setId(-1);
+					catDto.setName(Constants.TEXT_COPY_OF + catDto.getName() + System.currentTimeMillis());
+					this.webSiteDao.saveWebSiteCategory(catDto);
+					int newCatId = catDto.getId();
+					
+					List<WebSiteDTO> dtoList = this.webSiteDao.getWebSiteListByCategoryId(srcCatId);
+					this.copyWebSiteDtoList(dtoList, newCatId);
+				}						
+			}
+		}
+		
+		return JsonTool.getJsonDtoByMessage("");		
+	}	
+
+	
 	public JsonDTO copyWebSite(HttpServletRequest request) throws Exception
 	{			
 		String ids = this.getDataIdsRetString(request);
@@ -295,54 +326,75 @@ public class WebSiteBB extends BaseBB {
 			{
 				String id = idArr [i];
 				WebSiteDTO webSiteDto = webSiteDao.getWebSiteById(Integer.parseInt(id));
-				webSiteDto.setId(-1);
-				webSiteDto.setName(Constants.TEXT_COPY_OF + webSiteDto.getName());
-				
-				this.webSiteDao.saveWebSite(webSiteDto);
-				
-				List<WebSiteLoginAccountDTO> siteLoginAccountList = webSiteDto.getSiteLoginAccountDtoList();
-				if(!ClassTool.isListEmpty(siteLoginAccountList))
-				{
-					int laSize = siteLoginAccountList.size();
-					for(int ila=0; ila<laSize; ila++)
-					{
-						WebSiteLoginAccountDTO laDto = siteLoginAccountList.get(ila);
-						laDto.setId(-1);
-						laDto.setSiteId(webSiteDto.getId());
-						this.webSiteDao.saveWebSiteLoginAccountItem(laDto);
-					}
-				}
-				
-				List<WebSitePageLinkParseDTO> sitePageLinkList = webSiteDto.getPageLinkParseDtoList();
-				if(!ClassTool.isListEmpty(sitePageLinkList))
-				{
-					int plSize = sitePageLinkList.size();
-					for(int ipl=0; ipl<plSize; ipl++)
-					{
-						WebSitePageLinkParseDTO plDto = sitePageLinkList.get(ipl);
-						plDto.setId(-1);
-						plDto.setSiteId(webSiteDto.getId());
-						this.webSiteDao.saveWebSitePageLinkParseItem(plDto);
-					}
-				}
-
-				List<WebSiteContentPageCheckDTO> siteContentPageCheckList = webSiteDto.getContentPageCheckDtoList();
-				if(!ClassTool.isListEmpty(siteContentPageCheckList))
-				{
-					int cpcSize = siteContentPageCheckList.size();
-					for(int icpc=0; icpc<cpcSize; icpc++)
-					{
-						WebSiteContentPageCheckDTO cpcDto = siteContentPageCheckList.get(icpc);
-						cpcDto.setId(-1);
-						cpcDto.setSiteId(webSiteDto.getId());
-						this.webSiteDao.saveWebSiteContentPageCheckItem(cpcDto);
-					}
-				}				
+				this.copyWebSiteDto(webSiteDto, webSiteDto.getCategoryId());		
 			}
 		}
 		
 		return JsonTool.getJsonDtoByMessage("");		
 	}	
+	
+	
+	private void copyWebSiteDto(WebSiteDTO webSiteDto, int newWebSiteCatId) throws Exception
+	{
+		webSiteDto.setCategoryId(newWebSiteCatId);
+		webSiteDto.setId(-1);
+		webSiteDto.setName(Constants.TEXT_COPY_OF + webSiteDto.getName() + System.currentTimeMillis());		
+		this.webSiteDao.saveWebSite(webSiteDto);
+		
+		List<WebSiteLoginAccountDTO> siteLoginAccountList = webSiteDto.getSiteLoginAccountDtoList();
+		if(!ClassTool.isListEmpty(siteLoginAccountList))
+		{
+			int laSize = siteLoginAccountList.size();
+			for(int ila=0; ila<laSize; ila++)
+			{
+				WebSiteLoginAccountDTO laDto = siteLoginAccountList.get(ila);
+				laDto.setId(-1);
+				laDto.setSiteId(webSiteDto.getId());
+				this.webSiteDao.saveWebSiteLoginAccountItem(laDto);
+			}
+		}
+		
+		List<WebSitePageLinkParseDTO> sitePageLinkList = webSiteDto.getPageLinkParseDtoList();
+		if(!ClassTool.isListEmpty(sitePageLinkList))
+		{
+			int plSize = sitePageLinkList.size();
+			for(int ipl=0; ipl<plSize; ipl++)
+			{
+				WebSitePageLinkParseDTO plDto = sitePageLinkList.get(ipl);
+				plDto.setId(-1);
+				plDto.setSiteId(webSiteDto.getId());
+				this.webSiteDao.saveWebSitePageLinkParseItem(plDto);
+			}
+		}
+
+		List<WebSiteContentPageCheckDTO> siteContentPageCheckList = webSiteDto.getContentPageCheckDtoList();
+		if(!ClassTool.isListEmpty(siteContentPageCheckList))
+		{
+			int cpcSize = siteContentPageCheckList.size();
+			for(int icpc=0; icpc<cpcSize; icpc++)
+			{
+				WebSiteContentPageCheckDTO cpcDto = siteContentPageCheckList.get(icpc);
+				cpcDto.setId(-1);
+				cpcDto.setSiteId(webSiteDto.getId());
+				this.webSiteDao.saveWebSiteContentPageCheckItem(cpcDto);
+			}
+		}	
+	}
+	
+	
+	private void copyWebSiteDtoList(List<WebSiteDTO> webSiteDtoList, int newWebSiteCatId) throws Exception
+	{
+		if(!ClassTool.isListEmpty(webSiteDtoList))
+		{
+			int len = webSiteDtoList.size();
+			for(int i=0;i<len;i++)
+			{
+				WebSiteDTO dto = webSiteDtoList.get(i);
+				this.copyWebSiteDto(dto, newWebSiteCatId);
+			}
+		}
+	}
+
 	
 	public List<WebSiteDTO> getWebSiteDtoInCat(int catId, String siteName) throws Exception
 	{

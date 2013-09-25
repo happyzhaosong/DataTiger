@@ -77,8 +77,12 @@ Ext.define('DC.comp.ParseTplCatPanel', {
 	    {
 	    	var submitParams = utilToolGlobal.addSubmitParamsWithDelIds(null,utilToolGlobal.getIdListStrInArray(selectedRecords, seperatorComma));	    	
 	    	formToolGlobal.submitAndReloadRecords(parseTplCatDeleteUrl, submitParams, this.getId(), "Delete Parse Template Category", null, null);
-	    },
-	    
+	    },copySelectedRecords: function(selectedRecords)
+	    {
+	    	var submitParams = utilToolGlobal.addSubmitParamsWithIds(null,utilToolGlobal.getIdListStrInArray(selectedRecords, seperatorComma));
+	    	var reloadPanelListUrl = utilToolGlobal.buildReloadPanelListUrl(Ext.getCmp(idParseTplCatIdHidden).value,  this.getId());
+	    	formToolGlobal.submitAndReloadRecords(parseTplCatCopyUrl, submitParams, this.getId(), "Copy Parse Template Category and Parse Template In It", reloadPanelListUrl, null);
+	    },	    
 	    bbar: Ext.create('Ext.PagingToolbar', {
 	        pageSize: pageSize,
 	        store: idParseTplCatPanelStore,

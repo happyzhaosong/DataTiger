@@ -77,6 +77,12 @@ Ext.define('DC.comp.SiteCatPanel', {
 	    	var submitParams = utilToolGlobal.addSubmitParamsWithDelIds(null, utilToolGlobal.getIdListStrInArray(selectedRecords, seperatorComma));	    	
 	    	formToolGlobal.submitAndReloadRecords(siteCatDeleteUrl, submitParams, this.getId(), "Delete Web Site Category", null, null);
 	    },
+	    copySelectedRecords: function(selectedRecords)
+	    {
+	    	var submitParams = utilToolGlobal.addSubmitParamsWithIds(null,utilToolGlobal.getIdListStrInArray(selectedRecords, seperatorComma));	    	
+	    	var reloadPanelListUrl = utilToolGlobal.buildReloadPanelListUrl(Ext.getCmp(idSiteCatIdHidden).value, this.getId());
+	    	formToolGlobal.submitAndReloadRecords(siteCatCopyUrl, submitParams, this.getId(), "Copy Web Site Category", reloadPanelListUrl, null);
+	    },
 	    
 	    bbar: Ext.create('Ext.PagingToolbar', {
 	        pageSize: pageSize,

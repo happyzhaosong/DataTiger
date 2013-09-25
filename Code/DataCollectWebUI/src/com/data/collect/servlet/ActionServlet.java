@@ -250,6 +250,9 @@ public class ActionServlet extends HttpServlet{
 		}else if((Constants.ACTION_WEB_SITE_CATEGORY + Constants.DELETE).equals(action))
 		{
 			ret = siteBB.deleteWebSiteCategory(req);
+		}else if((Constants.ACTION_WEB_SITE_CATEGORY + Constants.COPY).equals(action))
+		{
+			ret = siteBB.copyWebSiteCategory(req);
 		}
 		return ret;
 	}
@@ -361,6 +364,9 @@ public class ActionServlet extends HttpServlet{
 		}else if((Constants.ACTION_PARSE_TEMPLATE_CATEGORY + Constants.DELETE).equals(action))
 		{
 			ret = parseTplBB.deleteParseTplCategory(req);
+		}else if((Constants.ACTION_PARSE_TEMPLATE_CATEGORY + Constants.COPY).equals(action))
+		{
+			ret = parseTplBB.copyParseTplCategory(req);
 		}
 		return ret;
 	}

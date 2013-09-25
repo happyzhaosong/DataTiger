@@ -80,6 +80,7 @@ var menuListUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_MENU + Cons
 var siteCatListUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_WEB_SITE_CATEGORY + Constants.LIST) %>";
 var siteCatSaveUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_WEB_SITE_CATEGORY + Constants.SAVE) %>";
 var siteCatDeleteUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_WEB_SITE_CATEGORY + Constants.DELETE) %>";
+var siteCatCopyUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_WEB_SITE_CATEGORY + Constants.COPY) %>";
 
 //web site
 var siteListUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_WEB_SITE + Constants.LIST) %>";
@@ -108,6 +109,7 @@ var siteLoginAccountDeleteUrl = "<%=WebTool.getActionURL(request, Constants.ACTI
 var parseTplCatListUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_PARSE_TEMPLATE_CATEGORY + Constants.LIST) %>";
 var parseTplCatSaveUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_PARSE_TEMPLATE_CATEGORY + Constants.SAVE) %>";
 var parseTplCatDeleteUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_PARSE_TEMPLATE_CATEGORY + Constants.DELETE) %>";
+var parseTplCatCopyUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_PARSE_TEMPLATE_CATEGORY + Constants.COPY) %>";
 
 //web site parse template
 var parseTplListAllUrl = "<%=WebTool.getActionURL(request, Constants.ACTION_PARSE_TEMPLATE + Constants.LIST_ALL) %>";

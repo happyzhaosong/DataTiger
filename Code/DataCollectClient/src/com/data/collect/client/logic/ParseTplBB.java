@@ -109,6 +109,39 @@ public class ParseTplBB extends BaseBB {
 	}
 
 	
+	public JsonDTO copyParseTplCategory(HttpServletRequest request) throws Exception
+	{
+		String ids = this.getDataIdsRetString(request);
+		if(!StringTool.isEmpty(ids))
+		{
+			String idArr[] = ids.split(Constants.SEPERATOR_COMMA);
+			int len = idArr.length;
+			for(int i=0;i<len;i++)
+			{
+				String id = idArr[i];
+				if(StringTool.isInteger(id))
+				{
+					List<ParseTplCategoryDTO> parseTplCatDtoList = this.parseTplDao.getParseTplCategoryListById(id);
+					if(!ClassTool.isListEmpty(parseTplCatDtoList))
+					{
+						ParseTplCategoryDTO parseTplCatDto = parseTplCatDtoList.get(0);						
+						int srcParseTplCatId = parseTplCatDto.getId();						
+						parseTplCatDto.setId(-1);
+						parseTplCatDto.setName(Constants.TEXT_COPY_OF + parseTplCatDto.getName() + System.currentTimeMillis());
+						this.parseTplDao.saveParseTplCategory(parseTplCatDto);
+						int newParseTplCatId = parseTplCatDto.getId();
+												
+						List<ParseTplDTO> parseTplDtoList = this.parseTplDao.getParseTplListByCategoryId(srcParseTplCatId);
+						
+						this.copyParseTplDtoList(parseTplDtoList, newParseTplCatId);
+					}
+				}				
+			}
+		}
+		return JsonTool.getJsonDtoByMessage("");
+	}
+	
+	
 	public JsonDTO copyParseTpl(HttpServletRequest request) throws Exception
 	{
 		String ids = this.getDataIdsRetString(request);
@@ -125,22 +158,7 @@ public class ParseTplBB extends BaseBB {
 					if(!ClassTool.isListEmpty(parseTplDtoList))
 					{
 						ParseTplDTO parseTplDto = parseTplDtoList.get(0);
-						parseTplDto.setId(-1);
-						parseTplDto.setName(Constants.TEXT_COPY_OF + parseTplDto.getName());
-						this.parseTplDao.saveParseTpl(parseTplDto);
-												
-						List<ParseTplItemDTO> parseTplItemList = parseTplDto.getParseTplItemList();
-						if(!ClassTool.isListEmpty(parseTplItemList))
-						{
-							int itemSize = parseTplItemList.size();
-							for(int j=0;j<itemSize;j++)
-							{
-								ParseTplItemDTO parseTplItemDto = parseTplItemList.get(j);
-								parseTplItemDto.setParseId(parseTplDto.getId());
-								parseTplItemDto.setId(-1);								
-								this.parseTplItemDao.saveParseTplItem(parseTplItemDto);
-							}
-						}
+						this.copyParseTplDto(parseTplDto, parseTplDto.getCategoryId());
 					}
 				}				
 			}
@@ -148,6 +166,39 @@ public class ParseTplBB extends BaseBB {
 		return JsonTool.getJsonDtoByMessage("");
 	}
 	
+	private void copyParseTplDto(ParseTplDTO parseTplDto, int newParseTplCatId) throws Exception
+	{
+		parseTplDto.setCategoryId(newParseTplCatId);
+		parseTplDto.setId(-1);
+		parseTplDto.setName(Constants.TEXT_COPY_OF + parseTplDto.getName() + System.currentTimeMillis());
+		this.parseTplDao.saveParseTpl(parseTplDto);
+								
+		List<ParseTplItemDTO> parseTplItemList = parseTplDto.getParseTplItemList();
+		if(!ClassTool.isListEmpty(parseTplItemList))
+		{
+			int itemSize = parseTplItemList.size();
+			for(int i=0;i<itemSize;i++)
+			{
+				ParseTplItemDTO parseTplItemDto = parseTplItemList.get(i);
+				parseTplItemDto.setParseId(parseTplDto.getId());
+				parseTplItemDto.setId(-1);								
+				this.parseTplItemDao.saveParseTplItem(parseTplItemDto);
+			}
+		}
+	}
+	
+	private void copyParseTplDtoList(List<ParseTplDTO> parseTplDtoList, int newParseTplCatId) throws Exception
+	{
+		if(!ClassTool.isListEmpty(parseTplDtoList))
+		{
+			int len = parseTplDtoList.size();
+			for(int i=0;i<len;i++)
+			{
+				ParseTplDTO dto = parseTplDtoList.get(i);
+				this.copyParseTplDto(dto, newParseTplCatId);
+			}
+		}
+	}
 	
 	public JsonDTO deleteParseTpl(HttpServletRequest request) throws Exception
 	{
