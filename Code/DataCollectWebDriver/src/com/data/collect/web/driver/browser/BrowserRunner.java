@@ -225,6 +225,7 @@ public class BrowserRunner {
 		      
     
 			      Exception throwEx = null;
+			      boolean ifOriginalContentPage = taskDto.isIfContentPage(); 
 			      try
 			      {
 			    	  realPageUrl = this.getRealPageUrl(taskDto);
@@ -243,7 +244,8 @@ public class BrowserRunner {
 			    	  }
 			    	  			    	  
 					  //if content page then parse it
-				      if(isContentPage)
+			    	  taskDto.setIfContentPage(isContentPage);
+				      if(taskDto.isIfContentPage())
 				      {
 				    	  taskDto.setIfContentPage(true);
 				    	  LogTool.debugText("Start parse content page data");  
@@ -253,9 +255,6 @@ public class BrowserRunner {
 						  retBuf.append(parseContentDuration);
 					      LogTool.debugText(retBuf.toString());
 					      LogTool.debugText("End parse content page data");
-				      }else
-				      {
-				    	  taskDto.setIfContentPage(false);
 				      }
 			      }catch(Exception ex)
 			      {
@@ -265,7 +264,7 @@ public class BrowserRunner {
 			    	  ifBrowserUnreach = ifBrowserUnreach(ex);
 			      }finally
 			      {
-			    	  if(!ifBrowserUnreach && !taskDto.isIfContentPage())
+			    	  if(!ifBrowserUnreach && !ifOriginalContentPage)
 			    	  {
 			    		  LogTool.debugText("Start parse url link in page");
 						  String parseUrlLinkDuration = this.parseUrlLinkInPage(driver, webSiteDto, taskDto, realPageUrl);	  			      					  
