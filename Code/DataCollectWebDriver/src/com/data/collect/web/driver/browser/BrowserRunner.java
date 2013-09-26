@@ -224,8 +224,7 @@ public class BrowserRunner {
 			      }
 		      
     
-			      Exception throwEx = null;
-			      boolean ifOriginalContentPage = taskDto.isIfContentPage(); 
+			      Exception throwEx = null;			     
 			      try
 			      {
 			    	  realPageUrl = this.getRealPageUrl(taskDto);
@@ -233,21 +232,19 @@ public class BrowserRunner {
 				      this.scrollDownTheWholePage(webSiteDto, realPageUrl);
 
 			    	  //first to check whether this page is content page or not
-			    	  boolean isContentPage = taskDto.isIfContentPage();
+			    	  boolean ifReallyContentPage = taskDto.isIfContentPage();
 			    	  
 			    	  /*check whether this link is really a content page or not in run time. Because some content page url redirect to other url in run time
 			    	  *for example item.taobao.com maybe redirect to detail.tmall.com some time
 			    	  */
-			    	  if(isContentPage)
+			    	  if(taskDto.isIfContentPage())
 			    	  {
-			    		  isContentPage = this.checkIsContentPage(this.driver, webSiteDto);
+			    		  ifReallyContentPage = this.checkIsContentPage(this.driver, webSiteDto);
 			    	  }
 			    	  			    	  
-					  //if content page then parse it
-			    	  taskDto.setIfContentPage(isContentPage);
-				      if(taskDto.isIfContentPage())
-				      {
-				    	  taskDto.setIfContentPage(true);
+					  //if really content page then parse it			    	  
+				      if(ifReallyContentPage)
+				      {				    	  
 				    	  LogTool.debugText("Start parse content page data");  
 				    	  //call parse page component to parse content page and save parsed out data into db. 
 				       	  String parseContentDuration = this.parseContentPage(driver, webSiteDto, taskDto, realPageUrl);
@@ -264,7 +261,7 @@ public class BrowserRunner {
 			    	  ifBrowserUnreach = ifBrowserUnreach(ex);
 			      }finally
 			      {
-			    	  if(!ifBrowserUnreach && !ifOriginalContentPage)
+			    	  if(!ifBrowserUnreach && !taskDto.isIfContentPage())
 			    	  {
 			    		  LogTool.debugText("Start parse url link in page");
 						  String parseUrlLinkDuration = this.parseUrlLinkInPage(driver, webSiteDto, taskDto, realPageUrl);	  			      					  
@@ -799,10 +796,9 @@ public class BrowserRunner {
 
 	private String parseEleDataByParseString(String eleData, String parseValueStringArr[]) //throws Exception
 	{
-		String ret = "";
+		String ret = eleData;
 		if(!ClassTool.isNullObj(parseValueStringArr))
 		{
-			String tmpParseOut = eleData;
 			int len = parseValueStringArr.length;
 			for(int i=0;i<len;i++)
 			{
@@ -812,12 +808,15 @@ public class BrowserRunner {
 				{
 					String startStr = parseStringPar[0];
 					String endStr = parseStringPar[1];
-					tmpParseOut = StringTool.getStringWithStartEndString(tmpParseOut, startStr, endStr);
-					if(StringTool.isEmpty(tmpParseOut))
+					String tmpParseOut = StringTool.getStringWithStartEndString(ret, startStr, endStr);
+					
+					if(!StringTool.isEmpty(tmpParseOut))
+					{
+						ret = tmpParseOut;						
+					}else
 					{
 						break;
 					}
-					ret = tmpParseOut;
 				}
 			}			
 		}
@@ -826,7 +825,7 @@ public class BrowserRunner {
 	
 	private String parseEleDataByValueRegExp(String eleData, String parseValueRegExpArr[], boolean caseInsensitive) //throws Exception
 	{
-		String ret = "";
+		String ret = eleData;
 		if(!ClassTool.isNullObj(parseValueRegExpArr))
 		{
 			int len = parseValueRegExpArr.length;
