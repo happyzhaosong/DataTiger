@@ -39,6 +39,7 @@
 	    	<input type="checkbox" name="taobao" value="1">天猫
 	    	<input type="checkbox" name="tmall" value="2">淘宝
 	    	<input type="checkbox" name="jingdong" value="3">京东
+	    	<input type="checkbox" name="jingdong" value="4">当当
     	</div>
     </div>
  

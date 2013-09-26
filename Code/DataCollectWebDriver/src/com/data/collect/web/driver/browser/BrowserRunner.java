@@ -52,6 +52,7 @@ import com.general.common.util.DateTool;
 import com.general.common.util.GetDeltaTimeTool;
 import com.general.common.util.LogTool;
 import com.general.common.util.StringTool;
+import com.general.common.util.URLTool;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 public class BrowserRunner {
@@ -1315,7 +1316,7 @@ public class BrowserRunner {
 	    				WebElement ele = eleList.get(i);
 	    				String url = ele.getAttribute("href");
 	    				
-	    				if(!StringTool.isEmpty(url))
+	    				if(!StringTool.isEmpty(url) && URLTool.isRegularUrl(url))
 	    				{
 	    					HtmlTool.processUrlAndAddToList(url, retList, linkParseDto);
 	    				}

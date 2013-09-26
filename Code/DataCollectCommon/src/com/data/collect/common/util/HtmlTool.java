@@ -223,6 +223,12 @@ public class HtmlTool extends BaseTool {
 			ret = ret.substring(0, ret.length()-1);
 		}
 		
+		if(!StringTool.isEmpty(ret))
+		{
+			//remove # charactor in url
+			ret = StringTool.runRegExpToReplace(ret, "#.*\\?", "?");
+			ret = StringTool.runRegExpToReplace(ret, "#.*$", "");
+		}
 		return ret;
 	}
 	
@@ -234,47 +240,56 @@ public class HtmlTool extends BaseTool {
 	{
 		StringBuffer retUrlBuf = new StringBuffer();
 		String reservedParamNames = linkParseDto.getRunStringFindOnUrl();
+		
+		//not reserve any parameters
 		if(StringTool.isEmpty(reservedParamNames))
 		{
+			url = StringTool.getStringWithStartEndString(url, "", GeneralConstants.QUESTION_MARK);
 			return url;
 		}else
 		{
 			LogTool.debugText("url before run reserve parameters = " + url);
-			
-			String urlPrefix = "";
-			String urlSuffix = "";
-			String urlArr[] = url.split(Constants.SEPERATOR_BACK_SLASH + Constants.QUESTION_MARK);
-			if(!ClassTool.isNullObj(urlArr) && urlArr.length>0)
+		
+			if(Constants.RESERVE_ALL_URL_PARAMETERS.equalsIgnoreCase(reservedParamNames))
 			{
-				urlPrefix = urlArr[0];
-				if(urlArr.length>1)
+				return url;
+			}else
+			{
+				String urlPrefix = "";
+				String urlSuffix = "";
+				String urlArr[] = url.split(Constants.SEPERATOR_BACK_SLASH + Constants.QUESTION_MARK);
+				if(!ClassTool.isNullObj(urlArr) && urlArr.length>0)
 				{
-					retUrlBuf.append(urlPrefix);
-					retUrlBuf.append(Constants.QUESTION_MARK);
-					
-					urlSuffix = urlArr[1];					
-					String paramsArr[] = urlSuffix.split(Constants.AND_MARK);
-					if(!ClassTool.isNullObj(paramsArr))
+					urlPrefix = urlArr[0];
+					if(urlArr.length>1)
 					{
-						int paramsSize = paramsArr.length;
-						for(int i=0;i<paramsSize;i++)
+						retUrlBuf.append(urlPrefix);
+						retUrlBuf.append(Constants.QUESTION_MARK);
+						
+						urlSuffix = urlArr[1];					
+						String paramsArr[] = urlSuffix.split(Constants.AND_MARK);
+						if(!ClassTool.isNullObj(paramsArr))
 						{
-							String paramStr = paramsArr[i];
-							if(HtmlTool.ifReservedParamInUrl(paramStr, reservedParamNames))
+							int paramsSize = paramsArr.length;
+							for(int i=0;i<paramsSize;i++)
 							{
-								retUrlBuf.append(paramStr);
-								retUrlBuf.append(Constants.AND_MARK);
+								String paramStr = paramsArr[i];
+								if(HtmlTool.ifReservedParamInUrl(paramStr, reservedParamNames))
+								{
+									retUrlBuf.append(paramStr);
+									retUrlBuf.append(Constants.AND_MARK);
+								}
 							}
-						}
-					}			
-					
+						}			
+						
+					}else
+					{
+						return url;
+					}
 				}else
 				{
 					return url;
 				}
-			}else
-			{
-				return url;
 			}
 		}
 		
