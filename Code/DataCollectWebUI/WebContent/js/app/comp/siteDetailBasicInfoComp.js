@@ -30,6 +30,10 @@ Ext.define('DC.comp.SiteDetailBasicInfoPanel', {
 			allowBlank: false
 		}, {
 			xtype: 'checkboxfield',
+			fieldLabel: 'Show Image In Browser To Parse Image Url(Some website like jingdong need to show image to parse img url)',
+			name: 'showImgInBrowser'
+		}, {
+			xtype: 'checkboxfield',
 			fieldLabel: 'Multi country website(Need put "$Country$" place holder in site top page url for replace). If use multiple country then use country iso name to replace the $Country$ placeholder in top url and create multiple download task when start download and parse.',
 			name: 'multiCountry'
 		}, {
@@ -120,6 +124,7 @@ Ext.define('DC.comp.SiteDetailBasicInfoPanel', {
 			        name: Ext.getCmp(idSiteDetailBasicInfoPanel + "name").value,			        
 			        desc: Ext.getCmp(idSiteDetailBasicInfoPanel + "desc").value,
 			        topUrl: Ext.getCmp(idSiteDetailBasicInfoPanel + "topUrl").value,
+			        showImgInBrowser: Ext.getCmp(idSiteDetailBasicInfoPanel + "showImgInBrowser").value,
 			        multiCountry: Ext.getCmp(idSiteDetailBasicInfoPanel + "multiCountry").value,
 			        placeHolders: Ext.getCmp(idSiteDetailBasicInfoPanel + "placeHolders").value,
 			        parseId: Ext.getCmp(idSiteDetailBasicInfoPanel + "parseId").value,			        
@@ -182,6 +187,7 @@ Ext.define('DC.comp.SiteDetailBasicInfoPanel', {
 				Ext.getCmp(idSiteDetailBasicInfoPanel + "name").setValue(dataObj.name);
 				Ext.getCmp(idSiteDetailBasicInfoPanel + "desc").setValue(dataObj.desc);
 				Ext.getCmp(idSiteDetailBasicInfoPanel + "topUrl").setValue(dataObj.topUrl);
+				Ext.getCmp(idSiteDetailBasicInfoPanel + "showImgInBrowser").setValue(dataObj.showImgInBrowser);
 				Ext.getCmp(idSiteDetailBasicInfoPanel + "multiCountry").setValue(dataObj.multiCountry);
 				Ext.getCmp(idSiteDetailBasicInfoPanel + "placeHolders").setValue(dataObj.placeHolders);
 				

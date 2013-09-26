@@ -94,10 +94,11 @@ public class BrowserRunner {
 		}
 	}
 	
-	private void initBrowserByType(String browserType) throws Exception
+	private void initBrowserByType(WebSiteDTO webSiteDto) throws Exception
 	{
 		if(driver==null)
 		{
+			String browserType = webSiteDto.getBrowserType();
 			DesiredCapabilities dc=new DesiredCapabilities();
 			//this can avoid browse page throw alert exception
 	        dc.setCapability(CapabilityType.UNEXPECTED_ALERT_BEHAVIOUR,UnexpectedAlertBehaviour.ACCEPT);
@@ -108,7 +109,11 @@ public class BrowserRunner {
 	            //Disable images
 	            //Disable CSS
 				//fireFoxProfile.setPreference("permissions.default.stylesheet", 2);
-	            //fireFoxProfile.setPreference("permissions.default.image", 2);
+	            
+				if(!webSiteDto.isShowImgInBrowser())
+				{
+					fireFoxProfile.setPreference("permissions.default.image", 2);
+				}
 	            //Disable flash
 	            fireFoxProfile.setPreference("dom.ipc.plugins.enabled.libflashplayer.so", "false");
 	            fireFoxProfile.setPreference("webdriver.load.strategy", "fast");
@@ -159,7 +164,7 @@ public class BrowserRunner {
 			if(webSiteDto!=null)
 			{
 				  LogTool.debugText("Start init browser");
-				  this.initBrowserByType(webSiteDto.getBrowserType());
+				  this.initBrowserByType(webSiteDto);
 				  LogTool.debugText("End init browser");
 				  getDltaTimeTool.getDeltaTime("InitBrowserByType", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 

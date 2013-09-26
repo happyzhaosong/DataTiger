@@ -91,6 +91,9 @@ public class WebSiteDTO extends BaseDTO {
 	@DBColumn(name="set_middle_level_task_url_charactor")
 	private String setMiddleLevelTaskUrlCharactor = "";	
 	
+	@DBColumn(name="show_img_in_browser")
+	private boolean showImgInBrowser = false;
+	
 	private String testPassedString = "";
 	
 	private String siteStatusString = "";
@@ -102,6 +105,14 @@ public class WebSiteDTO extends BaseDTO {
 	private List<WebSiteLoginAccountDTO> siteLoginAccountDtoList = new ArrayList<WebSiteLoginAccountDTO>();
 	
 	private List<ParseTplItemDTO> parseItemList = new ArrayList<ParseTplItemDTO>();
+
+	public boolean isShowImgInBrowser() {
+		return showImgInBrowser;
+	}
+
+	public void setShowImgInBrowser(boolean showImgInBrowser) {
+		this.showImgInBrowser = showImgInBrowser;
+	}
 
 	public String getSetHighLevelTaskUrlCharactor() {
 		return setHighLevelTaskUrlCharactor;
