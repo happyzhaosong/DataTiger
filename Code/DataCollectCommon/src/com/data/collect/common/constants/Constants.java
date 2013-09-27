@@ -118,8 +118,6 @@ public class Constants extends GeneralConstants{
 	public static final String ERROR_MESSAGE_PASSWORD_CAN_NOT_EMPTY = "Password can not be empty.";
 	public static final String ERROR_MESSAGE_USER_NAME_PASSWORD_NOT_CORRECT = "User name or password is not correct.";
 	public static final String ERROR_WEB_ELEMENT_NOT_FOUND_BY_XPATH = "Web element not find by xpath.";
-
-	public static final String RESERVE_ALL_URL_PARAMETERS = "RESERVE_ALL_URL_PARAMETERS";
 	
 	public static final String JSON_MENU_LIST = "JSON_MENU_LIST";
 		

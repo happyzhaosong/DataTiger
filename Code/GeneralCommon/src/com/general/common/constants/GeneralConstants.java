@@ -36,6 +36,9 @@ public class GeneralConstants {
 	public static final String ACTION_LOGIN = "ACTION_LOGIN";
 	public static final String ACTION_LOGOUT = "ACTION_LOGOUT";
 	
+	public static final String RESERVE_ALL_URL_PARAMETERS = "RESERVE_ALL_URL_PARAMETERS";
+	public static final String ALL_UNMATCHED_URL = "ALL_UNMATCHED_URL";
+	
 	public static final String ACTION_SEARCH = "ACTION_SEARCH";
 	public static final String ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS = "ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS";
 	public static final String ACTION_SEARCH_CLICK_ITEM = "ACTION_SEARCH_CLICK_ITEM";

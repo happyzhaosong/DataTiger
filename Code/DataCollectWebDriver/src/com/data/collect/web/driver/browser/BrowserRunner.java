@@ -1061,60 +1061,55 @@ public class BrowserRunner {
 	{
 		if(!StringTool.isEmpty(clickEleXPathBeforeParseUrlStr))
 		{
-			Map<String, String[]> urlChaXPathMap = StringTool.parseStringReturnStringListMapCommonSeperator(clickEleXPathBeforeParseUrlStr);
-			
-			if(urlChaXPathMap!=null)
-			{
-				Set<String> keys = urlChaXPathMap.keySet();
-				Iterator it = keys.iterator();
-				while(it.hasNext())
-				{
-					String urlCha = (String)it.next();
-					if(realPageUrl.indexOf(urlCha)!=-1)
-					{
-						String xpathArr[] = urlChaXPathMap.get(urlCha);
-						if(xpathArr!=null)
-						{
-							int size = xpathArr.length;
-							for(int i=0;i<size;i++)
-							{
-								String xpath = xpathArr[i];
-								By byCondition = this.getSearchByCondition(Constants.WEB_DRIVER_SEARCH_BY_TYPE_XPATH, xpath);
-							    if(byCondition!=null)
-							    {
-								   	List<WebElement> eleList = driver.findElements(byCondition);
-								   	if(!ClassTool.isListEmpty(eleList))
-								   	{
-								   		int eleListSize = eleList.size();
-										for(int k=0;k<eleListSize;k++)
-										{
-											try
-											{
-												WebElement ele = eleList.get(k);
-												if(ele.isDisplayed() && ele.isEnabled() && ele.getSize().getWidth()>0 && ele.getSize().getHeight()>0)
-												{
-													ele.click();
-												}
-											}catch(Exception ex)
-											{
-												if(this.ifBrowserUnreach(ex))
-												{
-													throw ex;
-												}else
-												{
-													LogTool.logError(ex);
-												}
-											}
-								   		}
-							    	}
-							    }
-							}
-						}
-					}
-				}
-			}
+			Map<String, String[]> urlChaXPathMap = StringTool.parseStringReturnStringListMapCommonSeperator(clickEleXPathBeforeParseUrlStr);			
+			String xpathArr[] = StringTool.getMatchUrlArray(realPageUrl, urlChaXPathMap);			
+			this.clickElementBy(Constants.WEB_DRIVER_SEARCH_BY_TYPE_XPATH, xpathArr);
 		}
 	}
+	
+	
+	
+	public void clickElementBy(String byType, String byValueArr[]) throws Exception
+	{
+		if(!StringTool.isEmpty(byType) && !ClassTool.isStringArrayEmpty(byValueArr))
+		{
+			int size = byValueArr.length;
+			for(int i=0;i<size;i++)
+			{
+				String byValue = byValueArr[i];
+				By byCondition = this.getSearchByCondition(byType, byValue);
+			    if(byCondition!=null)
+			    {
+				   	List<WebElement> eleList = driver.findElements(byCondition);
+				   	if(!ClassTool.isListEmpty(eleList))
+				   	{
+				   		int eleListSize = eleList.size();
+						for(int k=0;k<eleListSize;k++)
+						{
+							try
+							{
+								WebElement ele = eleList.get(k);
+								if(ele.isDisplayed() && ele.isEnabled() && ele.getSize().getWidth()>0 && ele.getSize().getHeight()>0)
+								{
+									ele.click();
+								}
+							}catch(Exception ex)
+							{
+								if(this.ifBrowserUnreach(ex))
+								{
+									throw ex;
+								}else
+								{
+									LogTool.logError(ex);
+								}
+							}
+				   		}
+			    	}
+			    }
+			}
+		}			
+
+	}	
 	
 	
 	/*

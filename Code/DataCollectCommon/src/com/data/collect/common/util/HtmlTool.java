@@ -2,7 +2,7 @@ package com.data.collect.common.util;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
 import com.data.collect.common.constants.Constants;
 import com.data.collect.common.dto.WebSiteDTO;
 import com.data.collect.common.dto.WebSitePageLinkParseDTO;
@@ -260,7 +260,7 @@ public class HtmlTool extends BaseTool {
 			{
 				return url;
 			}else
-			{
+			{				
 				String urlArr[] = url.split(Constants.SEPERATOR_BACK_SLASH + Constants.QUESTION_MARK);
 				if(!ClassTool.isNullObj(urlArr) && urlArr.length>1)
 				{
@@ -279,7 +279,7 @@ public class HtmlTool extends BaseTool {
 						for(int i=0;i<paramsSize;i++)
 						{
 							String paramStr = paramsArr[i];
-							if(HtmlTool.ifReservedParamInUrl(paramStr, reservedParamNames))
+							if(HtmlTool.ifReservedParamInUrl(url, paramStr, reservedParamNames))
 							{
 								retUrlBuf.append(paramStr);
 								retUrlBuf.append(Constants.AND_MARK);
@@ -305,7 +305,7 @@ public class HtmlTool extends BaseTool {
 	}
 
 	
-	private static boolean ifReservedParamInUrl(String paramStr, String reservedParamNames)
+	private static boolean ifReservedParamInUrl(String url, String paramStr, String reservedParamNames)
 	{
 		boolean ret = false;
 		if(Constants.RESERVE_ALL_URL_PARAMETERS.equalsIgnoreCase(reservedParamNames))
@@ -315,20 +315,25 @@ public class HtmlTool extends BaseTool {
 		{
 			if(!StringTool.isEmpty(reservedParamNames))
 			{
-				String reserveParamNameArr[] = reservedParamNames.split(Constants.SEPERATOR_SEMICOLON);
-				int arrSize = reserveParamNameArr.length;
-				for(int i = 0; i < arrSize; i++)
+				Map<String, String[]> urlChaReserveParamMap = StringTool.parseStringReturnStringListMapCommonSeperator(reservedParamNames);
+				String reserveParamNameArr[] = StringTool.getMatchUrlArray(url, urlChaReserveParamMap);
+				
+				if(!ClassTool.isStringArrayEmpty(reserveParamNameArr))
 				{
-					String reserveParamName = reserveParamNameArr[i].toLowerCase().trim();
-					if(!StringTool.isEmpty(reserveParamName))
+					int arrSize = reserveParamNameArr.length;
+					for(int i = 0; i < arrSize; i++)
 					{
-						paramStr = paramStr.toLowerCase().trim();
-						if(paramStr.startsWith(reserveParamName + Constants.EQUAL_MARK))
+						String reserveParamName = reserveParamNameArr[i].toLowerCase().trim();
+						if(!StringTool.isEmpty(reserveParamName))
 						{
-							ret = true;
-							break;
-						}
-					}								
+							paramStr = paramStr.toLowerCase().trim();
+							if(paramStr.startsWith(reserveParamName + Constants.EQUAL_MARK))
+							{
+								ret = true;
+								break;
+							}
+						}								
+					}
 				}
 			}
 		}

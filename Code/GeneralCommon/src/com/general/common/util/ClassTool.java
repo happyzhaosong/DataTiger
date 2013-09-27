@@ -66,6 +66,24 @@ public class ClassTool extends BaseTool {
 		}
 	}
 	
+	public static boolean isStringArrayEmpty(String strArr[])
+	{
+		if(strArr==null)
+		{
+			return true;
+		}else
+		{
+			int len = strArr.length;
+			if(len==0)
+			{
+				return true;
+			}else
+			{
+				return false;
+			}
+		}
+	}
+	
 	public static boolean isListEmpty(List objList)
 	{
 		if(objList==null)

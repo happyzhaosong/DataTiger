@@ -1,12 +1,14 @@
 package com.general.common.util;
 
 import java.util.ArrayList;
+
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import com.general.common.constants.GeneralConstants;
 import com.general.common.exception.EmptyStringException;
 
@@ -52,6 +54,33 @@ public class StringTool extends BaseTool {
 					 }
 				 }
 			}
+		}
+		return ret;
+	}
+	
+	
+	public static String[] getMatchUrlArray(String url, Map<String, String[]> urlChaArrMap)
+	{
+		String ret[] = null;
+        
+		if(urlChaArrMap!=null)
+		{
+			Set<String> keys = urlChaArrMap.keySet();
+			Iterator it = keys.iterator();
+			while(it.hasNext())
+			{
+				String urlCha = (String)it.next();
+				if(!StringTool.isEmpty(urlCha) && url.indexOf(urlCha)!=-1)
+				{
+					ret = urlChaArrMap.get(urlCha);
+					break;
+				}
+			}
+		}
+		
+		if(ClassTool.isNullObj(ret))
+		{
+			ret = urlChaArrMap.get(GeneralConstants.ALL_UNMATCHED_URL);
 		}
 		return ret;
 	}

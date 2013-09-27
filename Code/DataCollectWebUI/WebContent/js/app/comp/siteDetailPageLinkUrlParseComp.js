@@ -49,9 +49,9 @@ Ext.define('DC.comp.SiteDetailPageLinkUrlParseListPanel', {
 	        name: 'id'
 	    },{
 	    	xtype: 'textareafield',
-	    	height:100,
+	    	height: 150,
 	        grow : true,
-	        fieldLabel: 'Click These Web Elements By XPath Before Parse URL. Format is urlCharactor1!@#xpath1,xpath2;<br/>urlCharactor2!@#xpath3,xpath4;<br/>urlCharactor3!@#xpath5,xpath6<br/>Only useful for parse url link in one page by a html tag.',
+	        fieldLabel: 'Click These Web Elements By XPath <br/>Before Parse URL. Format is urlCha1!@#xpath1,xpath2;<br/>urlCha2!@#xpath3,xpath4;<br/>urlCha3!@#xpath5,xpath6<br/>Only useful for parse url link in one page by a html tag.urlCha必须唯一,不能为空',
 	        name: 'clickEleXPathBeforeParseUrl',
 	        allowBlank: true,
 			emptyText: 'For parse more element in taobao, tmall, jd etc. All values here should be xpath of elements which need to be clicked before parse url link in this page. If this field is empty then not click any element before parse url link. Format is urlCharactor1!@#xpath1,xpath2;urlCharactor2!@#xpath3,xpath4;urlCharactor3!@#xpath5,xpath6'
@@ -101,10 +101,11 @@ Ext.define('DC.comp.SiteDetailPageLinkUrlParseListPanel', {
 	        emptyText: "在解析出来的url上运行的正则表达式，使用正则表达式运行之后的url作为页面的url, Some site url like taobao same url add some different string, so need to run regexp on such url to get real simple url. Format: srcRegExp1!@#replaceStr1;srcRegExp2!@#replaceStr2;...",
 	        allowBlank: true
 	    },{
+	    	height: 150,
 	        grow : true,
 	        name : 'runStringFindOnUrl',
-	        fieldLabel: 'Reserved Params On Url(url中只保留如下参数名字的参数)',
-	        emptyText: "如果正则表达式不好写，则用该字段进行解析，该字段的格式是   reserveParam1;reserveParam2;reserveParam3;..., 只保留url中的这些有效参数及值，其他的参数过滤掉，对于taobao这样的网站因为taobao自动添加了很多无用的统计参数在url里面，所以需要过滤掉，只保留有用的参数. RESERVE_ALL_URL_PARAMETERS --- 保留所有的url参数",
+	        fieldLabel: 'Reserved Params On Url(url中只保留如下参数名字的参数,格式： urlCha1!@#reserveParam1,rP2;<br/>urlCha2!@#reserveParam3,rP4;<br/>urlCha3!@#reserveParam5,rP6;)<br/>urlCha必须唯一,不能为空<br/>特殊占位符：ALL_UNMATCHED_URL , RESERVE_ALL_URL_PARAMETERS',
+	        emptyText: "如果正则表达式不好写，则用该字段进行解析，该字段的格式是  urlCha1!@#reserveParam1,reserveParam2;<br/>urlCha2!@#reserveParam3,reserveParam4;<br/>urlCha3!@#reserveParam5,reserveParam6;<br/>, 只保留匹配urlCha的url中的这些有效参数及值，其他的参数过滤掉，如果某一个 urlCha='ALL_UNMATCHED_URL'则匹配除匹配后之外的所有的url，对于taobao这样的网站因为taobao自动添加了很多无用的统计参数在url里面，所以需要过滤掉，只保留有用的参数. RESERVE_ALL_URL_PARAMETERS --- 保留所有的url参数",
 	        allowBlank: true
 	    },{
 	        grow : true,
