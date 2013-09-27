@@ -79,13 +79,13 @@ YUI().use('DataSearchApp', function (Y) {
     var biaoTiItem = '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{biaoTi}" target="_detail" class="biaoTiClass">{biaoTiSummary}</a>';
     var jiaGeItem = '<strong class="itemTextJiaGe">{jiaGe}</strong>';
     var danJiaItem = '<strong class="itemTextDanJia" title="{danJia}"">{danJiaSummary}</strong>';
-    var xiaoLiangItem = '<strong class="itemText">销量:{jiaoYiSuccess}</strong>';
-    var pingFenItem = '<strong class="itemTextFloatRight">评分:{pingFen}</strong>';
+    var xiaoLiangItem = '<strong class="itemText">{jiaoYiSuccess}</strong>';
+    var pingFenItem = '<strong class="itemTextFloatRight">{pingFen}</strong>';
     var shopNameItem = '<a href="{shopUrl}" target="_shop" class="itemTextShopName" style="display:inline" title="{shopName}">{shopNameSummary}</a>';
     var wangWangItem = '<a href="{wangWangUrl}" target="_wangwang" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。" style="display: inline; float:right"><img src="img/wangwangContact.jpg" width="50px"/></a>'; 
 	var shangPinLaiYuanItem = '<image src="img/mall_{shangPinLaiYuan}.jpg" height="16px"/>';
 	var shopLevelImgItem = '<image src="{shopLevelImgUrl}" height="16px"/>';
-	var haoPingLvItem = '<strong class="itemTextFloatRight">好评率:{haoPingLv}</strong>';  
+	var haoPingLvItem = '<strong class="itemTextFloatRight">{haoPingLv}</strong>';  
 	var shangChengPeiSongItem = '<strong class="shangChengPeiSongItem_{shangChengPeiSong}">京东配送</strong>';
 	var cuXiaoJiaItem = '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{cuXiaoJia}" target="_detail" class="cuXiaoClass">{cuXiaoJiaSummary}</a>';
 	

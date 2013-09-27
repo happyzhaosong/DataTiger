@@ -3,6 +3,7 @@ package com.food.common.dto;
 import com.general.common.annotation.DBColumn;
 import com.general.common.annotation.DBTable;
 import com.general.common.dto.BaseDTO;
+import com.general.common.util.StringTool;
 
 
 @DBTable(name="data_xiu_hao_chi")
@@ -86,6 +87,11 @@ public class FoodDTO extends BaseDTO {
 		{
 			cuXiaoJiaSummary = cuXiaoJia;
 		}
+		
+		if(!StringTool.isEmpty(cuXiaoJiaSummary))
+		{
+			cuXiaoJiaSummary = "促销:" + cuXiaoJiaSummary;
+		}
 		return cuXiaoJiaSummary;
 	}
 
@@ -147,7 +153,11 @@ public class FoodDTO extends BaseDTO {
 		this.clickCount = clickCount;
 	}
 
-	public String getHaoPingLv() {
+	public String getHaoPingLv() {		
+		if(!StringTool.isEmpty(haoPingLv))
+		{
+			haoPingLv = "好评率:" + haoPingLv;
+		}
 		return haoPingLv;
 	}
 
@@ -172,6 +182,10 @@ public class FoodDTO extends BaseDTO {
 	}
 
 	public String getJiaoYiSuccess() {
+		if(!StringTool.isEmpty(jiaoYiSuccess))
+		{
+			jiaoYiSuccess = "销量:" + jiaoYiSuccess;
+		}
 		return jiaoYiSuccess;
 	}
 
@@ -258,7 +272,11 @@ public class FoodDTO extends BaseDTO {
 		this.cuXiaoJia = cuXiaoJia;
 	}
 
-	public String getPingFen() {
+	public String getPingFen() {		
+		if(!StringTool.isEmpty(pingFen))
+		{
+			pingFen = "评分:" + pingFen;
+		}
 		return pingFen;
 	}
 

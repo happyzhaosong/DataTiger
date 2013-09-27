@@ -48,7 +48,7 @@ public class HtmlTool extends BaseTool {
 					String urlTag = urlTagList.get(i);
 					String url = HtmlTool.getUrlInHtmlTag(urlTag).trim();
 					
-					if(!StringTool.isEmpty(url))
+					if(URLTool.isRegularUrl(url))
 					{
 						//这种情况就相当于http:// (http://stackoverflow.com/questions/4831741/can-i-change-all-my-http-links-to-just)
 						if(url.startsWith("//"))
@@ -69,7 +69,7 @@ public class HtmlTool extends BaseTool {
 						}else 
 						{
 							String urlLower = url.toLowerCase().trim();
-							if(URLTool.isRegularUrl(url) && !urlLower.startsWith("http"))
+							if(!urlLower.startsWith("http"))
 							{
 								String rootUrl = HtmlTool.getRootUrl(url);
 								if(!URLTool.isValidDomain(rootUrl))
@@ -105,7 +105,9 @@ public class HtmlTool extends BaseTool {
 			urlTrimList.add("%20");
 			urlTrimList.add("#");			
 			urlTrimList.add(".");
-			urlTrimList.add("&");			
+			urlTrimList.add("&");
+			urlTrimList.add("?");
+			
 			url = StringTool.trimSpecialCharactor(url, urlTrimList);
 			
 			url = url.replaceAll("&amp;", "&");
@@ -192,6 +194,7 @@ public class HtmlTool extends BaseTool {
 			retBuf.append(url.substring(0, questionMarkIdx+1));
 		}else
 		{
+			url = StringTool.runRegExpToReplace(url, "#.*$", "");
 			return url;
 		}
 		
@@ -244,7 +247,10 @@ public class HtmlTool extends BaseTool {
 		//not reserve any parameters
 		if(StringTool.isEmpty(reservedParamNames))
 		{
-			url = StringTool.getStringWithStartEndString(url, "", GeneralConstants.QUESTION_MARK);
+			if(url.indexOf(GeneralConstants.QUESTION_MARK)>-1)
+			{
+				url = StringTool.getStringWithStartEndString(url, "", GeneralConstants.QUESTION_MARK);
+			}
 			return url;
 		}else
 		{
@@ -255,33 +261,30 @@ public class HtmlTool extends BaseTool {
 				return url;
 			}else
 			{
-				String urlPrefix = "";
-				String urlSuffix = "";
 				String urlArr[] = url.split(Constants.SEPERATOR_BACK_SLASH + Constants.QUESTION_MARK);
-				if(!ClassTool.isNullObj(urlArr) && urlArr.length>0)
+				if(!ClassTool.isNullObj(urlArr) && urlArr.length>1)
 				{
+					String urlPrefix = "";
+					String urlSuffix = "";
 					urlPrefix = urlArr[0];
-					if(urlArr.length>1)
+
+					retUrlBuf.append(urlPrefix);
+					retUrlBuf.append(Constants.QUESTION_MARK);
+						
+					urlSuffix = urlArr[1];					
+					String paramsArr[] = urlSuffix.split(Constants.AND_MARK);
+					if(!ClassTool.isNullObj(paramsArr))
 					{
-						retUrlBuf.append(urlPrefix);
-						retUrlBuf.append(Constants.QUESTION_MARK);
-						
-						urlSuffix = urlArr[1];					
-						String paramsArr[] = urlSuffix.split(Constants.AND_MARK);
-						if(!ClassTool.isNullObj(paramsArr))
+						int paramsSize = paramsArr.length;
+						for(int i=0;i<paramsSize;i++)
 						{
-							int paramsSize = paramsArr.length;
-							for(int i=0;i<paramsSize;i++)
+							String paramStr = paramsArr[i];
+							if(HtmlTool.ifReservedParamInUrl(paramStr, reservedParamNames))
 							{
-								String paramStr = paramsArr[i];
-								if(HtmlTool.ifReservedParamInUrl(paramStr, reservedParamNames))
-								{
-									retUrlBuf.append(paramStr);
-									retUrlBuf.append(Constants.AND_MARK);
-								}
+								retUrlBuf.append(paramStr);
+								retUrlBuf.append(Constants.AND_MARK);
 							}
-						}			
-						
+						}					
 					}else
 					{
 						return url;
