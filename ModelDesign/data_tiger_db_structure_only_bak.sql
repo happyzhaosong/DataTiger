@@ -225,7 +225,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `cu_xiao_jia` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '促销价',
   `cu_xiao_jia_num` double(10,3) NOT NULL DEFAULT '1000000.000' COMMENT '促销价数值',
   `ping_fen` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品评分',
-  `ping_fen_num` double(5,2) NOT NULL DEFAULT '-1.00' COMMENT '商品评分数值',
+  `ping_fen_num` double(10,3) NOT NULL DEFAULT '-1.000' COMMENT '商品评分数值',
   `jiao_yi` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '''0''' COMMENT '交易的数量',
   `jiao_yi_num` bigint(10) NOT NULL DEFAULT '0' COMMENT '交易的数量数值',
   `jiao_yi_success` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '''0''' COMMENT '交易成功的数量',
@@ -236,7 +236,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `item_url` text COLLATE utf8_bin NOT NULL COMMENT '商品url链接地址',
   `shang_pin_lai_yuan` tinyint(1) NOT NULL DEFAULT '1' COMMENT '商品来源，1---天猫， 2---淘宝， 3---京东，4---dangdang',
   `hao_ping_lv` varchar(10) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '店铺好评率',
-  `hao_ping_lv_num` double(5,2) NOT NULL DEFAULT '0.00' COMMENT '店铺好评率数值',
+  `hao_ping_lv_num` double(10,3) NOT NULL DEFAULT '0.000' COMMENT '店铺好评率数值',
   `click_count` int(10) NOT NULL DEFAULT '0' COMMENT '商品被点击的次数，缺省按照这个次数降序排列',
   `wang_wang_url` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '掌柜旺旺链接',
   `shang_cheng_pei_song` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否由商城进行配送发货',
@@ -250,7 +250,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `download_task_useless_content_page` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Must have for each data table, 下载的页面是否是无效的内容页面，1 --- 是无效内容页面，0 --- 有效的内容页面',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `NewIndex1` (`biao_ti`,`meta_search_keyword`)
-) ENGINE=MyISAM AUTO_INCREMENT=1093 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
+) ENGINE=MyISAM AUTO_INCREMENT=1480 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
 
 /*Table structure for table `db_setting` */
 
@@ -322,7 +322,7 @@ CREATE TABLE `download_task` (
   PRIMARY KEY (`id`),
   KEY `site_id` (`site_id`,`useless_content_page`,`apply_time`,`if_content_page`),
   KEY `task_level_id` (`task_level`)
-) ENGINE=MyISAM AUTO_INCREMENT=20513 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=23016 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `download_thread` */
 

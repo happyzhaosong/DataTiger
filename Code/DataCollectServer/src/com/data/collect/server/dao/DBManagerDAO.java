@@ -248,7 +248,7 @@ public class DBManagerDAO extends BaseDAO {
 			}else
 			{
 				LogTool.debugText("Not a number value, column name : " + cName + ", parsed out value : " + cValue);
-				retBuf.append(10000);
+				retBuf.append(-1);
 			}
 		}else if(Constants.DATA_TYPE_BOOLEAN.equalsIgnoreCase(cType))
 		{

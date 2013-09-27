@@ -656,7 +656,26 @@ public class BrowserRunner {
 	{
 		String eleData = "";		
 		eleData = this.parseElementValueByWebDriver(parseTplItemDto, realPageUrl);
-		if(StringTool.isEmpty(eleData))
+		
+		boolean ifEleDataValid = true;
+		if(Constants.DATA_TYPE_STRING.equals(parseTplItemDto.getDataType()))
+		{
+			if(StringTool.isEmpty(eleData))
+			{
+				ifEleDataValid = false;
+			}
+		}else if(Constants.DATA_TYPE_NUMBER.equals(parseTplItemDto.getDataType()))
+		{
+			if(!StringTool.isNumeric(eleData))
+			{
+				ifEleDataValid = false;
+			}
+		}else if(Constants.DATA_TYPE_BOOLEAN.equals(parseTplItemDto.getDataType()))
+		{
+			
+		}		
+		
+		if(!ifEleDataValid)
 		{
 			//eleData = this.parseElementValueByJavaScript(parseTplItemDto);
 			if(!StringTool.isEmpty(parseTplItemDto.getDefaultVal()))
