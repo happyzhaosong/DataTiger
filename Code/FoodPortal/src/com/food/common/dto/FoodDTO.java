@@ -1,7 +1,10 @@
 package com.food.common.dto;
 
+import java.net.URLEncoder;
+
 import com.general.common.annotation.DBColumn;
 import com.general.common.annotation.DBTable;
+import com.general.common.constants.GeneralConstants;
 import com.general.common.dto.BaseDTO;
 import com.general.common.util.StringTool;
 
@@ -309,6 +312,11 @@ public class FoodDTO extends BaseDTO {
 	}
 
 	public String getItemUrl() {
+		//if(!StringTool.isEmpty(itemUrl))
+		{
+			//itemUrl = URLEncoder.encode(itemUrl);
+		}
+		itemUrl = StringTool.encodeStr(itemUrl);
 		return itemUrl;
 	}
 

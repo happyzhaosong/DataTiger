@@ -1,5 +1,6 @@
 package com.food.client.logic;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +62,14 @@ public class FoodBB extends BaseBB {
 	{
 		String id = GeneralWebTool.getStringParameterBeforeAttribute("id", request);
 		String itemUrl = GeneralWebTool.getStringParameterBeforeAttribute("itemUrl", request);
+		/*
+		if(!StringTool.isEmpty(itemUrl))
+		{
+			itemUrl = URLDecoder.decode(itemUrl);
+		}
+		*/
 		
+		itemUrl = StringTool.decodeStr(itemUrl);
 		this.foodDao.updateClickCount(id);		
 		response.sendRedirect(itemUrl);		
 	}

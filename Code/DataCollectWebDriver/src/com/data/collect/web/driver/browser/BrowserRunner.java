@@ -477,7 +477,7 @@ public class BrowserRunner {
 	/*
 	 * parse content page and save parsed out content into data table.
 	 * */
-	private String parseContentPage(WebDriver driver, WebSiteDTO webSiteDto, DownloadTaskDTO parentTaskDto, String realPageUrl) throws Exception
+	private String parseContentPage(WebDriver driver, WebSiteDTO webSiteDto, DownloadTaskDTO taskDto, String realPageUrl) throws Exception
 	{
 		StringBuffer retBuf = new StringBuffer();
 		GetDeltaTimeTool getDltaTimeTool = new GetDeltaTimeTool();
@@ -510,7 +510,7 @@ public class BrowserRunner {
 					
 					if(parseTplItemDto.isPageUrlAsValue())
 					{
-						eleData = parentTaskDto.getPageUrl();
+						eleData = realPageUrl;
 						//LogTool.debugText("Save url as data value");
 					}else
 					{
@@ -587,28 +587,28 @@ public class BrowserRunner {
 			DBTableColumnDTO downloadTaskParentPageUrlColumnDto = new DBTableColumnDTO();
 			downloadTaskParentPageUrlColumnDto.setColumnName(Constants.DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PARENT_PAGE_URL);			
 			downloadTaskParentPageUrlColumnDto.setColumnType(Constants.DATA_TYPE_STRING);
-			downloadTaskParentPageUrlColumnDto.setColumnValue(parentTaskDto.getParentPageUrl());
+			downloadTaskParentPageUrlColumnDto.setColumnValue(taskDto.getParentPageUrl());
 			dataTableDto.getColumnList().add(downloadTaskParentPageUrlColumnDto);
 			
 			//each data table must has a column 'download_task_page_url', for search and manipulate data in data table by data url
 			DBTableColumnDTO downloadTaskPageUrlColumnDto = new DBTableColumnDTO();
 			downloadTaskPageUrlColumnDto.setColumnName(Constants.DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PAGE_URL);			
 			downloadTaskPageUrlColumnDto.setColumnType(Constants.DATA_TYPE_STRING);
-			downloadTaskPageUrlColumnDto.setColumnValue(parentTaskDto.getPageUrl());
+			downloadTaskPageUrlColumnDto.setColumnValue(taskDto.getPageUrl());
 			dataTableDto.getColumnList().add(downloadTaskPageUrlColumnDto);
 			
 			//each data table must has a column 'download_task_id'
 			DBTableColumnDTO downloadTaskIdColumnDto = new DBTableColumnDTO();
 			downloadTaskIdColumnDto.setColumnName(Constants.DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_ID);			
 			downloadTaskIdColumnDto.setColumnType(Constants.DATA_TYPE_NUMBER);
-			downloadTaskIdColumnDto.setColumnValue(String.valueOf(parentTaskDto.getId()));
+			downloadTaskIdColumnDto.setColumnValue(String.valueOf(taskDto.getId()));
 			dataTableDto.getColumnList().add(downloadTaskIdColumnDto);
 			
 			//each data table must has a column 'download_task_level'
 			DBTableColumnDTO downloadTaskLevelColumnDto = new DBTableColumnDTO();
 			downloadTaskLevelColumnDto.setColumnName(Constants.DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_LEVEL);			
 			downloadTaskLevelColumnDto.setColumnType(Constants.DATA_TYPE_NUMBER);
-			downloadTaskLevelColumnDto.setColumnValue(String.valueOf(parentTaskDto.getTaskLevel()));
+			downloadTaskLevelColumnDto.setColumnValue(String.valueOf(taskDto.getTaskLevel()));
 			dataTableDto.getColumnList().add(downloadTaskLevelColumnDto);
 			
 			//each data table must has a column 'download_task_data_parse_time'
@@ -629,7 +629,7 @@ public class BrowserRunner {
 			DBTableColumnDTO downloadTaskUselessContentPageColumnDto = new DBTableColumnDTO();
 			downloadTaskUselessContentPageColumnDto.setColumnName(Constants.DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_USELESS_CONTENT_PAGE);			
 			downloadTaskUselessContentPageColumnDto.setColumnType(Constants.DATA_TYPE_NUMBER);
-			downloadTaskUselessContentPageColumnDto.setColumnValue(String.valueOf(parentTaskDto.getUselessContentPage()));
+			downloadTaskUselessContentPageColumnDto.setColumnValue(String.valueOf(taskDto.getUselessContentPage()));
 			dataTableDto.getColumnList().add(downloadTaskUselessContentPageColumnDto);
 
 			getDltaTimeTool.getDeltaTime("parse data", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);

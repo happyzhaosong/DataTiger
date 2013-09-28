@@ -280,6 +280,28 @@ public class StringTool extends BaseTool {
 		}
 	}
 	
+	public static String decodeStr(String str)
+	{
+		if(str==null || "".equals(str.trim()))
+		{
+			return "";
+		}else
+		{
+			StringBuffer strBuf = new StringBuffer();
+			char[] cArr = str.toCharArray();			
+			int size = cArr.length;
+			
+			for(int i=0;i<size;i++)
+			{
+				char c = cArr[i];
+				int cNum = (int)c;
+				cNum--;
+				strBuf.append((char)cNum);
+			}			
+			return strBuf.toString();
+		}
+	}
+	
 
 	public static String trimSpace(String str)
 	{

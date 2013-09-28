@@ -1,2 +1,24 @@
-1.Add machine ip who create the thread, one ip and one site limited to create 10 thread.
-2.Will created and exist plus less than 10.
+The process of data update and backup, write a stored procedure to do following every day night 12
+
+1.Backup new parsed out data to a table named data_xiu_hao_chi_{datetime} and dump the sql file.
+2.Upload the new data table file to product db.
+3.Restore the new parsed out data table to product db.
+
+Following is process in stored procedure
+1.Select all item_url, click_count records in data_xiu_hao_chi where click_count > 0.
+2.Update the click_count column in data_xiu_hao_chi_{datetime} according to the item_url in temp table.
+3.Drop data_xiu_hao_chi in product db.
+4.Rename data_xiu_hao_chi_{datetime} to data_xiu_hao_chi
+
+I think above process maybe done in java code is more better, There will add a click in each data table after 'List Table Data' link. Named 'Publish Table Data', step is as following
+
+Occured in local db:
+1.Copy data_xiu_hao_chi to data_xiu_hao_chi_{datetime} with structure and data.
+2.Backup data_xiu_hao_chi_{datetime} to sql dump file.
+
+Occured in remote db:
+3.Restore data_xiu_hao_chi_{datetime} table to remote product db.
+4.Select all item_url, click_count records in data_xiu_hao_chi where click_count > 0.
+5.Update the click_count column in data_xiu_hao_chi_{datetime} according to the item_url in temp table.
+6.Drop data_xiu_hao_chi in product db.
+7.Rename data_xiu_hao_chi_{datetime} to data_xiu_hao_chi.
