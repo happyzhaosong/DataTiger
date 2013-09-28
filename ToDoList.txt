@@ -1,41 +1,10 @@
-The process of data update and backup, write a stored procedure to do following every day night 12
-
-1.Backup new parsed out data to a table named data_xiu_hao_chi_{datetime} and dump the sql file.
-2.Upload the new data table file to product db.
-3.Restore the new parsed out data table to product db.
-
-Following is process in stored procedure
-1.Select all item_url, click_count records in data_xiu_hao_chi where click_count > 0.
-2.Update the click_count column in data_xiu_hao_chi_{datetime} according to the item_url in temp table.
-3.Drop data_xiu_hao_chi in product db.
-4.Rename data_xiu_hao_chi_{datetime} to data_xiu_hao_chi
-
-I think above process maybe done in java code is more better, There will add a click in each data table after 'List Table Data' link. Named 'Publish Table Data', step is as following
-
-Occured in local db:
-1.Copy data_xiu_hao_chi to data_xiu_hao_chi_{datetime} with structure and data.
-2.Backup data_xiu_hao_chi_{datetime} to sql dump file.
-
-Occured in remote db:
-3.Restore data_xiu_hao_chi_{datetime} table to remote product db.
-4.Select all item_url, click_count records in data_xiu_hao_chi where click_count > 0.
-5.Update the click_count column in data_xiu_hao_chi_{datetime} according to the item_url in temp table.
-6.Drop data_xiu_hao_chi in product db.
-7.Rename data_xiu_hao_chi_{datetime} to data_xiu_hao_chi.
+Best Method for calculate click count for item url:
+1.When user click one item url, then first update click_count in data_click_log table.
+2.Then update click_count in data_xiu_hao_chi data table.
+3.Order item by click_count in data_xiu_hao_chi data table.
+4.If system admin update data in data_xiu_hao_chi data table, then click_count in that table all will become 0.
+5.Go back to step 1.
 
 
-
---------------------------------------------------------------------------------------
-
-Method 2:
-
-Create one View to select just what need to show on the page
-
-seperate item click information into another click table
-
-update the click status table when user click product item.
-
-
-
-
-This way 
+This way can avoid view creation, stored procedure creation and make system manipulation as simple as possible.
+System manager just need to update data table when new data has been get from internet. No other step need to do.
