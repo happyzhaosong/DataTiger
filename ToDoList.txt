@@ -22,3 +22,20 @@ Occured in remote db:
 5.Update the click_count column in data_xiu_hao_chi_{datetime} according to the item_url in temp table.
 6.Drop data_xiu_hao_chi in product db.
 7.Rename data_xiu_hao_chi_{datetime} to data_xiu_hao_chi.
+
+
+
+--------------------------------------------------------------------------------------
+
+Method 2:
+
+Create one View to select just what need to show on the page
+
+seperate item click information into another click table
+
+update the click status table when user click product item.
+
+
+
+
+This way 

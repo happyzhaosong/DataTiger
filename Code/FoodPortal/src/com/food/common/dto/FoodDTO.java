@@ -312,10 +312,6 @@ public class FoodDTO extends BaseDTO {
 	}
 
 	public String getItemUrl() {
-		//if(!StringTool.isEmpty(itemUrl))
-		{
-			//itemUrl = URLEncoder.encode(itemUrl);
-		}
 		itemUrl = StringTool.encodeStr(itemUrl);
 		return itemUrl;
 	}

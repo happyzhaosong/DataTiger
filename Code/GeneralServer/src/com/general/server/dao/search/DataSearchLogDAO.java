@@ -52,7 +52,7 @@ public class DataSearchLogDAO extends BaseDAO {
 				this.whereBuf.append(existLogDto.getId());				
 				
 				existLogDto.setLastSearchDate(lastSearchDate);
-				existLogDto.setTotalSearchCount(logDto.getTotalSearchCount()+1);
+				existLogDto.setTotalSearchCount(existLogDto.getTotalSearchCount()+1);
 				existLogDto.setSearchResultCount(logDto.getSearchResultCount());
 				
 				LogTool.debugText("Begin update " + existLogDto.getSearchKeyword() + "'s search result count, new count is " + existLogDto.getSearchResultCount());				
@@ -81,7 +81,7 @@ public class DataSearchLogDAO extends BaseDAO {
 			this.whereBuf.append(searchIn);
 		}
 		
-		this.orderByBuf.append(" search_result_count desc "); 
+		this.orderByBuf.append(" total_search_count desc "); 
 		
 		List<DataSearchLogDTO> logList = new ArrayList<DataSearchLogDTO>();
 		logList = logList.getClass().cast(this.selectDtoList(DataSearchLogDTO.class, DBManager.getInstance().getMysqlDataSource()));

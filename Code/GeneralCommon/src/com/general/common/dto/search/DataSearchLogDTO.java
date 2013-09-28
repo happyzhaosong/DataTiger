@@ -29,9 +29,9 @@ public class DataSearchLogDTO extends BaseDTO {
 	private String searchKeywordSummary = "";
 
 	public String getSearchKeywordSummary() {
-		if(searchKeyword.length()>5)
+		if(searchKeyword.length()>3)
 		{
-			searchKeywordSummary = searchKeyword.substring(0, 6);
+			searchKeywordSummary = searchKeyword.substring(0, 3);
 			searchKeywordSummary += "...";
 		}else
 		{

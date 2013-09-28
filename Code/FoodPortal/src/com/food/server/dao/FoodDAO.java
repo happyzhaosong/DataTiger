@@ -36,6 +36,14 @@ public class FoodDAO extends BaseDAO {
 		
 		if(!StringTool.isEmpty(searchParamsDto.getOrderBy1()))
 		{
+			if(this.whereBuf.length()>0)
+			{
+				this.whereBuf.append(" and ");
+			}
+			
+			this.whereBuf.append(searchParamsDto.getOrderBy1());
+			this.whereBuf.append(" != -1 ");
+			
 			this.orderByBuf.append(searchParamsDto.getOrderBy1());
 			this.orderByBuf.append(" ");
 			this.orderByBuf.append(searchParamsDto.getDirection1());
@@ -43,6 +51,14 @@ public class FoodDAO extends BaseDAO {
 		
 		if(!StringTool.isEmpty(searchParamsDto.getOrderBy2()))
 		{
+			if(this.whereBuf.length()>0)
+			{
+				this.whereBuf.append(" and ");
+			}
+			
+			this.whereBuf.append(searchParamsDto.getOrderBy2());
+			this.whereBuf.append(" != -1 ");
+			
 			if(this.orderByBuf.length()>0)
 			{
 				this.orderByBuf.append(", ");
