@@ -88,7 +88,7 @@ public class FileTool extends BaseTool {
 	}
 	
 	
-	public static void writePropertiesFile(String filePath, Properties props) throws Exception
+	public static void writePropertiesFile(String filePath, SortedProperties props) throws Exception
 	{
 		if(FileTool.isFileExist(filePath, true, false))
 		{
@@ -104,9 +104,9 @@ public class FileTool extends BaseTool {
 		}
 	}
 	
-	public static Properties getPropertiesFile(String filePath) throws Exception
+	public static SortedProperties getPropertiesFile(String filePath) throws Exception
 	{
-		Properties props = new Properties();
+		SortedProperties props = new SortedProperties();
 		if(FileTool.isFileExist(filePath, true, false))
 		{
 			File file = new File(filePath);

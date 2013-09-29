@@ -74,7 +74,7 @@ public class ConfigTool extends BaseTool {
 			dbCfgInfo = new DBMQCfgInfoDTO();			
 			String dbCfgFilePath = ConfigTool.getConfigFilePath();	
  			
-			Properties dbProps = FileTool.getPropertiesFile(dbCfgFilePath);
+			SortedProperties dbProps = FileTool.getPropertiesFile(dbCfgFilePath);
 			if(dbProps.size()==0)
 			{
 				dbProps.setProperty(ConfigTool.DB_IP, DEFAULT_DB_IP);
