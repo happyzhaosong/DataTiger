@@ -42,6 +42,7 @@
 	    	<input type="checkbox" name="tmall" value="2">淘宝
 	    	<input type="checkbox" name="jingdong" value="3">京东
 	    	<input type="checkbox" name="jingdong" value="4">当当
+	    	<input type="checkbox" name="jingdong" value="5">我买网
     	</div>
     </div>
  
@@ -90,7 +91,7 @@ YUI().use('DataSearchApp', function (Y) {
 	var haoPingLvItem = '<strong class="itemTextFloatRight">{haoPingLv}</strong>';  
 	var shangChengPeiSongItem = '<strong class="shangChengPeiSongItem_{shangChengPeiSong}">京东配送</strong>';
 	var cuXiaoJiaItem = '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{cuXiaoJia}" target="_detail" class="cuXiaoClass">{cuXiaoJiaSummary}</a>';
-	var songJiFenItem = '<strong class="itemText">{songJiFen}</strong>';
+	var songJiFenItem = '<strong class="itemTextFloatRight">{songJiFen}</strong>';
 	
 	
 	templateSuffix = divPrefix + shangPinLaiYuanItem + songJiFenItem + divSuffix + templateSuffix; 
@@ -135,6 +136,17 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.dataItemTemplateDangDang += divPrefix + cuXiaoJiaItem + divSuffix;
     dataSearch.dataItemTemplateDangDang += divPrefix + shopNameItem + haoPingLvItem + divSuffix;
     dataSearch.dataItemTemplateDangDang += templateSuffix;
+    
+    
+    //womai template
+    dataSearch.dataItemTemplateWoMai = templatePrefix;
+    dataSearch.dataItemTemplateWoMai += divPrefix + imgItem + divSuffix;
+    dataSearch.dataItemTemplateWoMai += divPrefix + biaoTiItem + divSuffix;
+    dataSearch.dataItemTemplateWoMai += divPrefix + jiaGeItem + pingFenItem + divSuffix;
+    dataSearch.dataItemTemplateWoMai += divPrefix + cuXiaoJiaItem + divSuffix;
+    dataSearch.dataItemTemplateWoMai += divPrefix + haoPingLvItem + divSuffix;
+    dataSearch.dataItemTemplateWoMai += templateSuffix;
+    
     
     
     dataSearch.systemErrorMessageBusy = '<%=GeneralConstants.ERROR_MESSAGE_SYSTEM_BUSY%>';

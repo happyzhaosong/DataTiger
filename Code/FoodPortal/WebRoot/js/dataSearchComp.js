@@ -263,6 +263,8 @@
         dataItemTemplateJingDong: '',
         
         dataItemTemplateDangDang: '',
+        
+        dataItemTemplateWoMai: '',
 
         // In order to add photos to the container, they are expected to be in
         // the format from the API, this would mean an Array of photos.
@@ -290,6 +292,9 @@
             	}else if(sply==4)
             	{
             		photoItems += Y.Lang.sub(this.dataItemTemplateDangDang, photos[i]);
+            	}else if(sply==5)
+            	{
+            		photoItems += Y.Lang.sub(this.dataItemTemplateWoMai, photos[i]);
             	}else
             	{
             		photoItems += Y.Lang.sub(this.dataItemTemplate, photos[i]);
@@ -731,6 +736,7 @@
             page.dataItemTemplateTMall = this.dataItemTemplateTMall;
             page.dataItemTemplateJingDong = this.dataItemTemplateJingDong;
             page.dataItemTemplateDangDang = this.dataItemTemplateDangDang;
+            page.dataItemTemplateWoMai = this.dataItemTemplateWoMai;
             
             // Add our photos to the new page
             page.addPhotos(photos);
@@ -816,7 +822,9 @@
         
         dataItemTemplateJingDong: '',
         
-        dataItemTemplateDangDang: ''
+        dataItemTemplateDangDang: '',
+        
+        dataItemTemplateWoMai: ''
 
     }, {
         ATTRS: {
