@@ -14,14 +14,31 @@ import com.general.common.util.LogTool;
 
 public class DBManager extends BaseManager{
 		
-	private static DBManager instance = null;		
+	private static DBManager instance = null;
+	
+	//存储mysql数据表的数据源对象
 	private DataSource mysqlDataSource = null;
+	
+	//存储解析后的数据表的数据源对象
+	private DataSource dataTblDataSource = null;
+	
+	//存储mysql数据库表基本信息数据源对象
 	private DataSource mysqlInforSchemaDataSource = null;
 	
+	public DataSource getDataTblDataSource() throws Exception {
+		if(dataTblDataSource==null)
+		{
+			DBMQCfgInfoDTO cfgDto = this.getDBMQConfig();
+			dataTblDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_MY_SQL, GeneralConstants.JDBC_MY_SQL_CLASS, cfgDto.getDataTblDbIp(), cfgDto.getDataTblDbPort(), cfgDto.getDataTblDbName(), cfgDto.getDataTblDbUser(), cfgDto.getDataTblDbPasswd());
+		}
+		return dataTblDataSource;
+	}
+
 	public DataSource getMysqlDataSource() throws Exception{
 		if(mysqlDataSource==null)
 		{
-			mysqlDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_MY_SQL, GeneralConstants.JDBC_MY_SQL_CLASS, false);
+			DBMQCfgInfoDTO cfgDto = this.getDBMQConfig();
+			mysqlDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_MY_SQL, GeneralConstants.JDBC_MY_SQL_CLASS, cfgDto.getDbIp(), cfgDto.getDbPort(), cfgDto.getDbName(), cfgDto.getDbUser(), cfgDto.getDbPasswd());
 		}
 		return mysqlDataSource;
 	}
@@ -29,20 +46,25 @@ public class DBManager extends BaseManager{
 	public DataSource getMysqlInforSchemaDataSource() throws Exception{
 		if(mysqlInforSchemaDataSource==null)
 		{
-			mysqlInforSchemaDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_MY_SQL, GeneralConstants.JDBC_MY_SQL_CLASS, true);		
+			DBMQCfgInfoDTO cfgDto = this.getDBMQConfig();  
+			mysqlInforSchemaDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_MY_SQL, GeneralConstants.JDBC_MY_SQL_CLASS, cfgDto.getDbIp(), cfgDto.getDbPort(), cfgDto.getInformationShcemaDbName(), cfgDto.getInformationShcemaDbUser(), cfgDto.getInformationShcemaDbPasswd());		
 		}
 		return mysqlInforSchemaDataSource;
 	}
 
 	private DBManager()
 	{
+		/*
 		try
 		{
-			mysqlDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_MY_SQL, GeneralConstants.JDBC_MY_SQL_CLASS, false);
+			DBMQCfgInfoDTO cfgDto = this.getDBMQConfig();
+			mysqlDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_MY_SQL, GeneralConstants.JDBC_MY_SQL_CLASS, cfgDto.getDbIp(), cfgDto.getDbPort(), cfgDto.getDbName(), cfgDto.getDbUser(), cfgDto.getDbPasswd());
+			
 		}catch(Exception ex)
 		{
 			LogTool.logError( ex);
 		}
+		*/
 	}
 	
 
@@ -57,23 +79,15 @@ public class DBManager extends BaseManager{
 	}
 	
 
-    private DataSource setupDataSource(String serverType, String driverClass, boolean ifInformationSchema) throws Exception{
-    	DBMQCfgInfoDTO cfgDto = this.getDBMQConfig();   	
-    	
+    private DataSource setupDataSource(String serverType, String driverClass, String dbIp, String dbPort, String dbName, String dbUser, String dbPasswd) throws Exception{
     	StringBuffer sqlUrlBuf = new StringBuffer();
     	sqlUrlBuf.append("jdbc:mysql://");
-    	sqlUrlBuf.append(cfgDto.getDbIp());
+    	sqlUrlBuf.append(dbIp);
     	sqlUrlBuf.append(":");
-    	sqlUrlBuf.append(cfgDto.getDbPort());
+    	sqlUrlBuf.append(dbPort);
     	sqlUrlBuf.append("/");
     	
-    	if(ifInformationSchema)
-    	{
-    		sqlUrlBuf.append(cfgDto.getInformationShcemaDbName());
-    	}else
-    	{
-    		sqlUrlBuf.append(cfgDto.getDbName());
-    	}
+    	sqlUrlBuf.append(dbName);
     	
     	sqlUrlBuf.append("?autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8");
     	
@@ -81,15 +95,8 @@ public class DBManager extends BaseManager{
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName(driverClass);
         
-        if(ifInformationSchema)
-    	{
-	        ds.setUsername(cfgDto.getInformationShcemaDbUser());
-	        ds.setPassword(cfgDto.getInformationShcemaDbPasswd());
-    	}else
-    	{
-            ds.setUsername(cfgDto.getDbUser());
-            ds.setPassword(cfgDto.getDbPasswd());    		
-    	}
+        ds.setUsername(dbUser);
+        ds.setPassword(dbPasswd);
         
         ds.setUrl(connectURL); 
         ds.setTestOnBorrow(true);

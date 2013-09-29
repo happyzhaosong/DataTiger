@@ -4,10 +4,15 @@ public class DBMQCfgInfoDTO extends BaseDTO {
 	
 	private String dbIp = "";	
 	private String dbPort = "";	
-
 	private String dbName = "";
 	private String dbUser = "";
 	private String dbPasswd = "";
+	
+	private String dataTblDbIp = "";	
+	private String dataTblDbPort = "";	
+	private String dataTblDbName = "";
+	private String dataTblDbUser = "";
+	private String dataTblDbPasswd = "";
 	
 	private String informationShcemaDbName = "";
 	private String informationShcemaDbUser = "";
@@ -22,6 +27,36 @@ public class DBMQCfgInfoDTO extends BaseDTO {
 	
 	private String logLevel = "";
 	
+	public String getDataTblDbIp() {
+		return dataTblDbIp;
+	}
+	public void setDataTblDbIp(String dataTblDbIp) {
+		this.dataTblDbIp = dataTblDbIp;
+	}
+	public String getDataTblDbPort() {
+		return dataTblDbPort;
+	}
+	public void setDataTblDbPort(String dataTblDbPort) {
+		this.dataTblDbPort = dataTblDbPort;
+	}
+	public String getDataTblDbName() {
+		return dataTblDbName;
+	}
+	public void setDataTblDbName(String dataTblDbName) {
+		this.dataTblDbName = dataTblDbName;
+	}
+	public String getDataTblDbUser() {
+		return dataTblDbUser;
+	}
+	public void setDataTblDbUser(String dataTblDbUser) {
+		this.dataTblDbUser = dataTblDbUser;
+	}
+	public String getDataTblDbPasswd() {
+		return dataTblDbPasswd;
+	}
+	public void setDataTblDbPasswd(String dataTblDbPasswd) {
+		this.dataTblDbPasswd = dataTblDbPasswd;
+	}
 	public String getLogLevel() {
 		return logLevel;
 	}

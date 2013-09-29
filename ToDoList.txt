@@ -8,3 +8,14 @@ Best Method for calculate click count for item url:
 
 This way can avoid view creation, stored procedure creation and make system manipulation as simple as possible.
 System manager just need to update data table when new data has been get from internet. No other step need to do.
+
+--------------------------------------------------------------
+A more efficient method for update retrived internet data to data table is:
+
+1.Create 2 environment: Test environment, Production environment.
+
+In test environment:
+Provide test db information in config file and when save parsed out data, save the data to test db directly. 
+
+In production environment:
+Provide product db information in config file and when save parsed out data, save the data to product db directly. 

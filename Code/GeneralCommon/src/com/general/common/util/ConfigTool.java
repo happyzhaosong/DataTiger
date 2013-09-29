@@ -12,7 +12,6 @@ public class ConfigTool extends BaseTool {
 	
 	public static final String DB_IP = "db_ip";
 	public static final String DB_PORT = "db_port";
-	
 	public static final String DB_NAME = "db_name";
 	public static final String DB_USER = "db_user";
 	public static final String DB_PASSWD = "db_passwd";
@@ -22,6 +21,18 @@ public class ConfigTool extends BaseTool {
 	public static final String DEFAULT_DB_NAME = "data_collect";
 	public static final String DEFAULT_DB_USER = "dataCollect";
 	public static final String DEFAULT_DB_PASSWD = "saz008632";	
+	
+	public static final String DATA_TBL_DB_IP = "data_tbl_db_ip";
+	public static final String DATA_TBL_DB_PORT = "data_tbl_db_port";
+	public static final String DATA_TBL_DB_NAME = "data_tbl_db_name";
+	public static final String DATA_TBL_DB_USER = "data_tbl_db_user";
+	public static final String DATA_TBL_DB_PASSWD = "data_tbl_db_passwd";
+	
+	public static final String DEFAULT_DATA_TBL_DB_IP = DEFAULT_DB_IP;
+	public static final String DEFAULT_DATA_TBL_DB_PORT = DEFAULT_DB_PORT;
+	public static final String DEFAULT_DATA_TBL_DB_NAME = DEFAULT_DB_NAME;
+	public static final String DEFAULT_DATA_TBL_DB_USER = DEFAULT_DB_USER;
+	public static final String DEFAULT_DATA_TBL_DB_PASSWD = DEFAULT_DB_PASSWD;	
 
 	public static final String INFORMATION_SCHEMA_DB_NAME = "information_schema_db_name";
 	public static final String INFORMATION_SCHEMA_DB_USER = "information_schema_db_user";
@@ -72,6 +83,12 @@ public class ConfigTool extends BaseTool {
 				dbProps.setProperty(ConfigTool.DB_USER, DEFAULT_DB_USER);
 				dbProps.setProperty(ConfigTool.DB_PASSWD, DEFAULT_DB_PASSWD);
 				
+				dbProps.setProperty(ConfigTool.DATA_TBL_DB_IP, DEFAULT_DATA_TBL_DB_IP);
+				dbProps.setProperty(ConfigTool.DATA_TBL_DB_PORT, DEFAULT_DATA_TBL_DB_PORT);
+				dbProps.setProperty(ConfigTool.DATA_TBL_DB_NAME, DEFAULT_DATA_TBL_DB_NAME);
+				dbProps.setProperty(ConfigTool.DATA_TBL_DB_USER, DEFAULT_DATA_TBL_DB_USER);
+				dbProps.setProperty(ConfigTool.DATA_TBL_DB_PASSWD, DEFAULT_DATA_TBL_DB_PASSWD);
+				
 				dbProps.setProperty(ConfigTool.INFORMATION_SCHEMA_DB_NAME, DEFAULT_INFORMATION_SCHEMA_DB_NAME);
 				dbProps.setProperty(ConfigTool.INFORMATION_SCHEMA_DB_USER, DEFAULT_INFORMATION_SCHEMA_DB_USER);
 				dbProps.setProperty(ConfigTool.INFORMATION_SCHEMA_DB_PASSWD, DEFAULT_INFORMATION_SCHEMA_DB_PASSWD);
@@ -92,6 +109,12 @@ public class ConfigTool extends BaseTool {
 			dbCfgInfo.setDbName(StringTool.isEmpty(dbProps.getProperty(ConfigTool.DB_NAME), DEFAULT_DB_NAME));
 			dbCfgInfo.setDbUser(StringTool.isEmpty(dbProps.getProperty(ConfigTool.DB_USER), DEFAULT_DB_USER));
 			dbCfgInfo.setDbPasswd(StringTool.isEmpty(dbProps.getProperty(ConfigTool.DB_PASSWD), DEFAULT_DB_PASSWD));
+			
+			dbCfgInfo.setDataTblDbIp(StringTool.isEmpty(dbProps.getProperty(ConfigTool.DATA_TBL_DB_IP), DEFAULT_DATA_TBL_DB_IP));
+			dbCfgInfo.setDataTblDbPort(StringTool.isEmpty(dbProps.getProperty(ConfigTool.DATA_TBL_DB_PORT), DEFAULT_DATA_TBL_DB_PORT));
+			dbCfgInfo.setDataTblDbName(StringTool.isEmpty(dbProps.getProperty(ConfigTool.DATA_TBL_DB_NAME), DEFAULT_DATA_TBL_DB_NAME));
+			dbCfgInfo.setDataTblDbUser(StringTool.isEmpty(dbProps.getProperty(ConfigTool.DATA_TBL_DB_USER), DEFAULT_DATA_TBL_DB_USER));
+			dbCfgInfo.setDataTblDbPasswd(StringTool.isEmpty(dbProps.getProperty(ConfigTool.DATA_TBL_DB_PASSWD), DEFAULT_DATA_TBL_DB_PASSWD));
 				
 			dbCfgInfo.setInformationShcemaDbName(StringTool.isEmpty(dbProps.getProperty(ConfigTool.INFORMATION_SCHEMA_DB_NAME), ConfigTool.DEFAULT_INFORMATION_SCHEMA_DB_NAME));
 			dbCfgInfo.setInformationShcemaDbUser(StringTool.isEmpty(dbProps.getProperty(ConfigTool.INFORMATION_SCHEMA_DB_USER), ConfigTool.DEFAULT_INFORMATION_SCHEMA_DB_USER));

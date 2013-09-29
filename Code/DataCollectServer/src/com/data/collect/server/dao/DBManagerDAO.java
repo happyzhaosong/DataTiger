@@ -105,7 +105,7 @@ public class DBManagerDAO extends BaseDAO {
 			//need to check repeat row
 			if(selectSql.endsWith("and"))
 			{
-				List<Map<String,String>> repeatRowList = this.executeSelectSql(selectSql.substring(0,selectSql.length()-3), DBManager.getInstance().getMysqlDataSource());
+				List<Map<String,String>> repeatRowList = this.executeSelectSql(selectSql.substring(0,selectSql.length()-3), DBManager.getInstance().getDataTblDataSource());
 				selectPass = true;
 				long deltaTime = getDltaTimeTool.getDeltaTime("executeSelectSql", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 				if(deltaTime> Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND)
@@ -127,7 +127,7 @@ public class DBManagerDAO extends BaseDAO {
 						updateSqlBuf.append(" where id = ");
 						updateSqlBuf.append(id);
 
-						this.executeUpdateOrDeleteSql(updateSqlBuf.toString(), DBManager.getInstance().getMysqlDataSource());
+						this.executeUpdateOrDeleteSql(updateSqlBuf.toString(), DBManager.getInstance().getDataTblDataSource());
 						updatePass = true;
 						deltaTime = getDltaTimeTool.getDeltaTime("executeUpdateSql", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 						if(deltaTime> Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND)
@@ -138,7 +138,7 @@ public class DBManagerDAO extends BaseDAO {
 					}else
 					{
 						//insert new row
-						this.executeInsertSql(insertSqlBuf.toString(), DBManager.getInstance().getMysqlDataSource());
+						this.executeInsertSql(insertSqlBuf.toString(), DBManager.getInstance().getDataTblDataSource());
 						insertPass = true;
 						deltaTime = getDltaTimeTool.getDeltaTime("executeInsertSql", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 						if(deltaTime> Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND)
@@ -151,7 +151,7 @@ public class DBManagerDAO extends BaseDAO {
 			}else
 			{
 				//insert new row
-				this.executeInsertSql(insertSqlBuf.toString(), DBManager.getInstance().getMysqlDataSource());
+				this.executeInsertSql(insertSqlBuf.toString(), DBManager.getInstance().getDataTblDataSource());
 				insertPass = true;
 				long deltaTime = getDltaTimeTool.getDeltaTime("executeInsertSql", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 				if(deltaTime> Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND)
