@@ -82,6 +82,17 @@ public class FoodDTO extends BaseDTO {
 	@DBColumn(name="shang_cheng_pei_song")
 	private int shangChengPeiSong = 0;
 	
+	@DBColumn(name="song_ji_fen")
+	private String songJiFen = "";
+	
+	public String getSongJiFen() {
+		return songJiFen;
+	}
+
+	public void setSongJiFen(String songJiFen) {
+		this.songJiFen = songJiFen;
+	}
+
 	public String getCuXiaoJiaSummary() {
 		if(this.cuXiaoJia.length()>15)
 		{

@@ -31,7 +31,9 @@
 			<option value="jiao_yi_success_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">销量从低到高</option>		
 			<option value="jiao_yi_success_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">销量从高到低</option>
 			<option value="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">促销价从低到高</option>		
-			<option value="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">促销价从高到低</option>				 		    		
+			<option value="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">促销价从高到低</option>
+			<option value="song_ji_fen_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">送积分从低到高</option>		
+			<option value="song_ji_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">送积分从高到低</option>				 		    		
     	</select>
     	
     	<div id="searchIn" style="position: relative; left: 25; display: inline-block">
@@ -88,8 +90,10 @@ YUI().use('DataSearchApp', function (Y) {
 	var haoPingLvItem = '<strong class="itemTextFloatRight">{haoPingLv}</strong>';  
 	var shangChengPeiSongItem = '<strong class="shangChengPeiSongItem_{shangChengPeiSong}">京东配送</strong>';
 	var cuXiaoJiaItem = '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{cuXiaoJia}" target="_detail" class="cuXiaoClass">{cuXiaoJiaSummary}</a>';
+	var songJiFenItem = '<strong class="itemText">{songJiFen}</strong>';
 	
-	templateSuffix = divPrefix + shangPinLaiYuanItem + divSuffix + templateSuffix; 
+	
+	templateSuffix = divPrefix + shangPinLaiYuanItem + songJiFenItem + divSuffix + templateSuffix; 
     
     //taobao template
     dataSearch.dataItemTemplate = templatePrefix;
@@ -121,6 +125,17 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.dataItemTemplateJingDong += divPrefix + shopNameItem + haoPingLvItem + divSuffix;
     dataSearch.dataItemTemplateJingDong += shangChengPeiSongItem;
     dataSearch.dataItemTemplateJingDong += templateSuffix;  
+    
+    
+    //dang dang template
+    dataSearch.dataItemTemplateDangDang = templatePrefix;
+    dataSearch.dataItemTemplateDangDang += divPrefix + imgItem + divSuffix;
+    dataSearch.dataItemTemplateDangDang += divPrefix + biaoTiItem + divSuffix;
+    dataSearch.dataItemTemplateDangDang += divPrefix + jiaGeItem + pingFenItem + divSuffix;
+    dataSearch.dataItemTemplateDangDang += divPrefix + cuXiaoJiaItem + divSuffix;
+    dataSearch.dataItemTemplateDangDang += divPrefix + shopNameItem + haoPingLvItem + divSuffix;
+    dataSearch.dataItemTemplateDangDang += templateSuffix;
+    
     
     dataSearch.systemErrorMessageBusy = '<%=GeneralConstants.ERROR_MESSAGE_SYSTEM_BUSY%>';
     dataSearch.searchNoResultInfoPrefix = '<%=GeneralConstants.SEARCH_NO_RESULT_INFO_PREFIX%>';

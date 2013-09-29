@@ -253,7 +253,8 @@ CREATE TABLE `data_xiu_hao_chi` (
   `click_count` int(10) NOT NULL DEFAULT '0' COMMENT '商品被点击的次数，缺省按照这个次数降序排列',
   `wang_wang_url` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '掌柜旺旺链接',
   `shang_cheng_pei_song` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否由商城进行配送发货',
-  `song_ji_fen` bigint(10) NOT NULL DEFAULT '-1' COMMENT '本商品送的积分比如天猫商城商品经常送天猫积分',
+  `song_ji_fen` varchar(500) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '本商品送的积分比如天猫商城商品经常送天猫积分',
+  `song_ji_fen_num` bigint(10) NOT NULL DEFAULT '-1' COMMENT '本商品送的积分的数字值',
   `pin_pai_zhi_xiao` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否是品牌直销',
   `download_task_parent_page_url` text COLLATE utf8_bin NOT NULL COMMENT 'Must have for each data table, 本下载任务的父下载任务url链接地址，方便搜索并删除相应的data内容',
   `download_task_page_url` text COLLATE utf8_bin NOT NULL COMMENT 'Must have for each data table, 本下载任务的url链接地址',
@@ -264,7 +265,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `download_task_useless_content_page` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Must have for each data table, 下载的页面是否是无效的内容页面，1 --- 是无效内容页面，0 --- 有效的内容页面',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `NewIndex1` (`biao_ti`,`meta_search_keyword`)
-) ENGINE=MyISAM AUTO_INCREMENT=10545 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
+) ENGINE=MyISAM AUTO_INCREMENT=10556 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
 
 /*Table structure for table `db_setting` */
 
@@ -297,7 +298,7 @@ CREATE TABLE `download_mq_message` (
   `fail_reason` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'MQ action 失败的原因',
   `create_thread_count` int(11) DEFAULT NULL COMMENT '创建的线程数量，范围为 1 - 5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_setting` */
 
@@ -353,7 +354,7 @@ CREATE TABLE `download_thread` (
   `site_id` bigint(20) DEFAULT NULL COMMENT '线程访问的网站id',
   `webdriver_each_browse_start_time` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '每次 webdriver 访问网页的开始时间，webdriver每次访问一个网页都会更新这个时间，有一个监控线程轮询查看，如果 webdriver 开始访问页面时间和当前的时间之差大于10分钟，则认为 webdriver 挂起，则重新启动那个线程 ',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=159 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=165 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_thread_apply_task_status` */
 
@@ -436,7 +437,7 @@ CREATE TABLE `parse_item` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_9` (`parse_id`),
   CONSTRAINT `FK_Reference_9` FOREIGN KEY (`parse_id`) REFERENCES `parse` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=426 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=428 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `parse_item_action` */
 
