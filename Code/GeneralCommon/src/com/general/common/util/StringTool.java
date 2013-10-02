@@ -622,6 +622,40 @@ public class StringTool extends BaseTool {
 		return ret;
 	}
 	
+	public static boolean isCorrectString(String str, String strCharactor, String notStrCharactor, String strMatchRegExp)
+	{
+		boolean ret = true;
+		if(StringTool.isEmpty(str))
+		{
+			return false;
+		}
+		
+		if(!StringTool.isEmpty(strCharactor))
+		{
+			if(!StringTool.ifMatchStringCharactor(str, strCharactor))
+			{
+				return false;
+			}
+		}
+		
+		if(!StringTool.isEmpty(notStrCharactor))
+		{
+			if(StringTool.ifMatchStringCharactor(str, notStrCharactor))
+			{
+				return false;
+			}
+		}
+		
+		if(!StringTool.isEmpty(strMatchRegExp))
+		{
+			if(!StringTool.ifMatchStringCharactor(str, strMatchRegExp))
+			{
+				return false;
+			}
+		}
+		return ret;
+	}
+	
 	
 	public static void removeLastIndexCharactor(StringBuffer strBuf, String charactor)
 	{

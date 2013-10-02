@@ -238,18 +238,32 @@ public class BrowserRunner {
 				      this.scrollDownTheWholePage(webSiteDto, realPageUrl);
 
 			    	  //first to check whether this page is content page or not
-			    	  boolean ifReallyContentPage = taskDto.isIfContentPage();
+			    	  int ifReallyContentPage = taskDto.getIfReallyContentPage();
 			    	  
 			    	  /*check whether this link is really a content page or not in run time. Because some content page url redirect to other url in run time
 			    	  *for example item.taobao.com maybe redirect to detail.tmall.com some time
 			    	  */
 			    	  if(taskDto.isIfContentPage())
 			    	  {
-			    		  ifReallyContentPage = this.checkIsContentPage(this.driver, webSiteDto);
+			    		  //还没有check过是否是真的数据内容页面
+			    		  if(ifReallyContentPage==-1)
+			    		  {
+			    			  if(this.checkIfReallyContentPage(this.driver, webSiteDto))
+			    			  {
+			    				  //是需要的内容数据页面
+			    				  ifReallyContentPage = 1;
+			    			  }else
+			    			  {
+			    				  //不是需要的内容数据页面
+			    				  ifReallyContentPage = 0;
+			    			  }
+			    		  }
+			    		  
+			    		  taskDto.setIfReallyContentPage(ifReallyContentPage);
 			    	  }
 			    	  			    	  
 					  //if really content page then parse it			    	  
-				      if(ifReallyContentPage)
+				      if(ifReallyContentPage==1)
 				      {				    	  
 				    	  LogTool.debugText("Start parse content page data");  
 				    	  //call parse page component to parse content page and save parsed out data into db. 
@@ -1192,7 +1206,7 @@ public class BrowserRunner {
 			    					LogTool.logText("Parsed out 0 url links, originalPageUrl = " + parentTaskDto.getPageUrl() + " , realPageUrl = " + realPageUrl);
 			    				}
 			    			}
-	    				}	
+	    				}
 					}else
 					{
 						if(!StringTool.isEmpty(linkParseDto.getByEleType()) && !StringTool.isEmpty(linkParseDto.getByEleVal()))
@@ -1219,6 +1233,8 @@ public class BrowserRunner {
 	    			    			
 	    			parsedOutUrlCount = parsedOutUrlCount + urlList.size();
 	    			
+	    			this.checkIfUrlLinkWeNeed(urlList, linkParseDto, realPageUrl);
+	    			
 	    			String createEachTaskDuration = this.createNewTaskURL(urlList, linkParseDto, parentTaskDto, webSiteDto);
 	    			getDltaTimeTool.getDeltaTime("createNewTaskURL total", retBuf, 0, false);	    				    			
 	    			retBuf.append(createEachTaskDuration);
@@ -1226,6 +1242,8 @@ public class BrowserRunner {
     			}catch(Exception ex)
     			{
     				parsedOutUrlCount = parsedOutUrlCount + urlList.size();
+    				
+    				this.checkIfUrlLinkWeNeed(urlList, linkParseDto, realPageUrl);
 	    			
 	    			String createEachTaskDuration = this.createNewTaskURL(urlList, linkParseDto, parentTaskDto, webSiteDto);
 	    			getDltaTimeTool.getDeltaTime("createNewTaskURL total", retBuf, 0, false);	    				    			
@@ -1244,6 +1262,90 @@ public class BrowserRunner {
     	}
     	return retBuf.toString();
 	}
+	
+	
+	/*
+	 * If can not parse url link only by url link config, 
+	 * if configured url page charactor settings then use 
+	 * url page charactor settings to parse out needed url link. 
+	 * */
+	private void checkIfUrlLinkWeNeed(List<String> urlList, WebSitePageLinkParseDTO linkParseDto, String realPageUrl) throws Exception
+	{
+		if(!ClassTool.isNullObj(linkParseDto))
+		{
+			int size = urlList.size();
+			for(int i=0;i<size;i++)
+			{
+				String url = urlList.get(i);
+				if(!this.ifWebPageUrlWeNeed(url, linkParseDto))
+				{
+					urlList.remove(i);
+					size = urlList.size();
+					i--;
+				}
+			}
+				
+			if(!realPageUrl.equalsIgnoreCase(this.getCurrentWebPageUrlByJS()))
+			{
+				this.driver.get(realPageUrl);
+			}
+		}
+	}
+	
+	
+	private boolean ifWebPageUrlWeNeed(String url, WebSitePageLinkParseDTO linkParseDto) throws Exception
+	{
+		boolean ret = false;
+		String xpath = linkParseDto.getUrlPageChaXpathValue();
+		if(!StringTool.isEmpty(xpath))
+		{
+			Map<String, String[]> urlChaXpathArrMap = StringTool.parseStringReturnStringListMapCommonSeperator(xpath);
+			
+			Set<String> keys = urlChaXpathArrMap.keySet();
+			Iterator<String> it = keys.iterator();
+			this.driver.get(url);
+			while(it.hasNext())
+			{
+				String urlCha = it.next();
+				if(!StringTool.isEmpty(urlCha) && url.indexOf(urlCha)!=-1)
+				{
+					String xpathArr[] = urlChaXpathArrMap.get(urlCha);
+					
+					int size = xpathArr.length;
+					for(int i=0;i<size;i++)
+					{
+						String xpathTmp = xpathArr[i];
+						if(!StringTool.isEmpty(xpathTmp))
+						{
+							List<WebElement> webEleList = this.getElementsListBy(driver, Constants.WEB_DRIVER_SEARCH_BY_TYPE_XPATH, xpath, "");
+							int eleSize = webEleList.size();
+							for(int j=0;j<eleSize;j++)
+							{
+								WebElement webEle = webEleList.get(j);
+								String eleData = "";
+								if(!StringTool.isEmpty(linkParseDto.getUrlPageChaAttribute()))
+								{
+									eleData = this.getWebElementAttributeValues(webEle, linkParseDto.getUrlPageChaAttribute(), false);
+								}else
+								{
+									eleData = webEle.getText();
+								}
+									
+								if(!StringTool.isEmpty(eleData) && StringTool.isCorrectString(eleData, linkParseDto.getUrlPageCharactor(), linkParseDto.getUrlPageNotCharactor(), ""))
+								{
+									ret = true;
+									return ret;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return ret;
+	}
+	
+	
 	
 	/*
 	 * byEleType: can have only one value.
@@ -1467,7 +1569,7 @@ public class BrowserRunner {
 	/*
 	 * check before parse content page, because some content page will redirect to other pages so need to check if config
 	 * */
-	private boolean checkIsContentPage(WebDriver driver, WebSiteDTO webSiteDto) throws Exception
+	private boolean checkIfReallyContentPage(WebDriver driver, WebSiteDTO webSiteDto) throws Exception
 	{
 		boolean ret = true;
 		Exception throwEx = null;

@@ -124,7 +124,7 @@ CREATE TABLE `data_search_log` (
   `search_result_count` bigint(10) DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   `search_in` tinyint(4) NOT NULL DEFAULT '0' COMMENT '搜索的范围 0---全部，1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `data_search_log_detail` */
 
@@ -142,7 +142,7 @@ CREATE TABLE `data_search_log_detail` (
   `order_by` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '本次搜索 orderby 的字段',
   `search_result_count` bigint(10) NOT NULL DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+) ENGINE=MyISAM AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
 
 /*Table structure for table `data_tao_bao_jie` */
 
@@ -265,7 +265,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `download_task_useless_content_page` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Must have for each data table, 下载的页面是否是无效的内容页面，1 --- 是无效内容页面，0 --- 有效的内容页面',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `NewIndex1` (`biao_ti`,`meta_search_keyword`)
-) ENGINE=MyISAM AUTO_INCREMENT=11003 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
+) ENGINE=MyISAM AUTO_INCREMENT=13287 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
 
 /*Table structure for table `db_setting` */
 
@@ -298,7 +298,7 @@ CREATE TABLE `download_mq_message` (
   `fail_reason` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'MQ action 失败的原因',
   `create_thread_count` int(11) DEFAULT NULL COMMENT '创建的线程数量，范围为 1 - 5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_setting` */
 
@@ -318,6 +318,7 @@ CREATE TABLE `download_task` (
   `page_url` varchar(2000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '""' COMMENT 'The page''s url that will be download.',
   `site_id` int(11) NOT NULL DEFAULT '-1' COMMENT 'The download task beloned web site id.',
   `if_content_page` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'If this url related page is the content page or not. true---content page, false---category page.',
+  `if_really_content_page` tinyint(1) NOT NULL DEFAULT '-1' COMMENT '判断该页面是否真的是内容页面的标志，-1 --- 还没有判断，0 --- 不是内容页， 1 --- 真的是内容页 ， 缺省是 -1 代表还没有进行判断',
   `in_db_time` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '""' COMMENT 'Record the date that this url saved to db table.',
   `apply_time` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '""' COMMENT 'Record the date time that this url set to be task, if this is null then this is a task waiting for run.',
   `if_site_top_url` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'true---this is the top url of this site, false---this is not the top url of this site.',
@@ -337,7 +338,7 @@ CREATE TABLE `download_task` (
   PRIMARY KEY (`id`),
   KEY `site_id` (`site_id`,`useless_content_page`,`apply_time`,`if_content_page`),
   KEY `task_level_id` (`task_level`)
-) ENGINE=MyISAM AUTO_INCREMENT=28097 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=31114 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `download_thread` */
 
@@ -598,6 +599,10 @@ CREATE TABLE `site_url_parse` (
   `by_tag_attribute` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'if by_ele_type is Tag_Name, then by_ele_val is real tag name and by_tag_attribute is the attribute of that tag name',
   `run_regexp_on_url` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '在解析出来的url上运行的正则表达式，使用正则表达式运行之后的url作为页面的url',
   `run_string_find_on_url` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '如果正则表达式不好写，则用该字段进行解析，该字段的格式是   startStr1!@#endStr1;startStr2!@#endStr2;..., 将这些字符串截取之后的字符串再拼成一个字符串作为url， 如果startStr 是字符串开始则用空字符串代表，如果endStr是字符串结尾则用空字符串代表',
+  `url_page_cha_xpath_value` varchar(2000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '在最上面解析出来的url对应的页面里面查询这样的xpath.   如果在上面的解析基础上仍不能判断是否为正确的链接则用如下配置进行判断.',
+  `url_page_cha_attribute` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '上面的 XPath对应的元素的属性名字，多个属性名只得到第一个非空的属性值',
+  `url_page_charactor` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '如果本特征字符串不为空且上面的XPath对应的元素解析出来的值包含该特征字符串，则说明该url是我们想要的页面. ',
+  `url_page_not_charactor` varchar(500) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '如果本非特征字符串不为空且上面的XPath对应的元素解析出来的值包含该非特征字符串，则说明该url不是我们想要的页面. ',
   PRIMARY KEY (`id`),
   KEY `FK_Reference_7` (`site_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

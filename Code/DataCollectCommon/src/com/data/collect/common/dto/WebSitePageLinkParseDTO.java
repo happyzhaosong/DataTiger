@@ -49,6 +49,50 @@ public class WebSitePageLinkParseDTO extends BaseDTO {
 	
 	@DBColumn(name="run_string_find_on_url")
 	private String runStringFindOnUrl = "";
+	
+	@DBColumn(name="url_page_cha_xpath_value")
+	private String urlPageChaXpathValue = "";
+	
+	@DBColumn(name="url_page_cha_attribute")
+	private String urlPageChaAttribute = "";
+	
+	@DBColumn(name="url_page_charactor")
+	private String urlPageCharactor = "";
+	
+	@DBColumn(name="url_page_not_charactor")
+	private String urlPageNotCharactor = "";
+
+	public String getUrlPageChaXpathValue() {
+		return urlPageChaXpathValue;
+	}
+
+	public void setUrlPageChaXpathValue(String urlPageChaXpathValue) {
+		this.urlPageChaXpathValue = urlPageChaXpathValue;
+	}
+
+	public String getUrlPageChaAttribute() {
+		return urlPageChaAttribute;
+	}
+
+	public void setUrlPageChaAttribute(String urlPageChaAttribute) {
+		this.urlPageChaAttribute = urlPageChaAttribute;
+	}
+
+	public String getUrlPageCharactor() {
+		return urlPageCharactor;
+	}
+
+	public void setUrlPageCharactor(String urlPageCharactor) {
+		this.urlPageCharactor = urlPageCharactor;
+	}
+
+	public String getUrlPageNotCharactor() {
+		return urlPageNotCharactor;
+	}
+
+	public void setUrlPageNotCharactor(String urlPageNotCharactor) {
+		this.urlPageNotCharactor = urlPageNotCharactor;
+	}
 
 	public String getClickEleXPathBeforeParseUrl() {
 		return clickEleXPathBeforeParseUrl;

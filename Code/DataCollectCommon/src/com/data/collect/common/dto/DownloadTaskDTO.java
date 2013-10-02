@@ -26,6 +26,12 @@ public class DownloadTaskDTO extends BaseDTO {
 	@DBColumn(name="if_content_page")
 	private boolean ifContentPage = false;
 	
+	/*
+	 * 判断该页面是否真的是内容页面的标志，-1 --- 还没有判断，0 --- 不是内容页， 1 --- 真的是内容页
+	 * */
+	@DBColumn(name="if_really_content_page")
+	private int ifReallyContentPage = -1;
+	
 	@DBColumn(name="in_db_time")
 	private String inDbTime = "";
 	
@@ -74,6 +80,14 @@ public class DownloadTaskDTO extends BaseDTO {
 	@DBColumn(name="reset_apply_time_time")
 	private String resetApplyTimeTime = "";
 		
+	public int getIfReallyContentPage() {
+		return ifReallyContentPage;
+	}
+
+	public void setIfReallyContentPage(int ifReallyContentPage) {
+		this.ifReallyContentPage = ifReallyContentPage;
+	}
+
 	public String getParentPageUrl() {
 		return parentPageUrl;
 	}

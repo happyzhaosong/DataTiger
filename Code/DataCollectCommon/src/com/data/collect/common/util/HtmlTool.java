@@ -467,39 +467,8 @@ public class HtmlTool extends BaseTool {
 	
 	public static boolean isCorrectUrl(String url, String urlCharactor, String notUrlCharactor, String urlMatchRegExp)
 	{
-		boolean ret = true;
-		if(StringTool.isEmpty(url))
-		{
-			return false;
-		}
-		
-		if(!StringTool.isEmpty(urlCharactor))
-		{
-			if(!StringTool.ifMatchStringCharactor(url, urlCharactor))
-			{
-				return false;
-			}
-		}
-		
-		if(!StringTool.isEmpty(notUrlCharactor))
-		{
-			if(StringTool.ifMatchStringCharactor(url, notUrlCharactor))
-			{
-				return false;
-			}
-		}
-		
-		if(!StringTool.isEmpty(urlMatchRegExp))
-		{
-			if(!StringTool.ifMatchStringCharactor(url, urlMatchRegExp))
-			{
-				return false;
-			}
-		}
-		return ret;
+		return StringTool.isCorrectString(url, urlCharactor, notUrlCharactor, urlMatchRegExp);
 	}
-	
-	
 	
 	public static String getRootUrl(String currentUrl) throws Exception
 	{

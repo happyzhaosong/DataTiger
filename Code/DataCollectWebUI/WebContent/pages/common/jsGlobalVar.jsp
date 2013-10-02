@@ -276,8 +276,8 @@ var timeOutClientOperation = "<%=Constants.TIME_OUT_EXT_JS_CLIENT_OPERATION_SECO
 var emptyTextMultipleValue = "Can have multiple value seperated by semicolon(;). Diferrent values are or relationship.";
 var emptyTextSingleValue = "Can only have one value not seperated by semicolon(;).";
 var emptyTextSearchByValue = "Format is urlCharacotr1!@#xpath1#@!xpath2;urlCharacotr2!@#xpath1#@!xpath2;. Meaning search this element by what? tag, xpath, id, name, css selector etc, usually use id or name to get outer text then use regexp or parse string to parse needed value, this way webdriver can run fast and avoid hang, id or name or xpath can be multiple seperated by ;, you can set url specified search by value";
-
-
+var urlToXpathFormatBr = "Format is urlCha1!@#xpath1,xpath2;<br/>urlCha2!@#xpath3,xpath4;<br/>urlCha3!@#xpath5,xpath6<br/>.urlCha必须唯一,不能为空";
+var urlToXpathFormatNoBr = "Format is urlCha1!@#xpath1,xpath2;urlCha2!@#xpath3,xpath4;urlCha3!@#xpath5,xpath6.urlCha必须唯一,不能为空";
 
 //spider used browser type that catch web pages from web site.
 var browserTypeHU = "<%=Constants.WEB_DRIVER_BROWSER_TYPE_HTML_UNIT%>";

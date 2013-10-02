@@ -119,6 +119,34 @@ Ext.define('DC.comp.SiteDetailPageLinkUrlParseListPanel', {
 	        grow : true,
 	        name : 'urlPageDesc',
 	        fieldLabel: 'Description'
+	    },{	 
+	    	height: 25,
+	    	disabled: true,
+			fieldLabel: 'Parse Url Link Config Desc',
+			name:'parseContentPageConfigDesc',
+			emptyText: '如果在上面的解析基础上仍不能判断是否为正确的链接则用如下配置进行判断.**********'
+		},{	 
+			fieldLabel: '页面特征文字的XPath Value.' + urlToXpathFormatBr,
+			name:'urlPageChaXpathValue',
+			emptyText: '在最上面解析出来的url对应的页面里面查询这样的xpath. ' + urlToXpathFormatNoBr
+		},{
+	        grow : true,
+	        fieldLabel: 'XPath 对应的元素的  Attribute 名字',
+	        name: 'urlPageChaAttribute',
+	        allowBlank: true,
+			emptyText: '上面的 XPath对应的元素的属性名字，多个属性名只得到第一个非空的属性值' + emptyTextMultipleValue
+	    },{
+	        grow : true,
+	        fieldLabel: 'URL页面XPath元素的特征字符串',
+	        name: 'urlPageCharactor',
+	        allowBlank: true,
+			emptyText: '如果本特征字符串不为空且上面的XPath对应的元素解析出来的值包含该特征字符串，则说明该url是我们想要的页面. ' + emptyTextMultipleValue
+	    },{
+	        grow : true,
+	        fieldLabel: 'URL页面XPath元素的非特征字符串',
+	        name: 'urlPageNotCharactor',
+	        allowBlank: true,
+			emptyText: '如果本非特征字符串不为空且上面的XPath对应的元素解析出来的值包含该非特征字符串，则说明该url不是我们想要的页面. ' + emptyTextMultipleValue
 	    }];
     	
 		
