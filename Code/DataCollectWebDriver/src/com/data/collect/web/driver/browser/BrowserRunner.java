@@ -1271,7 +1271,7 @@ public class BrowserRunner {
 	 * */
 	private void checkIfUrlLinkWeNeed(List<String> urlList, WebSitePageLinkParseDTO linkParseDto, String realPageUrl) throws Exception
 	{
-		if(!ClassTool.isNullObj(linkParseDto))
+		if(!ClassTool.isNullObj(linkParseDto) && !StringTool.isEmpty(linkParseDto.getUrlPageChaXpathValue()))
 		{
 			int size = urlList.size();
 			for(int i=0;i<size;i++)
