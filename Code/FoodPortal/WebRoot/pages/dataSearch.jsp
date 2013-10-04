@@ -6,9 +6,9 @@
 	<a name="top"> </a>
     <!-- search form area-->
     <form id="searchForm">
-        <input type="text" id="searchKeyword" name="searchKeyword" value="" maxlength="100">
-        <input type="reset" id="resetBtn" value="清空" class="yui3-button">
+        <input type="text" id="searchKeyword" name="searchKeyword" value="" maxlength="100">        
         <input type="submit" id="searchBtn" value="搜索" class="yui3-button">
+        <input type="reset" id="resetBtn" value="清空" class="yui3-button">
         
         <ul id="searchKeywordTag" class="searchKeywordTag">
         	
@@ -91,10 +91,9 @@ YUI().use('DataSearchApp', function (Y) {
 	var haoPingLvItem = '<strong class="itemTextFloatRight">{haoPingLv}</strong>';  
 	var shangChengPeiSongItem = '<strong class="shangChengPeiSongItem_{shangChengPeiSong}">京东配送</strong>';
 	var cuXiaoJiaItem = '<a href="<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_CLICK_ITEM)%>id={id}&itemUrl={itemUrl}" title="{cuXiaoJia}" target="_detail" class="cuXiaoClass">{cuXiaoJiaSummary}</a>';
-	var songJiFenItem = '<strong class="itemTextFloatRight">{songJiFen}</strong>';
+	var songJiFenItem = '<strong class="itemText">{songJiFen}</strong>';
 	
-	
-	templateSuffix = divPrefix + shangPinLaiYuanItem + songJiFenItem + divSuffix + templateSuffix; 
+	templateSuffix = divPrefix + shangPinLaiYuanItem + divSuffix + templateSuffix; 
     
     //taobao template
     dataSearch.dataItemTemplate = templatePrefix;
@@ -143,10 +142,9 @@ YUI().use('DataSearchApp', function (Y) {
     dataSearch.dataItemTemplateWoMai += divPrefix + imgItem + divSuffix;
     dataSearch.dataItemTemplateWoMai += divPrefix + biaoTiItem + divSuffix;
     dataSearch.dataItemTemplateWoMai += divPrefix + jiaGeItem + pingFenItem + divSuffix;
-    dataSearch.dataItemTemplateWoMai += divPrefix + cuXiaoJiaItem + divSuffix;
-    dataSearch.dataItemTemplateWoMai += divPrefix + haoPingLvItem + divSuffix;
-    dataSearch.dataItemTemplateWoMai += templateSuffix;
-    
+    dataSearch.dataItemTemplateWoMai += divPrefix + cuXiaoJiaItem + divSuffix;    
+    dataSearch.dataItemTemplateWoMai += divPrefix + songJiFenItem + haoPingLvItem + divSuffix;
+    dataSearch.dataItemTemplateWoMai += templateSuffix;   
     
     
     dataSearch.systemErrorMessageBusy = '<%=GeneralConstants.ERROR_MESSAGE_SYSTEM_BUSY%>';

@@ -475,20 +475,36 @@ public class HtmlTool extends BaseTool {
 		String ret = "";
 		if(!StringTool.isEmpty(currentUrl))
 		{
-			String parseUrlRootRegExp = "^((?!/).)*/";
+			if(!StringTool.isEmpty(currentUrl))
+			{
+				if(currentUrl.indexOf(GeneralConstants.SEPERATOR_COLON)!=-1)
+				{
+					int idx = currentUrl.indexOf("/");
+					idx = currentUrl.indexOf("/", idx+1);
+					idx = currentUrl.indexOf("/", idx+1);
+					ret = currentUrl.substring(0, idx);
+				}else
+				{
+					int idx = currentUrl.indexOf("/");
+					ret = currentUrl.substring(0, idx);
+				}
+			}
+			/*
+			
 			List<String> urlTagList = StringTool.runRegExpToGetStringList(currentUrl, parseUrlRootRegExp, true);
 			if(!ClassTool.isListEmpty(urlTagList))
 			{
 				ret = urlTagList.get(0);
 			}else
 			{
-				parseUrlRootRegExp = "^((?!/).)*/";
+				
 				urlTagList = StringTool.runRegExpToGetStringList(currentUrl, parseUrlRootRegExp, true);
 				if(!ClassTool.isListEmpty(urlTagList))
 				{
 					ret = urlTagList.get(0);
 				}
 			}
+			*/
 			
 			if(StringTool.isEmpty(ret))
 			{
