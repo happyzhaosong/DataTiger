@@ -126,9 +126,9 @@ Ext.define('DC.comp.SiteDetailPageLinkUrlParseListPanel', {
 			name:'parseContentPageConfigDesc',
 			emptyText: '如果在上面的解析基础上仍不能判断是否为正确的链接则用如下配置进行判断.**********'
 		},{	 
-			fieldLabel: '页面特征文字的XPath Value.' + urlToXpathFormatBr,
+			fieldLabel: '页面特征文字的XPath Value.' + urlToXpathFormatBr + 'urlCha必须唯一,不能为空',
 			name:'urlPageChaXpathValue',
-			emptyText: '在最上面解析出来的url对应的页面里面查询这样的xpath. ' + urlToXpathFormatNoBr
+			emptyText: '在最上面解析出来的url对应的页面里面查询这样的xpath. ' + urlToXpathFormatNoBr + 'urlCha必须唯一,不能为空'
 		},{
 	        grow : true,
 	        fieldLabel: 'XPath 对应的元素的  Attribute 名字',
