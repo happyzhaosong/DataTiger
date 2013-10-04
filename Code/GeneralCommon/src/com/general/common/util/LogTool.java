@@ -34,7 +34,9 @@ public class LogTool extends BaseTool {
 	public static void debugError(Throwable ex, String className) throws Exception
 	{
 		LogTool.initLogger(className);
-		LogTool.getLogger().debug(ExceptionTool.getExceptionStackTraceString(ex));
+		String errMsg = ExceptionTool.getExceptionStackTraceString(ex);		
+		LogTool.getLogger().debug(errMsg);
+		System.out.println(errMsg);
 	}
 	
 	public static void logError(Throwable ex, String className)
@@ -42,7 +44,9 @@ public class LogTool extends BaseTool {
 		try
 		{
 			LogTool.initLogger(className);
-			LogTool.getLogger().error(ExceptionTool.getExceptionStackTraceString(ex));
+			String errMsg = ExceptionTool.getExceptionStackTraceString(ex);
+			LogTool.getLogger().error(errMsg);
+			System.out.println(errMsg);
 		}catch(Exception e)
 		{
 			LogTool.logText(e.getMessage(), LogTool.class.getName());
@@ -57,6 +61,7 @@ public class LogTool extends BaseTool {
 		{
 			LogTool.initLogger(className);
 			LogTool.getLogger().debug(text);
+			System.out.println(className + "  " + text);
 		}		
 	}
 	
@@ -68,6 +73,7 @@ public class LogTool extends BaseTool {
 			{
 				LogTool.initLogger(className);
 				LogTool.getLogger().info(text);
+				System.out.println(className + "  " + text);
 			}
 		}catch(Exception ex)
 		{
