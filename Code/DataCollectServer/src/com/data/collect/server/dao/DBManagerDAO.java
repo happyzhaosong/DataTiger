@@ -162,7 +162,7 @@ public class DBManagerDAO extends BaseDAO {
 			}
 		}catch(Exception ex)
 		{
-			LogTool.logError(ex);
+			LogTool.logError(ex, this.getClass().getName());
 			
 			String exMsg = ex.getMessage();
 			
@@ -247,7 +247,7 @@ public class DBManagerDAO extends BaseDAO {
 				retBuf.append(cValue.trim());	
 			}else
 			{
-				LogTool.debugText("Not a number value, column name : " + cName + ", parsed out value : " + cValue);
+				LogTool.debugText("Not a number value, column name : " + cName + ", parsed out value : " + cValue, this.getClass().getName());
 				retBuf.append(-1);
 			}
 		}else if(Constants.DATA_TYPE_BOOLEAN.equalsIgnoreCase(cType))
@@ -257,7 +257,7 @@ public class DBManagerDAO extends BaseDAO {
 				retBuf.append(0);
 			}else
 			{
-				LogTool.debugText("Boolean value check , column name : " + cName + ", parsed out value : " + cValue);
+				LogTool.debugText("Boolean value check , column name : " + cName + ", parsed out value : " + cValue, this.getClass().getName());
 				retBuf.append(1);
 			}
 		}

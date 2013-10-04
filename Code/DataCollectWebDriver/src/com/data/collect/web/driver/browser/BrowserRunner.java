@@ -124,18 +124,18 @@ public class BrowserRunner {
 	            //Set the modified profile while creating the browser object 
 	            	           
 	            driver = new FirefoxDriver(null,fireFoxProfile,dc);
-	            LogTool.logText("Create a firefox web driver browser");
+	            LogTool.logText("Create a firefox web driver browser", this.getClass().getName());
 			}else if(Constants.WEB_DRIVER_BROWSER_TYPE_HTML_UNIT.equals(browserType))
 			{
 	            HtmlUnitDriver htmlUnitDriver = new HtmlUnitDriver();
 	            htmlUnitDriver.setJavascriptEnabled(false);
 	            driver = htmlUnitDriver;
-	            LogTool.logText("Create a html unit web driver browser");
+	            LogTool.logText("Create a html unit web driver browser", this.getClass().getName());
 			}else if(Constants.WEB_DRIVER_BROWSER_TYPE_CHROME.equals(browserType))
 			{
 				System.setProperty("webdriver.chrome.driver", ConfigTool.getDBMQConfig().getChromeDriverPath());
 	            driver = new ChromeDriver(dc);
-	            LogTool.logText("Create a chrome web driver browser");
+	            LogTool.logText("Create a chrome web driver browser", this.getClass().getName());
 			}
 		}
 	}
@@ -160,13 +160,13 @@ public class BrowserRunner {
 				getDltaTimeTool.getDeltaTime("Browse page get web site dto=null", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 			}
 			
-			LogTool.debugText("Start browser page");
+			LogTool.debugText("Start browser page", this.getClass().getName());
 			
 			if(webSiteDto!=null)
 			{
-				  LogTool.debugText("Start init browser");
+				  LogTool.debugText("Start init browser", this.getClass().getName());
 				  this.initBrowserByType(webSiteDto);
-				  LogTool.debugText("End init browser");
+				  LogTool.debugText("End init browser", this.getClass().getName());
 				  getDltaTimeTool.getDeltaTime("InitBrowserByType", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 
 				  //login to web site if this web site need login
@@ -197,12 +197,12 @@ public class BrowserRunner {
 				      }
 				      getDltaTimeTool.getDeltaTime("Pass access denied", retBuf, 0, false);
 				      
-				      LogTool.debugText(retBuf.toString());	
+				      LogTool.debugText(retBuf.toString(), this.getClass().getName());	
 			      }catch(Exception ex)
 			      {
 			    	  if(ex instanceof TimeoutException)
 			    	  {
-			    		  LogTool.logText("Load page time out url = " + taskDto.getPageUrl());
+			    		  LogTool.logText("Load page time out url = " + taskDto.getPageUrl(), this.getClass().getName());
 			    	  }else if(ex instanceof UnhandledAlertException)
 			    	  {
 			    		  if(!StringTool.isEmpty(webSiteDto.getAlertTextToResetDTask()))
@@ -217,9 +217,9 @@ public class BrowserRunner {
 			    		  }
 			    	  }else
 			    	  {
-				    	  LogTool.logText("Get page exception, exception class name = " + ex.getClass().getName());
-				    	  LogTool.logText("Page url = " + taskDto.getPageUrl());
-				    	  LogTool.logError(ex);
+				    	  LogTool.logText("Get page exception, exception class name = " + ex.getClass().getName(), this.getClass().getName());
+				    	  LogTool.logText("Page url = " + taskDto.getPageUrl(), this.getClass().getName());
+				    	  LogTool.logError(ex, this.getClass().getName());
 				    	  
 				    	  ifBrowserUnreach = ifBrowserUnreach(ex);
 				    	  if(ifBrowserUnreach)
@@ -265,17 +265,17 @@ public class BrowserRunner {
 					  //if really content page then parse it			    	  
 				      if(ifReallyContentPage==1)
 				      {				    	  
-				    	  LogTool.debugText("Start parse content page data");  
+				    	  LogTool.debugText("Start parse content page data", this.getClass().getName());  
 				    	  //call parse page component to parse content page and save parsed out data into db. 
 				       	  String parseContentDuration = this.parseContentPage(driver, webSiteDto, taskDto, realPageUrl);
 	  			          getDltaTimeTool.getDeltaTime("parseContentPage total", retBuf, 0, false);
 						  retBuf.append(parseContentDuration);
-					      LogTool.debugText(retBuf.toString());
-					      LogTool.debugText("End parse content page data");
+					      LogTool.debugText(retBuf.toString(), this.getClass().getName());
+					      LogTool.debugText("End parse content page data", this.getClass().getName());
 				      }
 			      }catch(Exception ex)
 			      {
-			    	  LogTool.logError(ex);
+			    	  LogTool.logError(ex, this.getClass().getName());
 			    	  throwEx = ex;
 			    	  
 			    	  ifBrowserUnreach = ifBrowserUnreach(ex);
@@ -283,12 +283,12 @@ public class BrowserRunner {
 			      {
 			    	  if(!ifBrowserUnreach && !taskDto.isIfContentPage())
 			    	  {
-			    		  LogTool.debugText("Start parse url link in page");
+			    		  LogTool.debugText("Start parse url link in page", this.getClass().getName());
 						  String parseUrlLinkDuration = this.parseUrlLinkInPage(driver, webSiteDto, taskDto, realPageUrl);	  			      					  
 						  retBuf.append(parseUrlLinkDuration);
 						  getDltaTimeTool.getDeltaTime("parseUrlLinkInPage total", retBuf, 0, false);
-					      LogTool.debugText(retBuf.toString());
-					      LogTool.debugText("End parse url link in page");
+					      LogTool.debugText(retBuf.toString(), this.getClass().getName());
+					      LogTool.debugText("End parse url link in page", this.getClass().getName());
 			    	  }
 			    	  if(throwEx!=null)
 			    	  {
@@ -305,7 +305,7 @@ public class BrowserRunner {
 			}
 		}catch(MySQLIntegrityConstraintViolationException ex)
 		{
-			LogTool.logText("Url exist: " + taskDto.getPageUrl());
+			LogTool.logText("Url exist: " + taskDto.getPageUrl(), this.getClass().getName());
 		}catch(Exception ex)
 		{
 			//LogTool.logError(ex);
@@ -323,9 +323,9 @@ public class BrowserRunner {
 		{
 			if(retEx!=null)
 			{
-				LogTool.logText("Exception occured when download page : " + taskDto.getPageUrl());
-				LogTool.logText("Exception class name : " + retEx.getClass().getName());
-				LogTool.logText("Duration info : " + retBuf.toString());
+				LogTool.logText("Exception occured when download page : " + taskDto.getPageUrl(), this.getClass().getName());
+				LogTool.logText("Exception class name : " + retEx.getClass().getName(), this.getClass().getName());
+				LogTool.logText("Duration info : " + retBuf.toString(), this.getClass().getName());
 				throw retEx;
 			}
 			return retBuf.toString();
@@ -341,13 +341,13 @@ public class BrowserRunner {
 		String realUrl = "";
 		try
 		{
-  		    LogTool.debugText("Start get page real url");
+  		    LogTool.debugText("Start get page real url", this.getClass().getName());
   		    realUrl = this.getCurrentWebPageUrlByJS();
-			LogTool.debugText("realUrl = " + realUrl);			
+			LogTool.debugText("realUrl = " + realUrl, this.getClass().getName());			
 		}catch(Exception ex)
 		{
-			LogTool.debugText("Exception occured and realUrl in parseUrlLinkInPage = " + realUrl);			
-			LogTool.debugError(ex);
+			LogTool.debugText("Exception occured and realUrl in parseUrlLinkInPage = " + realUrl, this.getClass().getName());			
+			LogTool.debugError(ex, this.getClass().getName());
 			if(this.ifBrowserUnreach(ex))
 			{
 				throw ex;
@@ -440,7 +440,7 @@ public class BrowserRunner {
 		    long scrollHeight = -1;
 		   
 		    
-		    LogTool.debugText("**************************Start scroll down, pageUrl = " + pageUrl + "*******************************");
+		    LogTool.debugText("**************************Start scroll down, pageUrl = " + pageUrl + "*******************************", this.getClass().getName());
 		    
 		    int scrollDownCount = 1;
 		    while(true)
@@ -455,12 +455,12 @@ public class BrowserRunner {
 			    
 			    if(scrollHeightLast==scrollHeight)
 			    {
-			    	LogTool.debugText("**************************End scroll down, pageUrl = " + pageUrl + "*******************************");
+			    	LogTool.debugText("**************************End scroll down, pageUrl = " + pageUrl + "*******************************", this.getClass().getName());
 			    	break;
 			    }
 			    scrollHeightLast = scrollHeight;
 			    
-			    LogTool.debugText("Scroll down count = " + scrollDownCount + " , scrollHeightLast = " + scrollHeightLast + " , scrollHeight = " + scrollHeight);
+			    LogTool.debugText("Scroll down count = " + scrollDownCount + " , scrollHeightLast = " + scrollHeightLast + " , scrollHeight = " + scrollHeight, this.getClass().getName());
 			    
 			    scrollDownCount++;
 		    }	
@@ -536,7 +536,7 @@ public class BrowserRunner {
 					if(!StringTool.isEmpty(eleData) && !StringTool.isEmpty(parseTplItemDto.getSrcRegExp()))
 					{
 						eleData = this.processRegExpValueReplace(eleData, parseTplItemDto);
-						LogTool.debugText("After run regexp on data value = " + eleData);
+						LogTool.debugText("After run regexp on data value = " + eleData, this.getClass().getName());
 					}
 					
 					eleData = StringTool.isEmpty(eleData, "");
@@ -561,7 +561,7 @@ public class BrowserRunner {
 					dataTableDto.getColumnList().add(columnDto);					
 				}catch(Exception ex)
 				{
-					LogTool.logError(ex);
+					LogTool.logError(ex, this.getClass().getName());
 					if(this.ifBrowserUnreach(ex))
 					{
 						throw ex;
@@ -651,12 +651,12 @@ public class BrowserRunner {
 			String saveDataToDBDuration = this.dbManagerDao.saveDataTable(dataTableDto, parseItemList);
 			getDltaTimeTool.getDeltaTime("save data to db total", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 			retBuf.append(saveDataToDBDuration);
-			LogTool.debugText("Data value saved");
+			LogTool.debugText("Data value saved", this.getClass().getName());
 
 			if(errBuf.length()>0)
 			{
 				ParsePageException newEx = new ParsePageException(errBuf.toString());
-				LogTool.logError(newEx);
+				LogTool.logError(newEx, this.getClass().getName());
 				throw newEx;
 			}
 		}
@@ -765,7 +765,7 @@ public class BrowserRunner {
 		{
 			if(!ClassTool.isListEmpty(parseItemActionList))
 			{
-				LogTool.debugText("Start parseElementValueTakeAction");
+				LogTool.debugText("Start parseElementValueTakeAction", this.getClass().getName());
 				int size = parseItemActionList.size();
 				for(int i=0;i<size;i++)
 				{
@@ -780,12 +780,12 @@ public class BrowserRunner {
 							if(Constants.JAVA_SCRIPT_ACTION_CLICK.equalsIgnoreCase(actionDto.getByEleAction()))
 							{							
 								ele.click();
-								LogTool.debugText(actionDto.getByEleType() + " , " + actionDto.getByEleVal() + " " + actionDto.getByEleAction());
+								LogTool.debugText(actionDto.getByEleType() + " , " + actionDto.getByEleVal() + " " + actionDto.getByEleAction(), this.getClass().getName());
 							}
 						}
 					}				
 				}
-				LogTool.debugText("End parseElementValueTakeAction");
+				LogTool.debugText("End parseElementValueTakeAction", this.getClass().getName());
 			}
 		}catch(Exception ex)
 		{
@@ -938,7 +938,7 @@ public class BrowserRunner {
 								debugTextBuf.append(" , column name = ");
 								debugTextBuf.append(saveToColumn);								
 							}
-							LogTool.debugText(debugTextBuf.toString());			
+							LogTool.debugText(debugTextBuf.toString(), this.getClass().getName());			
 							
 							List<WebElement> eleListTmp = driver.findElements(searchBy);
 							
@@ -970,7 +970,7 @@ public class BrowserRunner {
 	        wait.until(expectation);
 	     } catch(Throwable error) {
 	    	Exception ex = new Exception("Timeout waiting for Page Load Request to complete." + error.getMessage()); 
-	        LogTool.logError( ex);
+	        LogTool.logError(ex, this.getClass().getName());
 	     }
 	 } 
 	
@@ -1048,7 +1048,7 @@ public class BrowserRunner {
 							throw ex;
 						}else
 						{
-							LogTool.logError(ex);
+							LogTool.logError(ex, this.getClass().getName());
 						}
 					}
 				}
@@ -1133,7 +1133,7 @@ public class BrowserRunner {
 									throw ex;
 								}else
 								{
-									LogTool.logError(ex);
+									LogTool.logError(ex, this.getClass().getName());
 								}
 							}
 				   		}
@@ -1156,14 +1156,14 @@ public class BrowserRunner {
 		String pageSource = "";
 		try
 		{
-  		    LogTool.debugText("Start get page source and real url");
+  		    LogTool.debugText("Start get page source and real url", this.getClass().getName());
 			pageSource = driver.getPageSource();			
-			LogTool.debugText("pageSource = " + pageSource);
+			LogTool.debugText("pageSource = " + pageSource, this.getClass().getName());
 		}catch(Exception ex)
 		{
-			LogTool.debugText("Exception occured and page source in parseUrlLinkInPage = " + pageSource);
+			LogTool.debugText("Exception occured and page source in parseUrlLinkInPage = " + pageSource, this.getClass().getName());
 			
-			LogTool.debugError(ex);
+			LogTool.debugError(ex, this.getClass().getName());
 			if(this.ifBrowserUnreach(ex))
 			{
 				throw ex;
@@ -1192,18 +1192,18 @@ public class BrowserRunner {
 		    				//use regexp to parse url out.
 		    				urlList = HtmlTool.parseOutUrlLinkList(pageSource, realPageUrl, webSiteDto, linkParseDto);	
 			    			getDltaTimeTool.getDeltaTime("regexp parse new task list count " + urlList.size() + " ,<br/> HtmlTool.parseOutUrlLinkList", retBuf, 0, false);
-						    LogTool.debugText(retBuf.toString());
+						    LogTool.debugText(retBuf.toString(), this.getClass().getName());
 						    
 			    			if(ClassTool.isListEmpty(urlList))
 			    			{
 		    					//parsed out url link with web driver
 		    					urlList = this.getUrlListByWebDriver(driver, linkParseDto);			    				
 				    			getDltaTimeTool.getDeltaTime("webdriver parse new task list count " + urlList.size(), retBuf, 0, false);
-							    LogTool.debugText(retBuf.toString());
+							    LogTool.debugText(retBuf.toString(), this.getClass().getName());
 		
 			    				if(ClassTool.isListEmpty(urlList))
 			    				{
-			    					LogTool.logText("Parsed out 0 url links, originalPageUrl = " + parentTaskDto.getPageUrl() + " , realPageUrl = " + realPageUrl);
+			    					LogTool.logText("Parsed out 0 url links, originalPageUrl = " + parentTaskDto.getPageUrl() + " , realPageUrl = " + realPageUrl, this.getClass().getName());
 			    				}
 			    			}
 	    				}
@@ -1222,7 +1222,7 @@ public class BrowserRunner {
 						    		{
 							    		List<String> tmpUrlList = this.getUrlListByWebElementClick(eleList, linkParseDto, parentTaskDto, byCondition, webSiteDto, realPageUrl);
 							    		getDltaTimeTool.getDeltaTime("webdriver not a tag use click parse new task list count " + urlList.size(), retBuf, 0, false);
-									    LogTool.debugText(retBuf.toString());
+									    LogTool.debugText(retBuf.toString(), this.getClass().getName());
 									    
 									    urlList.addAll(tmpUrlList);
 						    		}
@@ -1238,7 +1238,7 @@ public class BrowserRunner {
 	    			String createEachTaskDuration = this.createNewTaskURL(urlList, linkParseDto, parentTaskDto, webSiteDto);
 	    			getDltaTimeTool.getDeltaTime("createNewTaskURL total", retBuf, 0, false);	    				    			
 	    			retBuf.append(createEachTaskDuration);
-				    LogTool.debugText(retBuf.toString());
+				    LogTool.debugText(retBuf.toString(), this.getClass().getName());
     			}catch(Exception ex)
     			{
     				parsedOutUrlCount = parsedOutUrlCount + urlList.size();
@@ -1248,7 +1248,7 @@ public class BrowserRunner {
 	    			String createEachTaskDuration = this.createNewTaskURL(urlList, linkParseDto, parentTaskDto, webSiteDto);
 	    			getDltaTimeTool.getDeltaTime("createNewTaskURL total", retBuf, 0, false);	    				    			
 	    			retBuf.append(createEachTaskDuration);
-				    LogTool.debugText(retBuf.toString());
+				    LogTool.debugText(retBuf.toString(), this.getClass().getName());
 				    
     				if(this.ifBrowserUnreach(ex))
     				{
@@ -1483,7 +1483,7 @@ public class BrowserRunner {
 			    			{
 				    			if(ex instanceof TimeoutException)
 						    	{
-				    				LogTool.logText("Load page time out url = " + parentTaskDto.getPageUrl());
+				    				LogTool.logText("Load page time out url = " + parentTaskDto.getPageUrl(), this.getClass().getName());
 						    	}else if(ex instanceof UnhandledAlertException)
 						    	{
 						    		if(!StringTool.isEmpty(webSiteDto.getAlertTextToResetDTask()))
@@ -1516,7 +1516,7 @@ public class BrowserRunner {
 						throw ex;
 					}else
 					{
-						LogTool.logError(ex);
+						LogTool.logError(ex, this.getClass().getName());
 					}
 				}
 			}
@@ -1534,7 +1534,7 @@ public class BrowserRunner {
 			Alert alertDialog = driver.switchTo().alert();
 			//Get the alert text
 			String realAlertText = alertDialog.getText();
-			LogTool.debugText("realAlertText = " + realAlertText);
+			LogTool.debugText("realAlertText = " + realAlertText, this.getClass().getName());
 			
 			if(StringTool.isStringEqualExistInArray(realAlertText, alertText.split(Constants.SEPERATOR_SEMICOLON)))
 			{
@@ -1546,7 +1546,7 @@ public class BrowserRunner {
 			}
 		}catch(NoAlertPresentException ex)
 		{
-			LogTool.debugText("No alert found");
+			LogTool.debugText("No alert found", this.getClass().getName());
 		}catch(Exception ex)
 		{
 			if(this.ifBrowserUnreach(ex))
@@ -1554,7 +1554,7 @@ public class BrowserRunner {
 				throwEx = ex;
 			}else
 			{
-				LogTool.logError(ex);
+				LogTool.logError(ex, this.getClass().getName());
 			}
 		}finally
 		{
@@ -1634,7 +1634,7 @@ public class BrowserRunner {
 				throwEx = ex;
 			}else
 			{
-				LogTool.debugError(ex);
+				LogTool.debugError(ex, this.getClass().getName());
 			}
 		}finally
 		{
@@ -1717,10 +1717,10 @@ public class BrowserRunner {
 					String url = urlList.get(i);
 					this.createNewTaskURL(url, linkParseDto, parentTaskDto, webSiteDto);
 					getDltaTimeTool.getDeltaTime("create single url task", retBuf, Constants.MIN_RECORD_DURATION_TIME*5, false);
-				    LogTool.debugText(retBuf.toString());
+				    LogTool.debugText(retBuf.toString(), this.getClass().getName());
 				}catch(Exception ex)
 				{
-					LogTool.logError(ex);
+					LogTool.logError(ex, this.getClass().getName());
 				}
 			}
 		}

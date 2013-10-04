@@ -404,7 +404,7 @@ public class WebSiteBB extends BaseBB {
 			ret = this.webSiteDao.getWebSiteListByCategoryIdAndName(catId, siteName);
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, this.getClass().getName());
 			throw ex;
 		}finally
 		{

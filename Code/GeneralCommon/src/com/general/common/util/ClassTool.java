@@ -174,14 +174,14 @@ public class ClassTool extends BaseTool {
 			ClassTool.invokeSetMethod(obj, field, value);
 		}catch(Exception ex)
 		{	
-			LogTool.logError( ex);
+			LogTool.logError(ex, ClassTool.class.getName());
 			StringBuffer buf = new StringBuffer();
 			buf.append("FieldName:");
 			buf.append(fieldName);
 			buf.append("Error Message:");
 			buf.append(ex.getMessage());
 			ex = new Exception(buf.toString());
-			LogTool.logError( ex);
+			LogTool.logError(ex, ClassTool.class.getName());
 			throw ex;					
 		}
 	}
@@ -219,16 +219,16 @@ public class ClassTool extends BaseTool {
 		{
 			if(!"SerialVersionUID".equalsIgnoreCase(fieldName))
 			{
-				LogTool.logError( ex);
+				LogTool.logError(ex, ClassTool.class.getName());
 			}
 		}catch(Exception ex)
 		{	
-			LogTool.logError( ex);
+			LogTool.logError(ex, ClassTool.class.getName());
 			StringBuffer buf = new StringBuffer();
 			buf.append(fieldName);
 			buf.append(ex.getMessage());
 			ex = new Exception(buf.toString());
-			LogTool.logError( ex);
+			LogTool.logError(ex, ClassTool.class.getName());
 			throw ex;					
 		}
 	}
@@ -251,12 +251,12 @@ public class ClassTool extends BaseTool {
 			}
 		}catch(Exception ex)
 		{	
-			LogTool.logError( ex);
+			LogTool.logError(ex, ClassTool.class.getName());
 			StringBuffer buf = new StringBuffer();
 			buf.append(fieldName);
 			buf.append(ex.getMessage());
 			ex = new Exception(buf.toString());
-			LogTool.logError( ex);
+			LogTool.logError(ex, ClassTool.class.getName());
 			throw ex;					
 		}finally
 		{
@@ -289,7 +289,7 @@ public class ClassTool extends BaseTool {
 			}
 		}catch(Exception ex)
 		{	
-			LogTool.logError( ex);
+			LogTool.logError(ex, ClassTool.class.getName());
 			throw ex;					
 		}finally
 		{
@@ -327,12 +327,12 @@ public class ClassTool extends BaseTool {
 			}
 		}catch(Exception ex)
 		{	
-			LogTool.logError( ex);
+			LogTool.logError(ex, ClassTool.class.getName());
 			StringBuffer buf = new StringBuffer();
 			buf.append(fieldName);
 			buf.append(ex.getMessage());
 			ex = new Exception(buf.toString());
-			LogTool.logError( ex);
+			LogTool.logError(ex, ClassTool.class.getName());
 			throw ex;					
 		}finally
 		{
@@ -492,7 +492,7 @@ public class ClassTool extends BaseTool {
 						ClassTool.invokeSetMethod(ret, field, value);
 					}catch(Exception ex)
 					{
-						LogTool.logError( ex);
+						LogTool.logError(ex, ClassTool.class.getName());
 					}
 				}
 			}

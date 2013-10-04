@@ -71,7 +71,7 @@ public class MQMessageManager extends BaseManager implements ExceptionListener {
 			}
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, this.getClass().getName());
 		}
 	}
 
@@ -214,7 +214,7 @@ public class MQMessageManager extends BaseManager implements ExceptionListener {
 	}
 	
 	public void onException(JMSException ex) {
-		LogTool.logError(ex);
+		LogTool.logError(ex, this.getClass().getName());
 	}
 
 	public Session getSession() throws Exception

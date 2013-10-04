@@ -56,15 +56,15 @@ public class ActionFilter implements Filter{
 			}
 		}catch(IOException ex)
 		{
-			LogTool.logError(ex);
+			LogTool.logError(ex, this.getClass().getName());
 			throw ex;
 		}catch(ServletException ex)
 		{
-			LogTool.logError(ex);
+			LogTool.logError(ex, this.getClass().getName());
 			throw ex;
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, this.getClass().getName());
 		}
 	}
 

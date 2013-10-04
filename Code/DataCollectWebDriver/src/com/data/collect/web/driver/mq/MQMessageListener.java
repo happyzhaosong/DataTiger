@@ -24,17 +24,17 @@ public class MQMessageListener implements MessageListener {
 		{
 			//Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
 			if (message instanceof TextMessage) {
-				LogTool.logText("On Message thread priority = " + Thread.currentThread().getPriority());				
+				LogTool.logText("On Message thread priority = " + Thread.currentThread().getPriority(), this.getClass().getName());				
 	            TextMessage txtMsg = (TextMessage) message;
 	            String jsonTxt = txtMsg.getText();
-	            LogTool.logText(jsonTxt);
+	            LogTool.logText(jsonTxt, this.getClass().getName());
 	            List<MQMessageDTO> mqDtoList = JsonTool.getMQDtoByJsonString(jsonTxt);
 	            
 	            this.processMQMessage(mqDtoList);
 	        }
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, this.getClass().getName());
 		}
 	}
 
@@ -46,7 +46,7 @@ public class MQMessageListener implements MessageListener {
 	        for(int i=0;i<size;i++)
 	        {
 	        	MQMessageDTO mqDto = mqDtoList.get(i);
-	        	LogTool.logText(mqDto.toString());
+	        	LogTool.logText(mqDto.toString(), this.getClass().getName());
 	        	
 	        	if(!this.downloadMqMessageDao.ifMqMessageReceived(mqDto))
 	        	{
@@ -70,12 +70,12 @@ public class MQMessageListener implements MessageListener {
 		List<MQMessageDTO> mqDtoList = this.downloadMqMessageDao.getUnReceivedMqMessageList();
 		if(mqDtoList!=null && mqDtoList.size()>0)
 		{
-			LogTool.logText("Start process unreceived mq messages.");
+			LogTool.logText("Start process unreceived mq messages.", this.getClass().getName());
 			this.processMQMessage(mqDtoList);
-			LogTool.logText("End process unreceived mq messages.");
+			LogTool.logText("End process unreceived mq messages.", this.getClass().getName());
 		}else
 		{
-			LogTool.logText("No unreceived mq messages need to process.");
+			LogTool.logText("No unreceived mq messages need to process.", this.getClass().getName());
 		}
 	}
 	
@@ -88,7 +88,7 @@ public class MQMessageListener implements MessageListener {
 			MQMessageManager.getInstance().setMessageListener(mqmListener);
 		}catch(Exception ex)
 		{
-			LogTool.logError(ex);
+			LogTool.logError(ex, MQMessageListener.class.getName());
 		}
 	}
 }

@@ -112,7 +112,7 @@ public class BaseBB {
 			}
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, this.getClass().getName());
 			throw ex;
 		}finally
 		{

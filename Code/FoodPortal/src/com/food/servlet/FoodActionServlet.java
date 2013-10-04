@@ -50,7 +50,7 @@ public class FoodActionServlet extends HttpServlet {
 			}		
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, this.getClass().getName());
 			if(jsonDto==null) jsonDto = new JsonDTO();
 			jsonDto.setSuccess(false);
 			jsonDto.setMessage(ex.getMessage());
@@ -68,7 +68,7 @@ public class FoodActionServlet extends HttpServlet {
 					forwardBuf.append(JsonTool.getJsonString(jsonDto));
 				}catch(Exception ex)
 				{
-					LogTool.logError( ex);
+					LogTool.logError(ex, this.getClass().getName());
 				}
 			}			
 			GeneralWebTool.writeAjaxResponse(response, forwardBuf.toString());

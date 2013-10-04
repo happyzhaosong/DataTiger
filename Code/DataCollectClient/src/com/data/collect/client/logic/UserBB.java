@@ -112,7 +112,7 @@ public class UserBB extends BaseBB {
 			}			
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, this.getClass().getName());
 			ret = false;
 		}finally
 		{

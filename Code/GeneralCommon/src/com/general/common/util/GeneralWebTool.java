@@ -42,7 +42,7 @@ public class GeneralWebTool extends BaseTool {
 			}
 		}catch(UnsupportedEncodingException ex)
 		{
-			LogTool.logError(ex);
+			LogTool.logError(ex, GeneralWebTool.class.getName());
 		}finally
 		{			
 			return val.trim();
@@ -83,7 +83,7 @@ public class GeneralWebTool extends BaseTool {
 			rd.include(request, response);
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, GeneralWebTool.class.getName());
 		}
 	}
 	
@@ -204,7 +204,7 @@ public class GeneralWebTool extends BaseTool {
 			out.close();
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, GeneralWebTool.class.getName());
 		}
 	}
 }

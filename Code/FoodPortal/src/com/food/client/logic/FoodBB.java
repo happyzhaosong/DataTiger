@@ -39,7 +39,7 @@ public class FoodBB extends BaseBB {
 		
 		if(!StringTool.isEmpty(searchParamsDto.getSearchKeyword()) && searchParamsDto.isLogSearchKeyword())
 		{
-			LogTool.logText("Will log search keyword is " + searchParamsDto.getSearchKeyword());
+			LogTool.logText("Will log search keyword is " + searchParamsDto.getSearchKeyword(), this.getClass().getName());
 			if(dtoList.size()>0)
 			{
 				searchParamsDto.setSearchResultCount(dtoList.get(0).getTotalRecordsCountInThisSearch());

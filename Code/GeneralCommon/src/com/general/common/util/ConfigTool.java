@@ -1,7 +1,5 @@
 package com.general.common.util;
 
-import java.util.Properties;
-
 import com.general.common.dto.DBMQCfgInfoDTO;
 
 public class ConfigTool extends BaseTool {
@@ -9,6 +7,8 @@ public class ConfigTool extends BaseTool {
 	private static DBMQCfgInfoDTO dbCfgInfo = null;
 
 	public static final String CONFIG_FILE_NAME = "DCDBMQConfig.properties";
+	
+	public static final String LOG4J_CONFIG_FILE_NAME = "log4j.properties";
 	
 	public static final String DB_IP = "db_ip";
 	public static final String DB_PORT = "db_port";
@@ -47,8 +47,8 @@ public class ConfigTool extends BaseTool {
 	
 	public static final String DEFAULT_CONFIG_FILE_PATH_WINDOWS = "c:/data_collect/";
 	public static final String DEFAULT_CONFIG_FILE_PATH_OTHER = "/usr/local/etc/data_collect/";
-	public static final String DEFAULT_LOG_FILE_PATH_WINDOWS = DEFAULT_CONFIG_FILE_PATH_WINDOWS + "logs/";
-	public static final String DEFAULT_LOG_FILE_PATH_OTHER = DEFAULT_CONFIG_FILE_PATH_OTHER + "logs/";	
+	public static final String DEFAULT_LOG_FILE_DIRECTORY = "logs/";
+	public static final String DEFAULT_LOG_FILE_NAME = "log.txt";
 	
 	public static final String MQ_URL = "mq_url";
 	public static final String MQ_USER = "mq_user";
@@ -61,11 +61,7 @@ public class ConfigTool extends BaseTool {
 	public static final String DEFAULT_MQ_SUBJECT = "TOOL.DEFAULT";
 	
 	public static final String CHROME_DRIVER_PATH = "chrome_driver_path";
-	public static final String DEFAULT_CHROME_DRIVER_PATH = "E:/SelfWorkSpace/DataCollect/CommonLibRepository/tool/chromedriver2_win32_0.8/chromedriver.exe";
-		
-	public static final String LOG_LEVEL = "log_level";
-	public static final String DEFAULT_LOG_LEVEL = "debug";
-	
+	public static final String DEFAULT_CHROME_DRIVER_PATH = "E:/SelfWorkSpace/DataCollect/CommonLibRepository/tool/chromedriver2_win32_0.8/chromedriver.exe";	
 	
 	public static DBMQCfgInfoDTO getDBMQConfig() throws Exception
 	{
@@ -98,9 +94,7 @@ public class ConfigTool extends BaseTool {
 				dbProps.setProperty(ConfigTool.MQ_PASSWD, DEFAULT_MQ_PASSWD);
 				dbProps.setProperty(ConfigTool.MQ_SUBJECT, DEFAULT_MQ_SUBJECT);
 				
-				dbProps.setProperty(ConfigTool.CHROME_DRIVER_PATH, DEFAULT_CHROME_DRIVER_PATH);
-				
-				dbProps.setProperty(ConfigTool.LOG_LEVEL, DEFAULT_LOG_LEVEL);				
+				dbProps.setProperty(ConfigTool.CHROME_DRIVER_PATH, DEFAULT_CHROME_DRIVER_PATH);			
 				FileTool.writePropertiesFile(dbCfgFilePath, dbProps);
 			}			
 
@@ -126,12 +120,36 @@ public class ConfigTool extends BaseTool {
 			dbCfgInfo.setMqSubject(StringTool.isEmpty(dbProps.getProperty(ConfigTool.MQ_SUBJECT), DEFAULT_MQ_SUBJECT));
 			
 			dbCfgInfo.setChromeDriverPath(StringTool.isEmpty(dbProps.getProperty(ConfigTool.CHROME_DRIVER_PATH), ConfigTool.DEFAULT_CHROME_DRIVER_PATH));
-			dbCfgInfo.setLogLevel(StringTool.isEmpty(dbProps.getProperty(ConfigTool.LOG_LEVEL), ConfigTool.DEFAULT_LOG_LEVEL));
 		}
 		return dbCfgInfo;
 	}
 	
+	
+	public static String getLog4jConfigeFilePath() throws Exception
+	{
+		String log4jConfigFile = ConfigTool.getConfigFileDirectory() + ConfigTool.LOG4J_CONFIG_FILE_NAME;
+		
+		SortedProperties props = FileTool.getPropertiesFile(log4jConfigFile);
+		if(props.size()==0)
+		{
+			props.setProperty("log4j.rootLogger", "INFO,R2");
+			props.setProperty("log4j.appender.R2", "org.apache.log4j.RollingFileAppender");
+			props.setProperty("log4j.appender.R2.File", ConfigTool.getLogDirectory() + ConfigTool.DEFAULT_LOG_FILE_NAME);
+			props.setProperty("log4j.appender.R2.MaxFileSize", "10MB");
+			props.setProperty("log4j.appender.R2.MaxBackupIndex", "10");
+			props.setProperty("log4j.appender.R2.layout", "org.apache.log4j.PatternLayout");
+			props.setProperty("log4j.appender.R2.layout.ConversionPattern", "%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] [%c] [%p] - %m%n");
+			FileTool.writePropertiesFile(log4jConfigFile, props);
+		}		
+		return log4jConfigFile;
+	}
+	
 	private static String getConfigFilePath() throws Exception
+	{
+		return ConfigTool.getConfigFileDirectory() + CONFIG_FILE_NAME;		
+	}
+	
+	private static String getConfigFileDirectory() throws Exception
 	{
 		String ret = "";
 		if(UtilTool.ifWindowsOs())
@@ -140,9 +158,15 @@ public class ConfigTool extends BaseTool {
 		}else
 		{
 			ret = ConfigTool.DEFAULT_CONFIG_FILE_PATH_OTHER;			
-		}		
+		}
 		FileTool.isFileExist(ret, true, true);
-		ret += CONFIG_FILE_NAME;
+		return ret;
+	}
+	
+	private static String getLogDirectory() throws Exception
+	{
+		String ret = ConfigTool.getConfigFileDirectory() + ConfigTool.DEFAULT_LOG_FILE_DIRECTORY;
+		FileTool.isFileExist(ret, true, true);
 		return ret;
 	}
 }

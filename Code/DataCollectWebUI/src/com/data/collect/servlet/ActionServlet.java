@@ -85,7 +85,7 @@ public class ActionServlet extends HttpServlet{
 			}
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, this.getClass().getName());
 			if(jsonDto==null) jsonDto = new JsonDTO();
 			jsonDto.setSuccess(false);
 			jsonDto.setMessage(ex.getMessage());
@@ -103,7 +103,7 @@ public class ActionServlet extends HttpServlet{
 					forwardBuf.append(JsonTool.getJsonString(jsonDto));
 				}catch(Exception ex)
 				{
-					LogTool.logError( ex);
+					LogTool.logError(ex, this.getClass().getName());
 				}
 			}			
 			WebTool.writeAjaxResponse(resp, forwardBuf.toString());

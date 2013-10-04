@@ -134,8 +134,8 @@ public class BaseDAO {
 			
 		}catch(Exception e)
 		{
-			LogTool.logError( e);
-			LogTool.logText(sql);
+			LogTool.logError(e, this.getClass().getName());
+			LogTool.logText(sql, this.getClass().getName());
 			ex = e;
 		}finally
 		{
@@ -203,8 +203,8 @@ public class BaseDAO {
 			}
 		}catch(Exception e)
 		{
-			LogTool.logError( e);
-			LogTool.logText(this.sqlBuf.toString());
+			LogTool.logError(e, this.getClass().getName());
+			LogTool.logText(this.sqlBuf.toString(), this.getClass().getName());
 			ex = e;
 		}finally
 		{
@@ -238,8 +238,8 @@ public class BaseDAO {
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 		}catch(Exception e)
 		{
-			LogTool.logError( e);
-			LogTool.logText(sql);
+			LogTool.logError(e, this.getClass().getName());
+			LogTool.logText(sql, this.getClass().getName());
 			ex = e;
 		}finally
 		{
@@ -261,8 +261,8 @@ public class BaseDAO {
 			stmt.executeUpdate(sql);
 		}catch(Exception e)
 		{
-			LogTool.logError( e);
-			LogTool.logText(sql);
+			LogTool.logError(e, this.getClass().getName());
+			LogTool.logText(sql, this.getClass().getName());
 			ex = e;
 		}finally
 		{
@@ -332,8 +332,8 @@ public class BaseDAO {
 			}
 		}catch(Exception e)
 		{
-			LogTool.logError( e);
-			LogTool.logText(sqlBuf.toString());
+			LogTool.logError(e, this.getClass().getName());
+			LogTool.logText(sqlBuf.toString(), this.getClass().getName());
 			ex = e;
 		}finally
 		{
@@ -362,7 +362,7 @@ public class BaseDAO {
 			
 			String sql = sqlBuf.toString();
 			
-			LogTool.debugText("sql = " + sql);
+			LogTool.debugText("sql = " + sql, this.getClass().getName());
 			
 			conn = ds.getConnection();
 			Statement stmt = conn.createStatement();			 
@@ -382,8 +382,8 @@ public class BaseDAO {
 			}
 		}catch(Exception e)
 		{
-			LogTool.logError( e);
-			LogTool.logText(sqlBuf.toString());
+			LogTool.logError(e, this.getClass().getName());
+			LogTool.logText(sqlBuf.toString(), this.getClass().getName());
 			ex = e;
 		}finally
 		{
@@ -429,7 +429,7 @@ public class BaseDAO {
 				}
 			}catch(Exception e)
 			{
-				LogTool.logError( e);
+				LogTool.logError(e, this.getClass().getName());
 				ex = e;
 			}finally
 			{
@@ -473,8 +473,8 @@ public class BaseDAO {
 			}
 		}catch(Exception e)
 		{
-			LogTool.logError( e);
-			LogTool.logText(sqlBuf.toString());
+			LogTool.logError(e, this.getClass().getName());
+			LogTool.logText(sqlBuf.toString(), this.getClass().getName());
 			ex = e;
 		}finally
 		{

@@ -104,7 +104,7 @@ public class ThreadRunner extends Thread {
 
 	@Override
 	public void run() {		
-		LogTool.logText("Thread start, thread table id : " + this.getThreadTableId() + " , priority : " + this.getPriority());
+		LogTool.logText("Thread start, thread table id : " + this.getThreadTableId() + " , priority : " + this.getPriority(), this.getClass().getName());
 		while(this.running)
 		{
 			try
@@ -172,7 +172,7 @@ public class ThreadRunner extends Thread {
 								}								
 								//2.2run each download task
 								this.browserRunner.setAccessDenied(false);
-								LogTool.logText("Begin download and parse page = " + taskDto.getPageUrl());
+								LogTool.logText("Begin download and parse page = " + taskDto.getPageUrl(), this.getClass().getName());
 								browsePageDuration = this.browserRunner.browsePage(taskDto, webSiteDto);								
 								lastTaskDto = taskDto;
 								
@@ -185,8 +185,8 @@ public class ThreadRunner extends Thread {
 								}
 							}catch(Exception ex)
 							{
-								LogTool.logText("totalTimeDurationBuf exception, total time duration = " + totalTimeDurationBuf.toString());
-								LogTool.logError(ex);
+								LogTool.logText("totalTimeDurationBuf exception, total time duration = " + totalTimeDurationBuf.toString(), this.getClass().getName());
+								LogTool.logError(ex, this.getClass().getName());
 								
 								if(!ClassTool.isNullObj(taskDto))
 								{
@@ -218,28 +218,28 @@ public class ThreadRunner extends Thread {
 							}
 							
 							threadSleepMilliSeconds = this.countSleepMilliSeconds(this.browserRunner.isAccessDenied(), threadSleepMilliSeconds);
-							LogTool.logText("Task run delta time = " + deltaTime + " millisecond, Thread sleep " + threadSleepMilliSeconds + " millisecond.");
+							LogTool.logText("Task run delta time = " + deltaTime + " millisecond, Thread sleep " + threadSleepMilliSeconds + " millisecond.", this.getClass().getName());
 							this.sleep(threadSleepMilliSeconds);
 						}
 					}
 				}else
 				{
-					LogTool.logText("No task applied.");
+					LogTool.logText("No task applied.", this.getClass().getName());
 					this.sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*60);					
 				}				
 			}catch(Exception ex)
 			{
-				LogTool.logError( ex);
+				LogTool.logError(ex, this.getClass().getName());
 				try{
 					if(this.browserRunner.ifBrowserUnreach(ex))
 					{
-						LogTool.logText("Unreach browser exception occured, so stop this running thread. See exception above.");
+						LogTool.logText("Unreach browser exception occured, so stop this running thread. See exception above.", this.getClass().getName());
 						ThreadManager.getInstance().updateThreadStopTimeInDB(this.getId(), System.currentTimeMillis(), ex.getMessage() + "</br> Detail : " + ExceptionTool.getExceptionStackTraceString(ex));
 						ThreadManager.getInstance().deleteThreadInMemory(this.getId());
 					}
 				}catch(Exception e)
 				{
-					LogTool.logError( e);		
+					LogTool.logError(e, this.getClass().getName());		
 				}
 			}
 		}

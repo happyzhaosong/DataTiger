@@ -42,7 +42,7 @@ public class GetDeltaTimeTool extends BaseTool {
 			
 			if(writeLog)
 			{
-				LogTool.logText(retBuf.toString());
+				LogTool.logText(retBuf.toString(), GetDeltaTimeTool.class.getName());
 			}
 		}		
 		return deltaTime;

@@ -25,7 +25,7 @@ public class DBMQCfgInfoDTO extends BaseDTO {
 	
 	private String chromeDriverPath = "";
 	
-	private String logLevel = "";
+	//private String logLevel = "";
 	
 	public String getDataTblDbIp() {
 		return dataTblDbIp;
@@ -57,12 +57,16 @@ public class DBMQCfgInfoDTO extends BaseDTO {
 	public void setDataTblDbPasswd(String dataTblDbPasswd) {
 		this.dataTblDbPasswd = dataTblDbPasswd;
 	}
+	
+	/*
 	public String getLogLevel() {
 		return logLevel;
 	}
 	public void setLogLevel(String logLevel) {
 		this.logLevel = logLevel;
 	}
+	*/
+	
 	public String getChromeDriverPath() {
 		return chromeDriverPath;
 	}

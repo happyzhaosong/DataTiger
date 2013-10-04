@@ -254,7 +254,7 @@ public class HtmlTool extends BaseTool {
 			return url;
 		}else
 		{
-			LogTool.debugText("url before run reserve parameters = " + url);
+			LogTool.debugText("url before run reserve parameters = " + url, HtmlTool.class.getName());
 		
 			if(Constants.RESERVE_ALL_URL_PARAMETERS.equalsIgnoreCase(reservedParamNames))
 			{
@@ -429,7 +429,7 @@ public class HtmlTool extends BaseTool {
 	{
 		if(!StringTool.isEmpty(linkParseDto.getRunRegexpOnUrl()))
 		{
-			LogTool.debugText("url before run regexp = " + url);
+			LogTool.debugText("url before run regexp = " + url, HtmlTool.class.getName());
 			String regExpArr[] = linkParseDto.getRunRegexpOnUrl().split(Constants.SEPERATOR_SEMICOLON);
 			int regExpArrSize = regExpArr.length;
 			for(int iRegExp = 0; iRegExp < regExpArrSize; iRegExp++)
@@ -459,7 +459,7 @@ public class HtmlTool extends BaseTool {
 					}
 				}								
 			}
-			LogTool.debugText("url after run regexp = " + url);
+			LogTool.debugText("url after run regexp = " + url, HtmlTool.class.getName());
 		}
 		return url;
 	}

@@ -130,7 +130,7 @@ public class StringTool extends BaseTool {
 			return false;
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, StringTool.class.getName());
 			return false;
 		}
 	}
@@ -155,7 +155,7 @@ public class StringTool extends BaseTool {
 			return false;
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, StringTool.class.getName());
 			return false;
 		}
 	}
@@ -171,7 +171,7 @@ public class StringTool extends BaseTool {
 			return false;
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, StringTool.class.getName());
 			return false;
 		}
 	}
@@ -183,7 +183,7 @@ public class StringTool extends BaseTool {
 			return Integer.parseInt(str);
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, StringTool.class.getName());
 			throw new Exception(errMsg);
 		}
 	}
@@ -195,7 +195,7 @@ public class StringTool extends BaseTool {
 			return Long.parseLong(str);
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, StringTool.class.getName());
 			throw new Exception(errMsg);
 		}
 	}
@@ -207,7 +207,7 @@ public class StringTool extends BaseTool {
 			return Double.parseDouble(str);
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, StringTool.class.getName());
 			throw new Exception(errMsg);
 		}
 	}
@@ -253,7 +253,7 @@ public class StringTool extends BaseTool {
 		{
 			String errMsg = eleName + " should be saved first";
 			Exception ex = new Exception(errMsg);
-			LogTool.logError( ex);
+			LogTool.logError(ex, StringTool.class.getName());
 			throw ex;
 		}
 	}

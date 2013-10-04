@@ -45,7 +45,7 @@ public class URLTool extends BaseTool{
 			}
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, URLTool.class.getName());
 			ret.setSuccess(false);
 			ret.setCode(GeneralConstants.ERROR_CODE_URL_CAN_NOT_CONNECT);
 			ret.setMessage(ex.getMessage());

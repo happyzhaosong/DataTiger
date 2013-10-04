@@ -55,15 +55,15 @@ public class DataSearchLogDAO extends BaseDAO {
 				existLogDto.setTotalSearchCount(existLogDto.getTotalSearchCount()+1);
 				existLogDto.setSearchResultCount(logDto.getSearchResultCount());
 				
-				LogTool.debugText("Begin update " + existLogDto.getSearchKeyword() + "'s search result count, new count is " + existLogDto.getSearchResultCount());				
+				LogTool.debugText("Begin update " + existLogDto.getSearchKeyword() + "'s search result count, new count is " + existLogDto.getSearchResultCount(), this.getClass().getName());				
 				this.updateDto(existLogDto);
 			}else
 			{
-				LogTool.debugText("Begin insert " + logDto.getSearchKeyword() + "'s search result count, new count is " + logDto.getSearchResultCount());
+				LogTool.debugText("Begin insert " + logDto.getSearchKeyword() + "'s search result count, new count is " + logDto.getSearchResultCount(), this.getClass().getName());
 				this.insertDto(logDto);
 			}			
 		
-			LogTool.debugText("Begin insert log detail dto " + logDetailDto.getSearchKeyword() + "'s search result count, new count is " + logDetailDto.getSearchResultCount());
+			LogTool.debugText("Begin insert log detail dto " + logDetailDto.getSearchKeyword() + "'s search result count, new count is " + logDetailDto.getSearchResultCount(), this.getClass().getName());
 			//insert data_search_log_detail table
 			this.insertDto(logDetailDto);
 		}		

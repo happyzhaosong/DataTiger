@@ -30,7 +30,7 @@ public class RoleBB extends BaseBB {
 			ret = this.roleDao.getRoleList();
 		}catch(Exception ex)
 		{
-			LogTool.logError( ex);
+			LogTool.logError(ex, this.getClass().getName());
 			request.setAttribute(Constants.ERROR_MESSAGE, ex.getMessage());
 		}finally
 		{

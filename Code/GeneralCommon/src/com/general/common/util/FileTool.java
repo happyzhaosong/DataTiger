@@ -35,7 +35,7 @@ public class FileTool extends BaseTool {
 			fw.close();
 		}catch(Exception ex)
 		{
-			LogTool.logError(ex);
+			LogTool.logError(ex, FileTool.class.getName());
 			ex.printStackTrace(System.err);
 		}
 	}

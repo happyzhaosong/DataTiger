@@ -48,7 +48,7 @@ public class ThreadManager {
 	
 	public void createThread(MQMessageDTO mqDto) throws Exception
 	{
-		LogTool.logText("ThreadManager.createThread thread priority = " + Thread.currentThread().getPriority());
+		LogTool.logText("ThreadManager.createThread thread priority = " + Thread.currentThread().getPriority(), this.getClass().getName());
 		
 		if(ClassTool.isNullObj(this.threadMonitor))
 		{
@@ -94,7 +94,7 @@ public class ThreadManager {
 		
 	public void stopThreadInDBAndMemory(MQMessageDTO mqDto) throws Exception
 	{
-		LogTool.logText("ThreadManager.stopThreadInDBAndMemory thread priority = " + Thread.currentThread().getPriority());
+		LogTool.logText("ThreadManager.stopThreadInDBAndMemory thread priority = " + Thread.currentThread().getPriority(), this.getClass().getName());
 
 		String threadTableIds = mqDto.getThreadTableIds();
 		String threadIds = mqDto.getThreadIds();	
@@ -164,12 +164,12 @@ public class ThreadManager {
 						threadRunner.interrupt();
 					}catch(Exception ex)
 					{
-						LogTool.logError(ex);
+						LogTool.logError(ex, this.getClass().getName());
 						if(ex instanceof InterruptedException)
 						{
 							while(!threadRunner.isInterrupted())
 							{
-								LogTool.logText("Thread not interrupted.");
+								LogTool.logText("Thread not interrupted.", this.getClass().getName());
 							}
 						}else
 						{

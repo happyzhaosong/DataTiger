@@ -26,7 +26,7 @@ public class ThreadMonitor extends Thread {
 	@Override
 	public void run() {
 		
-		LogTool.logText("Thread monitor start, priority : " + this.getPriority());
+		LogTool.logText("Thread monitor start, priority : " + this.getPriority(), this.getClass().getName());
 		while(true)
 		{
 			try
@@ -45,9 +45,9 @@ public class ThreadMonitor extends Thread {
 							//means that tRunner web driver hang for 5 minutes, need to reset
 							if(deltaTime>(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*300))
 							{
-								LogTool.logText("Thread web driver hang, so reset it. Thread id : " + tRunner.getId() + " , Thread table id : " + tRunner.getThreadTableId());
+								LogTool.logText("Thread web driver hang, so reset it. Thread id : " + tRunner.getId() + " , Thread table id : " + tRunner.getThreadTableId(), this.getClass().getName());
 								tRunner.getBrowserRunner().resetBrowser();
-								LogTool.logText("Reset hang thread web driver done.");
+								LogTool.logText("Reset hang thread web driver done.", this.getClass().getName());
 							}
 						}
 					}
@@ -56,7 +56,7 @@ public class ThreadMonitor extends Thread {
 				this.sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*30);
 			}catch(Exception ex)
 			{
-				LogTool.logError(ex);
+				LogTool.logError(ex, this.getClass().getName());
 			}
 		}
 	}
