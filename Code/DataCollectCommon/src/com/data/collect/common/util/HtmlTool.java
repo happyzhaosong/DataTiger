@@ -1,5 +1,7 @@
 package com.data.collect.common.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +23,7 @@ public class HtmlTool extends BaseTool {
 	 * because web driver web element ele.getAttribute("href") too slow for a atribute retrive, so need to use regular expression to parse 
 	 * out url from html page source.
 	 * */
-	public static List<String> parseOutUrlLinkList(String pageSrc, String currentUrl, WebSiteDTO webSiteDto, WebSitePageLinkParseDTO linkParseDto) throws Exception
+	public static List<String> parseOutUrlLinkList(String pageSrc, String currentUrl, String pageCharset, WebSiteDTO webSiteDto, WebSitePageLinkParseDTO linkParseDto) throws Exception
 	{
 		List<String> retList = new ArrayList<String>();
 		if(!StringTool.isEmpty(pageSrc))
@@ -79,8 +81,8 @@ public class HtmlTool extends BaseTool {
 							}
 						}
 						
-						
-						HtmlTool.processUrlAndAddToList(url, retList, linkParseDto);
+						LogTool.logText("Start processUrlAndAddToList : " + url, HtmlTool.class.getName());
+						HtmlTool.processUrlAndAddToList(url, pageCharset, retList, linkParseDto);						
 					}
 				}				
 			}
@@ -97,7 +99,7 @@ public class HtmlTool extends BaseTool {
 	 * Run regexp on parsed out url if needed.
 	 * Reserve useful parameters on parsed out url if needed.
 	 * */
-	public static void processUrlAndAddToList(String url, List<String> urlList, WebSitePageLinkParseDTO linkParseDto ) throws Exception
+	public static void processUrlAndAddToList(String url, String pageCharset, List<String> urlList, WebSitePageLinkParseDTO linkParseDto ) throws Exception
 	{
 		if(!StringTool.isEmpty(url))
 		{
@@ -112,7 +114,7 @@ public class HtmlTool extends BaseTool {
 			
 			url = url.replaceAll("&amp;", "&");
 			
-			if(HtmlTool.isCorrectUrl(url, linkParseDto.getUrlCharactor(), linkParseDto.getNotUrlCharactor(), linkParseDto.getUrlMatchRegExp()))
+			if(HtmlTool.isCorrectUrl(url, pageCharset, linkParseDto.getUrlCharactor(), linkParseDto.getNotUrlCharactor(), linkParseDto.getUrlMatchRegExp()))
 			{
 				//remove no value url parameters
 				url = HtmlTool.removeNoValueUrlParameter(url);
@@ -340,90 +342,6 @@ public class HtmlTool extends BaseTool {
 		return ret;
 	}
 	
-	
-	
-	/*
-	//run string find on parsed out url
-	public static String runStringFindOnUrl(String url, WebSitePageLinkParseDTO linkParseDto) throws Exception
-	{
-		String retUrl = url;
-		if(!StringTool.isEmpty(linkParseDto.getRunStringFindOnUrl()))
-		{
-			LogTool.debugText("url before run string find = " + retUrl);
-			String arr[] = linkParseDto.getRunStringFindOnUrl().split(Constants.SEPERATOR_SEMICOLON);
-			int arrSize = arr.length;
-			for(int i = 0; i < arrSize; i++)
-			{
-				String strPair = arr[i];
-				if(!StringTool.isEmpty(strPair))
-				{
-					String strPairArr[] = strPair.split(Constants.SEPERATOR_COMPLEX);
-					int len = strPairArr.length;
-					if(len>0)
-					{
-						String startStr = "";
-						String endStr = "";
-						if(len==1)
-						{
-							startStr = strPairArr[0];
-						}else if(len==2)
-						{
-							startStr = strPairArr[0];
-							endStr = strPairArr[1];	
-						}
-						
-						
-						int startIdx = 0;
-						int endIdx = retUrl.length();
-						if(!StringTool.isEmpty(startStr))
-						{
-							startIdx = retUrl.indexOf(startStr, startIdx);
-							
-							if(startIdx!=-1)
-							{
-								if(!StringTool.isEmpty(endStr))
-								{
-									endIdx = retUrl.indexOf(endStr, startIdx + startStr.length());
-									if(endIdx!=-1)
-									{
-										if(startStr.startsWith("&") && endStr.startsWith("&"))
-										{
-											retUrl = retUrl.substring(0, startIdx) + retUrl.substring(endIdx);
-										}else
-										{
-											retUrl = retUrl.substring(0, startIdx) + retUrl.substring(endIdx + 1);
-										}
-									}else
-									{
-										retUrl = retUrl.substring(0, startIdx);
-									}
-								}else
-								{
-									retUrl = retUrl.substring(0, startIdx);
-								}
-							}
-						}else
-						{
-							//if want to remove one string in url then set startStr to empty string and endStr to not empty string.
-							if(!StringTool.isEmpty(endStr))
-							{
-								endIdx = retUrl.indexOf(endStr, startIdx + startStr.length());
-								if(endIdx!=-1)
-								{
-									retUrl = retUrl.substring(0, endIdx) + retUrl.substring(endIdx + endStr.length());
-								}
-							}
-						}
-					}
-				}								
-			}
-			LogTool.debugText("url after run string find = " + retUrl);
-		}
-
-		return retUrl;
-	}
-	*/
-	
 	//run regexp on parsed out url
 	public static String runRegExpOnUrl(String url, WebSitePageLinkParseDTO linkParseDto) throws Exception
 	{
@@ -465,8 +383,11 @@ public class HtmlTool extends BaseTool {
 	}
 	
 	
-	public static boolean isCorrectUrl(String url, String urlCharactor, String notUrlCharactor, String urlMatchRegExp)
+	public static boolean isCorrectUrl(String url, String pageCharset, String urlCharactor, String notUrlCharactor, String urlMatchRegExp) throws UnsupportedEncodingException
 	{
+		LogTool.debugText("Before decode : " + url, HtmlTool.class.getName());		
+		url = URLDecoder.decode(url, pageCharset);
+		LogTool.debugText("After decode : " + url, HtmlTool.class.getName());
 		return StringTool.isCorrectString(url, urlCharactor, notUrlCharactor, urlMatchRegExp);
 	}
 	
@@ -475,20 +396,35 @@ public class HtmlTool extends BaseTool {
 		String ret = "";
 		if(!StringTool.isEmpty(currentUrl))
 		{
-			if(!StringTool.isEmpty(currentUrl))
+			if(currentUrl.indexOf(GeneralConstants.SEPERATOR_COLON)!=-1)
 			{
-				if(currentUrl.indexOf(GeneralConstants.SEPERATOR_COLON)!=-1)
+				int idx = currentUrl.indexOf("/");
+				if(idx!=-1)
 				{
-					int idx = currentUrl.indexOf("/");
 					idx = currentUrl.indexOf("/", idx+1);
-					idx = currentUrl.indexOf("/", idx+1);
+					if(idx!=-1)
+					{
+						idx = currentUrl.indexOf("/", idx+1);
+						if(idx!=-1)
+						{
+							ret = currentUrl.substring(0, idx);
+						}else
+						{
+							ret = currentUrl;
+						}
+					}						
+				}
+			}else
+			{
+				int idx = currentUrl.indexOf("/");
+				if(idx!=-1)
+				{
 					ret = currentUrl.substring(0, idx);
 				}else
 				{
-					int idx = currentUrl.indexOf("/");
-					ret = currentUrl.substring(0, idx);
+					ret = currentUrl;
 				}
-			}
+			}			
 			/*
 			
 			List<String> urlTagList = StringTool.runRegExpToGetStringList(currentUrl, parseUrlRootRegExp, true);
@@ -587,7 +523,7 @@ public class HtmlTool extends BaseTool {
 			urlTrimList.add("\"");
 			urlTrimList.add("'");
 			urlTrimList.add("%20");
-			urlTrimList.add("#");			
+			//urlTrimList.add("#");			
 			urlTrimList.add(".");
 			urlTrimList.add("&");
 			

@@ -1,6 +1,7 @@
 package com.data.collect.web.driver.browser;
 
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -64,6 +65,16 @@ public class BrowserRunner {
 	//private ParseTplItemDAO parseTplItemDao = new ParseTplItemDAO();
 	private DBManagerDAO dbManagerDao = new DBManagerDAO();
 	
+	private String pageCharset = GeneralConstants.PAGE_CHAR_SET_UTF8;
+	
+	public String getPageCharset() {
+		return pageCharset;
+	}
+
+	public void setPageCharset(String pageCharset) {
+		this.pageCharset = pageCharset;
+	}
+
 	public boolean isAccessDenied() {
 		return accessDenied;
 	}
@@ -188,6 +199,8 @@ public class BrowserRunner {
 			    	  driver.get(taskDto.getPageUrl());			    	  
 				      getDltaTimeTool.getDeltaTime("Get web page", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 				      //this.waitForPageLoaded(driver);
+				      
+				      this.pageCharset = this.calculatePageCharset();
 				      
 				      if(this.checkAccessDenied(webSiteDto))
 				      {
@@ -1189,16 +1202,18 @@ public class BrowserRunner {
 					{
 	    				if(Constants.WEB_ELEMENT_TAG_NAME_A.equalsIgnoreCase(linkParseDto.getByEleVal()))
 	    				{
-		    				//use regexp to parse url out.
-		    				urlList = HtmlTool.parseOutUrlLinkList(pageSource, realPageUrl, webSiteDto, linkParseDto);	
-			    			getDltaTimeTool.getDeltaTime("regexp parse new task list count " + urlList.size() + " ,<br/> HtmlTool.parseOutUrlLinkList", retBuf, 0, false);
+	    					//parsed out url link with web driver
+	    					urlList = this.getUrlListByWebDriver(driver, linkParseDto);			    				
+			    			getDltaTimeTool.getDeltaTime("webdriver parse new task list count " + urlList.size(), retBuf, 0, false);
+
 						    LogTool.debugText(retBuf.toString(), this.getClass().getName());
 						    
 			    			if(ClassTool.isListEmpty(urlList))
 			    			{
-		    					//parsed out url link with web driver
-		    					urlList = this.getUrlListByWebDriver(driver, linkParseDto);			    				
-				    			getDltaTimeTool.getDeltaTime("webdriver parse new task list count " + urlList.size(), retBuf, 0, false);
+			    				//use regexp to parse url out.
+			    				urlList = HtmlTool.parseOutUrlLinkList(pageSource, realPageUrl, this.pageCharset, webSiteDto, linkParseDto);	
+				    			getDltaTimeTool.getDeltaTime("regexp parse new task list count " + urlList.size() + " ,<br/> HtmlTool.parseOutUrlLinkList", retBuf, 0, false);
+
 							    LogTool.debugText(retBuf.toString(), this.getClass().getName());
 		
 			    				if(ClassTool.isListEmpty(urlList))
@@ -1242,6 +1257,7 @@ public class BrowserRunner {
     			}catch(Exception ex)
     			{
     				parsedOutUrlCount = parsedOutUrlCount + urlList.size();
+    				LogTool.logError(ex, this.getClass().getName());
     				
     				this.checkIfUrlLinkWeNeed(urlList, linkParseDto, realPageUrl);
 	    			
@@ -1434,7 +1450,7 @@ public class BrowserRunner {
 	    				
 	    				if(!StringTool.isEmpty(url) && URLTool.isRegularUrl(url))
 	    				{
-	    					HtmlTool.processUrlAndAddToList(url, retList, linkParseDto);
+	    					HtmlTool.processUrlAndAddToList(url, this.getPageCharset(), retList, linkParseDto);
 	    				}
     				}catch(Exception ex)
     				{
@@ -1471,7 +1487,7 @@ public class BrowserRunner {
 			
 						//Thread.currentThread().sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*3);
 						
-						HtmlTool.processUrlAndAddToList(url, urlList, linkParseDto);
+						HtmlTool.processUrlAndAddToList(url, this.getPageCharset(), urlList, linkParseDto);
 		    			
 		    			if(j<(eleListSize-1))
 		    			{	
@@ -1647,6 +1663,52 @@ public class BrowserRunner {
 	}
 	
 	
+	private String calculatePageCharset() throws Exception
+	{
+		String ret = "";
+		if(this.driver!=null)
+		{
+			String xpath = "//meta[@charset]";			
+			List<WebElement> eleList = this.getElementsListBy(this.driver, Constants.WEB_DRIVER_SEARCH_BY_TYPE_XPATH, xpath, "");
+			
+			if(!ClassTool.isListEmpty(eleList))
+			{
+				WebElement ele = eleList.get(0);
+				ret = this.getWebElementAttributeValues(ele, "charset", false);
+			}else
+			{
+				xpath = "//meta[@content]";
+				eleList = this.getElementsListBy(this.driver, Constants.WEB_DRIVER_SEARCH_BY_TYPE_XPATH, xpath, "");
+				
+				if(!ClassTool.isListEmpty(eleList))
+				{
+					WebElement ele = eleList.get(0);
+					ret = this.getWebElementAttributeValues(ele, "content", false);
+					if(!StringTool.isEmpty(ret))
+					{
+						ret = ret.toLowerCase();
+						int idx = ret.indexOf("charset=");
+						if(idx>-1)
+						{
+							ret = ret.substring(idx + 8);
+						}else
+						{
+							ret = GeneralConstants.PAGE_CHAR_SET_UTF8;	
+						}
+					}else
+					{
+						ret = GeneralConstants.PAGE_CHAR_SET_UTF8;	
+					}
+				}else
+				{
+					ret = GeneralConstants.PAGE_CHAR_SET_UTF8;
+				}
+			}
+		}
+		return ret;
+	}
+	
+	
 	private boolean checkAccessDenied(WebSiteDTO webSiteDto) throws Exception
 	{
 		boolean ret = false;
@@ -1758,6 +1820,7 @@ public class BrowserRunner {
 			newTaskDto.setId(-1);
 			newTaskDto.setParentPageUrl(parentTaskDto.getPageUrl());
 			newTaskDto.setPageUrl(url);
+			newTaskDto.setDecodePageUrl(URLDecoder.decode(url, this.pageCharset));
 			newTaskDto.setSiteId(linkParseDto.getSiteId());
 			newTaskDto.setIfContentPage(ifContentPage);
 			newTaskDto.setInDbTime(String.valueOf(System.currentTimeMillis()));

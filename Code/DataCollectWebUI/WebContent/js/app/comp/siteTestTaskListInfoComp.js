@@ -21,13 +21,14 @@ Ext.define('DC.comp.SiteTestTaskListInfoPanel', {
         { text: 'Task Level', dataIndex: 'taskLevel', flex: 1 , sortable: true, hideable: true},
         { text: 'Parent Page Url', dataIndex: 'parentPageUrl', flex: 15 , sortable: true, hideable: true, renderer: rendererToolGlobal.renderUrlLinkStyle},
         { text: 'Page Url', dataIndex: 'pageUrl', flex: 55 , sortable: true, hideable: true, renderer: rendererToolGlobal.renderUrlLinkStyle},
+        { text: 'Decode Page Url', dataIndex: 'decodePageUrl', flex: 55 , sortable: true, hideable: true, renderer: rendererToolGlobal.renderUrlLinkStyle},
         //{ text: 'Site Id', dataIndex: 'siteId', flex: 1 , sortable: true, hideable: true},
         //{ text: 'If Content Page', dataIndex: 'ifContentPage', flex: 1 , sortable: true, hideable: true},
         { text: 'In Db Time', dataIndex: 'inDbTime', flex: 3 , sortable: true, hideable: true, renderer: rendererToolGlobal.renderTimeStr},
         { text: 'Task Apply Time', dataIndex: 'applyTime', flex: 3 , sortable: true, hideable: true, renderer: rendererToolGlobal.renderTimeStr},
         //{ text: 'If Site Top Url', dataIndex: 'ifSiteTopUrl', flex: 1 , sortable: true, hideable: true},
         //{ text: 'If Test', dataIndex: 'ifTest', flex: 1 , sortable: true, hideable: true},
-        { text: 'Thread Table Id', dataIndex: 'threadTableId', flex: 1 , sortable: true, hideable: true},
+        //{ text: 'Thread Table Id', dataIndex: 'threadTableId', flex: 1 , sortable: true, hideable: true},
         { text: 'Run Time', dataIndex: 'runTime', flex: 3 , sortable: true, hideable: true, renderer: rendererToolGlobal.renderTimeStr},
         { text: 'Task Run Delta Time', dataIndex: 'taskRunDeltaTime', flex: 3 , sortable: true, hideable: true, renderer: rendererToolGlobal.renderTimeInSeconds},
         { text: 'Run Time Duration', dataIndex: 'durationInfo', flex: 5 , sortable: false, hideable: true}, 
@@ -51,7 +52,7 @@ Ext.define('DC.comp.SiteTestTaskListInfoPanel', {
     		fn: function(obj,td,cIdx,record,tr,rIdx)
     		{
     			var data = utilToolGlobal.getRecordDataObj(record);
-    			if(cIdx==4 || cIdx==5)
+    			if(cIdx==4 || cIdx==5 || cIdx==6 )
     			{
     				var url = '';
     				if(cIdx==4)
@@ -60,6 +61,9 @@ Ext.define('DC.comp.SiteTestTaskListInfoPanel', {
     				}else if(cIdx==5)
     				{
     					url = data.pageUrl;
+    				}else if(cIdx==6)
+    				{
+    					url = data.decodePageUrl;
     				}
     				if(stringToolGlobal.isEmpty(url))
     				{
@@ -68,7 +72,7 @@ Ext.define('DC.comp.SiteTestTaskListInfoPanel', {
     				{
     					window.open(url,'newWindow','height=800,width=1000,top=0,left=0,toolbar=yes,menubar=yes,scrollbars=yes, resizable=yes,location=yes, status=yes'); 
     				}    				
-    			}else if(cIdx==16)
+    			}else if(cIdx==17)
     			{
     				if(!stringToolGlobal.isEmpty(data.errorMessage))
     				{

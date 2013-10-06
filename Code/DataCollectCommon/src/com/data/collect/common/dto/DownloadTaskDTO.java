@@ -19,6 +19,9 @@ public class DownloadTaskDTO extends BaseDTO {
 	
 	@DBColumn(name="page_url")
 	private String pageUrl = "";
+
+	@DBColumn(name="decode_page_url")
+	private String decodePageUrl = "";
 	
 	@DBColumn(name="site_id")
 	private int siteId = -1;
@@ -80,6 +83,14 @@ public class DownloadTaskDTO extends BaseDTO {
 	@DBColumn(name="reset_apply_time_time")
 	private String resetApplyTimeTime = "";
 		
+	public String getDecodePageUrl() {
+		return decodePageUrl;
+	}
+
+	public void setDecodePageUrl(String decodePageUrl) {
+		this.decodePageUrl = decodePageUrl;
+	}
+
 	public int getIfReallyContentPage() {
 		return ifReallyContentPage;
 	}
