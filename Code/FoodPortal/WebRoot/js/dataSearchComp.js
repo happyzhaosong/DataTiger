@@ -485,8 +485,7 @@
     		Y.one('#resetBtn').hide();
     	}
     }
-
-    
+        
     Y.DataSearchApp = Y.Base.create('search', Y.View, [], {
 
     	// This is a flag that will determin if we are performing a new query
@@ -843,4 +842,4 @@
             }
         }
     });
-},'1.0',{requires:['paginator-core', 'model', 'view', 'transition', 'Escape','jsonp','io-base','json', 'querystring-stringify-simple', 'cssbutton', 'node-event-simulate']});
+},'1.0',{requires:['autocomplete', 'paginator-core', 'model', 'view', 'transition', 'Escape','jsonp','io-base','json', 'querystring-stringify-simple', 'cssbutton', 'node-event-simulate']});

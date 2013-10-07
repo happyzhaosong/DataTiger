@@ -1,5 +1,6 @@
 package com.general.client.logic.search;
 
+import java.net.URLDecoder;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import com.general.client.logic.BaseBB;
@@ -20,8 +21,29 @@ import com.general.server.dao.search.DataSearchLogDAO;
 public class DataSearchLogBB extends BaseBB {
 	
 	private DataSearchLogDAO dataSearchLogDao = new DataSearchLogDAO();
+	
+	
+	/*
+	 * When user input search keyword in search input text field, 
+	 * used for autocomplete for list out all related search keyword for user to select
+	 * */
+	public JsonDTO getRelatedFoodSearchKeyword(HttpServletRequest request, int searchIn) throws Exception
+	{
+		String filterKeyword = request.getParameter(GeneralConstants.ACTION_PARAM_FILTER_KEYWORD);
+		filterKeyword = URLDecoder.decode(filterKeyword,GeneralConstants.PAGE_CHAR_SET_UTF8);  
+
+		BasePageDTO pageDto = new BasePageDTO();		
+		pageDto.setLimit("10");		
+		pageDto.setStart("0");
 		
-	public JsonDTO getLogSearchDataListInJson(HttpServletRequest request, int searchIn) throws Exception	
+		this.dataSearchLogDao.setPageDto(pageDto);	
+		List<DataSearchLogDTO> dtoList = this.dataSearchLogDao.getLogSearchDataList(searchIn, filterKeyword);
+		
+		return JsonTool.getJsonDtoByObjList(GeneralConstants.JSON_RELATED_SEARCH_KEYWORD_LIST, dtoList);
+	}
+	
+	
+	public JsonDTO getTopLogSearchDataListInJson(HttpServletRequest request, int searchIn) throws Exception	
 	{
 		return JsonTool.getJsonDtoByObjList(GeneralConstants.JSON_SEARCH_KEYWORD_LIST, this.getLogSearchDataList(request, searchIn));
 	}
@@ -35,7 +57,7 @@ public class DataSearchLogBB extends BaseBB {
 		pageDto.setStart(String.valueOf(start));
 		
 		this.dataSearchLogDao.setPageDto(pageDto);
-		return this.dataSearchLogDao.getLogSearchDataList(searchIn);
+		return this.dataSearchLogDao.getLogSearchDataList(searchIn, "");
 	}
 	
 	public void logSearchData(HttpServletRequest request, BaseSearchParamsDTO searchParamsDto, int searchIn) throws Exception	

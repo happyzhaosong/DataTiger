@@ -40,8 +40,11 @@ public class GeneralConstants {
 	public static final String ALL_UNMATCHED_URL = "ALL_UNMATCHED_URL";
 	
 	public static final String ACTION_SEARCH = "ACTION_SEARCH";
+	public static final String ACTION_SEARCH_FILTER_KEYWORD = "ACTION_SEARCH_FILTER_KEYWORD";
 	public static final String ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS = "ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS";
 	public static final String ACTION_SEARCH_CLICK_ITEM = "ACTION_SEARCH_CLICK_ITEM";
+	
+	public static final String ACTION_PARAM_FILTER_KEYWORD = "ACTION_PARAM_FILTER_KEYWORD";	
 	
 	public static final String LIST = "_LIST";	
 	public static final String LIST_ALL = "_LIST_ALL";
@@ -162,7 +165,8 @@ public class GeneralConstants {
 	public static final String JSON_TOTAL_RESULT_COUNT = "JSON_TOTAL_RESULT_COUNT";
 	
 	public static final String JSON_SEARCH_KEYWORD_LIST = "JSON_SEARCH_KEYWORD_LIST";
-		
+	public static final String JSON_RELATED_SEARCH_KEYWORD_LIST = "JSON_RELATED_SEARCH_KEYWORD_LIST";
+			
 	public static final String SERIAL_VERSION_UID = "serialVersionUID";
 	
 	/************************************Downoad Related Constants**********************************************/	

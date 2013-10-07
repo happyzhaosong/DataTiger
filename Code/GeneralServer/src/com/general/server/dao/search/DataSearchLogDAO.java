@@ -70,15 +70,26 @@ public class DataSearchLogDAO extends BaseDAO {
 	}
 	
 	
-	public List<DataSearchLogDTO> getLogSearchDataList(int searchIn) throws Exception	
+	public List<DataSearchLogDTO> getLogSearchDataList(int searchIn, String searchKeyword) throws Exception	
 	{
 		this.initStringBuffer();
 
-		//check whether the searchKeyword exist or not
 		if(searchIn>0)
 		{
 			this.whereBuf.append(" search_in = ");
 			this.whereBuf.append(searchIn);
+		}
+		
+		if(!StringTool.isEmpty(searchKeyword))
+		{
+			if(this.whereBuf.length()>0)
+			{
+				this.whereBuf.append(" and ");				
+			}
+			
+			this.whereBuf.append(" search_keyword like '%");
+			this.whereBuf.append(searchKeyword);
+			this.whereBuf.append("%'");
 		}
 		
 		this.orderByBuf.append(" total_search_count desc "); 

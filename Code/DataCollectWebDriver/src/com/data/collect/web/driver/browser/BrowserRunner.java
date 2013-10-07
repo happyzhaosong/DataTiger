@@ -1705,6 +1705,14 @@ public class BrowserRunner {
 				}
 			}
 		}
+		
+		if(StringTool.isEmpty(ret))
+		{
+			ret = GeneralConstants.PAGE_CHAR_SET_UTF8;
+		}else if(GeneralConstants.PAGE_CHAR_SET_GBK.equalsIgnoreCase(ret))
+		{
+			ret = GeneralConstants.PAGE_CHAR_SET_GB2312;
+		}
 		return ret;
 	}
 	
@@ -1818,7 +1826,7 @@ public class BrowserRunner {
 					
 			DownloadTaskDTO newTaskDto = new DownloadTaskDTO();
 			newTaskDto.setId(-1);
-			newTaskDto.setParentPageUrl(parentTaskDto.getPageUrl());
+			newTaskDto.setParentPageUrl(URLDecoder.decode(parentTaskDto.getPageUrl(), this.pageCharset));
 			newTaskDto.setPageUrl(url);
 			newTaskDto.setDecodePageUrl(URLDecoder.decode(url, this.pageCharset));
 			newTaskDto.setSiteId(linkParseDto.getSiteId());

@@ -1,6 +1,7 @@
 package com.food.servlet;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,10 +43,13 @@ public class FoodActionServlet extends HttpServlet {
 					jsonDto = foodBB.searchFood(request);
 				}else if(GeneralConstants.ACTION_SEARCH_GET_FOOD_SEARCH_KEYWORDS.equals(action))
 				{
-					jsonDto = foodBB.getFoodSearchKeyword(request);
+					jsonDto = foodBB.getTopFoodSearchKeyword(request);
 				}else if(GeneralConstants.ACTION_SEARCH_CLICK_ITEM.equals(action))
 				{
 					foodBB.clickItem(request, response);
+				}else if(GeneralConstants.ACTION_SEARCH_FILTER_KEYWORD.equals(action))
+				{
+					jsonDto = foodBB.getRelatedFoodSearchKeyword(request);		
 				}
 			}		
 		}catch(Exception ex)

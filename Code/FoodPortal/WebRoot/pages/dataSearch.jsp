@@ -174,5 +174,45 @@ YUI().use('DataSearchApp', function (Y) {
     		}
     	}
     });
+    
+    
+    Y.one('#searchKeyword').plug(Y.Plugin.AutoComplete, {
+        resultHighlighter: 'phraseMatch',
+        queryDelay: 500,
+        requestTemplate: '<%=GeneralConstants.ACTION_PARAM_FILTER_KEYWORD%>={query}',
+        source: '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_FILTER_KEYWORD)%>',        
+        on: {
+        	query: function(inputValue, query){
+        		inputValue.query = encodeURI(inputValue.query);
+        	}
+        },
+        
+        resultTextLocator: 'searchKeyword',
+        
+        resultListLocator: function (response) {
+            // Makes sure an array is returned even on an error.
+            if (response.error || !response.success || !response.exist || !response.JSON_RELATED_SEARCH_KEYWORD_LIST || response.JSON_RELATED_SEARCH_KEYWORD_LIST.length==0) {
+                return [];
+            }
+            
+            return response.JSON_RELATED_SEARCH_KEYWORD_LIST;
+        },
+        
+        resultFormatter: function (query, results){
+        	var template = '{search_keyword} {result_count}';
+        	
+        	return Y.Array.map(results, function (result) {
+			    var data = result.raw;
+			
+			    // Use string substitution to fill out the tweet template and
+			    // return an HTML string for this result.
+			    return Y.Lang.sub(template, {
+			      search_keyword : data.searchKeyword,
+			      result_count   : data.searchResultCount
+			    });
+	  		});        
+       }
+        
+    });
 });
 </script>

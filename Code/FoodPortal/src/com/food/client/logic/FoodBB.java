@@ -53,9 +53,18 @@ public class FoodBB extends BaseBB {
 		return JsonTool.getJsonDtoByObjList(FoodConstants.JSON_ROOT_FOOD_LIST, dtoList);
 	}
 	
-	public JsonDTO getFoodSearchKeyword(HttpServletRequest request) throws Exception
+	public JsonDTO getTopFoodSearchKeyword(HttpServletRequest request) throws Exception
 	{
-		return this.dataSearchLogBB.getLogSearchDataListInJson(request, GeneralConstants.SEARCH_DATA_IN_XIU_HAO_CHI);
+		return this.dataSearchLogBB.getTopLogSearchDataListInJson(request, GeneralConstants.SEARCH_DATA_IN_XIU_HAO_CHI);
+	}
+	
+	/*
+	 * When user input search keyword in search input text field, 
+	 * used for autocomplete for list out all related search keyword for user to select
+	 * */
+	public JsonDTO getRelatedFoodSearchKeyword(HttpServletRequest request) throws Exception
+	{	
+		return this.dataSearchLogBB.getRelatedFoodSearchKeyword(request, GeneralConstants.SEARCH_DATA_IN_XIU_HAO_CHI);
 	}
 	
 	public void clickItem(HttpServletRequest request, HttpServletResponse response) throws Exception
