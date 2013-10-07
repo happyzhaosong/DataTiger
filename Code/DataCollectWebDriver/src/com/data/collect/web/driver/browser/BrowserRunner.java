@@ -162,6 +162,12 @@ public class BrowserRunner {
 		Exception retEx = null;
 		try
 		{			
+			//如果是内容也并且不是真正的内容页面则直接跳转，这样可以节约资源，提高解析效率
+			if(taskDto.isIfContentPage() && taskDto.getIfReallyContentPage()==0)
+			{
+				return retBuf.toString();
+			}
+			
 			//try only open one firefox browser and open new page in tab.
 			//first need to set open new page in tab config in Firefox.
 			//then open new page and do not quit webdriver when user stop one download thread.

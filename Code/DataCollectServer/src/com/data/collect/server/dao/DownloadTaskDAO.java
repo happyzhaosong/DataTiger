@@ -281,7 +281,7 @@ public class DownloadTaskDAO extends BaseDAO {
 			this.whereBuf.append(") ");
 		}
 		
-		this.updateDto("update download_task set apply_time = '', reset_apply_time_time = '" + System.currentTimeMillis() + "', reset_apply_time_reason = 'Reset by web site editor manually' ");
+		this.updateDto("update download_task set apply_time = '', if_really_content_page = -1, reset_apply_time_time = '" + System.currentTimeMillis() + "', reset_apply_time_reason = 'Reset by web site editor manually' ");
 	}
 	
 
