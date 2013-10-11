@@ -24,7 +24,7 @@ Ext.define('DC.comp.SitePanel', {
     			if(cIdx==2)
     			{
     				Ext.getCmp(idSiteIdHidden).setValue(record.raw.id);
-    				this.showAddEditWindow("Edit Web Site", record);
+    				this.showAddEditWindow("Edit Web Site : " + record.raw.name , record);
     			}else if(cIdx!=0)
     			{
     				Ext.Msg.alert('Cell Value', td.innerText).setAutoScroll(true);

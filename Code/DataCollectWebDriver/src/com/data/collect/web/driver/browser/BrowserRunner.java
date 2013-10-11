@@ -1452,11 +1452,13 @@ public class BrowserRunner {
     				try
     				{
 	    				WebElement ele = eleList.get(i);
-	    				String url = ele.getAttribute("href");
-	    				
-	    				if(!StringTool.isEmpty(url) && URLTool.isRegularUrl(url))
+	    				if(this.ifInCorrectXPath(ele, driver, linkParseDto.getUrlXpathCharactor(), linkParseDto.getNotUrlXpathCharactor()))
 	    				{
-	    					HtmlTool.processUrlAndAddToList(url, this.getPageCharset(), retList, linkParseDto);
+		    				String url = ele.getAttribute("href");	    				
+		    				if(!StringTool.isEmpty(url) && URLTool.isRegularUrl(url))
+		    				{
+		    					HtmlTool.processUrlAndAddToList(url, this.getPageCharset(), retList, linkParseDto);
+		    				}
 	    				}
     				}catch(Exception ex)
     				{
@@ -1470,6 +1472,108 @@ public class BrowserRunner {
 		}
 		return retList;
 	}
+	
+	
+	private boolean ifInCorrectXPath(WebElement element, WebDriver driver, String xpathCha, String xpathNotCha)
+	{
+		boolean ret = true;
+		String xpath = this.GetElementFullXPathFromBodyElement(element, driver);
+		LogTool.logText("xpath = " + xpath, this.getClass().getName());
+		if(!StringTool.isCorrectString(xpath, xpathCha, xpathNotCha, ""))
+		{
+			ret = false;
+		}
+		return ret;
+	}
+	
+	/*
+	 * Get element xpath. Example: //div[@id="footer-2013"]/div[1]/a[10], //a[@id="urlknet"] 
+	 */
+	private String GetElementXPath(WebElement element, WebDriver driver)
+	{
+	    return (String) ((JavascriptExecutor) driver).executeScript(
+	    "getXPath=function(node)" +
+	    "{" +
+	        "if (node.id !== '')" +
+	        "{" +
+	            "return '//' + node.tagName.toLowerCase() + '[@id=\"' + node.id + '\"]'" +
+	        "}" +
+
+	        "if (node === document.body)" +
+	        "{" +
+	            "return node.tagName.toLowerCase()" +
+	        "}" +
+
+	        "var nodeCount = 0;" +
+	        "var childNodes = node.parentNode.childNodes;" +
+
+	        "for (var i=0; i<childNodes.length; i++)" +
+	        "{" +
+	            "var currentNode = childNodes[i];" +
+
+	            "if (currentNode === node)" +
+	            "{" +
+	                "return getXPath(node.parentNode) + '/' + node.tagName.toLowerCase() + '[' + (nodeCount+1) + ']'" +
+	            "}" +
+
+	            "if (currentNode.nodeType === 1 && " +
+	                "currentNode.tagName.toLowerCase() === node.tagName.toLowerCase())" +
+	            "{" +
+	                "nodeCount++" +
+	            "}" +
+	        "}" +
+	    "};" +
+
+	    "return getXPath(arguments[0]);", element);
+	}
+
+	
+	/*
+	 * Get Xpath from body element. Include every element in xpath route. 
+	 * Example: body/div[8]/div[@id="footer-2013"]/div[3]/a[@id="urlknet"]
+	 * */
+	private String GetElementFullXPathFromBodyElement(WebElement element, WebDriver driver)
+	{
+	    return (String) ((JavascriptExecutor) driver).executeScript(
+	    "getXPath=function(node)" +
+	    "{" +
+	    
+	        "if (node === document.body)" +
+	        "{" +
+	            "return node.tagName.toLowerCase()" +
+	        "}" +
+
+	        "var nodeCount = 0;" +
+	        "var childNodes = node.parentNode.childNodes;" +
+
+	        "for (var i=0; i<childNodes.length; i++)" +
+	        "{" +
+	            "var currentNode = childNodes[i];" +
+
+	            "if (currentNode === node)" +
+	            "{" +	                
+		            "if (node.id !== '')" +
+			        "{" +
+			            "return getXPath(node.parentNode) + '/' + node.tagName.toLowerCase() + '[@id=\"' + node.id + '\"]'" +
+			        "}else if(node.className!==''){" +
+			        	"return getXPath(node.parentNode) + '/' + node.tagName.toLowerCase() + '[@class=\"' + node.className + '\"]'" +
+			        "}else " +			        
+			        "{ " +
+			        	"return getXPath(node.parentNode) + '/' + node.tagName.toLowerCase() + '[' + (nodeCount+1) + ']'" +
+			        "}" +		            
+	            "}" +
+
+	            "if (currentNode.nodeType === 1 && " +
+	                "currentNode.tagName.toLowerCase() === node.tagName.toLowerCase())" +
+	            "{" +
+	                "nodeCount++" +
+	            "}" +
+	        "}" +
+	    "};" +
+
+	    "return getXPath(arguments[0]);", element);
+	}
+
 	
 	private List<String> getUrlListByWebElementClick(List<WebElement> eleList, WebSitePageLinkParseDTO linkParseDto, DownloadTaskDTO parentTaskDto, By byCondition, WebSiteDTO webSiteDto, String realPageUrl) throws Exception
 	{

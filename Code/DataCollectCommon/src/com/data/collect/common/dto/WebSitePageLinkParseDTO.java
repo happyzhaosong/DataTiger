@@ -22,6 +22,12 @@ public class WebSitePageLinkParseDTO extends BaseDTO {
 
 	@DBColumn(name="by_ele_val")
 	private String byEleVal = "";
+
+	@DBColumn(name="url_xpath_charactor")
+	private String urlXpathCharactor = "";
+	
+	@DBColumn(name="not_url_xpath_charactor")
+	private String notUrlXpathCharactor = "";
 	
 	@DBColumn(name="url_charactor")
 	private String urlCharactor = "";
@@ -61,6 +67,22 @@ public class WebSitePageLinkParseDTO extends BaseDTO {
 	
 	@DBColumn(name="url_page_not_charactor")
 	private String urlPageNotCharactor = "";
+
+	public String getUrlXpathCharactor() {
+		return urlXpathCharactor;
+	}
+
+	public void setUrlXpathCharactor(String urlXpathCharactor) {
+		this.urlXpathCharactor = urlXpathCharactor;
+	}
+
+	public String getNotUrlXpathCharactor() {
+		return notUrlXpathCharactor;
+	}
+
+	public void setNotUrlXpathCharactor(String notUrlXpathCharactor) {
+		this.notUrlXpathCharactor = notUrlXpathCharactor;
+	}
 
 	public String getUrlPageChaXpathValue() {
 		return urlPageChaXpathValue;

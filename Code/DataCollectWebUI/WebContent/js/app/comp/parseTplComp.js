@@ -24,7 +24,7 @@ Ext.define('DC.comp.ParseTplPanel', {
     			if(cIdx==2)
     			{
     				Ext.getCmp(idParseTplIdHidden).setValue(record.raw.id);
-    				this.showAddEditWindow("Edit Parse Template", record);
+    				this.showAddEditWindow("Edit Parse Template : " + record.raw.name, record);
     			}else if(cIdx!=0)
     			{
     				if(!stringToolGlobal.isEmpty(td.innerText))

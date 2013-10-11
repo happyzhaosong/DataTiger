@@ -74,6 +74,17 @@ Ext.define('DC.comp.SiteDetailPageLinkUrlParseListPanel', {
 			emptyText: emptyTextMultipleValue,
 	    },{
 	        grow : true,
+	        name : 'urlXpathCharactor',
+	        fieldLabel: 'URL XPath Charactor',
+	        emptyText: emptyTextMultipleValue,
+	        allowBlank: true
+	    },{
+	        grow : true,
+	        name : 'notUrlXpathCharactor',
+	        emptyText: emptyTextMultipleValue,
+	        fieldLabel: 'Not URL XPath Charactor'
+	    },{
+	        grow : true,
 	        name : 'urlCharactor',
 	        fieldLabel: 'URL Charactor',
 	        emptyText: emptyTextMultipleValue,
@@ -165,6 +176,8 @@ Ext.define('DC.comp.SiteDetailPageLinkUrlParseListPanel', {
     		Ext.getCmp(idSiteDetailPageLinkUrlParseListPanel + "byEleType").select(recordObj.byEleType);
     		Ext.getCmp(idSiteDetailPageLinkUrlParseListPanel + "byEleVal").setValue(recordObj.byEleVal);
     		Ext.getCmp(idSiteDetailPageLinkUrlParseListPanel + "byTagAttribute").setValue(recordObj.byTagAttribute);
+    		Ext.getCmp(idSiteDetailPageLinkUrlParseListPanel + "urlXpathCharactor").setValue(recordObj.urlXpathCharactor);
+    		Ext.getCmp(idSiteDetailPageLinkUrlParseListPanel + "notUrlXpathCharactor").setValue(recordObj.notUrlXpathCharactor);
     		Ext.getCmp(idSiteDetailPageLinkUrlParseListPanel + "urlCharactor").setValue(recordObj.urlCharactor);
     		Ext.getCmp(idSiteDetailPageLinkUrlParseListPanel + "notUrlCharactor").setValue(recordObj.notUrlCharactor);
     		Ext.getCmp(idSiteDetailPageLinkUrlParseListPanel + "urlMatchRegExp").setValue(recordObj.urlMatchRegExp);
