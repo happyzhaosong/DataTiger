@@ -1477,8 +1477,8 @@ public class BrowserRunner {
 	private boolean ifInCorrectXPath(WebElement element, WebDriver driver, String xpathCha, String xpathNotCha)
 	{
 		boolean ret = true;
-		String xpath = this.GetElementFullXPathFromBodyElement(element, driver);
-		LogTool.logText("xpath = " + xpath, this.getClass().getName());
+		String xpath = this.getElementFullXPathFromBodyElement(element, driver);
+		//LogTool.logText("xpath = " + xpath, this.getClass().getName());
 		if(!StringTool.isCorrectString(xpath, xpathCha, xpathNotCha, ""))
 		{
 			ret = false;
@@ -1489,7 +1489,7 @@ public class BrowserRunner {
 	/*
 	 * Get element xpath. Example: //div[@id="footer-2013"]/div[1]/a[10], //a[@id="urlknet"] 
 	 */
-	private String GetElementXPath(WebElement element, WebDriver driver)
+	private String getElementXPath(WebElement element, WebDriver driver)
 	{
 	    return (String) ((JavascriptExecutor) driver).executeScript(
 	    "getXPath=function(node)" +
@@ -1532,7 +1532,7 @@ public class BrowserRunner {
 	 * Get Xpath from body element. Include every element in xpath route. 
 	 * Example: body/div[8]/div[@id="footer-2013"]/div[3]/a[@id="urlknet"]
 	 * */
-	private String GetElementFullXPathFromBodyElement(WebElement element, WebDriver driver)
+	private String getElementFullXPathFromBodyElement(WebElement element, WebDriver driver)
 	{
 	    return (String) ((JavascriptExecutor) driver).executeScript(
 	    "getXPath=function(node)" +
