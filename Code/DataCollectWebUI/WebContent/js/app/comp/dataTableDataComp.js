@@ -127,11 +127,11 @@ Ext.define('DC.comp.DataTableDataPanel', {
     items: [{
 		xtype:'DataTableDataListPanel',
 		id:idDataTableDataListPanel,
-		split: false,
+		split: true,
 		floatable: false,
 		collapsible: true,
 		region: 'north',
-		height: '40%'
+		height: '60%'
 	},{
 		xtype:'DataTableDataDetailPanel',			
 		id:idDataTableDataDetailPanel,
@@ -148,6 +148,7 @@ Ext.define('DC.comp.DataTableDataPanel', {
 		floatable: false,
 		collapsible: false,
 		region: 'east',
+		autoScroll: true,
 		hidden: false,
 		width: '35%',
 		layout: {
