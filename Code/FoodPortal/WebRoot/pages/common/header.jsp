@@ -1,3 +1,5 @@
+<meta name="Keywords" content="购物,比购网,淘宝,比较购物,打折,食品,我爱购物,时尚,流行,购物,化妆,美容,婚嫁,婚纱照,旅行,美食,母婴,家居,女性网站,时尚网站,打折,返利网,返利网官网,返利网登录,淘宝网 返利,淘宝返利,51返利,发现,网上购物,网上商城,手机,笔记本,电脑,MP3,CD,VCD,DV,相机,数码,配件,手表,存储卡,京东商城">
+<meta name="description" content="购物,比购网,淘宝,比较购物,打折,食品,我爱购物,时尚,流行,购物,化妆,美容,婚嫁,婚纱照,旅行,美食,母婴,家居,女性网站,时尚网站,打折,返利网,返利网官网,返利网登录,淘宝网 返利,淘宝返利,51返利,发现,网上购物,网上商城,手机,笔记本,电脑,MP3,CD,VCD,DV,相机,数码,配件,手表,存储卡,京东商城">
 <link rel="stylesheet" href="<%=basePath%>yui_3.11.0/build/node-menunav/assets/skins/sam/node-menunav.css">
 <link href="<%=basePath%>yui_3.11.0/build/cssreset/cssreset.css" rel="stylesheet">
 <link href="<%=basePath%>yui_3.11.0/build/cssbase/cssbase.css" rel="stylesheet">

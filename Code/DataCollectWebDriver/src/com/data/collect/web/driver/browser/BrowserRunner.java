@@ -131,7 +131,7 @@ public class BrowserRunner {
 	            fireFoxProfile.setPreference("webdriver.load.strategy", "fast");
 	            fireFoxProfile.setPreference("dom.max_chrome_script_run_time", "6000");
 	            fireFoxProfile.setPreference("dom.max_script_run_time", "6000");
-	            //fireFoxProfile.setPreference("plugin.scan.plid.all", "false");
+	            fireFoxProfile.setPreference("plugin.scan.plid.all", "false");
 	            //Set the modified profile while creating the browser object 
 	            	           
 	            driver = new FirefoxDriver(null,fireFoxProfile,dc);
