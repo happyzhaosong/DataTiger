@@ -225,7 +225,7 @@ public class ThreadRunner extends Thread {
 				}else
 				{
 					LogTool.logText("No task applied.", this.getClass().getName());
-					this.sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*60);					
+					this.sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*600);					
 				}				
 			}catch(Exception ex)
 			{

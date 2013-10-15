@@ -212,6 +212,27 @@ public class DownloadTaskDAO extends BaseDAO {
 	}
 
 	
+	public boolean ifDownloadUrlExist(String url, int siteId) throws Exception
+	{
+		boolean ret = false;
+		if(!StringTool.isEmpty(url))
+		{
+			StringBuffer sqlBuf = new StringBuffer();
+			sqlBuf.append("SELECT id FROM download_task WHERE page_url  = '");
+			sqlBuf.append(url.trim());
+			sqlBuf.append("' and site_id = ");
+			sqlBuf.append(siteId);
+			
+			List<Map<String,String>> map = this.executeSelectSql(sqlBuf.toString(), DBManager.getInstance().getMysqlDataSource());
+			if(map.size()>0)
+			{
+				ret = true;
+			}
+		}
+		return ret; 
+	}
+	
+	
     private List<DownloadTaskDTO> getDownloadTaskListBy(String byKey, String byValue1, String byValue2) throws Exception
 	{    	
     	this.initStringBuffer();

@@ -110,6 +110,8 @@ public class BrowserRunner {
 	{
 		if(driver==null)
 		{
+			LogTool.debugText("Start init browser", this.getClass().getName());
+			
 			String browserType = webSiteDto.getBrowserType();
 			DesiredCapabilities dc=new DesiredCapabilities();
 			//this can avoid browse page throw alert exception
@@ -148,6 +150,8 @@ public class BrowserRunner {
 	            driver = new ChromeDriver(dc);
 	            LogTool.logText("Create a chrome web driver browser", this.getClass().getName());
 			}
+			
+			LogTool.debugText("End init browser", this.getClass().getName());
 		}
 	}
 
@@ -181,9 +185,7 @@ public class BrowserRunner {
 			
 			if(webSiteDto!=null)
 			{
-				  LogTool.debugText("Start init browser", this.getClass().getName());
-				  this.initBrowserByType(webSiteDto);
-				  LogTool.debugText("End init browser", this.getClass().getName());
+				  this.initBrowserByType(webSiteDto);				  
 				  getDltaTimeTool.getDeltaTime("InitBrowserByType", retBuf, Constants.MIN_RECORD_DURATION_TIME, false);
 
 				  //login to web site if this web site need login
@@ -1171,23 +1173,6 @@ public class BrowserRunner {
 	{
 		StringBuffer retBuf = new StringBuffer();
 		GetDeltaTimeTool getDltaTimeTool = new GetDeltaTimeTool();
-
-		String pageSource = "";
-		try
-		{
-  		    LogTool.debugText("Start get page source and real url", this.getClass().getName());
-			pageSource = driver.getPageSource();			
-			LogTool.debugText("pageSource = " + pageSource, this.getClass().getName());
-		}catch(Exception ex)
-		{
-			LogTool.debugText("Exception occured and page source in parseUrlLinkInPage = " + pageSource, this.getClass().getName());
-			
-			LogTool.debugError(ex, this.getClass().getName());
-			if(this.ifBrowserUnreach(ex))
-			{
-				throw ex;
-			}
-		}
 				
 		List<WebSitePageLinkParseDTO> linkParseList = webSiteDto.getPageLinkParseDtoList();
 		
@@ -1217,7 +1202,7 @@ public class BrowserRunner {
 			    			if(ClassTool.isListEmpty(urlList))
 			    			{
 			    				//use regexp to parse url out.
-			    				urlList = HtmlTool.parseOutUrlLinkList(pageSource, realPageUrl, this.pageCharset, webSiteDto, linkParseDto);	
+			    				urlList = HtmlTool.parseOutUrlLinkList(this.calculatePageSource(), realPageUrl, this.pageCharset, webSiteDto, linkParseDto);	
 				    			getDltaTimeTool.getDeltaTime("regexp parse new task list count " + urlList.size() + " ,<br/> HtmlTool.parseOutUrlLinkList", retBuf, 0, false);
 
 							    LogTool.debugText(retBuf.toString(), this.getClass().getName());
@@ -1773,6 +1758,30 @@ public class BrowserRunner {
 	}
 	
 	
+	private String calculatePageSource() throws Exception 
+	{
+		String pageSource = "";
+		try
+		{
+  		    LogTool.debugText("Start get page source and real url", this.getClass().getName());
+			pageSource = driver.getPageSource();			
+			LogTool.debugText("pageSource = " + pageSource, this.getClass().getName());
+		}catch(Exception ex)
+		{
+			LogTool.debugText("Exception occured and page source in parseUrlLinkInPage = " + pageSource, this.getClass().getName());
+			
+			LogTool.debugError(ex, this.getClass().getName());
+			if(this.ifBrowserUnreach(ex))
+			{
+				throw ex;
+			}
+		}finally
+		{
+			return pageSource;
+		}
+	}
+	
+	
 	private String calculatePageCharset() throws Exception
 	{
 		String ret = "";
@@ -1909,8 +1918,9 @@ public class BrowserRunner {
 	
 	private void createNewTaskURL(String url, WebSitePageLinkParseDTO linkParseDto, DownloadTaskDTO parentTaskDto, WebSiteDTO webSiteDto) throws Exception
 	{
-		boolean duplicate = false;
 		int siteId = webSiteDto.getId();
+		boolean duplicate = this.downloadTaskDao.ifDownloadUrlExist(url, siteId);	
+		/*
 		List<DownloadTaskDTO> dtList = this.downloadTaskDao.getDownloadTaskListByPageUrl(url);
 		int size = dtList.size();
 		for(int i=0;i<size;i++)
@@ -1922,6 +1932,9 @@ public class BrowserRunner {
 				break;
 			}
 		}
+		*/
+		
+		
 		
 		if(!duplicate)
 		{

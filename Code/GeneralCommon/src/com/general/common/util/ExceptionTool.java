@@ -21,7 +21,9 @@ public class ExceptionTool extends BaseTool {
 	public static String getExceptionStackTraceString(Throwable ex)
 	{
 		StringBuffer retBuf = new StringBuffer();
-		retBuf.append("Error message = ");
+		retBuf.append("Exception class Name = ");
+		retBuf.append(ex.getClass().getName());
+		retBuf.append("<br/>Error message = ");
 		retBuf.append(ex.getLocalizedMessage());		
 		StackTraceElement stackArr[] = ex.getStackTrace();
 		if(!ClassTool.isNullObj(stackArr))

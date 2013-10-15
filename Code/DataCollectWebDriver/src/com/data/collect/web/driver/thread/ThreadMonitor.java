@@ -42,18 +42,35 @@ public class ThreadMonitor extends Thread {
 						if(tRunner.getLastRunTime()!=-1)
 						{
 							long deltaTime = System.currentTimeMillis() - tRunner.getLastRunTime();
-							//means that tRunner web driver hang for 5 minutes, need to reset
-							if(deltaTime>(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*300))
+							//means that tRunner web driver hang for 60 minutes, need to reset, Because some pages need a lot of time to parse url and save those url to db.
+							if(deltaTime>(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*3600))
 							{
-								LogTool.logText("Thread web driver hang, so reset it. Thread id : " + tRunner.getId() + " , Thread table id : " + tRunner.getThreadTableId(), this.getClass().getName());
+								StringBuffer logTxtBuf = new StringBuffer();
+								logTxtBuf.append("Thread web driver hang, so reset it. Thread id : ");
+								logTxtBuf.append(tRunner.getId());
+								logTxtBuf.append(" , Thread table id : ");
+								logTxtBuf.append(tRunner.getThreadTableId());
+								
+								if(tRunner.getBrowserRunner()!=null && tRunner.getBrowserRunner().getDriver()!=null)
+								{
+									logTxtBuf.append(" , Current Url : ");
+									logTxtBuf.append(tRunner.getBrowserRunner().getDriver().getCurrentUrl());
+								}else
+								{
+									logTxtBuf.append(" , This browser has been reseted and not started again. Maybe the parse task not finished in the program.");
+								}
+								
+								LogTool.logText(logTxtBuf.toString() , this.getClass().getName());
+								
 								tRunner.getBrowserRunner().resetBrowser();
+								
 								LogTool.logText("Reset hang thread web driver done.", this.getClass().getName());
 							}
 						}
 					}
 				}			
 				
-				this.sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*30);
+				this.sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*300);
 			}catch(Exception ex)
 			{
 				LogTool.logError(ex, this.getClass().getName());
