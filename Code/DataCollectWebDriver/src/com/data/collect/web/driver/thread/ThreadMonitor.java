@@ -43,7 +43,7 @@ public class ThreadMonitor extends Thread {
 						{
 							long deltaTime = System.currentTimeMillis() - tRunner.getLastRunTime();
 							//means that tRunner web driver hang for 60 minutes, need to reset, Because some pages need a lot of time to parse url and save those url to db.
-							if(deltaTime>(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*3600))
+							if(deltaTime>(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*300))
 							{
 								StringBuffer logTxtBuf = new StringBuffer();
 								logTxtBuf.append("Thread web driver hang, so reset it. Thread id : ");
@@ -70,7 +70,7 @@ public class ThreadMonitor extends Thread {
 					}
 				}			
 				
-				this.sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*300);
+				this.sleep(Constants.DOWNLOAD_THREAD_SLEEP_TIME_1_SECOND*30);
 			}catch(Exception ex)
 			{
 				LogTool.logError(ex, this.getClass().getName());

@@ -1,5 +1,8 @@
 package com.general.common.util;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 public class ExceptionTool extends BaseTool {
 
 	
@@ -20,7 +23,12 @@ public class ExceptionTool extends BaseTool {
 	
 	public static String getExceptionStackTraceString(Throwable ex)
 	{
-		StringBuffer retBuf = new StringBuffer();
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		ex.printStackTrace(pw);
+		return sw.toString();
+		
+		/*
 		retBuf.append("Exception class Name = ");
 		retBuf.append(ex.getClass().getName());
 		retBuf.append("<br/>Error message = ");
@@ -44,5 +52,6 @@ public class ExceptionTool extends BaseTool {
 		}
 		
 		return retBuf.toString();
+		*/
 	}
 }

@@ -385,9 +385,9 @@ public class HtmlTool extends BaseTool {
 	
 	public static boolean isCorrectUrl(String url, String pageCharset, String urlCharactor, String notUrlCharactor, String urlMatchRegExp) throws UnsupportedEncodingException
 	{
-		LogTool.debugText("Before decode : " + url, HtmlTool.class.getName());		
+		//LogTool.debugText("Before decode : " + url, HtmlTool.class.getName());		
 		url = URLDecoder.decode(url, pageCharset);
-		LogTool.debugText("After decode : " + url, HtmlTool.class.getName());
+		//LogTool.debugText("After decode : " + url, HtmlTool.class.getName());
 		return StringTool.isCorrectString(url, urlCharactor, notUrlCharactor, urlMatchRegExp);
 	}
 	

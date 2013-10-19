@@ -102,7 +102,11 @@ public class DBManager extends BaseManager{
         ds.setTestOnBorrow(true);
         ds.setTestWhileIdle(true);
         //default 10 connection to db
-        ds.setInitialSize(10);        
+        ds.setInitialSize(10);  
+        
+        LogTool.logText("DbConnUrl = " + connectURL , this.getClass().getName());
+        LogTool.logText("DbUserName = " + dbUser , this.getClass().getName());
+        LogTool.logText("DbPasswd = " + dbPasswd , this.getClass().getName());
         
         if(GeneralConstants.SERVER_TYPE_MY_SQL.equals(serverType))
         {        	

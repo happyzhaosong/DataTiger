@@ -172,6 +172,25 @@ YUI().use('DataSearchApp', function (Y) {
     		{
     			Y.all('#searchIn input').set('checked', false);
     		}
+    	}else
+    	{
+    		if(!currTarget._node.checked)
+    		{
+    			Y.one('#searchIn input[value="0"]').set('checked', false);
+    		}else
+    		{
+    		    var total = 5;
+    		    var checkedAll = true;
+    		    for(var i=1;i<=5;i++)
+    		    {
+    				checkedAll = checkedAll & Y.one('#searchIn input[value="' + i + '"]')._node.checked;
+    			}
+    			
+    			if(checkedAll)
+    			{
+    				Y.one('#searchIn input[value="0"]').set('checked', true);
+    			}
+    		}
     	}
     });
     
