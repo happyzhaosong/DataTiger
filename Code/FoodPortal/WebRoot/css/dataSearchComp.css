@@ -21,7 +21,8 @@
     border-radius: 3px;
     padding: 8px;
     background: #fefefe;
-    margin-top: 3px;	
+    margin-top: 3px;
+    display: block;	
 }
 
 #demo form input {

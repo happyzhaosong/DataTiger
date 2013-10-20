@@ -6,6 +6,7 @@
 	<a name="top"> </a>
     <!-- search form area-->
     <form id="searchForm">
+    	<input type="hidden" id="orderByWithDierction1Value" value="click_count<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" />
         <input type="text" id="searchKeyword" name="searchKeyword" value="" maxlength="100">        
         <input type="submit" id="searchBtn" value="搜索" class="yui3-button">
         <input type="reset" id="resetBtn" value="清空" class="yui3-button">
@@ -15,32 +16,36 @@
         </ul>
     </form>
     
-    <!-- searchin area -->
-    <div id="commonContainer" class="commonContainer">
-    	范围：
-    	<div id="searchIn" style="position: relative; left: 15; display: inline-block">
-	    	<input type="checkbox" name="all" value="0">所有&nbsp;&nbsp;
-	    	<input type="checkbox" name="taobao" value="1">天猫
-	    	<input type="checkbox" name="tmall" value="2">淘宝
-	    	<input type="checkbox" name="jingdong" value="3">京东
-	    	<input type="checkbox" name="jingdong" value="4">当当
-	    	<input type="checkbox" name="jingdong" value="5">我买网
-    	</div>
-    </div>
     
-    <!-- order area -->
     <div id="commonContainer" class="commonContainer">
-    	 排序：
-    	<ul id="orderByWithDierction1" class="searchKeywordTag">
-        	<li><a href="#" title="{searchKeyword}">价格↑</a>&nbsp;&nbsp;</li>
-        	<li><a href="#" title="{searchKeyword}">单价↑</a>&nbsp;&nbsp;</li>
-        	<li><a href="#" title="{searchKeyword}">评分↓</a>&nbsp;&nbsp;</li>
-        	<li><a href="#" title="{searchKeyword}">好评↓</a>&nbsp;&nbsp;</li>
-        	<li><a href="#" title="{searchKeyword}">销量↓</a>&nbsp;&nbsp;</li>
-        	<li><a href="#" title="{searchKeyword}">促销价↑</a>&nbsp;&nbsp;</li>
-        	<li><a href="#" title="{searchKeyword}">送积分↓</a>&nbsp;&nbsp;</li>
-        	<li><a href="#" title="{searchKeyword}">访问量↓</a>&nbsp;&nbsp;</li>
-        </ul>
+    	<!-- searchin area -->
+    	<div style="margin-bottom:8px">
+	    	范围：
+	    	<div id="searchIn" style="position: relative; left: 15; display: inline-block">
+		    	<input type="checkbox" name="all" value="0">所有&nbsp;&nbsp;
+		    	<input type="checkbox" name="taobao" value="1">天猫
+		    	<input type="checkbox" name="tmall" value="2">淘宝
+		    	<input type="checkbox" name="jingdong" value="3">京东
+		    	<input type="checkbox" name="jingdong" value="4">当当
+		    	<input type="checkbox" name="jingdong" value="5">我买网
+	    	</div>
+    	</div>
+    
+    
+	    <!-- order area -->
+	    <div>
+	    	 排序：
+	    	<ul id="orderByWithDierction1" class="searchKeywordTag">
+	        	<li><a href="#" title="价格从低到高" data="jia_ge_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">价格↑</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="单价从低到高" data="dan_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">单价↑</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="促销价从低到高" data="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">促销价↑</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="评分从高到低" data="ping_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">评分↓</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="好评从高到低" data="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">好评↓</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="销量从高到低" data="jiao_yi_success_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">销量↓</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="送积分从高到低" data="song_ji_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">送积分↓</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="访问量从高到低" data="click_count<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">访问量↓</a>&nbsp;&nbsp;</li>
+	        </ul>
+        </div>
     </div>
  
     <div class="results"></div>

@@ -475,6 +475,11 @@
     	showResetBtn(ev);
     }); 
     
+    Y.all('#orderByWithDierction1 a').on('click', function(ev){  
+    	Y.one('#orderByWithDierction1Value')._node.value = ev.currentTarget._node.getAttribute('data');
+    	Y.one('#searchBtn').simulate('click');
+    });
+    
     function showResetBtn(ev)
     {
     	if(Y.one('#searchKeyword').get('value').length>0)
@@ -651,7 +656,7 @@
         	this._api.searchKeyword = Y.one('#searchKeyword').get("value");
         	
         	var orderBy1SelIdx = Y.one('#orderByWithDierction1').get('selectedIndex');        	
-        	this._api.orderByWithDierction1 = Y.one('#orderByWithDierction1').get('options')._nodes[orderBy1SelIdx].value
+        	this._api.orderByWithDierction1 = Y.one('#orderByWithDierction1Value').get('value');
         	
         	var searchWebSite = '';
         	var searchWebSiteNodeList = Y.all('#searchIn input');
