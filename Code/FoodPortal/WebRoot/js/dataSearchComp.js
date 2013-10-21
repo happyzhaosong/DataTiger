@@ -440,12 +440,12 @@
         	var control = '';
         	if(currPage > 1)
         	{
-        		control += '<li><a id="searchKeywordPrev" href="#" title="Previous" alt="Previous"><&nbsp;</a></li>';
+        		control += '<li><a id="searchKeywordPrev" href="#" title="Previous" alt="Previous">←&nbsp;</a></li>';
         	}
         	
         	if(currPage*pageSize < totalResultCount)
         	{
-        		control += '<li><a id="searchKeywordNext" href="#" title="Next" alt="Next">&nbsp;></a></li>';
+        		control += '<li><a id="searchKeywordNext" href="#" title="Next" alt="Next">&nbsp;→</a></li>';
         	}
         	return control;
         }
