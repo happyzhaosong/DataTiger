@@ -4,6 +4,7 @@ import java.sql.Date;
 import com.general.common.annotation.DBColumn;
 import com.general.common.annotation.DBTable;
 import com.general.common.dto.BaseDTO;
+import com.general.common.util.StringTool;
 
 @DBTable(name="data_search_log")
 public class DataSearchLogDTO extends BaseDTO {
@@ -29,14 +30,22 @@ public class DataSearchLogDTO extends BaseDTO {
 	private String searchKeywordSummary = "";
 
 	public String getSearchKeywordSummary() {
-		if(searchKeyword.length()>3)
+		searchKeywordSummary = StringTool.getFirstNumWordsInString(searchKeyword, 5);
+		if(searchKeywordSummary.length()<searchKeyword.length())
 		{
-			searchKeywordSummary = searchKeyword.substring(0, 3);
+			searchKeywordSummary += "...";
+		}
+		/*
+		if(searchKeyword.length()>5)
+		{
+			//searchKeywordSummary = searchKeyword.substring(0, 10);
+			
 			searchKeywordSummary += "...";
 		}else
 		{
 			searchKeywordSummary = searchKeyword;
 		}
+		*/
 		return searchKeywordSummary;
 	}
 

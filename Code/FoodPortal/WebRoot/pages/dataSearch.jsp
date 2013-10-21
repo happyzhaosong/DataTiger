@@ -7,9 +7,12 @@
     <!-- search form area-->
     <form id="searchForm">
     	<input type="hidden" id="orderByWithDierction1Value" value="click_count<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" />
-        <input type="text" id="searchKeyword" name="searchKeyword" value="" maxlength="100">        
-        <input type="submit" id="searchBtn" value="搜索" class="yui3-button">
-        <input type="reset" id="resetBtn" value="清空" class="yui3-button">
+    	
+    	<div style="display:block; margin-bottom:8px">
+	        <input type="text" id="searchKeyword" name="searchKeyword" value="" maxlength="100">        
+	        <input type="submit" id="searchBtn" value="搜索" class="yui3-button">
+	        <input type="reset" id="resetBtn" value="清空" class="yui3-button">
+        </div>
         
         <ul id="searchKeywordTag" class="searchKeywordTag">
         	
@@ -21,7 +24,7 @@
     	<!-- searchin area -->
     	<div style="margin-bottom:8px">
 	    	范围：
-	    	<div id="searchIn" style="position: relative; left: 15; display: inline-block">
+	    	<div id="searchIn" style="position: relative; left: 0; display: inline-block">
 		    	<input type="checkbox" name="all" value="0">所有&nbsp;&nbsp;
 		    	<input type="checkbox" name="taobao" value="1">天猫
 		    	<input type="checkbox" name="tmall" value="2">淘宝

@@ -398,7 +398,7 @@
         	
         	if(keywordList)
         	{
-        		this.dataItemTemplate = '<li><a href="#" title="{searchKeyword}">{searchKeywordSummary}</a>&nbsp;&nbsp;</li>';
+        		this.dataItemTemplate = '<li><a href="#" title="{searchKeyword}" style="background-color:#E6E6E6; padding:2px; border-radius: 3px">{searchKeywordSummary}</a>&nbsp;&nbsp;</li>';
         		var len = keywordList.length;
         		for(var i=0;i<len;i++)
         		{

@@ -909,5 +909,64 @@ public class StringTool extends BaseTool {
             tgt +=(char)b[i];   
         }   
         return tgt;   
-    }  
+    }
+    
+    
+    public static String getFirstNumWordsInString(String str, int wordCount)
+    {
+    	if(StringTool.isEmpty(str))
+    	{
+    		return "";
+    	}else
+    	{
+    		StringBuffer sb = new StringBuffer();
+    		int addWordCount = 0;
+    		String strArr[] = str.split(" ");
+    		int size = strArr.length;
+    		for(int i=0;i<size;i++)
+    		{
+    			String strItem = strArr[i];
+    			if(!StringTool.isEmpty(strItem))
+    			{
+    				addWordCount++;
+    				strItem = strItem.trim();
+    				int letterCount = 0;
+    		    	int len = strItem.length();
+    		    	for(int j=0;j<len;j++)
+    		    	{
+    		    		char c = strItem.charAt(j);    		    		
+    		    		if(StringTool.ifChineseString(String.valueOf(c)))
+    		    		{
+    		    			letterCount=0;
+    		    			addWordCount++;    		    			
+    		    		}else
+    		    		{
+    		    			letterCount++;
+    		    		}
+    		    		
+    		    		if(letterCount>6)
+    		    		{
+    		    			letterCount=0;
+    		    			addWordCount++;
+    		    		}
+    		    		
+    		    		sb.append(c);
+    		    		
+    		    		if(addWordCount>wordCount)
+    		    		{
+    		    			return sb.toString();
+    		    		}
+    		    	}
+    		    	sb.append(" ");
+    			}
+    		}
+    		return sb.toString();
+    	}
+    }
+    
+    public static boolean ifChineseString(String str)
+    {
+    	 boolean ret = str.matches("[\u4E00-\u9FA5]"); 
+    	 return ret;
+    }
 }
