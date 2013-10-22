@@ -398,7 +398,7 @@
         	
         	if(keywordList)
         	{
-        		this.dataItemTemplate = '<li><a href="#" title="{searchKeyword}" style="background-color:#E6E6E6; padding:2px; border-radius: 3px">{searchKeywordSummary}</a>&nbsp;&nbsp;</li>';
+        		this.dataItemTemplate = '<li><a href="#" title="{searchKeyword}" style="background-color:#E6E6E6; padding:2px; border-radius: 3px; color: #0000FF;">{searchKeywordSummary}</a>&nbsp;&nbsp;</li>';
         		var len = keywordList.length;
         		for(var i=0;i<len;i++)
         		{
@@ -440,12 +440,12 @@
         	var control = '';
         	if(currPage > 1)
         	{
-        		control += '<li><a id="searchKeywordPrev" href="#" title="Previous" alt="Previous">←&nbsp;</a></li>';
+        		control += '<li><a id="searchKeywordPrev" href="#" title="Previous" alt="Previous" class="biaoTiClass">←&nbsp;</a></li>';
         	}
         	
         	if(currPage*pageSize < totalResultCount)
         	{
-        		control += '<li><a id="searchKeywordNext" href="#" title="Next" alt="Next">&nbsp;→</a></li>';
+        		control += '<li><a id="searchKeywordNext" href="#" title="Next" alt="Next" class="biaoTiClass">&nbsp;→</a></li>';
         	}
         	return control;
         }
@@ -475,8 +475,21 @@
     	showResetBtn(ev);
     }); 
     
-    Y.all('#orderByWithDierction1 a').on('click', function(ev){  
-    	Y.one('#orderByWithDierction1Value')._node.value = ev.currentTarget._node.getAttribute('data');
+    Y.all('#orderByWithDierction1 a').on('click', function(ev){ 
+    	var currNode = ev.currentTarget._node;
+    	Y.one('#orderByWithDierction1Value')._node.value = currNode.getAttribute('data');
+    	currNode.style.backgroundColor = "#E6E6E6";
+    	
+    	var nodeArr = Y.all('#orderByWithDierction1 a')._nodes;
+    	var length = nodeArr.length;    	
+    	for(var i=0;i < length;i++)
+    	{
+    		var node = nodeArr[i];
+    		if(node.getAttribute('data')!=currNode.getAttribute('data'))
+    		{
+    			node.style.backgroundColor = "#FFFFFF";
+    		}
+    	}    	
     	Y.one('#searchBtn').simulate('click');
     });
     

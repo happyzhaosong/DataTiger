@@ -244,6 +244,12 @@ a{
 .biaoTiClass {
 	color: #0000FF;	
 }
+
+.orderByClass {
+	color: #0000FF;	
+	padding:2px;
+	border-radius: 3px;
+}
 	
 	
 	

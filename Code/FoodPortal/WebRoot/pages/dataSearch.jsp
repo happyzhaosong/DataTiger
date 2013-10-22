@@ -39,14 +39,14 @@
 	    <div>
 	    	 排序：
 	    	<ul id="orderByWithDierction1" class="searchKeywordTag">
-	        	<li><a href="#" title="价格从低到高" data="jia_ge_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">价格↑</a>&nbsp;&nbsp;</li>
-	        	<li><a href="#" title="单价从低到高" data="dan_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">单价↑</a>&nbsp;&nbsp;</li>
-	        	<li><a href="#" title="促销价从低到高" data="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>">促销价↑</a>&nbsp;&nbsp;</li>
-	        	<li><a href="#" title="评分从高到低" data="ping_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">评分↓</a>&nbsp;&nbsp;</li>
-	        	<li><a href="#" title="好评从高到低" data="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">好评↓</a>&nbsp;&nbsp;</li>
-	        	<li><a href="#" title="销量从高到低" data="jiao_yi_success_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">销量↓</a>&nbsp;&nbsp;</li>
-	        	<li><a href="#" title="送积分从高到低" data="song_ji_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">送积分↓</a>&nbsp;&nbsp;</li>
-	        	<li><a href="#" title="访问量从高到低" data="click_count<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>">访问量↓</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="价格从低到高" data="jia_ge_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>" class="orderByClass">价格↑</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="单价从低到高" data="dan_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>" class="orderByClass">单价↑</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="促销价从低到高" data="cu_xiao_jia_num<%=GeneralConstants.ORDER_BY_ASC_SUFFIX%>" class="orderByClass">促销价↑</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="评分从高到低" data="ping_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">评分↓</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="好评从高到低" data="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">好评↓</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="销量从高到低" data="jiao_yi_success_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">销量↓</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="送积分从高到低" data="song_ji_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">送积分↓</a>&nbsp;&nbsp;</li>
+	        	<li><a href="#" title="访问量从高到低" data="click_count<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">访问量↓</a>&nbsp;&nbsp;</li>
 	        </ul>
         </div>
     </div>

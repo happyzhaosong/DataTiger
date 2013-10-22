@@ -92,7 +92,7 @@ public class DataSearchLogDAO extends BaseDAO {
 			this.whereBuf.append("%'");
 		}
 		
-		this.orderByBuf.append(" total_search_count desc "); 
+		this.orderByBuf.append(" search_result_count desc "); 
 		
 		List<DataSearchLogDTO> logList = new ArrayList<DataSearchLogDTO>();
 		logList = logList.getClass().cast(this.selectDtoList(DataSearchLogDTO.class, DBManager.getInstance().getMysqlDataSource()));
