@@ -398,7 +398,7 @@
         	
         	if(keywordList)
         	{
-        		this.dataItemTemplate = '<li><a href="#" title="{searchKeyword}" style="background-color:#E6E6E6; padding:2px; border-radius: 3px; color: #0000FF;">{searchKeywordSummary}</a>&nbsp;&nbsp;</li>';
+        		this.dataItemTemplate = '<li><a href="#" title="{searchKeyword}&nbsp;&nbsp;({searchResultCount})" data="{searchKeyword}" style="background-color:#E6E6E6; padding:2px; border-radius: 3px; color: #0000FF;">{searchKeywordSummary}</a>&nbsp;&nbsp;</li>';
         		var len = keywordList.length;
         		for(var i=0;i<len;i++)
         		{
@@ -428,7 +428,7 @@
             		context.requestSearchKeywordTags();
             	}else
             	{
-            		var searchKeyword = ev.currentTarget.getAttribute('title');    	
+            		var searchKeyword = ev.currentTarget.getAttribute('data');    	
             		Y.one('#searchKeyword').set('value',searchKeyword);
             		Y.one('#searchBtn').simulate('click');
             	}

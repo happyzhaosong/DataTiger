@@ -74,9 +74,11 @@ public class DataSearchLogDAO extends BaseDAO {
 	{
 		this.initStringBuffer();
 
+		this.whereBuf.append(" search_result_count > 0 ");
+		
 		if(searchIn>0)
 		{
-			this.whereBuf.append(" search_in = ");
+			this.whereBuf.append(" and search_in = ");
 			this.whereBuf.append(searchIn);
 		}
 		

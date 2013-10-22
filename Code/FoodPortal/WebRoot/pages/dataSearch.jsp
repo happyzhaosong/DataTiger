@@ -202,7 +202,7 @@ YUI().use('DataSearchApp', function (Y) {
     
     Y.one('#searchKeyword').plug(Y.Plugin.AutoComplete, {
         resultHighlighter: 'phraseMatch',
-        queryDelay: 500,
+        queryDelay: 100,
         requestTemplate: '<%=GeneralConstants.ACTION_PARAM_FILTER_KEYWORD%>={query}',
         source: '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH_FILTER_KEYWORD)%>',        
         on: {
@@ -223,7 +223,7 @@ YUI().use('DataSearchApp', function (Y) {
         },
         
         resultFormatter: function (query, results){
-        	var template = '{search_keyword} {result_count}';
+        	var template = '{search_keyword}&nbsp;&nbsp;({result_count})';
         	
         	return Y.Array.map(results, function (result) {
 			    var data = result.raw;
