@@ -111,7 +111,7 @@ CREATE TABLE `data_search_log` (
   `search_result_count` bigint(10) DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   `search_in` tinyint(4) NOT NULL DEFAULT '0' COMMENT '搜索的范围 0---全部，1---data_xiu_hao_chi, 2---data_xiu_hao_pu',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `data_search_log_detail` */
 
@@ -129,7 +129,7 @@ CREATE TABLE `data_search_log_detail` (
   `order_by` varchar(100) COLLATE utf8_bin NOT NULL COMMENT '本次搜索 orderby 的字段',
   `search_result_count` bigint(10) NOT NULL DEFAULT '0' COMMENT '本关键词搜索出的结果条数',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=83 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
+) ENGINE=MyISAM AUTO_INCREMENT=98 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='记录用户所有搜索的详细信息，包括关键词，ip，时间，地区，在哪个范围搜索等信息';
 
 /*Table structure for table `data_tao_bao_jie` */
 
@@ -207,6 +207,44 @@ CREATE TABLE `data_tao_bao_jie` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=151837 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='taobao 店铺 crawler data table';
 
+/*Table structure for table `data_video` */
+
+DROP TABLE IF EXISTS `data_video`;
+
+CREATE TABLE `data_video` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `biao_ti` varchar(1000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '标题',
+  `ping_fen` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '评分',
+  `ping_fen_num` double(10,3) NOT NULL DEFAULT '-1.000' COMMENT '评分数值',
+  `play_count` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '播放次数',
+  `play_count_num` double(10,3) NOT NULL DEFAULT '-1.000' COMMENT '播放次数数值',
+  `ding_num` bigint(10) NOT NULL DEFAULT '0' COMMENT '顶数量',
+  `cai_num` bigint(10) NOT NULL DEFAULT '0' COMMENT '踩数量',
+  `chuang_jian_zhe` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '视频创建者，对于短视频使用',
+  `dao_yan` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '导演，对于电影，电视剧使用',
+  `zhu_yan` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '主演',
+  `di_qu` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '生产地区',
+  `lei_xing` varchar(200) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '视频类型',
+  `tv_station` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '播放电台名称',
+  `zhu_chi_ren` varchar(100) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '节目主持人',
+  `mian_bao_xie_title` varchar(1000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '视频主页面包屑标题文字',
+  `img_url` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '图片链接url',
+  `meta_search_keyword` varchar(2000) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT '商品 meta keywords 关键词信息, example: <meta name="keywords"',
+  `meta_desc` text COLLATE utf8_bin COMMENT '商品 meta description 描述信息, example: <meta name="description"',
+  `item_url` text COLLATE utf8_bin NOT NULL COMMENT '商品url链接地址',
+  `video_site` tinyint(1) NOT NULL DEFAULT '1' COMMENT '视频网站，1---youku， 2---爱奇艺， 3---土豆，4---搜狐视频, 5---网易视频，6---新浪视频',
+  `click_count` int(10) NOT NULL DEFAULT '0' COMMENT '商品被点击的次数，缺省按照这个次数降序排列',
+  `download_task_parent_page_url` text COLLATE utf8_bin COMMENT 'Must have for each data table, 本下载任务的父下载任务url链接地址，方便搜索并删除相应的data内容',
+  `download_task_page_url` text COLLATE utf8_bin COMMENT 'Must have for each data table, 本下载任务的url链接地址',
+  `download_task_id` bigint(20) NOT NULL DEFAULT '-1' COMMENT 'Must have for each data table, download_task 表 id',
+  `download_task_level` int(11) NOT NULL DEFAULT '1' COMMENT 'Must have for each data table, download_task 级别',
+  `download_task_data_parse_time` varchar(20) COLLATE utf8_bin NOT NULL DEFAULT '' COMMENT 'Must have for each data table, 下载的内容页面的解析时间字符串格式',
+  `download_task_data_parse_time_number` bigint(100) NOT NULL DEFAULT '1' COMMENT 'Must have for each data table, 下载的内容页面的解析时间数字格式',
+  `download_task_useless_content_page` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Must have for each data table, 下载的页面是否是无效的内容页面，1 --- 是无效内容页面，0 --- 有效的内容页面',
+  PRIMARY KEY (`id`),
+  FULLTEXT KEY `NewIndex1` (`biao_ti`,`meta_search_keyword`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 /*Table structure for table `data_xiu_hao_chi` */
 
 DROP TABLE IF EXISTS `data_xiu_hao_chi`;
@@ -252,7 +290,7 @@ CREATE TABLE `data_xiu_hao_chi` (
   `download_task_useless_content_page` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Must have for each data table, 下载的页面是否是无效的内容页面，1 --- 是无效内容页面，0 --- 有效的内容页面',
   PRIMARY KEY (`id`),
   FULLTEXT KEY `NewIndex1` (`biao_ti`,`meta_search_keyword`)
-) ENGINE=MyISAM AUTO_INCREMENT=61697 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
+) ENGINE=MyISAM AUTO_INCREMENT=115371 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='保存互联网抓取的食品信息';
 
 /*Table structure for table `db_setting` */
 
@@ -285,7 +323,7 @@ CREATE TABLE `download_mq_message` (
   `fail_reason` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'MQ action 失败的原因',
   `create_thread_count` int(11) DEFAULT NULL COMMENT '创建的线程数量，范围为 1 - 5',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=291 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=322 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_setting` */
 
@@ -327,7 +365,7 @@ CREATE TABLE `download_task` (
   KEY `site_id` (`site_id`,`useless_content_page`,`apply_time`,`if_content_page`),
   KEY `task_level_id` (`task_level`),
   KEY `page_url_idx` (`page_url`(333))
-) ENGINE=MyISAM AUTO_INCREMENT=214440 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=MyISAM AUTO_INCREMENT=1594088 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*Table structure for table `download_thread` */
 
@@ -344,7 +382,7 @@ CREATE TABLE `download_thread` (
   `site_id` bigint(20) DEFAULT NULL COMMENT '线程访问的网站id',
   `webdriver_each_browse_start_time` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT '每次 webdriver 访问网页的开始时间，webdriver每次访问一个网页都会更新这个时间，有一个监控线程轮询查看，如果 webdriver 开始访问页面时间和当前的时间之差大于10分钟，则认为 webdriver 挂起，则重新启动那个线程 ',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=275 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=293 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `download_thread_apply_task_status` */
 
@@ -380,7 +418,7 @@ CREATE TABLE `parse` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_8` (`category_id`),
   CONSTRAINT `FK_Reference_8` FOREIGN KEY (`category_id`) REFERENCES `parse_category` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `parse_category` */
 
@@ -391,7 +429,7 @@ CREATE TABLE `parse_category` (
   `cat_name` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `cat_desc` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 /*Table structure for table `parse_item` */
 
@@ -427,7 +465,7 @@ CREATE TABLE `parse_item` (
   PRIMARY KEY (`id`),
   KEY `FK_Reference_9` (`parse_id`),
   CONSTRAINT `FK_Reference_9` FOREIGN KEY (`parse_id`) REFERENCES `parse` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=454 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=473 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `parse_item_action` */
 
