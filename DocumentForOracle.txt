@@ -1,0 +1,18 @@
+1.创建手动管理表空间时候报错 ORA-02199 
+http://f.dataguru.cn/thread-102217-1-1.html
+
+SQL> create tablespace ts_mssm segment space management manual;
+create tablespace ts_mssm segment space management manual
+                                                        *
+第 1 行出现错误:
+ORA-02199: 缺失 DATAFILE/TEMPFILE 子句
+
+创建表空间的时候报错，提示缺失 DATAFILE/TEMPFILE
+
+第一种解决方法：指定 DATAFILE/TEMPFILE 路径。一问度娘都有，我这介绍第二种
+
+第二种解决方法：指定默认路径。路径“D:\oracle\product\10.2.0\oradata\lims” 必须是已经存在的
+
+SQL> alter system set db_create_file_dest = 'D:\oracle\product\10.2.0\oradata\lims';
+
+2.如果安装oracle后 tnslistener 启动不起来，则检查是否设置了 oracle_home 环境变量
