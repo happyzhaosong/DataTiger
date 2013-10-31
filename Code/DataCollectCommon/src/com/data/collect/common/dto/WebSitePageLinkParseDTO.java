@@ -14,7 +14,7 @@ public class WebSitePageLinkParseDTO extends BaseDTO {
 	@DBColumn(name="site_id")
 	private int siteId = -1;
 	
-	@DBColumn(name="click_ele_xpath_before_parse_url")
+	@DBColumn(name="click_ele_xpath_before_parse")
 	private String clickEleXPathBeforeParseUrl = "";	
 	
 	@DBColumn(name="by_ele_type")

@@ -70,7 +70,7 @@ public class FoodDAO extends BaseDAO {
 		}
 		
 		List<FoodDTO> ret = new ArrayList<FoodDTO>();
-		ret = ret.getClass().cast(this.selectDtoList(FoodDTO.class, DBManager.getInstance().getMysqlDataSource()));		
+		ret = ret.getClass().cast(this.selectDtoList(FoodDTO.class, DBManager.getInstance().getDataSource()));		
 		return ret;
 	}
 	
@@ -83,7 +83,7 @@ public class FoodDAO extends BaseDAO {
 			sqlBuf.append(GeneralConstants.TABLE_DATA_XIU_HAO_CHI);
 			sqlBuf.append(" set click_count = click_count + 1 where id = ");
 			sqlBuf.append(id);		
-			this.executeUpdateOrDeleteSql(sqlBuf.toString(), DBManager.getInstance().getMysqlDataSource());
+			this.executeUpdateOrDeleteSql(sqlBuf.toString(), DBManager.getInstance().getDataSource());
 		}
 	}
 

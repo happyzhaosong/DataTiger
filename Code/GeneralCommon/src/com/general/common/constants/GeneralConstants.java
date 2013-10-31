@@ -73,9 +73,13 @@ public class GeneralConstants {
 	public static final String dataTypeDateList[] = {"yyyy-MM-dd hh:mm:ss"};
 	
 	//jdbc my sql
-	public static final String SERVER_TYPE_MY_SQL = "SERVER_TYPE_MY_SQL";
-	
+	public static final String SERVER_TYPE_MY_SQL = "SERVER_TYPE_MY_SQL";	
 	public static final String JDBC_MY_SQL_CLASS = "org.gjt.mm.mysql.Driver";
+	
+	//jdbc oracle
+	public static final String SERVER_TYPE_ORACLE = "SERVER_TYPE_ORACLE";	
+	public static final String JDBC_ORACLE_CLASS = "oracle.jdbc.driver.OracleDriver";
+
 	
 	
 	//session

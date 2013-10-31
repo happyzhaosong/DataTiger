@@ -16,6 +16,9 @@ public class DBManager extends BaseManager{
 		
 	private static DBManager instance = null;
 	
+	//存储 oracle 数据表的数据源对象
+	private DataSource oracleDataSource = null;
+	
 	//存储mysql数据表的数据源对象
 	private DataSource mysqlDataSource = null;
 	
@@ -23,18 +26,22 @@ public class DBManager extends BaseManager{
 	private DataSource dataTblDataSource = null;
 	
 	//存储mysql数据库表基本信息数据源对象
-	private DataSource mysqlInforSchemaDataSource = null;
+	//private DataSource mysqlInforSchemaDataSource = null;
 	
-	public DataSource getDataTblDataSource() throws Exception {
-		if(dataTblDataSource==null)
+	public DataSource getDataSource() throws Exception {
+		return DBManager.getInstance().getOracleDataSource();
+	}
+	
+	private DataSource getOracleDataSource() throws Exception {
+		if(oracleDataSource==null)
 		{
 			DBMQCfgInfoDTO cfgDto = this.getDBMQConfig();
-			dataTblDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_MY_SQL, GeneralConstants.JDBC_MY_SQL_CLASS, cfgDto.getDataTblDbIp(), cfgDto.getDataTblDbPort(), cfgDto.getDataTblDbName(), cfgDto.getDataTblDbUser(), cfgDto.getDataTblDbPasswd());
-		}
-		return dataTblDataSource;
+			oracleDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_ORACLE, GeneralConstants.JDBC_ORACLE_CLASS, cfgDto.getDbIp(), cfgDto.getDbPort(), cfgDto.getDbName(), cfgDto.getDbUser(), cfgDto.getDbPasswd());
+		}		
+		return oracleDataSource;
 	}
-
-	public DataSource getMysqlDataSource() throws Exception{
+	
+	private DataSource getMysqlDataSource() throws Exception{
 		if(mysqlDataSource==null)
 		{
 			DBMQCfgInfoDTO cfgDto = this.getDBMQConfig();
@@ -43,6 +50,16 @@ public class DBManager extends BaseManager{
 		return mysqlDataSource;
 	}
 
+	public DataSource getDataTblDataSource() throws Exception {
+		if(dataTblDataSource==null)
+		{
+			DBMQCfgInfoDTO cfgDto = this.getDBMQConfig();
+			dataTblDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_ORACLE, GeneralConstants.JDBC_ORACLE_CLASS, cfgDto.getDataTblDbIp(), cfgDto.getDataTblDbPort(), cfgDto.getDataTblDbName(), cfgDto.getDataTblDbUser(), cfgDto.getDataTblDbPasswd());
+		}
+		return dataTblDataSource;
+	}
+
+	/*
 	public DataSource getMysqlInforSchemaDataSource() throws Exception{
 		if(mysqlInforSchemaDataSource==null)
 		{
@@ -51,20 +68,11 @@ public class DBManager extends BaseManager{
 		}
 		return mysqlInforSchemaDataSource;
 	}
+	*/
 
 	private DBManager()
 	{
-		/*
-		try
-		{
-			DBMQCfgInfoDTO cfgDto = this.getDBMQConfig();
-			mysqlDataSource = setupDataSource(GeneralConstants.SERVER_TYPE_MY_SQL, GeneralConstants.JDBC_MY_SQL_CLASS, cfgDto.getDbIp(), cfgDto.getDbPort(), cfgDto.getDbName(), cfgDto.getDbUser(), cfgDto.getDbPasswd());
-			
-		}catch(Exception ex)
-		{
-			LogTool.logError( ex);
-		}
-		*/
+
 	}
 	
 
@@ -81,38 +89,49 @@ public class DBManager extends BaseManager{
 
     private DataSource setupDataSource(String serverType, String driverClass, String dbIp, String dbPort, String dbName, String dbUser, String dbPasswd) throws Exception{
     	StringBuffer sqlUrlBuf = new StringBuffer();
-    	sqlUrlBuf.append("jdbc:mysql://");
-    	sqlUrlBuf.append(dbIp);
-    	sqlUrlBuf.append(":");
-    	sqlUrlBuf.append(dbPort);
-    	sqlUrlBuf.append("/");
     	
-    	sqlUrlBuf.append(dbName);
-    	
-    	sqlUrlBuf.append("?autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8");
-    	
-    	String connectURL = sqlUrlBuf.toString();
-        BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName(driverClass);
-        
-        ds.setUsername(dbUser);
-        ds.setPassword(dbPasswd);
-        
-        ds.setUrl(connectURL); 
-        ds.setTestOnBorrow(true);
-        ds.setTestWhileIdle(true);
-        //default 10 connection to db
-        ds.setInitialSize(10);  
-        
-        LogTool.logText("DbConnUrl = " + connectURL , this.getClass().getName());
-        LogTool.logText("DbUserName = " + dbUser , this.getClass().getName());
-        LogTool.logText("DbPasswd = " + dbPasswd , this.getClass().getName());
-        
-        if(GeneralConstants.SERVER_TYPE_MY_SQL.equals(serverType))
-        {        	
-        	ds.setValidationQuery("select 1 from dual");
+    	if(GeneralConstants.SERVER_TYPE_MY_SQL.equals(serverType))
+        { 
+	    	sqlUrlBuf.append("jdbc:mysql://");
+	    	sqlUrlBuf.append(dbIp);
+	    	sqlUrlBuf.append(":");
+	    	sqlUrlBuf.append(dbPort);
+	    	sqlUrlBuf.append("/");
+	    	
+	    	sqlUrlBuf.append(dbName);	    	
+	    	sqlUrlBuf.append("?autoReconnect=true&autoReconnectForPools=true&useUnicode=true&characterEncoding=UTF-8");	    	
+        }else if(GeneralConstants.SERVER_TYPE_ORACLE.equals(serverType))
+        {
+	    	sqlUrlBuf.append("jdbc:oracle:thin:@");
+	    	sqlUrlBuf.append(dbIp);
+	    	sqlUrlBuf.append(":");
+	    	sqlUrlBuf.append(dbPort);
+	    	sqlUrlBuf.append(":");	    	
+	    	sqlUrlBuf.append(dbName);   
         }
-        
+    	
+    	BasicDataSource ds = new BasicDataSource();
+	    ds.setDriverClassName(driverClass);
+	        
+	    ds.setUsername(dbUser);
+	    ds.setPassword(dbPasswd);
+	        
+	    String connectURL = sqlUrlBuf.toString();
+	    ds.setUrl(connectURL); 
+	    ds.setTestOnBorrow(true);
+	    ds.setTestWhileIdle(true);
+	    //default 10 connection to db
+	    ds.setInitialSize(10);  
+	        
+	    LogTool.logText("DbConnUrl = " + connectURL , this.getClass().getName());
+	    LogTool.logText("DbUserName = " + dbUser , this.getClass().getName());
+	    LogTool.logText("DbPasswd = " + dbPasswd , this.getClass().getName());
+	        
+	    if(GeneralConstants.SERVER_TYPE_MY_SQL.equals(serverType))
+        { 
+	    	ds.setValidationQuery("select 1 from dual");
+        }
+	    
         return ds;
     }
 

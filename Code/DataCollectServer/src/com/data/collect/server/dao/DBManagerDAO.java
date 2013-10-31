@@ -367,7 +367,9 @@ public class DBManagerDAO extends BaseDAO {
 	
     private List<DBTableDTO> getDataTableListBy(String byKey, String byValue) throws Exception
 	{    	
-    	this.initStringBuffer();    	
+    	this.initStringBuffer();   
+    	
+    	/*
     	this.whereBuf.append(" table_schema = '");
 		this.whereBuf.append(DBManager.getInstance().getDBMQConfig().getDbName());
 		this.whereBuf.append("' and table_name like '");
@@ -382,7 +384,21 @@ public class DBManagerDAO extends BaseDAO {
 		}
 		
 		this.whereBuf.append("%'");
+		*/
 		
+    	if(this.BY_TABLE_NAME.equals(byKey))
+		{
+			this.whereBuf.append(" lower(table_name) like '");
+			this.whereBuf.append(Constants.DATA_TABLE_PREFIX);
+
+			if(!StringTool.isEmpty(byValue))
+			{
+				this.whereBuf.append(byValue);				
+			}
+			
+			this.whereBuf.append("%'");
+		}   	
+    	
 		List<DBTableDTO> ret = new ArrayList<DBTableDTO>();
 		ret = ret.getClass().cast(this.selectDtoListFromInformationSchema(DBTableDTO.class));
 		if(ret!=null)
@@ -402,6 +418,7 @@ public class DBManagerDAO extends BaseDAO {
     private List<DBTableColumnDTO> getDataTableColumnListBy(String byKey, String byValue) throws Exception
 	{    	
     	this.initStringBuffer();
+    	/*
     	this.whereBuf.append(" table_schema = '");
 		this.whereBuf.append(DBManager.getInstance().getDBMQConfig().getDbName());
 		this.whereBuf.append("'");
@@ -414,6 +431,17 @@ public class DBManagerDAO extends BaseDAO {
 		}
 		
 		//this.orderByBuf.append(" column_name asc ");
+		*/
+		
+		if(this.BY_TABLE_NAME.equals(byKey))
+		{
+			if(!StringTool.isEmpty(byValue))
+			{
+				this.whereBuf.append(" and table_name  = '");
+				this.whereBuf.append(byValue);
+				this.whereBuf.append("'");
+			}
+		}
 		
 		List<DBTableColumnDTO> ret = new ArrayList<DBTableColumnDTO>();
 		return ret.getClass().cast(this.selectDtoListFromInformationSchema(DBTableColumnDTO.class));

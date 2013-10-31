@@ -29,7 +29,7 @@ public class DownloadTaskDAO extends BaseDAO {
 		{
 			this.initStringBuffer();
 			sql = "insert into download_thread_apply_task_status(applying_task, apply_time) values(true,'"+System.currentTimeMillis()+"')";
-			this.executeInsertSql(sql, DBManager.getInstance().getMysqlDataSource());
+			this.executeInsertSql(sql, DBManager.getInstance().getDataSource());
 		}else
 		{
 			Object obj = list.get(0);
@@ -223,7 +223,7 @@ public class DownloadTaskDAO extends BaseDAO {
 			sqlBuf.append("' and site_id = ");
 			sqlBuf.append(siteId);
 			
-			List<Map<String,String>> map = this.executeSelectSql(sqlBuf.toString(), DBManager.getInstance().getMysqlDataSource());
+			List<Map<String,String>> map = this.executeSelectSql(sqlBuf.toString(), DBManager.getInstance().getDataSource());
 			if(map.size()>0)
 			{
 				ret = true;
@@ -335,7 +335,7 @@ public class DownloadTaskDAO extends BaseDAO {
 	public String resetDownloadTaskApplyTimeAndLevelByWebSiteId(String downloadTaskIdInWhereSql, String taskLevel, String resetApplyTime) throws Exception
 	{
 		String retDownloadTaskId = "";
-		List<Map<String,String>> idList = this.executeSelectSql(downloadTaskIdInWhereSql + " limit 0, 500" , DBManager.getInstance().getMysqlDataSource());
+		List<Map<String,String>> idList = this.executeSelectSql(downloadTaskIdInWhereSql + " limit 0, 500" , DBManager.getInstance().getDataSource());
 		if(!ClassTool.isListEmpty(idList))
 		{
 			StringBuffer idBuf = new StringBuffer();
@@ -373,7 +373,7 @@ public class DownloadTaskDAO extends BaseDAO {
 				sqlBuf.append(")");
 								
 				//this.executeUpdateOrDeleteSql("update download_task set apply_time = '', task_level = " + taskLevel + " where id in (" + retDownloadTaskId + ")", DBManager.getInstance().getMysqlDataSource());
-				this.executeUpdateOrDeleteSql(sqlBuf.toString(), DBManager.getInstance().getMysqlDataSource());
+				this.executeUpdateOrDeleteSql(sqlBuf.toString(), DBManager.getInstance().getDataSource());
 			}
 		}
 		return retDownloadTaskId;

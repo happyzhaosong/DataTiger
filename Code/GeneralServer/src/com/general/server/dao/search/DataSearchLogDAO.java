@@ -34,7 +34,7 @@ public class DataSearchLogDAO extends BaseDAO {
 			this.setPageDto(pageDto);
 			
 			List<DataSearchLogDTO> logList = new ArrayList<DataSearchLogDTO>();
-			logList = logList.getClass().cast(this.selectDtoList(DataSearchLogDTO.class, DBManager.getInstance().getMysqlDataSource()));		
+			logList = logList.getClass().cast(this.selectDtoList(DataSearchLogDTO.class, DBManager.getInstance().getDataSource()));		
 			
 			//if exist then update it's last search time and total search count
 			if(logList.size()>0)
@@ -97,7 +97,7 @@ public class DataSearchLogDAO extends BaseDAO {
 		this.orderByBuf.append(" search_result_count desc "); 
 		
 		List<DataSearchLogDTO> logList = new ArrayList<DataSearchLogDTO>();
-		logList = logList.getClass().cast(this.selectDtoList(DataSearchLogDTO.class, DBManager.getInstance().getMysqlDataSource()));
+		logList = logList.getClass().cast(this.selectDtoList(DataSearchLogDTO.class, DBManager.getInstance().getDataSource()));
 		return logList;
 	}
 }

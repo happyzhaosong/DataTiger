@@ -2,6 +2,7 @@ package com.general.server.dao;
 
 import java.sql.Connection;
 
+
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
@@ -19,7 +20,6 @@ import com.general.common.util.DBTool;
 import com.general.common.util.LogTool;
 import com.general.common.util.StringTool;
 import com.general.server.manager.DBManager;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 
 public class BaseDAO {
@@ -115,7 +115,7 @@ public class BaseDAO {
 		Exception ex = null;
 		String sql = "";
 		try{		
-			conn = DBManager.getInstance().getMysqlDataSource().getConnection();
+			conn = DBManager.getInstance().getDataSource().getConnection();
 			Statement stmt = conn.createStatement();			
 			sql = DBTool.getInsertSqlFromObjectClass(dto);
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -129,9 +129,6 @@ public class BaseDAO {
 					rs.close();
 				}					
 			}
-		}catch(MySQLIntegrityConstraintViolationException e)
-		{
-			
 		}catch(Exception e)
 		{
 			LogTool.logError(e, this.getClass().getName());
@@ -173,12 +170,12 @@ public class BaseDAO {
 		StringBuffer sqlBuf = new StringBuffer();
 		sqlBuf.append(sql);
 		this.appendWhereBuffer(sqlBuf);
-		this.executeUpdateOrDeleteSql(sqlBuf.toString(), DBManager.getInstance().getMysqlDataSource());
+		this.executeUpdateOrDeleteSql(sqlBuf.toString(), DBManager.getInstance().getDataSource());
 	}
 	
 	protected List<Object> selectDtoList(Class objClass) throws Exception
 	{
-		return this.selectDtoList(objClass, DBTool.getSelectSqlFromObjectClass(objClass), DBManager.getInstance().getMysqlDataSource());
+		return this.selectDtoList(objClass, DBTool.getSelectSqlFromObjectClass(objClass), DBManager.getInstance().getDataSource());
 	}
 	
 	protected List<Object> selectDtoList(Class objClass, DataSource ds) throws Exception
@@ -194,7 +191,7 @@ public class BaseDAO {
 		Connection conn = null;
 		Exception ex = null;	
 		try{		
-			conn = DBManager.getInstance().getMysqlDataSource().getConnection();
+			conn = DBManager.getInstance().getDataSource().getConnection();
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(this.sqlBuf.toString());
 			if(rs.next())
@@ -216,12 +213,13 @@ public class BaseDAO {
 	
 	protected List<Object> selectDtoList(Class objClass, String sql) throws Exception
 	{
-		return this.selectDtoList(objClass, sql, DBManager.getInstance().getMysqlDataSource());
+		return this.selectDtoList(objClass, sql, DBManager.getInstance().getDataSource());
 	}
 
 	protected List<Object> selectDtoListFromInformationSchema(Class objClass) throws Exception
 	{
-		return this.selectDtoList(objClass, DBTool.getSelectSqlFromObjectClass(objClass), DBManager.getInstance().getMysqlInforSchemaDataSource());
+		return this.selectDtoList(objClass, DBTool.getSelectSqlFromObjectClass(objClass), DBManager.getInstance().getDataSource());
+		//return this.selectDtoList(objClass, DBTool.getSelectSqlFromObjectClass(objClass), DBManager.getInstance().getMysqlInforSchemaDataSource());
 	}
 	
 	/*

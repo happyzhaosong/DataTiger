@@ -38,7 +38,7 @@ public class WebSiteDTO extends BaseDTO {
 	private String alertTextToResetDTask = "";
 	
 	@DBColumn(name="multi_country")
-	private boolean multiCountry = false;
+	private int multiCountry = 0;
 
 	@DBColumn(name="place_holders")
 	private String placeHolders = "";
@@ -56,7 +56,7 @@ public class WebSiteDTO extends BaseDTO {
 	private int downloadTaskRegetDuration;
 	
 	@DBColumn(name="need_login")
-	private boolean needLogin = false;
+	private int needLogin = 0;
 	
 	@DBColumn(name="login_check_return_url")
 	private String loginCheckReturnUrl = "";
@@ -68,31 +68,31 @@ public class WebSiteDTO extends BaseDTO {
 	private String loginCheckReturnDataXPath = "";
 	
 	@DBColumn(name="test_passed")
-	private boolean testPassed = false;
+	private int testPassed = 0;
 	
 	@DBColumn(name="site_status")
-	private boolean siteStatus = false;
+	private int siteStatus = 0;
 	
-	@DBColumn(name="access_denied_page_element_xpath")
+	@DBColumn(name="access_denied_page_element_xp")
 	private String accessDeniedPageElementXpath = "";
 
-	@DBColumn(name="access_denied_page_element_value")
+	@DBColumn(name="access_denied_page_element_val")
 	private String accessDeniedPageElementValue = "";
 	
-	@DBColumn(name="need_scroll_page_url_charactor")
+	@DBColumn(name="need_scroll_page_url_char")
 	private String needScrollPageUrlCharactor = "";
 		
-	@DBColumn(name="not_need_scroll_page_url_charactor")
+	@DBColumn(name="not_need_scroll_page_url_char")
 	private String notNeedScrollPageUrlCharactor = "";	
 	
-	@DBColumn(name="set_high_level_task_url_charactor")
+	@DBColumn(name="set_high_level_task_url_char")
 	private String setHighLevelTaskUrlCharactor = "";	
 	
-	@DBColumn(name="set_middle_level_task_url_charactor")
+	@DBColumn(name="set_middle_level_task_url_char")
 	private String setMiddleLevelTaskUrlCharactor = "";	
 	
 	@DBColumn(name="show_img_in_browser")
-	private boolean showImgInBrowser = false;
+	private int showImgInBrowser = 0;
 	
 	private String testPassedString = "";
 	
@@ -106,11 +106,37 @@ public class WebSiteDTO extends BaseDTO {
 	
 	private List<ParseTplItemDTO> parseItemList = new ArrayList<ParseTplItemDTO>();
 
-	public boolean isShowImgInBrowser() {
+	public int getMultiCountry() {
+		return multiCountry;
+	}
+
+	public int getNeedLogin() {
+		return needLogin;
+	}
+
+	public int getTestPassed() {
+		return testPassed;
+	}
+
+	public int getSiteStatus() {
+		return siteStatus;
+	}
+
+	public int getShowImgInBrowser() {
 		return showImgInBrowser;
 	}
 
-	public void setShowImgInBrowser(boolean showImgInBrowser) {
+	public boolean isShowImgInBrowser() {
+		if(this.showImgInBrowser==1)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
+	}
+
+	public void setShowImgInBrowser(int showImgInBrowser) {
 		this.showImgInBrowser = showImgInBrowser;
 	}
 
@@ -198,10 +224,16 @@ public class WebSiteDTO extends BaseDTO {
 	}
 
 	public boolean isMultiCountry() {
-		return multiCountry;
+		if(this.multiCountry==1)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
 	}
 
-	public void setMultiCountry(boolean multiCountry) {
+	public void setMultiCountry(int multiCountry) {
 		this.multiCountry = multiCountry;
 	}
 
@@ -214,7 +246,7 @@ public class WebSiteDTO extends BaseDTO {
 	}
 
 	public String getTestPassedString() {
-		if(this.testPassed)
+		if(this.testPassed==1)
 		{
 			testPassedString = "Passed";
 		}else
@@ -229,7 +261,7 @@ public class WebSiteDTO extends BaseDTO {
 	}
 
 	public String getSiteStatusString() {
-		if(this.siteStatus)
+		if(this.siteStatus==1)
 		{
 			siteStatusString = "Product";
 		}else
@@ -262,18 +294,30 @@ public class WebSiteDTO extends BaseDTO {
 	}
 
 	public boolean isSiteStatus() {
-		return siteStatus;
+		if(this.siteStatus==1)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
 	}
 
-	public void setSiteStatus(boolean siteStatus) {
+	public void setSiteStatus(int siteStatus) {
 		this.siteStatus = siteStatus;
 	}
 
 	public boolean isTestPassed() {
-		return testPassed;
+		if(testPassed==1)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
 	}
 
-	public void setTestPassed(boolean testPassed) {
+	public void setTestPassed(int testPassed) {
 		this.testPassed = testPassed;
 	}
 
@@ -358,10 +402,16 @@ public class WebSiteDTO extends BaseDTO {
 	}
 
 	public boolean isNeedLogin() {
-		return needLogin;
+		if(needLogin==1)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
 	}
 
-	public void setNeedLogin(boolean needLogin) {
+	public void setNeedLogin(int needLogin) {
 		this.needLogin = needLogin;
 	}
 

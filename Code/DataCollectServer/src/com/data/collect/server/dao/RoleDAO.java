@@ -21,7 +21,7 @@ public class RoleDAO extends BaseDAO {
 	{
 		this.initStringBuffer();		
 		List<RoleDTO> retList = new ArrayList<RoleDTO>();		
-		String sql = "SELECT id, role_name, role_desc FROM role AS r, account_role_map AS arm ";
+		String sql = "SELECT id, role_name, role_desc FROM role r, account_role_map arm ";
 		this.whereBuf.append(" r.id = arm.role_id AND arm.account_id = ");
 		this.whereBuf.append(userId);
 		retList = retList.getClass().cast(this.selectDtoList(RoleDTO.class, sql));

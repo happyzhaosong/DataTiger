@@ -69,7 +69,7 @@ public class DBManagerBB extends BaseBB {
 				while(!StringTool.isEmpty(updateDownloadTaskIds))
 				{
 					String updateSql = "update "+tableName+" set download_task_level = '" + taskLevel + "' where download_task_id in(" + updateDownloadTaskIds + ")";
-					dbManagerDao.executeUpdateOrDeleteSql(updateSql, DBManager.getInstance().getMysqlDataSource());
+					dbManagerDao.executeUpdateOrDeleteSql(updateSql, DBManager.getInstance().getDataSource());
 					
 					updateDownloadTaskIds = downloadTaskDao.resetDownloadTaskApplyTimeAndLevelByWebSiteId(downloadTaskIdInWhereSql, taskLevel, resetApplyTime);
 				}
@@ -81,7 +81,7 @@ public class DBManagerBB extends BaseBB {
 				{
 					deleteSql = deleteSql + " where " + whereClause;
 				}
-				dbManagerDao.executeUpdateOrDeleteSql(deleteSql, DBManager.getInstance().getMysqlDataSource());				
+				dbManagerDao.executeUpdateOrDeleteSql(deleteSql, DBManager.getInstance().getDataSource());				
 			}
 		}
 		

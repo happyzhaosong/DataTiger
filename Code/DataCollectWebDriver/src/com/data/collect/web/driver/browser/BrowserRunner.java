@@ -2,6 +2,7 @@ package com.data.collect.web.driver.browser;
 
 
 import java.net.URLDecoder;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -54,7 +55,6 @@ import com.general.common.util.GetDeltaTimeTool;
 import com.general.common.util.LogTool;
 import com.general.common.util.StringTool;
 import com.general.common.util.URLTool;
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 public class BrowserRunner {
 	
@@ -324,9 +324,6 @@ public class BrowserRunner {
 				this.downloadTaskDao.saveDownloadTask(taskDto);
    		        getDltaTimeTool.getDeltaTime("Can not get website related dto save task back to db", retBuf, 0, false);
 			}
-		}catch(MySQLIntegrityConstraintViolationException ex)
-		{
-			LogTool.logText("Url exist: " + taskDto.getPageUrl(), this.getClass().getName());
 		}catch(Exception ex)
 		{
 			//LogTool.logError(ex);

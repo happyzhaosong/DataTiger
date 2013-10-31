@@ -83,7 +83,7 @@ public class DownloadTaskBB extends BaseBB {
 				{
 					deleteSql = deleteSql + " where " + whereClause;
 				}
-				downloadTaskDao.executeUpdateOrDeleteSql(deleteSql, DBManager.getInstance().getMysqlDataSource());				
+				downloadTaskDao.executeUpdateOrDeleteSql(deleteSql, DBManager.getInstance().getDataSource());				
 			}
 		}
 		
