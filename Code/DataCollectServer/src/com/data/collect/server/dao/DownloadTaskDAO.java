@@ -12,6 +12,7 @@ import com.data.collect.common.dto.DownloadTaskDTO;
 import com.general.common.dto.DBTableColumnDTO;
 import com.general.common.exception.EmptyStringException;
 import com.general.common.util.ClassTool;
+import com.general.common.util.DBTool;
 import com.general.common.util.StringTool;
 import com.general.server.dao.BaseDAO;
 import com.general.server.manager.DBManager;
@@ -335,7 +336,7 @@ public class DownloadTaskDAO extends BaseDAO {
 	public String resetDownloadTaskApplyTimeAndLevelByWebSiteId(String downloadTaskIdInWhereSql, String taskLevel, String resetApplyTime) throws Exception
 	{
 		String retDownloadTaskId = "";
-		List<Map<String,String>> idList = this.executeSelectSql(downloadTaskIdInWhereSql + " limit 0, 500" , DBManager.getInstance().getDataSource());
+		List<Map<String,String>> idList = this.executeSelectSql(DBTool.getCurrPageSql(downloadTaskIdInWhereSql, 0, 500) , DBManager.getInstance().getDataSource());
 		if(!ClassTool.isListEmpty(idList))
 		{
 			StringBuffer idBuf = new StringBuffer();

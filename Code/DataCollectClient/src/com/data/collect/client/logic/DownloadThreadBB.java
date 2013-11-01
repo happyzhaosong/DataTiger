@@ -219,11 +219,11 @@ public class DownloadThreadBB extends BaseBB {
 					dtDto.setId(-1);
 					dtDto.setPageUrl(url);
 					dtDto.setSiteId(Integer.parseInt(siteId));
-					dtDto.setIfContentPage(false);
+					dtDto.setIfContentPage(0);
 					dtDto.setInDbTime(String.valueOf(System.currentTimeMillis()));
 					dtDto.setApplyTime("");
-					dtDto.setIfSiteTopUrl(true);
-					dtDto.setIfTest(true);
+					dtDto.setIfSiteTopUrl(1);
+					dtDto.setIfTest(1);
 					dtDto.setParsedOutUrlCount(-1);
 					
 					downloadTaskDao.saveDownloadTask(dtDto);

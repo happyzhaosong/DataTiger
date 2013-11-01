@@ -615,15 +615,29 @@ public class BaseDAO {
 	{
 		if(this.getPageDto()!=null)
 		{
-			if(ClassTool.isNullObj(sqlBuf))
+			if(!ClassTool.isNullObj(sqlBuf))
 			{
+				/*
 				sqlBuf = new StringBuffer();
+				sqlBuf.insert(0, " select * from (select rownum r, t.* from ( ");
+				sqlBuf.append(" ) t where rownum < ");
+				sqlBuf.append(Integer.parseInt(this.getPageDto().getStart()) + Integer.parseInt(this.getPageDto().getLimit())); 
+				sqlBuf.append(" ) where r > =");
+				sqlBuf.append(this.getPageDto().getStart());
+				*/
+				String pageSql = DBTool.getCurrPageSql(sqlBuf.toString(), Integer.parseInt(this.getPageDto().getStart()), Integer.parseInt(this.getPageDto().getLimit()));
+				
+				sqlBuf.delete(0, sqlBuf.length());
+				
+				sqlBuf.append(pageSql);
 			}			
 			
+			/*
 			sqlBuf.append(" limit ");
 			sqlBuf.append(this.getPageDto().getStart());
 			sqlBuf.append(", ");
 			sqlBuf.append(this.getPageDto().getLimit());
+			*/
 		}
 	}
 }

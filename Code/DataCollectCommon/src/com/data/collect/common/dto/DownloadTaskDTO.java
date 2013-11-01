@@ -27,7 +27,7 @@ public class DownloadTaskDTO extends BaseDTO {
 	private int siteId = -1;
 		
 	@DBColumn(name="if_content_page")
-	private boolean ifContentPage = false;
+	private int ifContentPage = 0;
 	
 	/*
 	 * 判断该页面是否真的是内容页面的标志，-1 --- 还没有判断，0 --- 不是内容页， 1 --- 真的是内容页
@@ -42,10 +42,10 @@ public class DownloadTaskDTO extends BaseDTO {
 	private String applyTime = "";
 		
 	@DBColumn(name="if_site_top_url")
-	private boolean ifSiteTopUrl = false;
+	private int ifSiteTopUrl = 0;
 	
 	@DBColumn(name="if_test")
-	private boolean ifTest = false;	
+	private int ifTest = 0;	
 
 	@DBColumn(name="duration_info")
 	private String durationInfo = "";
@@ -74,7 +74,7 @@ public class DownloadTaskDTO extends BaseDTO {
 	@DBColumn(name="access_denied_date")
 	private String accessDeniedDate = "";
 	
-	@DBColumn(name="access_denied_thread_sleep_time")
+	@DBColumn(name="access_denied_thread_sleep_tim")
 	private long accessDeniedThreadSleepTime = -1;
 	
 	@DBColumn(name="reset_apply_time_reason")
@@ -204,10 +204,16 @@ public class DownloadTaskDTO extends BaseDTO {
 	}
 
 	public boolean isIfContentPage() {
-		return ifContentPage;
+		if(ifContentPage==1)
+		{
+			return true;
+		}else
+		{
+			return false;
+		}
 	}
 
-	public void setIfContentPage(boolean ifContentPage) {
+	public void setIfContentPage(int ifContentPage) {
 		this.ifContentPage = ifContentPage;
 	}
 
@@ -220,18 +226,30 @@ public class DownloadTaskDTO extends BaseDTO {
 	}
 
 	public boolean isIfSiteTopUrl() {
-		return ifSiteTopUrl;
+		if(ifSiteTopUrl==1)
+		{
+			return true;
+		}else
+		{
+			return false;	
+		}		
 	}
 
-	public void setIfSiteTopUrl(boolean ifSiteTopUrl) {
+	public void setIfSiteTopUrl(int ifSiteTopUrl) {
 		this.ifSiteTopUrl = ifSiteTopUrl;
 	}
 
 	public boolean isIfTest() {
-		return ifTest;
+		if(ifTest==1)
+		{
+			return true;
+		}else
+		{
+			return false;	
+		}
 	}
 
-	public void setIfTest(boolean ifTest) {
+	public void setIfTest(int ifTest) {
 		this.ifTest = ifTest;
 	}
 

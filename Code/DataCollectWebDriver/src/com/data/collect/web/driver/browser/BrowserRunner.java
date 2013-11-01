@@ -1950,10 +1950,10 @@ public class BrowserRunner {
 			newTaskDto.setPageUrl(url);
 			newTaskDto.setDecodePageUrl(URLDecoder.decode(url, this.pageCharset));
 			newTaskDto.setSiteId(linkParseDto.getSiteId());
-			newTaskDto.setIfContentPage(ifContentPage);
+			newTaskDto.setIfContentPage(StringTool.getIntByBoolean(ifContentPage));
 			newTaskDto.setInDbTime(String.valueOf(System.currentTimeMillis()));
-			newTaskDto.setIfSiteTopUrl(false);
-			newTaskDto.setIfTest(parentTaskDto.isIfTest());
+			newTaskDto.setIfSiteTopUrl(0);
+			newTaskDto.setIfTest(StringTool.getIntByBoolean(parentTaskDto.isIfTest()));
 			newTaskDto.setTaskRunDeltaTime(0);
 			newTaskDto.setApplyTime("");
 			

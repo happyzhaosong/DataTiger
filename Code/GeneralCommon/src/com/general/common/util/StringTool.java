@@ -59,6 +59,17 @@ public class StringTool extends BaseTool {
 	}
 	
 	
+	public static int getIntByBoolean(boolean val)
+	{
+		if(val)
+		{
+			return 1;
+		}else
+		{
+			return 0 ;
+		}
+	}
+	
 	public static String[] getMatchUrlArray(String url, Map<String, String[]> urlChaArrMap)
 	{
 		String ret[] = null;

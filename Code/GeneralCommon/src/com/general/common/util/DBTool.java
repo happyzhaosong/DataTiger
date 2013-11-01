@@ -347,6 +347,25 @@ public class DBTool extends BaseTool {
 	}
 	
 	
+	public static String getCurrPageSql(String sql, int start, int limit)
+	{
+		if(!StringTool.isEmpty(sql))
+		{
+			StringBuffer sqlBuf = new StringBuffer();
+			sqlBuf.append(" select * from (select rownum r, t.* from ( ");
+			sqlBuf.append(sql);
+			sqlBuf.append(" ) t where rownum < ");
+			sqlBuf.append(start + limit); 
+			sqlBuf.append(" ) where r > =");
+			sqlBuf.append(start);
+			return sqlBuf.toString();
+		}else
+		{
+			return "";
+		}		
+	}
+	
+	
 	public static void parseSortAndFilter(BasePageDTO pageDto) throws Exception
 	{
 		if(!ClassTool.isNullObj(pageDto))
