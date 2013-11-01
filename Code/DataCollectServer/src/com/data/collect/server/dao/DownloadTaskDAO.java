@@ -23,13 +23,13 @@ public class DownloadTaskDAO extends BaseDAO {
 	{
 		boolean ret = false;
 		this.initStringBuffer();
-		String sql = "select applying_task,apply_time from download_thread_apply_task_status";
+		String sql = "select applying_task,apply_time from download_thread_apply_task_sta";
 		List<Object> list = this.selectDtoList(null, sql); 
 		//this.executeSelectSql(sql, DBManager.getInstance().getMysqlDataSource());
 		if(ClassTool.isNullObj(list) || list.size()==0)
 		{
 			this.initStringBuffer();
-			sql = "insert into download_thread_apply_task_status(applying_task, apply_time) values(true,'"+System.currentTimeMillis()+"')";
+			sql = "insert into download_thread_apply_task_sta(applying_task, apply_time) values(1,'"+System.currentTimeMillis()+"')";
 			this.executeInsertSql(sql, DBManager.getInstance().getDataSource());
 		}else
 		{
@@ -61,7 +61,7 @@ public class DownloadTaskDAO extends BaseDAO {
 	public void setThreadApplyingTask(boolean apply) throws Exception
 	{
 		this.initStringBuffer();
-		String sql = "update download_thread_apply_task_status set applying_task = " + apply + ", apply_time = '"+System.currentTimeMillis()+"'";
+		String sql = "update download_thread_apply_task_sta set applying_task = " + StringTool.getIntByBoolean(apply) + ", apply_time = '"+System.currentTimeMillis()+"'";
 		this.updateDto(sql);
 	}
 	
