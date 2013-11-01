@@ -78,7 +78,7 @@ public class DownloadThreadDAO extends BaseDAO {
 			
 			if(this.BY_WEB_SITE_ID_RUNNING_THREAD.equals(byKey))
 			{
-				this.whereBuf.append(" and (stop_time is null or stop_time='')  ");				
+				this.whereBuf.append(" and (stop_time is null or stop_time=' ')  ");				
 			}
 
 			if(this.BY_WEB_SITE_ID_TEST_THREAD.equals(byKey))
@@ -104,10 +104,10 @@ public class DownloadThreadDAO extends BaseDAO {
 		{
 			if(running)
 			{
-				this.whereBuf.append(" stop_time is null or stop_time='' and ");	
+				this.whereBuf.append(" stop_time is null or stop_time=' ' and ");	
 			}else
 			{
-				this.whereBuf.append(" stop_time is not null and stop_time!='' and ");	
+				this.whereBuf.append(" stop_time is not null and stop_time!=' ' and ");	
 			}
 		}
 		
@@ -143,7 +143,7 @@ public class DownloadThreadDAO extends BaseDAO {
 		this.whereBuf.append(" = ");
 		this.whereBuf.append(webSiteId.trim());
 			
-		this.whereBuf.append(" and (stop_time is null or stop_time='')  ");				
+		this.whereBuf.append(" and (stop_time is null or stop_time=' ')  ");				
 		
 		this.whereBuf.append(" and thread_type != ");
 		this.whereBuf.append(Constants.DOWNLOAD_THREAD_TYPE_ALL);
@@ -164,7 +164,7 @@ public class DownloadThreadDAO extends BaseDAO {
 		this.whereBuf.append(" = ");
 		this.whereBuf.append(webSiteId.trim());
 			
-		this.whereBuf.append(" and (stop_time is null or stop_time='')  ");				
+		this.whereBuf.append(" and (stop_time is null or stop_time=' ')  ");				
 		
 		this.whereBuf.append(" and thread_type != ");
 		this.whereBuf.append(Constants.DOWNLOAD_THREAD_TYPE_ALL);

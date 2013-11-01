@@ -113,7 +113,7 @@ public class DownloadMqMessageDAO extends BaseDAO {
 			}
 		}else if(this.BY_UNRECEIVED_MQ_MESSAGE.equals(byKey))
 		{
-			this.whereBuf.append(" receive_time is null or receive_time='' ");
+			this.whereBuf.append(" receive_time is null or receive_time=' ' ");
 		}
 		List<MQMessageDTO> ret = new ArrayList<MQMessageDTO>();
 		ret = ret.getClass().cast(this.selectDtoList(MQMessageDTO.class));

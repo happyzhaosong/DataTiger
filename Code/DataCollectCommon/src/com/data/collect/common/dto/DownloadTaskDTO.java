@@ -212,6 +212,10 @@ public class DownloadTaskDTO extends BaseDTO {
 			return false;
 		}
 	}
+	
+	public int getIfContentPage() {
+		return ifContentPage;
+	}
 
 	public void setIfContentPage(int ifContentPage) {
 		this.ifContentPage = ifContentPage;
@@ -235,6 +239,10 @@ public class DownloadTaskDTO extends BaseDTO {
 		}		
 	}
 
+	public int getIfSiteTopUrl() {
+		return ifSiteTopUrl;
+	}
+	
 	public void setIfSiteTopUrl(int ifSiteTopUrl) {
 		this.ifSiteTopUrl = ifSiteTopUrl;
 	}
@@ -249,6 +257,10 @@ public class DownloadTaskDTO extends BaseDTO {
 		}
 	}
 
+	public int getIfTest() {
+		return ifTest;
+	}
+	
 	public void setIfTest(int ifTest) {
 		this.ifTest = ifTest;
 	}

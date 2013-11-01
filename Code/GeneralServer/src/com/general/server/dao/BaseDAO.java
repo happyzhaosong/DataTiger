@@ -1,8 +1,7 @@
 package com.general.server.dao;
 
 import java.sql.Connection;
-
-
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
@@ -116,10 +115,17 @@ public class BaseDAO {
 		String sql = "";
 		try{		
 			conn = DBManager.getInstance().getDataSource().getConnection();
-			Statement stmt = conn.createStatement();			
+			/*
+			Statement stmt = conn.createStatement();			 
 			sql = DBTool.getInsertSqlFromObjectClass(dto);
 			stmt.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
 			ResultSet rs = stmt.getGeneratedKeys();
+			*/
+			sql = DBTool.getInsertSqlFromObjectClass(dto);
+			PreparedStatement pstmt =(PreparedStatement)conn.prepareStatement(sql,new String[]{"ID"});
+			pstmt.executeUpdate();  
+			ResultSet rs=pstmt.getGeneratedKeys();
+			
 			if(rs!=null)
 			{
 				if(rs.next())
@@ -534,7 +540,7 @@ public class BaseDAO {
 						whereBuf.append(this.getPageDto().getFilterValue().trim());
 						whereBuf.append("%' and ");
 						whereBuf.append(this.getPageDto().getFilter());
-						whereBuf.append(" != '' ");
+						whereBuf.append(" != ' ' ");
 					}else
 					{
 						whereBuf.append(" '");

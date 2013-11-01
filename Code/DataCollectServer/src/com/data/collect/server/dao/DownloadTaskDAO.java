@@ -89,7 +89,7 @@ public class DownloadTaskDAO extends BaseDAO {
 		this.whereBuf.append(" site_id ");
 		this.whereBuf.append(" = ");
 		this.whereBuf.append(siteId.trim());
-		this.whereBuf.append(" and useless_content_page = 0 and apply_time = '' ");
+		this.whereBuf.append(" and useless_content_page = 0 and apply_time = ' ' ");
 		
 		if(ifContentPage==0 || ifContentPage==1)
 		{
@@ -111,7 +111,7 @@ public class DownloadTaskDAO extends BaseDAO {
 		this.whereBuf.append(" site_id ");
 		this.whereBuf.append(" = ");
 		this.whereBuf.append(siteId.trim());
-		this.whereBuf.append(" and useless_content_page = 0 and apply_time = '' ");
+		this.whereBuf.append(" and useless_content_page = 0 and apply_time = ' ' ");
 		
 		if(ifContentPage==0 || ifContentPage==1)
 		{
@@ -303,7 +303,7 @@ public class DownloadTaskDAO extends BaseDAO {
 			this.whereBuf.append(") ");
 		}
 		
-		this.updateDto("update download_task set apply_time = '', if_really_content_page = -1, reset_apply_time_time = '" + System.currentTimeMillis() + "', reset_apply_time_reason = 'Reset by web site editor manually' ");
+		this.updateDto("update download_task set apply_time = ' ', if_really_content_page = -1, reset_apply_time_time = '" + System.currentTimeMillis() + "', reset_apply_time_reason = 'Reset by web site editor manually' ");
 	}
 	
 
@@ -329,7 +329,7 @@ public class DownloadTaskDAO extends BaseDAO {
 			this.whereBuf.append(") ");
 		}
 		
-		this.updateDto("update download_task set apply_time = '', task_level = " + taskLevel);
+		this.updateDto("update download_task set apply_time = ' ', task_level = " + taskLevel);
 	}
 	
 	
@@ -365,7 +365,7 @@ public class DownloadTaskDAO extends BaseDAO {
 				sqlBuf.append("update download_task set ");
 				if("true".equalsIgnoreCase(resetApplyTime))
 				{
-					sqlBuf.append(" apply_time = '', ");	
+					sqlBuf.append(" apply_time = ' ', ");	
 				}				
 				sqlBuf.append(" task_level =  ");
 				sqlBuf.append(taskLevel);

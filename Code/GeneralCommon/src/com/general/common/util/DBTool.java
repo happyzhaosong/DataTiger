@@ -317,11 +317,15 @@ public class DBTool extends BaseTool {
 		}
 		
 		Object ret = ClassTool.invokeGetMethod(objInstance, field);
+		
 		if(GeneralConstants.CLASS_TYPE_STRING.equals(fieldType))
 		{
-			if(!ClassTool.isNullObj(ret))
+			if(!StringTool.isEmpty((String)ret))
 			{
 				ret = ret.toString().replaceAll("'", "\\\\'");
+			}else
+			{
+				ret = " ";
 			}
 		}
 		buf.append(ret);
