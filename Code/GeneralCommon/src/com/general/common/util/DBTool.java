@@ -330,12 +330,24 @@ public class DBTool extends BaseTool {
 		{
 			if(!StringTool.isEmpty((String)ret))
 			{
-				ret = ret.toString().replaceAll("'", "\\\\'");
+				ret = ret.toString().replaceAll("'", "''");
 			}else
 			{
 				ret = " ";
 			}
 		}
+		
+		if(GeneralConstants.CLASS_TYPE_BOOLEAN.equals(fieldType))
+		{
+			if(((Boolean)ret).booleanValue())
+			{
+				ret = 1;
+			}else
+			{
+				ret = 0;
+			}
+		}
+		
 		buf.append(ret);
 		
 		

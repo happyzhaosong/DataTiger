@@ -238,7 +238,7 @@ public class DBManagerDAO extends BaseDAO {
 		if(Constants.DATA_TYPE_STRING.equalsIgnoreCase(cType))
 		{
 			retBuf.append(Constants.SEPERATOR_SINGLE_QUOTES);
-			retBuf.append(cValue.trim().replaceAll("'", "\\\\'"));		
+			retBuf.append(cValue.trim().replaceAll("'", "''"));		
 			retBuf.append(Constants.SEPERATOR_SINGLE_QUOTES);
 		}else if(Constants.DATA_TYPE_NUMBER.equalsIgnoreCase(cType))
 		{
