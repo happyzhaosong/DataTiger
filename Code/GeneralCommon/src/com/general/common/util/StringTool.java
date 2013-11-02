@@ -923,6 +923,26 @@ public class StringTool extends BaseTool {
     }
     
     
+    public static String substring(String src, String startStr){   
+        if(!StringTool.isEmpty(src) && !StringTool.isEmpty(startStr))
+        {
+        	src = src.trim();
+        	startStr = startStr.trim();
+        	int idx = src.indexOf(startStr);
+        	if(idx>-1)
+        	{
+        		return src.substring(idx + 1);
+        	}else
+        	{
+        		return src;
+        	}
+        }else
+        {
+        	 return "";   
+        }
+    }
+    
+    
     public static String getFirstNumWordsInString(String str, int wordCount)
     {
     	if(StringTool.isEmpty(str))

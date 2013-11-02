@@ -159,7 +159,7 @@ Ext.define('DC.comp.TableColumnListComboBox', {
      alias:'widget.TableColumnListComboBox',
      listConfig: {
          getInnerTpl: function() {
-        	 var ret = '<div title="{columnDesc}">{columnName}     {columnType}     {columnDesc}</div>';        	
+        	 var ret = '<div title="{columnDesc}">{columnName}     <font color=red>{columnType}</font>     {columnDesc}</div>';        	
              return ret;
          }
      },

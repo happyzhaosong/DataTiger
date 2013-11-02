@@ -9,22 +9,22 @@ import com.general.common.util.ClassTool;
 import com.general.common.util.StringTool;
 import com.general.common.dto.ParseTplItemDTO;
 
-@DBTable(name="columns")
+@DBTable(name="USER_TAB_COLUMNS ut, USER_COL_COMMENTS uc ")
 public class DBTableColumnDTO extends BaseDTO implements Comparable{
 
-	@DBColumn(name="TABLE_NAME")
+	@DBColumn(name="ut.TABLE_NAME")
 	private String tableName = "";
 	
-	@DBColumn(name="COLUMN_NAME")
+	@DBColumn(name="ut.COLUMN_NAME")
 	private String columnName = "";
 	
-	@DBColumn(name="COLUMN_TYPE")
+	@DBColumn(name="ut.DATA_TYPE")
 	private String columnType = "";
 	
-	@DBColumn(name="CHARACTER_MAXIMUM_LENGTH")
+	@DBColumn(name="ut.DATA_LENGTH")
 	private String columnMaxLen = "";
 	
-	@DBColumn(name="COLUMN_COMMENT")
+	@DBColumn(name="uc.COMMENTS")
 	private String columnDesc = "";
 	
 	private String columnValue = "";

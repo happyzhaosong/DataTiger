@@ -222,11 +222,13 @@ public class BaseDAO {
 		return this.selectDtoList(objClass, sql, DBManager.getInstance().getDataSource());
 	}
 
+	/*
 	protected List<Object> selectDtoListFromInformationSchema(Class objClass) throws Exception
 	{
 		return this.selectDtoList(objClass, DBTool.getSelectSqlFromObjectClass(objClass), DBManager.getInstance().getDataSource());
 		//return this.selectDtoList(objClass, DBTool.getSelectSqlFromObjectClass(objClass), DBManager.getInstance().getMysqlInforSchemaDataSource());
 	}
+	*/
 	
 	/*
 	 * execute insert sql

@@ -108,39 +108,47 @@ public class DBTool extends BaseTool {
 	
 	public static String getStringValueFromResultSet(ResultSet result, String columnName, String columnType) throws Exception
 	{
-		if(GeneralConstants.CLASS_TYPE_INT.equals(columnType))
+		if(!StringTool.isEmpty(columnName))
 		{
-			return String.valueOf(result.getInt(columnName));
-		}else if(GeneralConstants.CLASS_TYPE_LONG.equals(columnType))
-		{
-			return String.valueOf(result.getLong(columnName));
-		}else if(GeneralConstants.CLASS_TYPE_BOOLEAN.equals(columnType))
-		{
-			return String.valueOf(result.getBoolean(columnName));
-		}else if(GeneralConstants.CLASS_TYPE_DOUBLE.equals(columnType))
-		{
-			return String.valueOf(result.getDouble(columnName));
-		}else if(GeneralConstants.CLASS_TYPE_STRING.equals(columnType))
-		{
-			String ret = result.getString(columnName);
-			if(ret==null) 
+			columnName = StringTool.substring(columnName, ".");
+			
+			if(GeneralConstants.CLASS_TYPE_INT.equals(columnType))
 			{
-				return "";
+				return String.valueOf(result.getInt(columnName));
+			}else if(GeneralConstants.CLASS_TYPE_LONG.equals(columnType))
+			{
+				return String.valueOf(result.getLong(columnName));
+			}else if(GeneralConstants.CLASS_TYPE_BOOLEAN.equals(columnType))
+			{
+				return String.valueOf(result.getBoolean(columnName));
+			}else if(GeneralConstants.CLASS_TYPE_DOUBLE.equals(columnType))
+			{
+				return String.valueOf(result.getDouble(columnName));
+			}else if(GeneralConstants.CLASS_TYPE_STRING.equals(columnType))
+			{
+				String ret = result.getString(columnName);
+				if(ret==null) 
+				{
+					return "";
+				}else
+				{
+					return ret.trim();
+				}
 			}else
 			{
-				return ret.trim();
+				Object obj = result.getObject(columnName);
+				if(obj==null)
+				{
+					return "";
+				}else
+				{
+					return obj.toString().trim();
+				}
 			}
 		}else
 		{
-			Object obj = result.getObject(columnName);
-			if(obj==null)
-			{
-				return "";
-			}else
-			{
-				return obj.toString().trim();
-			}
-		}		
+			return "";
+		}
 	}
 	
 	public static String getUpdateSqlFromObjectClass(Object objInstance) throws Exception

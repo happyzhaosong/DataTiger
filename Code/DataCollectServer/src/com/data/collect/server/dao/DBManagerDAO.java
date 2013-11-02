@@ -316,7 +316,7 @@ public class DBManagerDAO extends BaseDAO {
 	
 	
 	public List<DBTableDTO> getDataTableList() throws Exception {
-		return this.getDataTableListBy("", "");
+		return this.getDataTableListBy(this.BY_TABLE_NAME, "");
 	}
 
 	public List<DBTableColumnDTO> getDataTableColumnList(String tableName) throws Exception
@@ -368,23 +368,6 @@ public class DBManagerDAO extends BaseDAO {
     private List<DBTableDTO> getDataTableListBy(String byKey, String byValue) throws Exception
 	{    	
     	this.initStringBuffer();   
-    	
-    	/*
-    	this.whereBuf.append(" table_schema = '");
-		this.whereBuf.append(DBManager.getInstance().getDBMQConfig().getDbName());
-		this.whereBuf.append("' and table_name like '");
-		this.whereBuf.append(Constants.DATA_TABLE_PREFIX);
-		
-		if(this.BY_TABLE_NAME.equals(byKey))
-		{
-			if(!StringTool.isEmpty(byValue))
-			{
-				this.whereBuf.append(byValue);
-			}
-		}
-		
-		this.whereBuf.append("%'");
-		*/
 		
     	if(this.BY_TABLE_NAME.equals(byKey))
 		{
@@ -400,7 +383,7 @@ public class DBManagerDAO extends BaseDAO {
 		}   	
     	
 		List<DBTableDTO> ret = new ArrayList<DBTableDTO>();
-		ret = ret.getClass().cast(this.selectDtoListFromInformationSchema(DBTableDTO.class));
+		ret = ret.getClass().cast(this.selectDtoList(DBTableDTO.class));
 		if(ret!=null)
 		{
 			int size = ret.size();
@@ -418,32 +401,43 @@ public class DBManagerDAO extends BaseDAO {
     private List<DBTableColumnDTO> getDataTableColumnListBy(String byKey, String byValue) throws Exception
 	{    	
     	this.initStringBuffer();
-    	/*
-    	this.whereBuf.append(" table_schema = '");
-		this.whereBuf.append(DBManager.getInstance().getDBMQConfig().getDbName());
-		this.whereBuf.append("'");
-		
-		if(this.BY_TABLE_NAME.equals(byKey))
-		{
-			this.whereBuf.append(" and table_name  = '");
-			this.whereBuf.append(byValue);
-			this.whereBuf.append("'");					
-		}
-		
-		//this.orderByBuf.append(" column_name asc ");
-		*/
 		
 		if(this.BY_TABLE_NAME.equals(byKey))
 		{
 			if(!StringTool.isEmpty(byValue))
 			{
-				this.whereBuf.append(" and table_name  = '");
-				this.whereBuf.append(byValue);
-				this.whereBuf.append("'");
+				this.whereBuf.append(" lower(ut.table_name)  = '");
+				this.whereBuf.append(byValue.toLowerCase());
+				this.whereBuf.append("' and ut.table_name = uc.table_name and ut.column_name = uc.column_name ");
 			}
 		}
 		
 		List<DBTableColumnDTO> ret = new ArrayList<DBTableColumnDTO>();
-		return ret.getClass().cast(this.selectDtoListFromInformationSchema(DBTableColumnDTO.class));
-	}	
+		ret = ret.getClass().cast(this.selectDtoList(DBTableColumnDTO.class));
+		
+		
+		return ret;
+	}
+    
+    /*
+    private void updateDBTableColumnComments(List<DBTableColumnDTO> cDtoList) throws Exception
+    {
+    	if(!ClassTool.isListEmpty(cDtoList))
+    	{
+    		int size = cDtoList.size();
+    		for(int i=0;i<size;i++)
+    		{
+    			DBTableColumnDTO cDto = cDtoList.get(i);
+    			
+    			String tName = cDto.getTableName();
+    			String cName = cDto.getColumnName();
+    			
+    			if(!StringTool.isEmpty(tName) && !StringTool.isEmpty(cName))
+    			{
+    				
+    			}
+    		}
+    	}
+    }
+    */
 }

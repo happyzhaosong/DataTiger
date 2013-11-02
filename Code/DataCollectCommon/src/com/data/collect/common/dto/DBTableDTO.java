@@ -9,13 +9,13 @@ import com.general.common.dto.BaseDTO;
 import com.general.common.dto.DBTableColumnDTO;
 import com.general.common.dto.ParseTplItemDTO;
 
-@DBTable(name="tables")
+@DBTable(name="user_tab_comments")
 public class DBTableDTO extends BaseDTO {
 	
 	@DBColumn(name="TABLE_NAME")
 	private String tableName = "";
 	
-	@DBColumn(name="TABLE_COMMENT")
+	@DBColumn(name="COMMENTS")
 	private String tableDesc = "";
 	
 	private List<DBTableColumnDTO> columnList = null;
