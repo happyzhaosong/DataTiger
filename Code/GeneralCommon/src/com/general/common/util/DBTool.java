@@ -378,7 +378,7 @@ public class DBTool extends BaseTool {
 			StringBuffer sqlBuf = new StringBuffer();
 			sqlBuf.append(" select * from (select rownum r, t.* from ( ");
 			sqlBuf.append(sql);
-			sqlBuf.append(" ) t where rownum < ");
+			sqlBuf.append(" ) t where rownum <= ");
 			sqlBuf.append(start + limit); 
 			sqlBuf.append(" ) where r > =");
 			sqlBuf.append(start);
