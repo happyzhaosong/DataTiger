@@ -69,7 +69,7 @@ public class LogTool extends BaseTool {
 			{
 				LogTool.initLogger(className);
 				LogTool.getLogger().debug(text);
-				System.out.println(className + "  " + text);
+				//System.out.println(className + "  " + text);
 			}
 		}catch(Exception ex)
 		{

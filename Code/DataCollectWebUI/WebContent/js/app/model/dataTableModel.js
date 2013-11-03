@@ -20,7 +20,7 @@ Ext.define('DC.model.DBTableColumn', {
 Ext.define('DC.model.DataTableData', {
 	 extend: 'Ext.data.Model',
   fields: [
-      {name: dataId , type: 'int'},
+      {name: 'ID' , type: 'int'},
       {name: dataColumnDownloadTaskId , type: 'int'},
       {name: dataColumnDownloadTaskPageUrl , type: 'string'},
       {name: dataColumnDownloadTaskLevel , type: 'int'},

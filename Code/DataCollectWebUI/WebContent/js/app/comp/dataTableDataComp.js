@@ -15,7 +15,7 @@ Ext.define('DC.comp.DataTableDataListPanel', {
 	    selModel: Ext.create('Ext.selection.CheckboxModel',{}),
 	    columns: [
 	  	    { xtype: 'rownumberer', width: 50, sortable: false},	              
-	        { text: 'Table Id', dataIndex: dataId, flex: 1 , sortable: true, hideable: false, renderer: rendererToolGlobal.renderUrlLinkStyle},
+	        { text: 'Table Id', dataIndex: 'ID', flex: 1 , sortable: true, hideable: false, renderer: rendererToolGlobal.renderUrlLinkStyle},
 	        { text: 'Download Task Id', dataIndex: dataColumnDownloadTaskId, flex: 1 , sortable: true, hideable: false, renderer: rendererToolGlobal.renderUrlLinkStyle},        
 	        { text: 'Download Task Page Url', dataIndex: dataColumnDownloadTaskPageUrl, flex: 3 , sortable: true, hideable: false, renderer: rendererToolGlobal.renderUrlLinkStyle},        
 	        { text: 'Download Task Level', dataIndex: dataColumnDownloadTaskLevel, flex: 1 , sortable: true, hideable: false},       
@@ -42,12 +42,12 @@ Ext.define('DC.comp.DataTableDataListPanel', {
 	    				formToolGlobal.createSearchPanelItem(Ext.getCmp(idDataTableDataSearchPanel), Ext.getCmp(idDataTableDataListPanel), dataObj);
 	    			}else if(cIdx==4)
 	    			{
-	     				if(stringToolGlobal.isEmpty(dataObj.download_task_page_url))
+	     				if(stringToolGlobal.isEmpty(dataObj.DOWNLOAD_TASK_PAGE_URL))
 	    				{
 	    					Ext.Msg.alert('Alert', "Download task page url can not be empty.");	
 	    				}else
 	    				{
-	    					window.open(dataObj.download_task_page_url,'newWindow','height=800,width=1000,top=0,left=0,toolbar=yes,menubar=yes,scrollbars=yes, resizable=yes,location=yes, status=yes'); 
+	    					window.open(dataObj.DOWNLOAD_TASK_PAGE_URL,'newWindow','height=800,width=1000,top=0,left=0,toolbar=yes,menubar=yes,scrollbars=yes, resizable=yes,location=yes, status=yes'); 
 	    				} 
 	    			}else
 	    			{

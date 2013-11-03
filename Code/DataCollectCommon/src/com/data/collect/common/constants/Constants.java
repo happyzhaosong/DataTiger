@@ -163,13 +163,13 @@ public class Constants extends GeneralConstants{
 	//5---Worker thread
 	public static final int DOWNLOAD_THREAD_TYPE_WORKER = 5;
 	
-	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PARENT_PAGE_URL = "download_task_parent_page_url";
-	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PAGE_URL = "download_task_page_url";
-	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_ID = "download_task_id";
-	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_LEVEL = "download_task_level";
-	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_DATA_PARSE_TIME = "download_task_data_parse_time";
-	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_DATA_PARSE_TIME_NUMBER = "download_task_data_parse_time_number";	
-	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_USELESS_CONTENT_PAGE = "download_task_useless_content_page";	
+	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PARENT_PAGE_URL = "DOWNLOAD_TASK_PARENT_PAGE_URL";
+	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_PAGE_URL = "DOWNLOAD_TASK_PAGE_URL";
+	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_ID = "DOWNLOAD_TASK_ID";
+	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_LEVEL = "DOWNLOAD_TASK_LEVEL";
+	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_DATA_PARSE_TIME = "DOWNLOAD_TASK_DATA_PARSE_TIME";
+	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_DATA_PARSE_TIME_NUMBER = "DOWNLOAD_TASK_DATA_PARSE_TIME_";	
+	public static final String DATA_TABLE_COLUMN_NAME_DOWNLOAD_TASK_USELESS_CONTENT_PAGE = "DOWNLOAD_TASK_USELESS_CONTENT";	
 
 	public static final String RESET_APPLY_TIME = "RESET_APPLY_TIME";	
 	public static final String DOWNLOAD_TASK_LEVEL = "DOWNLOAD_TASK_LEVEL";	
