@@ -140,16 +140,20 @@ public class ConfigTool extends BaseTool {
 		{
 			props.setProperty("log4j.rootLogger", "INFO,R2");
 			props.setProperty("log4j.appender.R2.File", ConfigTool.getLogDirectory() + ConfigTool.DEFAULT_LOG_FILE_NAME);
-			props.setProperty("log4j.appender.R2", "org.apache.log4j.DailyRollingFileAppender");
-
-			/*
+			
+					
 			props.setProperty("log4j.appender.R2", "org.apache.log4j.RollingFileAppender");
 			props.setProperty("log4j.appender.R2.MaxFileSize", "10MB");
 			props.setProperty("log4j.appender.R2.MaxBackupIndex", "10");
-			*/
+			
 			
 			props.setProperty("log4j.appender.R2.layout", "org.apache.log4j.PatternLayout");
+			
+			/*
+			props.setProperty("log4j.appender.R2.DatePattern", "'.'yyyy-MM-dd-HH-mm");			
+			props.setProperty("log4j.appender.R2", "org.apache.log4j.DailyRollingFileAppender");			
 			props.setProperty("log4j.appender.R2.layout.ConversionPattern", "%d{yyyy-MM-dd HH:mm:ss,SSS} [%t] [%c] [%p] - %m%n");
+			*/
 			FileTool.writePropertiesFile(log4jConfigFile, props);
 		}		
 		return log4jConfigFile;

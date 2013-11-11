@@ -380,7 +380,7 @@ public class DBTool extends BaseTool {
 			sqlBuf.append(sql);
 			sqlBuf.append(" ) t where rownum <= ");
 			sqlBuf.append(start + limit); 
-			sqlBuf.append(" ) where r > =");
+			sqlBuf.append(" ) where r > ");
 			sqlBuf.append(start);
 			return sqlBuf.toString();
 		}else
