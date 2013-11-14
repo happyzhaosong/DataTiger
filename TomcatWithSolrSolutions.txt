@@ -1,0 +1,119 @@
+Tomcat 上部署 solor 心得体会与步骤
+
+1.   安装环境
+
+a)    运行环境：apache-tomcat-7.0.30，作为服务。
+
+b)    Solr版本: apache-solr-4.5.1
+
+c)    分词器: mmseg4j-1.6.2
+
+d)    词库版本: sogou-dic
+
+
+2.   准备工作
+
+a)    软件下载地址：
+
+         i.      Solr下载地址：http://lucene.apache.org/solr/
+
+        ii.      Tomact 下载地址：http://tomcat.apache.org/
+
+       iii.      分词器：http://code.google.com/p/mmseg4j/
+
+        iv.      Sougou词库：https://code.google.com/p/mmseg4j/downloads/detail?name=sogou-dic-utf8.zip&can=2&q
+
+         v.      Tomcat 需要依赖java环境, jre下载地址:http://www.oracle.com/technetwork/indexes/downloads/index.html#java
+
+3.   安装过程
+
+a)    先安装jre或者jvm
+
+b)    安装Tomcat
+
+c)    完成以上2步后，解压出apache-solr-4.5.1 定位到dist目录： 
+
+【Solr学习札记】1.安装步骤详解
+
+将 apache-solr-4.5.1.war 重命名为: solr.war
+
+d)    定位到Tomcat的安装目录,
+
+将solr.war复制到webapps目录下，如果Tomcat是运行状态，/solr/这个目录会自动生成，若没有生成，请检查Tomcat是否为运行状态。
+
+e)     接下来要创建solr索引要存放的位置了。 首先新建一个/solr-tomcat/ 文件夹，建在哪里都行，我这里建立在了：D:\solr-tomcat\
+
+1.安装步骤详解 ,然后在\solr-tomcat\下，建立一个solr文件夹. 然后将 解压后的solr目录里面的example\solr\
+
+1.安装步骤详解 下面的所有文件复制到刚刚建立的\solr-tomcat\solr\目录下去。
+
+f)     接下来就是配置solr.home 了，方式如下：
+
+	1.如果是用tomcat\bin 目录下的 catalina.bat 启动tomcat，则编辑此文件添加如下行在最前面
+	   
+		set JAVA_OPTS="-Dsolr.solr.home=E:\Tool\apache-tomcat-6.0.35-windows-x64\solr"
+
+		if not "%LOGGING_CONFIG%" == "" goto noJuliConfig
+		set LOGGING_CONFIG=-Dnop
+		if not exist "%CATALINA_BASE%\conf\logging.properties" goto noJuliConfig
+		set LOGGING_CONFIG=-Djava.util.logging.config.file="%CATALINA_BASE%\conf\logging.properties"
+		:noJuliConfig
+		set JAVA_OPTS=%JAVA_OPTS% %LOGGING_CONFIG% 
+		
+		if not "%LOGGING_MANAGER%" == "" goto noJuliManager
+		set LOGGING_MANAGER=-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager
+		:noJuliManager
+		set JAVA_OPTS=%JAVA_OPTS% %LOGGING_MANAGER% 
+
+		rem ----- Execute The Requested Command ---------------------------------------
+
+
+
+        2.基于JNDI： (本人使用的该种方式.)
+
+	在tomcat安装目录下定位到 /conf/
+
+1.安装步骤详解
+
+进入 /catalina/, 创建/localhost/ （若有该目录，怎不需要创建）,在/localhost/目录下创建solr.xml文件，里面的内容为：
+
+<Context docBase="C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\solr" debug="0" crossContext="true">
+
+<Environment name="solr/home" type="java.lang.String" value="D:\solr-tomcat\solr" override="true"/>
+
+</Context>
+
+这里说明下：
+
+docBase的值为 Tomcat目录下webapps\solr目录，也就是，自动创建出来的那个solr目录.
+
+Environment节点的Value属性的值为：自己建立的\solr-tomcat\solr目录。请各位读者注意不要写错！
+
+g)    打开浏览器，输入 : htpp://localhost:8080/solr/admin/ （其中的端口根据情况输入 默认是8080） 就可以访问solr服务了
+
+
+4.   常见问题
+
+a) 按照如上方法安装后不能访问，访问的时候出现页面信息"HTTP Status 503 - Server is shutting down or failed to initialize"
+   
+   而且没有任何日志信息输出？
+
+   解决方法：因为 solr 4.3 以上将log部分从war包中剥离出来，所以需要按照如下步骤将相应的jar文件拷贝到tomcat webapp lib 下，同理，因为 solr 4.3 使用log4j所以需要将log4j的配置文件log.properties拷贝到tomcat webapp lib下
+
+http://wiki.apache.org/solr/SolrLogging#Switching_from_Log4J_logging_back_to_Java-util_logging
+
+Solr 4.3 and above do not include any logging jars in the WAR file. They must be provided separately. 
+
+The Solr example for these versions includes jars (in the jetty lib/ext directory) that set up SLF4J with a binding to the Apache log4j library. 
+
+To get the same logging setup in another container (Tomcat for example) as with the example Jetty server, you need to do the following
+
+1.Copy the jars from solr/example/lib/ext into your container's main lib directory. These jars will set up SLF4J and log4j.
+
+2.Exactly where this lib directory is highly variable. For a Debian or Ubuntu server using the Tomcat package available from the OS vendor, this is likely to be /usr/share/tomcat6/lib or /usr/share/tomcat7/lib. 
+
+3.Copy the logging config from solr/example/resources/log4j.properties into a location on the classpath. Usually you can use the same location as the jar files above. Edit the configuration file for your preferred log destination.
+
+    Optionally, if you did not place log4j.properties on the classpath, set java option -Dlog4j.configuration=file:///path/to/log4j.properties
+
+4.这时候启动会出现异常说明 commons-logging 包没有找到，下载相应的 commons-logging 包，保存到tomcat webapp lib 目录下，重新启动tomcat，运行成功
