@@ -161,3 +161,42 @@ scoring.
 </searchComponent>
 
 ***************************************************************************************************************************
+
+Data import from oracle db:
+1. Need following jar files add to solr.home/core_name/lib directory : solr-dataimporthandler-extras-4.5.1.jar ,  solr-dataimporthandler-4.5.1.jar , ojdbc6.jar
+
+2. Add following in solrconfig.xml in solr.home/core_name/conf directory : 
+  <!-- DataImportHandler -->
+  <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
+    <lst name="defaults">
+      <str name="config">db-data-config.xml</str>
+    </lst>
+  </requestHandler>
+  
+3. Add db-data-config.xml in solr.home/core_name/conf directory.
+
+4. The content in db-data-config.xml file:
+
+   <dataConfig>
+    <dataSource name="jdbc" driver="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@//10.228.66.15:1521/DataTiger" user="datacollect" password="saz008632"/>
+    <document>
+        <entity name="item" query="select id,shop_name,biao_ti,fen_lei,meta_search_keyword,meta_desc,shang_pin_lai_yuan,shang_cheng_pei_song
+,pin_pai_zhi_xiao,song_ji_fen_num,hao_ping_lv_num,jia_ge_num,dan_jia_num,cu_xiao_jia_num,ping_fen_num,jiao_yi_num,jiao_yi_success_num from data_xiu_hao_chi
+" >
+     
+        </entity>
+    </document>
+</dataConfig>
+
+
+5. Restart solr server, select user wanted core, in left menu "Dataimport", click Execute button to import the data.
+
+More info see : http://wiki.apache.org/solr/DataImportHandler
+**********************************************************************************************************************************
+
+1. org.apache.solr.common.SolrException: undefined field text
+
+  change <defaultSearchField>text</defaultSearchField> to <defaultSearchField>BIAO_TI</defaultSearchField>
+  
+**********************************************************************************************************************************
+
