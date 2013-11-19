@@ -117,3 +117,47 @@ To get the same logging setup in another container (Tomcat for example) as with 
     Optionally, if you did not place log4j.properties on the classpath, set java option -Dlog4j.configuration=file:///path/to/log4j.properties
 
 4.这时候启动会出现异常说明 commons-logging 包没有找到，下载相应的 commons-logging 包，保存到tomcat webapp lib 目录下，重新启动tomcat，运行成功
+
+
+*******************************************************************************************************************************************
+
+1.  java.lang.NumberFormatException: For input string: "MA147LL/A"
+
+	at java.lang.NumberFormatException.forInputString(Unknown Source)
+	at java.lang.Long.parseLong(Unknown Source)
+	at java.lang.Long.parseLong(Unknown Source)
+	at org.apache.solr.schema.TrieField.readableToIndexed(TrieField.java:393)
+	at org.apache.solr.schema.TrieField.readableToIndexed(TrieField.java:378)
+	at org.apache.solr.handler.component.QueryElevationComponent$ElevationObj.<init>(QueryElevationComponent.java:137)
+	at org.apache.solr.handler.component.QueryElevationComponent.loadElevationMap(QueryElevationComponent.java:310)
+	at org.apache.solr.handler.component.QueryElevationComponent.inform(QueryElevationComponent.java:224)
+
+
+解决方法1.修改 schema.xml 里面的 uniquekey 字段的类型为 string 类型，如果是非 string 类型，则会出错。
+
+
+
+解决方法2：修改 elevate.xml 里面的内容，注释掉字符串类型的 id 的 doc
+
+<query text="ipod">
+<!-- <doc id="MA147LL/A" /> --> <!-- put the actual ipod at the top -->
+<!-- <doc id="IW-02" exclude="true" /> --> <!-- exclude this cable -->
+</query>
+
+这样就可以解决这个问题
+
+<!-- Query Elevation Component
+
+http://wiki.apache.org/solr/QueryElevationComponent
+
+a search component that enables you to configure the top
+results for a given query regardless of the normal lucene
+scoring.
+-->
+<searchComponent name="elevator" class="solr.QueryElevationComponent" >
+<!-- pick a fieldType to analyze queries -->
+<str name="queryFieldType">string</str>
+<str name="config-file">elevate.xml</str>
+</searchComponent>
+
+***************************************************************************************************************************

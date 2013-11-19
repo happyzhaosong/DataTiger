@@ -2,31 +2,60 @@ package com.general.common.dto;
 
 public class DBMQCfgInfoDTO extends BaseDTO {
 	
+	//data collect db settings
 	private String dbIp = "";	
 	private String dbPort = "";	
 	private String dbName = "";
 	private String dbUser = "";
 	private String dbPasswd = "";
-	
+
+	//data table db settings
 	private String dataTblDbIp = "";	
 	private String dataTblDbPort = "";	
 	private String dataTblDbName = "";
 	private String dataTblDbUser = "";
 	private String dataTblDbPasswd = "";
 	
+	/*
+	//informationSchema db settings (use for mysql only)
 	private String informationShcemaDbName = "";
 	private String informationShcemaDbUser = "";
 	private String informationShcemaDbPasswd = "";
+	*/
 	
+	//the mq server connection strings
 	private String mqUrl = "";	
 	private String mqUser = "";
 	private String mqPasswd = "";
 	private String mqSubject = "";
 	
+	//webdriver chrome driver path
 	private String chromeDriverPath = "";
 	
-	//private String logLevel = "";
 	
+	//solr settings
+	private String solrIp = "";	
+	private String solrPort = "";	
+	private String solrWebAppName = "";
+		
+	public String getSolrIp() {
+		return solrIp;
+	}
+	public void setSolrIp(String solrIp) {
+		this.solrIp = solrIp;
+	}
+	public String getSolrPort() {
+		return solrPort;
+	}
+	public void setSolrPort(String solrPort) {
+		this.solrPort = solrPort;
+	}
+	public String getSolrWebAppName() {
+		return solrWebAppName;
+	}
+	public void setSolrWebAppName(String solrWebAppName) {
+		this.solrWebAppName = solrWebAppName;
+	}
 	public String getDataTblDbIp() {
 		return dataTblDbIp;
 	}
@@ -103,24 +132,7 @@ public class DBMQCfgInfoDTO extends BaseDTO {
 	public void setDbPasswd(String dbPasswd) {
 		this.dbPasswd = dbPasswd;
 	}
-	public String getInformationShcemaDbName() {
-		return informationShcemaDbName;
-	}
-	public void setInformationShcemaDbName(String informationShcemaDbName) {
-		this.informationShcemaDbName = informationShcemaDbName;
-	}
-	public String getInformationShcemaDbUser() {
-		return informationShcemaDbUser;
-	}
-	public void setInformationShcemaDbUser(String informationShcemaDbUser) {
-		this.informationShcemaDbUser = informationShcemaDbUser;
-	}
-	public String getInformationShcemaDbPasswd() {
-		return informationShcemaDbPasswd;
-	}
-	public void setInformationShcemaDbPasswd(String informationShcemaDbPasswd) {
-		this.informationShcemaDbPasswd = informationShcemaDbPasswd;
-	}
+	
 	public String getMqUrl() {
 		return mqUrl;
 	}

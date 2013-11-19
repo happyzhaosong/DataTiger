@@ -63,7 +63,18 @@ public class ConfigTool extends BaseTool {
 	public static final String DEFAULT_MQ_SUBJECT = "TOOL.DEFAULT";
 	
 	public static final String CHROME_DRIVER_PATH = "chrome_driver_path";
-	public static final String DEFAULT_CHROME_DRIVER_PATH = "E:/SelfWorkSpace/DataCollect/CommonLibRepository/tool/chromedriver2_win32_0.8/chromedriver.exe";	
+	public static final String DEFAULT_CHROME_DRIVER_PATH = "E:/SelfWorkSpace/DataCollect/CommonLibRepository/tool/chromedriver2_win32_0.8/chromedriver.exe";
+	
+
+	
+	public static final String SOLR_IP = "solr_ip";
+	public static final String SOLR_PORT = "solr_port";
+	public static final String SOLR_WEB_APP_NAME = "solr_web_app_name";
+	
+	public static final String DEFAULT_SOLR_IP = "10.228.66.15";
+	public static final String DEFAULT_SOLR_PORT = "8983";
+	public static final String DEFAULT_SOLR_WEB_APP_NAME = "solr";
+	
 	
 	public static DBMQCfgInfoDTO getDBMQConfig() throws Exception
 	{
@@ -98,7 +109,12 @@ public class ConfigTool extends BaseTool {
 				dbProps.setProperty(ConfigTool.MQ_PASSWD, DEFAULT_MQ_PASSWD);
 				dbProps.setProperty(ConfigTool.MQ_SUBJECT, DEFAULT_MQ_SUBJECT);
 				
-				dbProps.setProperty(ConfigTool.CHROME_DRIVER_PATH, DEFAULT_CHROME_DRIVER_PATH);			
+				dbProps.setProperty(ConfigTool.CHROME_DRIVER_PATH, DEFAULT_CHROME_DRIVER_PATH);
+				
+				dbProps.setProperty(ConfigTool.SOLR_IP, DEFAULT_SOLR_IP);
+				dbProps.setProperty(ConfigTool.SOLR_PORT, DEFAULT_SOLR_PORT);
+				dbProps.setProperty(ConfigTool.SOLR_WEB_APP_NAME, DEFAULT_SOLR_WEB_APP_NAME);
+				
 				FileTool.writePropertiesFile(dbCfgFilePath, dbProps);
 			}			
 
@@ -126,6 +142,10 @@ public class ConfigTool extends BaseTool {
 			dbCfgInfo.setMqSubject(StringTool.isEmpty(dbProps.getProperty(ConfigTool.MQ_SUBJECT), DEFAULT_MQ_SUBJECT));
 			
 			dbCfgInfo.setChromeDriverPath(StringTool.isEmpty(dbProps.getProperty(ConfigTool.CHROME_DRIVER_PATH), ConfigTool.DEFAULT_CHROME_DRIVER_PATH));
+			
+			dbCfgInfo.setSolrIp(StringTool.isEmpty(dbProps.getProperty(ConfigTool.SOLR_IP), DEFAULT_SOLR_IP));
+			dbCfgInfo.setSolrPort(StringTool.isEmpty(dbProps.getProperty(ConfigTool.SOLR_PORT), DEFAULT_SOLR_PORT));
+			dbCfgInfo.setSolrWebAppName(StringTool.isEmpty(dbProps.getProperty(ConfigTool.SOLR_WEB_APP_NAME), DEFAULT_SOLR_WEB_APP_NAME));
 		}
 		return dbCfgInfo;
 	}
