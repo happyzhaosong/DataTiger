@@ -2,7 +2,6 @@ package com.food.server.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.food.common.dto.FoodDTO;
 import com.general.common.constants.GeneralConstants;
 import com.general.common.dto.search.BaseSearchParamsDTO;
@@ -12,8 +11,11 @@ import com.general.server.manager.DBManager;
 
 public class FoodDAO extends BaseDAO {
 
+	private static String CORE_NAME = "core_xiu_hao_chi";
+		
 	public List<FoodDTO> searchFood(BaseSearchParamsDTO searchParamsDto) throws Exception
 	{
+		/*
 		this.initStringBuffer();
 
 		if(!StringTool.isEmpty(searchParamsDto.getSearchWebSite()))
@@ -68,8 +70,10 @@ public class FoodDAO extends BaseDAO {
 			this.orderByBuf.append(" ");
 			this.orderByBuf.append(searchParamsDto.getDirection2());
 		}
-		
+		*/
 		List<FoodDTO> ret = new ArrayList<FoodDTO>();
+		
+		
 		ret = ret.getClass().cast(this.selectDtoList(FoodDTO.class, DBManager.getInstance().getDataSource()));		
 		return ret;
 	}

@@ -36,8 +36,7 @@ public class DBMQCfgInfoDTO extends BaseDTO {
 	//solr settings
 	private String solrIp = "";	
 	private String solrPort = "";	
-	private String solrWebAppName = "";
-		
+			
 	public String getSolrIp() {
 		return solrIp;
 	}
@@ -50,12 +49,9 @@ public class DBMQCfgInfoDTO extends BaseDTO {
 	public void setSolrPort(String solrPort) {
 		this.solrPort = solrPort;
 	}
-	public String getSolrWebAppName() {
-		return solrWebAppName;
-	}
-	public void setSolrWebAppName(String solrWebAppName) {
-		this.solrWebAppName = solrWebAppName;
-	}
+
+	 
+	
 	public String getDataTblDbIp() {
 		return dataTblDbIp;
 	}
