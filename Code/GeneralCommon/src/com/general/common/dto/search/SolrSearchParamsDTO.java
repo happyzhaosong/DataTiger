@@ -6,7 +6,7 @@ import java.util.List;
 import com.general.common.constants.GeneralConstants;
 import com.general.common.dto.BaseDTO;
 
-public class SolrSearchParamsDTO extends BaseDTO {	
+public class SolrSearchParamsDTO{	
 	private List<SolrSearchKeywordDTO> sarchKeywordList = new ArrayList<SolrSearchKeywordDTO>();
 	private List<SolrSearchOrderDTO> sarchOrderList = new ArrayList<SolrSearchOrderDTO>();
 	private long startRow = 0;

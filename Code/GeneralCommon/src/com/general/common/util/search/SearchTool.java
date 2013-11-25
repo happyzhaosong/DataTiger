@@ -1,9 +1,17 @@
 package com.general.common.util.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.general.common.constants.GeneralConstants;
+import com.general.common.dto.BasePageDTO;
+import com.general.common.dto.search.BaseSearchParamsDTO;
+import com.general.common.dto.search.SolrSearchKeywordDTO;
+import com.general.common.dto.search.SolrSearchOrderDTO;
+import com.general.common.dto.search.SolrSearchParamsDTO;
 import com.general.common.util.BaseTool;
 import com.general.common.util.DateTool;
 import com.general.common.util.GeneralWebTool;
@@ -47,6 +55,36 @@ public class SearchTool extends BaseTool {
 			session.setAttribute(GeneralConstants.SEARCH_LAST_SEARCH_ACTION, currAction);
 			session.setAttribute(GeneralConstants.SEARCH_LAST_SEARCH_TIME_SAVED_IN_SESSION, currTime);
 		}
+		return ret;
+	}
+	
+	
+	public static SolrSearchParamsDTO getSolrSearchParamsDtoFromSearchParamsDto(BaseSearchParamsDTO searchParamsDto, BasePageDTO pageDto)
+	{
+		SolrSearchParamsDTO ret = new SolrSearchParamsDTO();
+		List<SolrSearchOrderDTO> sarchOrderList = new ArrayList<SolrSearchOrderDTO>();	
+		
+		/* solr search order column list*/
+		if(!StringTool.isEmpty(searchParamsDto.getOrderBy1()))
+		{
+			SolrSearchOrderDTO solrSearchOrderDto1 = new SolrSearchOrderDTO();
+			solrSearchOrderDto1.setOrderColumn(searchParamsDto.getOrderBy1().toUpperCase());
+			solrSearchOrderDto1.setDirection(searchParamsDto.getDirection1());
+			sarchOrderList.add(solrSearchOrderDto1);
+		}
+
+		if(!StringTool.isEmpty(searchParamsDto.getOrderBy2()))
+		{
+			SolrSearchOrderDTO solrSearchOrderDto2 = new SolrSearchOrderDTO();
+			solrSearchOrderDto2.setOrderColumn(searchParamsDto.getOrderBy2().toUpperCase());
+			solrSearchOrderDto2.setDirection(searchParamsDto.getDirection2());
+			sarchOrderList.add(solrSearchOrderDto2);
+		}
+
+		ret.setSarchOrderList(sarchOrderList);
+		ret.setStartRow((Long.parseLong(pageDto.getPage()) - 1)*Long.parseLong(pageDto.getLimit()));
+		ret.setPageSize(Long.parseLong(pageDto.getLimit()));
+		
 		return ret;
 	}
 }

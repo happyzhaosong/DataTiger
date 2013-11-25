@@ -5,25 +5,35 @@ import com.general.common.dto.BaseDTO;
 /*
  * Record solr search keywords parameters.
  * */
-public class SolrSearchKeywordDTO extends BaseDTO {
+public class SolrSearchKeywordDTO{
 
-	private String searchColum = "*";
+	private String colum = "*";
 	
-	private String searchKeyword = "*";
+	private String keyword = "*";
+	
+	private int priority = 1;
 
-	public String getSearchColum() {
-		return searchColum;
+	public String getColum() {
+		return colum;
 	}
 
-	public void setSearchColum(String searchColum) {
-		this.searchColum = searchColum;
+	public void setColum(String colum) {
+		this.colum = colum;
 	}
 
-	public String getSearchKeyword() {
-		return searchKeyword;
+	public String getKeyword() {
+		return keyword;
 	}
 
-	public void setSearchKeyword(String searchKeyword) {
-		this.searchKeyword = searchKeyword;
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 }

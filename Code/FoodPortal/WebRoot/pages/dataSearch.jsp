@@ -6,7 +6,7 @@
 	<a name="top"> </a>
     <!-- search form area-->
     <form id="searchForm">
-    	<input type="hidden" id="orderByWithDierction1Value" value="click_count<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" />
+    	<input type="hidden" id="orderByWithDierction1Value" value="jia_ge_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" />
     	
     	<div style="display:block; margin-bottom:8px">
 	        <input type="text" id="searchKeyword" name="searchKeyword" value="" maxlength="100">        

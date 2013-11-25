@@ -6,7 +6,7 @@ import com.general.common.dto.BaseDTO;
 /*
  * Record solr search result order parameters.
  * */
-public class SolrSearchOrderDTO extends BaseDTO {
+public class SolrSearchOrderDTO{
 
 	private String orderColumn = "";
 	

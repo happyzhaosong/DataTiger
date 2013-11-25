@@ -5,12 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocumentList;
 
 import com.general.common.constants.GeneralConstants;
 import com.general.common.dto.DBMQCfgInfoDTO;
-import com.general.common.dto.search.BaseSearchParamsDTO;
+import com.general.common.dto.search.SolrSearchKeywordDTO;
+import com.general.common.dto.search.SolrSearchOrderDTO;
+import com.general.common.dto.search.SolrSearchParamsDTO;
+import com.general.common.util.ClassTool;
 import com.general.common.util.StringTool;
 
 public class SolrManager extends BaseManager {
@@ -78,23 +84,59 @@ public class SolrManager extends BaseManager {
     }
     
     
-	public List<Map<String, String>> searchDataIndex(String coreName, BaseSearchParamsDTO searchParamsDto) throws Exception
+	public List<Map<String, String>> searchDataIndex(String coreName, SolrSearchParamsDTO solrSearchParamsDto) throws Exception
 	{
 		List<Map<String, String>> ret = new ArrayList<Map<String, String>>();
-		HttpSolrServer solrServer = SolrManager.getInstance().getSolrServer(coreName);
+		HttpSolrServer solrServer = SolrManager.getInstance().getSolrServer(coreName);	
 				
-		String searchColumn = searchParamsDto.getSearchColumn();
-		if(StringTool.isEmpty(searchColumn))
+		StringBuffer queryBuf = new StringBuffer();		
+		List<SolrSearchKeywordDTO> solrKeywordList = solrSearchParamsDto.getSarchKeywordList();
+		if(ClassTool.isListEmpty(solrKeywordList))
 		{
-			searchColumn
+			queryBuf.append("*:*");
+		}else
+		{
+			int size = solrKeywordList.size();
+			for(int i=0;i<size;i++)
+			{
+				SolrSearchKeywordDTO searchKeywordDto = solrKeywordList.get(i);
+				if(!StringTool.isEmpty(searchKeywordDto.getColum()) && !StringTool.isEmpty(searchKeywordDto.getKeyword()))
+				{
+					queryBuf.append(searchKeywordDto.getColum());
+					queryBuf.append(GeneralConstants.SEPERATOR_COLON);
+					queryBuf.append(searchKeywordDto.getKeyword());
+					queryBuf.append("^");
+					queryBuf.append(searchKeywordDto.getPriority());
+					queryBuf.append(" ");
+				}				
+			}
 		}
 		
-		SolrQuery query = new SolrQuery();
-	    query.setQuery("*:*");
-	    query.add.addSortField( "price", SolrQuery.ORDER.asc );
 		
+		SolrQuery query = new SolrQuery();
+	    query.setQuery(queryBuf.toString());
+	    
+	    SortClause sortScore = new SortClause("score", "desc");
+	    query.addSort(sortScore);
+	    
+	    List<SolrSearchOrderDTO> solrOrderList = solrSearchParamsDto.getSarchOrderList();
+	    if(!ClassTool.isListEmpty(solrOrderList))
+	    {
+	    	int size = solrOrderList.size();
+	    	for(int i=0;i<size;i++)
+	    	{
+	    		SolrSearchOrderDTO searchOrderDto = solrOrderList.get(i);
+	    		if(!StringTool.isEmpty(searchOrderDto.getOrderColumn()) && !StringTool.isEmpty(searchOrderDto.getDirection()))
+	    		{
+	    			SortClause tmpSortScore = new SortClause(searchOrderDto.getOrderColumn(), searchOrderDto.getDirection());
+	    		    query.addSort(tmpSortScore);
+	    		}
+	    	}
+	    }
+	    
+	    QueryResponse response = solrServer.query(query);
+	    SolrDocumentList list = response.getResults();
+	    
 		return ret;
-	}
-	
-	private 
+	}	 
 }
