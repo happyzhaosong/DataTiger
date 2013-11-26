@@ -1,8 +1,10 @@
 <dataConfig>
     <dataSource name="jdbc" driver="oracle.jdbc.driver.OracleDriver" url="jdbc:oracle:thin:@//10.228.66.15:1521/DataTiger" user="datacollect" password="saz008632"/>
     <document>
-        <entity name="data_xiu_hao_chi" query="select id,shop_name,biao_ti,fen_lei,meta_search_keyword,meta_desc,shang_pin_lai_yuan,shang_cheng_pei_song
-,pin_pai_zhi_xiao,song_ji_fen_num,hao_ping_lv_num,jia_ge_num,dan_jia_num,cu_xiao_jia_num,ping_fen_num,jiao_yi_num,jiao_yi_success_num from data_xiu_hao_chi
+        <entity name="data_xiu_hao_chi" query="select ID,SHOP_NAME,BIAO_TI,FEN_LEI,JIA_GE_NUM,DAN_JIA_NUM,CU_XIAO_JIA_NUM
+,PING_FEN_NUM,JIAO_YI_NUM,JIAO_YI_SUCCESS_NUM,SHANG_PIN_LAI_YUAN,HAO_PING_LV_NUM,SHANG_CHENG_PEI_SONG,PIN_PAI_ZHI_XIAO,SONG_JI_FEN_NUM
+,ITEM_URL,SHOP_LEVEL_IMG_URL,JIA_GE,DAN_JIA,CU_XIAO_JIA,PING_FEN,JIAO_YI,JIAO_YI_SUCCESS,IMG_URL,HAO_PING_LV,WANG_WANG_URL,SONG_JI_FEN
+,SHOP_URL,META_SEARCH_KEYWORD from data_xiu_hao_chi
 " >
      
         </entity>

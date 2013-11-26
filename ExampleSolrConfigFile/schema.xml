@@ -119,15 +119,10 @@
    <field name="SHANG_PIN_LAI_YUAN" type="int" indexed="true" stored="true" />
    <field name="HAO_PING_LV_NUM" type="double" indexed="true" stored="true" />
    <field name="SHANG_CHENG_PEI_SONG" type="int" indexed="true" stored="true" />
-   <field name="PIN_PAI_ZHI_XIAO" type="int" indexed="true" stored="true" />   
-   <field name="SONG_JI_FEN_NUM" type="int" indexed="true" stored="true" />
-
-
+   <field name="PIN_PAI_ZHI_XIAO" type="int" indexed="true" stored="true" />      
+   <field name="SONG_JI_FEN_NUM" type="int" indexed="true" stored="true" />   
    
-   <field name="META_SEARCH_KEYWORD" type="text_zh_complex" indexed="true" stored="false" />
-   <field name="META_DESC" type="text_zh_complex" indexed="true" stored="false" />
-    
-   
+   <field name="ITEM_URL" type="string" indexed="false" stored="true"/>
    <field name="SHOP_LEVEL_IMG_URL" type="string" indexed="false" stored="true" />
    <field name="JIA_GE" type="string" indexed="false" stored="true" />
    <field name="DAN_JIA" type="string" indexed="false" stored="true" />   
@@ -140,9 +135,10 @@
    <field name="WANG_WANG_URL"  type="string" indexed="false" stored="true"/>
    <field name="SONG_JI_FEN"  type="string" indexed="false" stored="true"/>
    <field name="SHOP_URL"  type="string" indexed="false" stored="true"/>
-   <field name="ITEM_URL"  type="string" indexed="false" stored="true"/>
    
-   <field name="_version_" type="long" indexed="true" stored="true"/>
+   <field name="META_SEARCH_KEYWORD" type="text_zh_complex" indexed="true" stored="false" />
+   
+   <field name="_version_" type="long" indexed="false" stored="true"/>
     
  </fields>
 
@@ -311,18 +307,21 @@
     <fieldType name="text_zh_complex" class="solr.TextField" >
         <analyzer>
           <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="complex" dicPath="C:/Users/Administrator/Downloads/solr-4.5.1/solr-4.5.1/example/solr/core_xiu_hao_chi/lib/sogou-dic-utf8/data"/>
+          <filter class="solr.LowerCaseFilterFactory"/>
         </analyzer>
     </fieldType>
     
     <fieldType name="text_zh_maxword" class="solr.TextField" >
         <analyzer>
           <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="max-word" dicPath="C:/Users/Administrator/Downloads/solr-4.5.1/solr-4.5.1/example/solr/core_xiu_hao_chi/lib/sogou-dic-utf8/data"/>
+          <filter class="solr.LowerCaseFilterFactory"/>
         </analyzer>
     </fieldType>
     
     <fieldType name="text_zh_simple" class="solr.TextField" >
         <analyzer>
           <tokenizer class="com.chenlb.mmseg4j.solr.MMSegTokenizerFactory" mode="simple" dicPath="C:/Users/Administrator/Downloads/solr-4.5.1/solr-4.5.1/example/solr/core_xiu_hao_chi/lib/sogou-dic-utf8/data"/>
+          <filter class="solr.LowerCaseFilterFactory"/>
         </analyzer>
     </fieldType>
 

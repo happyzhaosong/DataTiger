@@ -349,6 +349,11 @@ public class ClassTool extends BaseTool {
 	{
 		return extractValue(objClass, result);
 	}
+	
+	public static Object extractValueFromMap(Class objClass, Map result) throws Exception
+	{
+		return extractValue(objClass, result);
+	}
 
 	private static Object extractValue(Class objClass, Object dataSrc) throws Exception
 	{
@@ -374,6 +379,15 @@ public class ClassTool extends BaseTool {
 					{
 						String columnName = column.name();
 						value = DBTool.getStringValueFromResultSet((ResultSet)dataSrc, columnName, fieldType);
+					}
+				}else if(dataSrc instanceof Map)
+				{
+					Map row = (Map)dataSrc;
+					DBColumn column = field.getAnnotation(DBColumn.class);
+					if(column!=null)
+					{
+						String columnName = column.name();
+						value = (String)row.get(columnName.toUpperCase());						
 					}
 				}
 					

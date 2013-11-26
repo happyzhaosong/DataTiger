@@ -2,6 +2,8 @@ package com.food.server.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import com.food.common.dto.FoodDTO;
 import com.general.common.constants.GeneralConstants;
 import com.general.common.dto.BasePageDTO;
@@ -21,68 +23,10 @@ public class FoodDAO extends BaseDAO {
 		
 	public List<FoodDTO> searchFood(BaseSearchParamsDTO searchParamsDto) throws Exception
 	{
-		/*
-		this.initStringBuffer();
-
-		if(!StringTool.isEmpty(searchParamsDto.getSearchWebSite()))
-		{
-			this.addMultipleValueClauseInWhereClause("shang_pin_lai_yuan", searchParamsDto.getSearchWebSite(), "or");
-		}
-		
-		if(!StringTool.isEmpty(searchParamsDto.getSearchKeyword().trim()))
-		{
-			if(this.whereBuf.length()>0)
-			{
-				this.whereBuf.append(" and ");
-			}
-			
-			this.whereBuf.append(" biao_ti like '%");	
-			this.whereBuf.append(searchParamsDto.getSearchKeyword().trim());
-			this.whereBuf.append("%'");
-		}
-		
-		
-		if(!StringTool.isEmpty(searchParamsDto.getOrderBy1()))
-		{
-			if(this.whereBuf.length()>0)
-			{
-				this.whereBuf.append(" and ");
-			}
-			
-			this.whereBuf.append(searchParamsDto.getOrderBy1());
-			this.whereBuf.append(" != -1 ");
-			
-			this.orderByBuf.append(searchParamsDto.getOrderBy1());
-			this.orderByBuf.append(" ");
-			this.orderByBuf.append(searchParamsDto.getDirection1());
-		}
-		
-		if(!StringTool.isEmpty(searchParamsDto.getOrderBy2()))
-		{
-			if(this.whereBuf.length()>0)
-			{
-				this.whereBuf.append(" and ");
-			}
-			
-			this.whereBuf.append(searchParamsDto.getOrderBy2());
-			this.whereBuf.append(" != -1 ");
-			
-			if(this.orderByBuf.length()>0)
-			{
-				this.orderByBuf.append(", ");
-			}
-			
-			this.orderByBuf.append(searchParamsDto.getOrderBy2());
-			this.orderByBuf.append(" ");
-			this.orderByBuf.append(searchParamsDto.getDirection2());
-		}
-		*/
 		List<FoodDTO> ret = new ArrayList<FoodDTO>();
-		SolrSearchParamsDTO solrSearchParamsDto = this.getFoodSolrSearchParamsDtoFromSearchParamsDto(searchParamsDto, this.getPageDto());
-		
-		SolrManager.getInstance().searchDataIndex(CORE_NAME, solrSearchParamsDto);
-		
-		ret = ret.getClass().cast(this.selectDtoList(FoodDTO.class, DBManager.getInstance().getDataSource()));		
+		SolrSearchParamsDTO solrSearchParamsDto = this.getFoodSolrSearchParamsDtoFromSearchParamsDto(searchParamsDto, this.getPageDto());		
+		//ret = ret.getClass().cast(this.selectDtoList(FoodDTO.class, DBManager.getInstance().getDataSource()));		
+		ret = ret.getClass().cast(SolrManager.getInstance().searchDataIndex(CORE_NAME, solrSearchParamsDto, FoodDTO.class));
 		return ret;
 	}
 	

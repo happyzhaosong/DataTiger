@@ -82,8 +82,8 @@ public class SearchTool extends BaseTool {
 		}
 
 		ret.setSarchOrderList(sarchOrderList);
-		ret.setStartRow((Long.parseLong(pageDto.getPage()) - 1)*Long.parseLong(pageDto.getLimit()));
-		ret.setPageSize(Long.parseLong(pageDto.getLimit()));
+		ret.setStartRow((Integer.parseInt(pageDto.getPage()) - 1)*Integer.parseInt(pageDto.getLimit()));
+		ret.setPageSize(Integer.parseInt(pageDto.getLimit()));
 		
 		return ret;
 	}

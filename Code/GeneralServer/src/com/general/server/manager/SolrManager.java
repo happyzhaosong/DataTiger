@@ -1,6 +1,9 @@
 package com.general.server.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +12,7 @@ import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
 import com.general.common.constants.GeneralConstants;
@@ -84,11 +88,53 @@ public class SolrManager extends BaseManager {
     }
     
     
-	public List<Map<String, String>> searchDataIndex(String coreName, SolrSearchParamsDTO solrSearchParamsDto) throws Exception
+    public List<Object> searchDataIndex(String coreName, SolrSearchParamsDTO solrSearchParamsDto, Class objClass) throws Exception
+    {
+    	List<Object> ret = new ArrayList();
+    	List<Map<String, String>> rowList = this.searchDataIndex(coreName, solrSearchParamsDto);
+    	int rowSize = rowList.size();
+    	for(int i=0;i<rowSize;i++)
+    	{
+    		Map rowMap = rowList.get(i);
+    		ret.add(ClassTool.extractValueFromMap(objClass, rowMap));
+    	}
+    	return ret;    	
+    }
+    
+	private List<Map<String, String>> searchDataIndex(String coreName, SolrSearchParamsDTO solrSearchParamsDto) throws Exception
 	{
 		List<Map<String, String>> ret = new ArrayList<Map<String, String>>();
 		HttpSolrServer solrServer = SolrManager.getInstance().getSolrServer(coreName);	
-				
+		SolrQuery query = SolrManager.getInstance().constructSolrQuery(solrSearchParamsDto);	
+		
+	    QueryResponse response = solrServer.query(query);
+	    SolrDocumentList list = response.getResults();
+	    
+	    if(list!=null)
+	    {
+	    	int size = list.size();
+	    	for(int i=0;i<size;i++)
+	    	{
+	    		SolrDocument sd = list.get(i);
+	    		Collection<String> fieldNames = sd.getFieldNames();
+	    		Iterator<String> it = fieldNames.iterator();
+	    		
+	    		Map<String, String> rowMap = new HashMap<String, String>();
+	    		while(it.hasNext())
+	    		{
+	    			String fieldName = it.next();
+	    			Object fieldValue = sd.getFieldValue(fieldName);
+	    			rowMap.put(fieldName.toUpperCase(), fieldValue.toString());		
+	    		}
+	    		
+	    		ret.add(rowMap);
+	    	}
+	    }	    
+		return ret;
+	}	
+	
+	public SolrQuery constructSolrQuery(SolrSearchParamsDTO solrSearchParamsDto) throws Exception
+	{
 		StringBuffer queryBuf = new StringBuffer();		
 		List<SolrSearchKeywordDTO> solrKeywordList = solrSearchParamsDto.getSarchKeywordList();
 		if(ClassTool.isListEmpty(solrKeywordList))
@@ -114,11 +160,15 @@ public class SolrManager extends BaseManager {
 		
 		
 		SolrQuery query = new SolrQuery();
+		query.setStart(solrSearchParamsDto.getStartRow());
+		query.setRows(solrSearchParamsDto.getPageSize());				
 	    query.setQuery(queryBuf.toString());
 	    
+	    List<SortClause> sortList = new ArrayList<SortClause>();
 	    SortClause sortScore = new SortClause("score", "desc");
-	    query.addSort(sortScore);
+	    sortList.add(sortScore);	    
 	    
+	    /*
 	    List<SolrSearchOrderDTO> solrOrderList = solrSearchParamsDto.getSarchOrderList();
 	    if(!ClassTool.isListEmpty(solrOrderList))
 	    {
@@ -129,14 +179,13 @@ public class SolrManager extends BaseManager {
 	    		if(!StringTool.isEmpty(searchOrderDto.getOrderColumn()) && !StringTool.isEmpty(searchOrderDto.getDirection()))
 	    		{
 	    			SortClause tmpSortScore = new SortClause(searchOrderDto.getOrderColumn(), searchOrderDto.getDirection());
-	    		    query.addSort(tmpSortScore);
+	    			sortList.add(tmpSortScore);
 	    		}
 	    	}
 	    }
+	    */
+	    query = query.setSorts(sortList);
 	    
-	    QueryResponse response = solrServer.query(query);
-	    SolrDocumentList list = response.getResults();
-	    
-		return ret;
-	}	 
+	    return query;
+	}
 }

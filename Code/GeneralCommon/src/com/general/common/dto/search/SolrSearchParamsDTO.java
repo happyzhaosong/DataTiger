@@ -2,15 +2,13 @@ package com.general.common.dto.search;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.general.common.constants.GeneralConstants;
-import com.general.common.dto.BaseDTO;
 
 public class SolrSearchParamsDTO{	
 	private List<SolrSearchKeywordDTO> sarchKeywordList = new ArrayList<SolrSearchKeywordDTO>();
 	private List<SolrSearchOrderDTO> sarchOrderList = new ArrayList<SolrSearchOrderDTO>();
-	private long startRow = 0;
-	private long pageSize = Long.parseLong(GeneralConstants.DEFAULT_PAGE_SIZE);
+	private int startRow = 0;
+	private int pageSize = Integer.parseInt(GeneralConstants.DEFAULT_PAGE_SIZE);
 	public List<SolrSearchKeywordDTO> getSarchKeywordList() {
 		return sarchKeywordList;
 	}
@@ -23,16 +21,16 @@ public class SolrSearchParamsDTO{
 	public void setSarchOrderList(List<SolrSearchOrderDTO> sarchOrderList) {
 		this.sarchOrderList = sarchOrderList;
 	}
-	public long getStartRow() {
+	public int getStartRow() {
 		return startRow;
 	}
-	public void setStartRow(long startRow) {
+	public void setStartRow(int startRow) {
 		this.startRow = startRow;
 	}
-	public long getPageSize() {
+	public int getPageSize() {
 		return pageSize;
 	}
-	public void setPageSize(long pageSize) {
+	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 	}
 }
