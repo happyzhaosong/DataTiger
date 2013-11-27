@@ -65,14 +65,13 @@ public class FoodDAO extends BaseDAO {
 			searchKeywordDtoMetaKeyword.setKeyword(searchParamsDto.getSearchKeyword());
 			searchKeywordDtoMetaKeyword.setPriority(1);
 			sarchKeywordList.add(searchKeywordDtoMetaKeyword);
-	        */
-			
+	        			
 			SolrSearchKeywordDTO searchKeywordDtoShopName = new SolrSearchKeywordDTO();
 			searchKeywordDtoShopName.setColum("SHOP_NAME");
 			searchKeywordDtoShopName.setKeyword(searchParamsDto.getSearchKeyword());
 			searchKeywordDtoShopName.setPriority(3);
 			sarchKeywordList.add(searchKeywordDtoShopName);
-			
+			*/
 			
 			SolrSearchKeywordDTO searchKeywordDtoMall = new SolrSearchKeywordDTO();
 			searchKeywordDtoMall.setColum("SHANG_PIN_LAI_YUAN");
