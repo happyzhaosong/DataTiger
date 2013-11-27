@@ -16,6 +16,7 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 
 import com.general.common.constants.GeneralConstants;
+import com.general.common.dto.BasePageDTO;
 import com.general.common.dto.DBMQCfgInfoDTO;
 import com.general.common.dto.search.SolrSearchKeywordDTO;
 import com.general.common.dto.search.SolrSearchOrderDTO;
@@ -88,15 +89,17 @@ public class SolrManager extends BaseManager {
     }
     
     
-    public List<Object> searchDataIndex(String coreName, SolrSearchParamsDTO solrSearchParamsDto, Class objClass) throws Exception
+    public List<BasePageDTO> searchDataIndex(String coreName, SolrSearchParamsDTO solrSearchParamsDto, Class objClass) throws Exception
     {
-    	List<Object> ret = new ArrayList();
+    	List<BasePageDTO> ret = new ArrayList();
     	List<Map<String, String>> rowList = this.searchDataIndex(coreName, solrSearchParamsDto);
     	int rowSize = rowList.size();
     	for(int i=0;i<rowSize;i++)
     	{
-    		Map rowMap = rowList.get(i);
-    		ret.add(ClassTool.extractValueFromMap(objClass, rowMap));
+    		Map<String, String> rowMap = rowList.get(i);
+    		BasePageDTO rowDto = (BasePageDTO)ClassTool.extractValueFromMap(objClass, rowMap);
+    		rowDto.setTotalRecordsCountInThisSearch(Long.parseLong(rowMap.get(GeneralConstants.JSON_TOTAL_RESULT_COUNT)));    		
+    		ret.add(rowDto);    		
     	}
     	return ret;    	
     }
@@ -108,7 +111,7 @@ public class SolrManager extends BaseManager {
 		SolrQuery query = SolrManager.getInstance().constructSolrQuery(solrSearchParamsDto);	
 		
 	    QueryResponse response = solrServer.query(query);
-	    SolrDocumentList list = response.getResults();
+	    SolrDocumentList list = response.getResults();    
 	    
 	    if(list!=null)
 	    {
@@ -127,6 +130,7 @@ public class SolrManager extends BaseManager {
 	    			rowMap.put(fieldName.toUpperCase(), fieldValue.toString());		
 	    		}
 	    		
+	    		rowMap.put(GeneralConstants.JSON_TOTAL_RESULT_COUNT, String.valueOf(list.getNumFound()));
 	    		ret.add(rowMap);
 	    	}
 	    }	    
@@ -151,24 +155,20 @@ public class SolrManager extends BaseManager {
 					queryBuf.append(searchKeywordDto.getColum());
 					queryBuf.append(GeneralConstants.SEPERATOR_COLON);
 					queryBuf.append(searchKeywordDto.getKeyword());
+					/*
 					queryBuf.append("^");
 					queryBuf.append(searchKeywordDto.getPriority());
+					*/
 					queryBuf.append(" ");
 				}				
 			}
-		}
-		
-		
-		SolrQuery query = new SolrQuery();
-		query.setStart(solrSearchParamsDto.getStartRow());
-		query.setRows(solrSearchParamsDto.getPageSize());				
-	    query.setQuery(queryBuf.toString());
-	    
+		}		
+	    	    
 	    List<SortClause> sortList = new ArrayList<SortClause>();
 	    SortClause sortScore = new SortClause("score", "desc");
 	    sortList.add(sortScore);	    
 	    
-	    /*
+	    
 	    List<SolrSearchOrderDTO> solrOrderList = solrSearchParamsDto.getSarchOrderList();
 	    if(!ClassTool.isListEmpty(solrOrderList))
 	    {
@@ -180,11 +180,23 @@ public class SolrManager extends BaseManager {
 	    		{
 	    			SortClause tmpSortScore = new SortClause(searchOrderDto.getOrderColumn(), searchOrderDto.getDirection());
 	    			sortList.add(tmpSortScore);
+	    			
+					queryBuf.append(" -");
+	    			queryBuf.append(searchOrderDto.getOrderColumn());
+					queryBuf.append(GeneralConstants.SEPERATOR_COLON);
+					queryBuf.append("-1 ");					
 	    		}
 	    	}
 	    }
-	    */
-	    query = query.setSorts(sortList);
+	    
+		SolrQuery query = new SolrQuery();
+		query.set("defType", "edismax");
+		query.set("stopwords", "true");
+		query.set("lowercaseOperators", "true");		
+		query.setQuery(queryBuf.toString().trim());
+		query.setSorts(sortList);
+		query.setStart(solrSearchParamsDto.getStartRow());
+		query.setRows(solrSearchParamsDto.getPageSize());    
 	    
 	    return query;
 	}

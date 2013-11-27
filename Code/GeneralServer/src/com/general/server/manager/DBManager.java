@@ -1,7 +1,6 @@
 package com.general.server.manager;
 
 import java.sql.Connection;
-
 import java.sql.SQLException;
 
 import javax.sql.DataSource;

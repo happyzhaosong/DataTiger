@@ -24,9 +24,10 @@ public class FoodDAO extends BaseDAO {
 	public List<FoodDTO> searchFood(BaseSearchParamsDTO searchParamsDto) throws Exception
 	{
 		List<FoodDTO> ret = new ArrayList<FoodDTO>();
-		SolrSearchParamsDTO solrSearchParamsDto = this.getFoodSolrSearchParamsDtoFromSearchParamsDto(searchParamsDto, this.getPageDto());		
-		//ret = ret.getClass().cast(this.selectDtoList(FoodDTO.class, DBManager.getInstance().getDataSource()));		
+		
+		SolrSearchParamsDTO solrSearchParamsDto = this.getFoodSolrSearchParamsDtoFromSearchParamsDto(searchParamsDto, this.getPageDto());				
 		ret = ret.getClass().cast(SolrManager.getInstance().searchDataIndex(CORE_NAME, solrSearchParamsDto, FoodDTO.class));
+
 		return ret;
 	}
 	
@@ -58,17 +59,20 @@ public class FoodDAO extends BaseDAO {
 			searchKeywordDtoBiaoTi.setPriority(10);
 			sarchKeywordList.add(searchKeywordDtoBiaoTi);
 			
+			/*
 			SolrSearchKeywordDTO searchKeywordDtoMetaKeyword = new SolrSearchKeywordDTO();
 			searchKeywordDtoMetaKeyword.setColum("META_SEARCH_KEYWORD");
 			searchKeywordDtoMetaKeyword.setKeyword(searchParamsDto.getSearchKeyword());
 			searchKeywordDtoMetaKeyword.setPriority(1);
 			sarchKeywordList.add(searchKeywordDtoMetaKeyword);
-	
+	        */
+			
 			SolrSearchKeywordDTO searchKeywordDtoShopName = new SolrSearchKeywordDTO();
 			searchKeywordDtoShopName.setColum("SHOP_NAME");
 			searchKeywordDtoShopName.setKeyword(searchParamsDto.getSearchKeyword());
 			searchKeywordDtoShopName.setPriority(3);
 			sarchKeywordList.add(searchKeywordDtoShopName);
+			
 			
 			SolrSearchKeywordDTO searchKeywordDtoMall = new SolrSearchKeywordDTO();
 			searchKeywordDtoMall.setColum("SHANG_PIN_LAI_YUAN");

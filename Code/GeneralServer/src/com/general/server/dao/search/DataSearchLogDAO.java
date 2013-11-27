@@ -6,7 +6,6 @@ import java.util.List;
 import com.general.common.dto.BasePageDTO;
 import com.general.common.dto.search.DataSearchLogDTO;
 import com.general.common.dto.search.DataSearchLogDetailDTO;
-import com.general.common.util.ClassTool;
 import com.general.common.util.LogTool;
 import com.general.common.util.StringTool;
 import com.general.server.dao.BaseDAO;

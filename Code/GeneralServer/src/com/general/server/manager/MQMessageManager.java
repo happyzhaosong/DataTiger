@@ -1,8 +1,5 @@
 package com.general.server.manager;
 
-import java.util.logging.Logger;
-
-
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
