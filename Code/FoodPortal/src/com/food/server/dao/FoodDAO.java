@@ -72,15 +72,25 @@ public class FoodDAO extends BaseDAO {
 			searchKeywordDtoShopName.setPriority(3);
 			sarchKeywordList.add(searchKeywordDtoShopName);
 			*/
-			
-			SolrSearchKeywordDTO searchKeywordDtoMall = new SolrSearchKeywordDTO();
-			searchKeywordDtoMall.setColum("SHANG_PIN_LAI_YUAN");
-			searchKeywordDtoMall.setKeyword(searchParamsDto.getSearchWebSite());
-			searchKeywordDtoMall.setPriority(3);
-			sarchKeywordList.add(searchKeywordDtoMall);
-			
-			ret.setSarchKeywordList(sarchKeywordList);
-		}		
+		}
+		
+		if(!StringTool.isEmpty(searchParamsDto.getSearchWebSite()) && searchParamsDto.getSearchWebSite().indexOf("0,")==-1)
+		{
+			String webSiteIdArr[] = searchParamsDto.getSearchWebSite().split(GeneralConstants.SEPERATOR_COMMA);
+			int len = webSiteIdArr.length;
+			for(int i=0;i<len;i++)
+			{
+				SolrSearchKeywordDTO searchKeywordDtoMall = new SolrSearchKeywordDTO();
+				searchKeywordDtoMall.setColum("SHANG_PIN_LAI_YUAN");
+				searchKeywordDtoMall.setKeyword(webSiteIdArr[i]);
+				searchKeywordDtoMall.setPriority(3);
+				sarchKeywordList.add(searchKeywordDtoMall);
+			}
+		}
+		ret.setSarchKeywordList(sarchKeywordList);
+		
+		ret.setFacetField("FEN_LEI");
+		
 		return ret;
 	}
 

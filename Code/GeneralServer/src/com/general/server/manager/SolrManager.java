@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrQuery.SortClause;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
+import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
@@ -72,7 +73,7 @@ public class SolrManager extends BaseManager {
     	// The following settings are provided here for completeness.
     	// They will not normally be required, and should only be used 
     	// after consulting javadocs to know whether they are truly required.
-    	ret.setSoTimeout(1000);  // socket read timeout
+    	ret.setSoTimeout(10000);  // socket read timeout
     	ret.setDefaultMaxConnectionsPerHost(100);
     	ret.setMaxTotalConnections(100);
     	ret.setFollowRedirects(false);  // defaults to false
@@ -112,6 +113,11 @@ public class SolrManager extends BaseManager {
 		
 	    QueryResponse response = solrServer.query(query);
 	    SolrDocumentList list = response.getResults();    
+	    
+	    /*
+	    FacetField ff = response.getFacetField(solrSearchParamsDto.getFacetField());
+	    ff.getValues()
+	    */
 	    
 	    if(list!=null)
 	    {
@@ -196,7 +202,12 @@ public class SolrManager extends BaseManager {
 		query.setQuery(queryBuf.toString().trim());
 		query.setSorts(sortList);
 		query.setStart(solrSearchParamsDto.getStartRow());
-		query.setRows(solrSearchParamsDto.getPageSize());    
+		query.setRows(solrSearchParamsDto.getPageSize());
+		
+		/*set facet parameters*/
+		query.setFacet(true);
+		query.addFacetField(solrSearchParamsDto.getFacetField());
+		query.setFacetSort(solrSearchParamsDto.getFacetField());
 	    
 	    return query;
 	}

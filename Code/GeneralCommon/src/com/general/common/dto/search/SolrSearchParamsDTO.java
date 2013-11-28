@@ -9,6 +9,14 @@ public class SolrSearchParamsDTO{
 	private List<SolrSearchOrderDTO> sarchOrderList = new ArrayList<SolrSearchOrderDTO>();
 	private int startRow = 0;
 	private int pageSize = Integer.parseInt(GeneralConstants.DEFAULT_PAGE_SIZE);
+	private String facetField = "";
+	
+	public String getFacetField() {
+		return facetField;
+	}
+	public void setFacetField(String facetField) {
+		this.facetField = facetField;
+	}
 	public List<SolrSearchKeywordDTO> getSarchKeywordList() {
 		return sarchKeywordList;
 	}
