@@ -16,3 +16,5 @@ ORA-02199: 缺失 DATAFILE/TEMPFILE 子句
 SQL> alter system set db_create_file_dest = 'D:\oracle\product\10.2.0\oradata\lims';
 
 2.如果安装oracle后 tnslistener 启动不起来，则检查是否设置了 oracle_home 环境变量
+
+3.Oracle Sql Developer 和 jdk 1.6 配合的更好，jdk1.7 安装会有问题异常出现。

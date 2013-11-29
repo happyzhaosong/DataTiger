@@ -45,7 +45,7 @@ e)     接下来要创建solr索引要存放的位置了。 首先新建一个/solr-tomcat/ 文件夹，建
 
 1.安装步骤详解 ,然后在\solr-tomcat\下，建立一个solr文件夹. 然后将 解压后的solr目录里面的example\solr\
 
-1.安装步骤详解 下面的所有文件复制到刚刚建立的\solr-tomcat\solr\目录下去。
+下面的所有文件复制到刚刚建立的\solr-tomcat\solr\目录下去。
 
 f)     接下来就是配置solr.home 了，方式如下：
 

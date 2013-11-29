@@ -33,7 +33,7 @@
 /** SEARCH RESULTS **/
 #demo .results {
     position: relative;
-    margin: 8px 0;
+    margin: 8px 0px 0px 0px;
 }
 #demo.hide-pg .results {
     margin: 0;

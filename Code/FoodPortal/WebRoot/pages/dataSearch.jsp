@@ -46,7 +46,7 @@
 	        	<li><a href="#" title="好评从高到低" data="hao_ping_lv_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">好评↓</a>&nbsp;&nbsp;</li>
 	        	<li><a href="#" title="销量从高到低" data="jiao_yi_success_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">销量↓</a>&nbsp;&nbsp;</li>
 	        	<li><a href="#" title="送积分从高到低" data="song_ji_fen_num<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">送积分↓</a>&nbsp;&nbsp;</li>
-	        	<li><a href="#" title="访问量从高到低" data="click_count<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">访问量↓</a>&nbsp;&nbsp;</li>
+	        	<!-- <li><a href="#" title="访问量从高到低" data="click_count<%=GeneralConstants.ORDER_BY_DESC_SUFFIX%>" class="orderByClass">访问量↓</a>&nbsp;&nbsp;</li>  -->
 	        </ul>
         </div>
     </div>
@@ -71,7 +71,7 @@ YUI().use('DataSearchApp', function (Y) {
     
         
     dataSearch.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH)%>';  
-    dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px"></ul>';
+    dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px; margin:0px"></ul>';
     
   	var emptyRowHtmlCode = '<image src="" height="16px" style="display: block"/>';
   	var divPrefix = '<div style="display: block;">';
