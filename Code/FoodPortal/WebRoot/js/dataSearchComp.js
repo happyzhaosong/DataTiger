@@ -4,7 +4,7 @@
 
     Y.DataSearchPaginatorPages = Y.Base.create('pager-pages', Y.View, [], {
 
-        // We modify the the containerTemplate so our page items are contained in
+        // We modify the containerTemplate so our page items are contained in
         // their proper parent
         containerTemplate: '<ul/>',
 

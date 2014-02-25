@@ -138,7 +138,7 @@
    
    <field name="META_SEARCH_KEYWORD" type="text_zh_complex" indexed="true" stored="false" />
    
-   <field name="_version_" type="long" indexed="false" stored="true"/>
+   <field name="_version_" type="long" indexed="true" stored="true"/>
     
  </fields>
 

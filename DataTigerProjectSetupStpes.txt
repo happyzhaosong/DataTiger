@@ -1,0 +1,22 @@
+1. Develop environment setup.
+1) Install MyEclipse9 or MyEclipse10.
+2) Install Tomcat 6 or bigger as application server.
+3) Install Solr into tomcat. (Referal TomcatWithSolrSolutions.txt)
+4) Set solr home to C:\solr
+5) 然后将下载的solr安装包里面的解压后的solr目录里面的example\solr\下面的所有文件复制到刚刚建立的C:\solr\目录下去。
+6) Create core dirrectory in C:\solr directory.
+
+2. Local operation DB environment setup. 
+1) Install Oracle 11.2 as local db to save data parse configuration and parsed out data.
+2) The instance name is DATATIGER
+3) Set oracle account system's password to saz008632 or saz))*632
+4) Create tablespace : DATATIGER, DATATIGER_TMP
+5) Create oracle account : datacollect / saz008632 and let it use above tablespace
+6) Import data tiger parse db schema into oracle. 
+7) Use Oracle SQL Developer as oracle db client manager.
+
+3. 运营维护：
+1) 每天使用 solr admin UI 里面的 Import 功能将 oracle 数据库里面的相应的数据导入到 solr 的索引文件里面。
+2) 新生成的索引文件上传到运营的网站供用户搜索使用。
+3) 一个solr服务器里面可以有多个 core 目录，来对不同的类型的信息进行分类索引。
+

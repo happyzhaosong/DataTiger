@@ -71,7 +71,7 @@ YUI().use('DataSearchApp', function (Y) {
     
         
     dataSearch.url = '<%=FoodWebTool.getActionURL(request, FoodConstants.ACTION_SEARCH)%>';  
-    dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px; margin:0px"></ul>';
+    dataSearch.containerTemplate = '<ul class="yui3-g" style="padding:2px; margin:8px"></ul>';
     
   	var emptyRowHtmlCode = '<image src="" height="16px" style="display: block"/>';
   	var divPrefix = '<div style="display: block;">';

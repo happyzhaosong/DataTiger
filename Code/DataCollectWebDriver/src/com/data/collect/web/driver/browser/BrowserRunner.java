@@ -166,7 +166,7 @@ public class BrowserRunner {
 		Exception retEx = null;
 		try
 		{			
-			//如果是内容也并且不是真正的内容页面则直接跳转，这样可以节约资源，提高解析效率
+			//如果是内容页面但是不是真正的内容页面则直接跳转，这样可以节约资源，提高解析效率
 			if(taskDto.isIfContentPage() && taskDto.getIfReallyContentPage()==0)
 			{
 				return retBuf.toString();
